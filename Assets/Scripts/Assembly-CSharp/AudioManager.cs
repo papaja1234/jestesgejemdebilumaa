@@ -5,6 +5,7 @@ using UnityEngine;
 public class AudioManager : Singleton<AudioManager>
 {
 	public delegate void OnAudioMuted(bool muted);
+	public delegate void OnMusicMuted(bool muted);
 
 	public enum AudioMaterial
 	{
@@ -131,6 +132,8 @@ public class AudioManager : Singleton<AudioManager>
 	}
 
 	private bool audioMuted;
+	
+	private bool musicMuted;
 
 	private Dictionary<int, float> previousPlayTimes = new Dictionary<int, float>();
 
@@ -157,10 +160,14 @@ public class AudioManager : Singleton<AudioManager>
 	private bool m_applicationPaused;
 
 	public bool AudioMuted => audioMuted;
+	
+	public bool MusicMuted => musicMuted;
 
 	public bool Paused => m_paused;
 
 	public static event OnAudioMuted onAudioMuted;
+
+	public static event OnMusicMuted onMusicMuted;
 
 	public List<AudioSource> GetActiveLoopingSounds()
 	{
@@ -542,13 +549,24 @@ public class AudioManager : Singleton<AudioManager>
 		{
 			AudioListener.volume = 1f;
 		}
-		MuteSounds(activeLoopingSounds, audioMuted);
 		MuteSounds(active3dOneShotSounds, audioMuted);
+		MuteSounds(activeLoopingSounds, audioMuted);
 		MuteSounds(m_activeMusic, audioMuted);
 		SaveAudioParams();
 		if (AudioManager.onAudioMuted != null)
 		{
 			AudioManager.onAudioMuted(audioMuted);
+		}
+	}
+
+	public void ToggleMusicMute()
+	{
+		musicMuted = !musicMuted;
+		MusicManager.musicMuted = musicMuted;
+		PauseSounds(m_activeMusic, musicMuted);
+		if (AudioManager.onMusicMuted != null)
+		{
+			AudioManager.onMusicMuted(musicMuted);
 		}
 	}
 

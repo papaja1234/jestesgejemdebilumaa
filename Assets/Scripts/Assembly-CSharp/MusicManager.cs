@@ -50,6 +50,8 @@ public class MusicManager : MonoBehaviour
 	private static bool isNativeMusicPlaying;
 
 	public GameObject Music => m_music;
+	
+	public static bool musicMuted = true;
 
 	private void Awake()
 	{
@@ -61,6 +63,10 @@ public class MusicManager : MonoBehaviour
 
 	private void StartMusic(AudioSource music, float delay, float fadeInTime, MusicStartOption option = MusicStartOption.StartFromBeginning)
 	{
+		if (musicMuted)
+		{
+			return;
+		}
 		m_requestedMusic.Clear();
 		m_requestedMusic.Add(new MusicChange(Time.time + delay, music, fadeInTime, option));
 	}
@@ -93,6 +99,10 @@ public class MusicManager : MonoBehaviour
 	private void StartMusic(MusicChange data)
 	{
 		m_fadingOutMusic = false;
+		if (musicMuted)
+		{
+			return;
+		}
 		if (m_music != null && m_musicPrefab != data.music.gameObject)
 		{
 			StopMusic();
