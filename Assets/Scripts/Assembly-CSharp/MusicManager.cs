@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class MusicManager : MonoBehaviour
 {
+	public delegate void OnMusicMuted(bool muted);
+
 	public enum MusicStartOption
 	{
 		StartFromBeginning = 0,
@@ -50,6 +52,12 @@ public class MusicManager : MonoBehaviour
 	private static bool isNativeMusicPlaying;
 
 	public GameObject Music => m_music;
+
+	public static event OnMusicMuted onMusicMuted;
+	
+	private bool m_musicMuted;
+	
+	public bool MusicMuted => m_musicMuted;
 
 	private void Awake()
 	{
@@ -288,5 +296,11 @@ public class MusicManager : MonoBehaviour
 	public static bool IsNativeMusicPlaying()
 	{
 		return _IsMusicPlaying();
+	}
+	
+	public void ToggleMute()
+	{
+		m_musicMuted = !m_musicMuted;
+		NativeMusicStateChanged(m_musicMuted);
 	}
 }
