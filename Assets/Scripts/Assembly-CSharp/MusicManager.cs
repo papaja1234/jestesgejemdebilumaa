@@ -55,7 +55,7 @@ public class MusicManager : MonoBehaviour
 
 	public static event OnMusicMuted onMusicMuted;
 	
-	private bool m_musicMuted;
+	private bool m_musicMuted = true;
 	
 	public bool MusicMuted => m_musicMuted;
 
@@ -65,6 +65,7 @@ public class MusicManager : MonoBehaviour
 		EventManager.Connect<LoadLevelEvent>(ReceiveLoadingLevelEvent);
 		EventManager.Connect<GameStateChanged>(ReceiveGameStateChanged);
 		m_globalMusicVolume = UserSettings.GetFloat("MusicVolume", 1f);
+		NativeMusicStateChanged(m_musicMuted);
 	}
 
 	private void StartMusic(AudioSource music, float delay, float fadeInTime, MusicStartOption option = MusicStartOption.StartFromBeginning)
