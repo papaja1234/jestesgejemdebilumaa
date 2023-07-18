@@ -224,10 +224,10 @@ public class JetEngine : BasePropulsion
 	{
 		if (customPartIndex == 0)
 		{
-			yield return new UIPartSliderButtonInfo(UIPartButtonType.Slider, 2, base.Type, m_fuelComponentIndex, base.ConnectedComponent, new UIPartSliderButton.Range(m_maxForce, 1500f, -1500f, 3000f, 100f, 0.02f));
+			yield return new UIPartSliderButtonInfo(UIPartButtonType.Slider, 2, base.Type, m_fuelComponentIndex, base.ConnectedComponent, new UIPartSliderButton.Range(m_maxForce, 1500f, -2000f, 6000f, 100f, 0.02f));
 			yield break;
 		}
-		yield return new UIPartSliderButtonInfo(UIPartButtonType.Slider, 2, base.Type, m_fuelComponentIndex, base.ConnectedComponent, new UIPartSliderButton.Range(m_maxForce, 1500f, 0f, 3000f, 100f, 0.02f));
+		yield return new UIPartSliderButtonInfo(UIPartButtonType.Slider, 2, base.Type, m_fuelComponentIndex, base.ConnectedComponent, new UIPartSliderButton.Range(m_maxForce, 1500f, 0f, 6000f, 100f, 0.02f));
 		yield return new UIPartSliderButtonInfo(UIPartButtonType.Slider, 3, base.Type, m_fuelComponentIndex, base.ConnectedComponent, new UIPartSliderButton.Range(m_angle, 0f, -45f, 45f, 2.5f, 0.02f));
 	}
 
