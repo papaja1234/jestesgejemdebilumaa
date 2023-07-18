@@ -138,6 +138,8 @@ public class JetEngine : BasePropulsion
 	private FlameController m_flameController;
 
 	private static System.Random s_random;
+	
+	private float m_destroyProbablity = 0.1f; // HACK: Hard code the destroy probablity
 
 	public float RequiredFuelAmount
 	{
@@ -305,6 +307,12 @@ public class JetEngine : BasePropulsion
 					result = true;
 				}
 			}
+		}
+		// Destroy the part when burnt too much
+		if (num * m_destroyProbablity > 0.02f)
+		{
+			base.contraption.RemovePart(part);
+			UnityEngine.Object.Destroy(part.gameObject);
 		}
 		float r = INContraption.GetBounds(part.rigidbody).R;
 		function.Set(delegate(float x, float y)
