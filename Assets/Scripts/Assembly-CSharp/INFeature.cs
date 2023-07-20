@@ -200,5 +200,6 @@ public enum INFeature
 	JetEngineForce = 197,
 	JetEngineFlameLength = 198,
 	JetEngineFlameWidth = 199,
-	ElectricalSystem = 200
+	ElectricalSystem = 200,
+	AlienWoodenFrame = 201
 }

@@ -20,7 +20,11 @@ Shader "INShaders/Unlit_ColorTransparent_SolidColor" {
 		
 		void surf(Input IN, inout SurfaceOutputStandard o)
 		{
-			fixed4 c = tex2D(_MainTex, IN.uv_MainTex) * _Color;
+			// BUG: VERY ANNOYING BUG: Here is the bugged code in comments:
+			//     fixed4 c = tex2D(_MainTex, IN.uv_MainTex) * _Color;
+			// Here is the fix
+			// You will have to experience the bug yourself >:)
+			fixed4 c = _Color;
 			o.Albedo = c.rgb;
 			o.Alpha = c.a;
 		}

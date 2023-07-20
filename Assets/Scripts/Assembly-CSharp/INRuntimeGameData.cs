@@ -57,6 +57,7 @@ public class INRuntimeGameData : Singleton<INRuntimeGameData>
 		InitializePart(INFeature.DecelerationLight, SetDecelerationLight);
 		InitializePart(INFeature.AutoControlLight, SetAutoControlLight);
 		InitializePart(INFeature.ElectricalSystem, SetElectricalSystem);
+		InitializePart(INFeature.AlienWoodenFrame, SetAlienWoodenFrame);
 	}
 
 	private void InitializePart(INFeature feature, Action action)
@@ -334,6 +335,18 @@ public class INRuntimeGameData : Singleton<INRuntimeGameData>
 					AddCustomPart(item);
 				}
 			}
+		}
+	}
+	
+	private void SetAlienWoodenFrame()
+	{
+		if (INSettings.GetBool(INFeature.AlienWoodenFrame))
+		{
+			AddCustomPart(CreatePartAndSetParent(BasePart.PartType.WoodenFrame, 11));
+		}
+		else
+		{
+			RemoveCustomPart(BasePart.PartType.WoodenFrame, 11);
 		}
 	}
 
