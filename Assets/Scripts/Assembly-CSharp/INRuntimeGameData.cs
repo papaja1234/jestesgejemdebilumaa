@@ -343,10 +343,12 @@ public class INRuntimeGameData : Singleton<INRuntimeGameData>
 		if (INSettings.GetBool(INFeature.AlienExtras))
 		{
 			AddCustomPart(CreatePartAndSetParent(BasePart.PartType.WoodenFrame, 11));
+			AddCustomPart(CreatePartAndSetParent(BasePart.PartType.Spring, 4));
 		}
 		else
 		{
 			RemoveCustomPart(BasePart.PartType.WoodenFrame, 11);
+			RemoveCustomPart(BasePart.PartType.Spring, 4);
 		}
 	}
 

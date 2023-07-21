@@ -179,3 +179,5 @@ Save_Button_Sprite						0		896		120		121		1		1		768
 
 AlienWoodenFrame_IconSprite				512		256		105		105		0.4		0.4		768
 AlienWoodenFrame_Sprite					512		256		105		105		0.4		0.4		768
+AlienSantaSpring_IconSprite				640		256		105		105		0.4		0.4		768
+AlienSantaSpring_Sprite					640		256		105		105		0.4		0.4		768
