@@ -2827,7 +2827,7 @@ MonoBehaviour:
   m_enclosedPart: {fileID: 0}
   m_enclosedInto: {fileID: 0}
   m_constructionIconSprite: {fileID: 114290017204915766, guid: 3bb797db6258747dab58e216ef16fb60, type: 3}
-  m_projectilePrefab: {fileID: 1155311346533028, guid: 773c4495590b7d940af8cd68b5a9fc02, type: 3}
+  m_projectilePrefab: {fileID: 1155311346533028, guid: ad49a86cc376e6beb9c62943c027b6b5, type: 3}
   m_particleEffect: {fileID: 198749085496206227}
   m_rapidCooldownTime: 0.05
 --- !u!65 &65044161297452722
