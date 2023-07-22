@@ -183,7 +183,7 @@ MonoBehaviour:
   m_interactiveRadius: 0.5
   m_breakVelocity: 2
   m_powerConsumption: 0
-  m_enginePower: 0
+  m_enginePower: 1000
   m_ZOffset: 0
   customPartIndex: 6
   craftable: 1
