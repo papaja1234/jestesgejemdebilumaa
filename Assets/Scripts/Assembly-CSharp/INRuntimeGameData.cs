@@ -57,6 +57,7 @@ public class INRuntimeGameData : Singleton<INRuntimeGameData>
 		InitializePart(INFeature.DecelerationLight, SetDecelerationLight);
 		InitializePart(INFeature.AutoControlLight, SetAutoControlLight);
 		InitializePart(INFeature.ElectricalSystem, SetElectricalSystem);
+		InitializePart(INFeature.Irrational, SetIrrational);
 	}
 
 	private void InitializePart(INFeature feature, Action action)
@@ -337,6 +338,27 @@ public class INRuntimeGameData : Singleton<INRuntimeGameData>
 		}
 	}
 
+	private void SetIrrational()
+	{
+		if (!INSettings.GetBool(INFeature.Irrational)) return;
+
+		foreach (BasePart part in m_partListBuilder.GetParts(BasePart.PartType.Irrational))
+		{
+			BasePart basePart = CreatePartAndSetParent(part);
+			if (basePart.customPartIndex == 0) AddPart(basePart);
+			else AddCustomPart(basePart);
+		}
+
+		foreach (PartListBuilder.PartRangeValue partRange in m_partListBuilder.GetPartRanges(BasePart.PartType.Irrational))
+		{
+			foreach (BasePart item in m_partListBuilder.CreatePartRange(partRange))
+			{
+				SetParent(item);
+				if (item.customPartIndex == 0) AddPart(item);
+				else AddCustomPart(item);
+			}
+		}
+	}
 	private GameData CreateGameData()
 	{
 		GameData gameData = UnityEngine.Object.Instantiate(Singleton<GameManager>.Instance.gameData);

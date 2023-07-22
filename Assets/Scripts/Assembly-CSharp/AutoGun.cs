@@ -107,7 +107,7 @@ public class AutoGun : ExplodingGrapplingHook
 				}
 			}
 		}
-		if (flag && s_random.NextSingle() < float3)
+		if (flag/* && s_random.NextSingle() < float3*/)
 		{
 			Shoot();
 		}
