@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4787496405097816}
   - component: {fileID: 65491875534222486}
-  - component: {fileID: 114512801002213040}
+  - component: {fileID: 4236917249195766579}
   - component: {fileID: 33333774051940575}
   - component: {fileID: 23452028037407186}
   - component: {fileID: 114244690709250098}
@@ -49,7 +49,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &114512801002213040
+--- !u!114 &4236917249195766579
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -58,16 +58,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 1781075272015711}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee97cac41bfdc82be2c35d7286c62559, type: 3}
+  m_Script: {fileID: 11500000, guid: 0bba5ad1d31e8dc36c7a0bbf67618e0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_jointPreprocessing: 1
+  m_jointPreprocessing: 0
   m_eightWay: 0
   m_coordX: 0
   m_coordY: 0
   m_mass: 0.125
   m_interactiveRadius: 0.5
-  m_breakVelocity: 2
+  m_breakVelocity: 10
   m_powerConsumption: 0
   m_enginePower: 0
   m_ZOffset: 0.1
@@ -94,7 +94,7 @@ MonoBehaviour:
   m_enclosedPart: {fileID: 0}
   m_enclosedInto: {fileID: 0}
   m_constructionIconSprite: {fileID: 114411771606543456, guid: f74a4cdb02ac0ec8b8205812b078fde5, type: 3}
-  m_material: 0
+  m_material: 1
   m_brokenTextures: []
 --- !u!33 &33333774051940575
 MeshFilter:
