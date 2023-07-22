@@ -59,11 +59,10 @@ MonoBehaviour:
   customPartIndex: 4
   craftable: 1
   lootCrateReward: 1
-  tags:
-  - Gold
+  tags: []
   audioMaterial: 2
   m_jointType: 0
-  m_partTier: 3
+  m_partTier: 4
   m_partType: 28
   m_autoAlign: 1
   m_flipped: 0
