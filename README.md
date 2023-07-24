@@ -11,5 +11,5 @@ Thanks to Miuna for all the prior work from the mod called BPLE, we really hope 
 ## Legal Notice:
 This mod is not affiliated with Rovio in any way. Please note that the game Bad Piggies is developed by Rovio. Most of the unmodified source codes and resources belongs to them.
 
-## Postscriptum / Постскриптум:
+## Postscriptum / Постскриптум (by WLM):
 The project within my branch may be opened in Unity Pro (UniHacked/License), so it may not open in free Unity Engine.
