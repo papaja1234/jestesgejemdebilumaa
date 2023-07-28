@@ -31,7 +31,7 @@ public class ExplodingGrapplingHook : BasePart
 
 	private float m_shootTime;
 	
-	public float m_rapidCooldownTime;
+	public float m_rapidCooldownTime = 0.5f;
 
 	protected float CoolingTime { get; set; }
 
@@ -119,19 +119,11 @@ public class ExplodingGrapplingHook : BasePart
 	protected void Shoot()
 	{
 		float rapidCooldownTime = 0.0f;
-		if (customPartIndex == 11)
-		{
-			rapidCooldownTime = m_rapidCooldownTime;
-		}
-		else
-		{
-			rapidCooldownTime = INSettings.GetFloat(INFeature.GunProjectileForcedCoolingTime);
-		}
+		rapidCooldownTime = m_rapidCooldownTime;
 		if (!m_enabled && !(Time.time - m_shootTime < rapidCooldownTime))
 		{
 			m_shootTime = Time.time;
 			Singleton<AudioManager>.Instance.SpawnOneShotEffect(WPFMonoBehaviour.gameData.commonAudioCollection.alienLaserFire, base.transform);
-			m_enabled = (customPartIndex != 11);
 			currentProjectile = UnityEngine.Object.Instantiate(m_projectilePrefab).GetComponent<ExplodingGrapplingHookProjectile>();
 			m_particleEffect.Play();
 			currentProjectile.transform.parent = base.transform;

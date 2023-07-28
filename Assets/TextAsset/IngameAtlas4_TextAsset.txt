@@ -187,3 +187,4 @@ AlienMetalTNT_IconSprite				512		128		100		100		0.4		0.4		768
 AlienMetalTNT_Sprite					512		128		100		100		0.4		0.4		768
 AlienRapidGunExtended_IconSprite			768		384		210		105		0.4		0.4		768
 AlienRapidGunExtended_Sprite				768		384		210		105		0.4		0.4		768
+AlienExplodingBullet					768		512		105		105		0.4		0.4		768

@@ -47,7 +47,10 @@ public class ExplodingGrapplingHookProjectile : WPFMonoBehaviour
 
 	private void OnCollisionEnter(Collision collision)
 	{
-		Explode();
+		if (!(bool)collision.gameObject.GetComponent<ExplodingGrapplingHookProjectile>())
+		{
+			Explode();
+		}
 	}
 
 	public void Explode()
