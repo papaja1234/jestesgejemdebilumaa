@@ -2803,7 +2803,7 @@ MonoBehaviour:
   m_powerConsumption: 0
   m_enginePower: 0
   m_ZOffset: 0
-  customPartIndex: 11
+  customPartIndex: 12
   craftable: 1
   lootCrateReward: 1
   tags:
@@ -2841,8 +2841,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.640625, y: 0.8203125, z: 1}
-  m_Center: {x: 0.41015625, y: 0, z: 0}
+  m_Size: {x: 2.040625, y: 0.41015625, z: 1}
+  m_Center: {x: 0.6101563, y: 0, z: 0}
 --- !u!1 &1603961166353207
 GameObject:
   m_ObjectHideFlags: 0
@@ -3585,7 +3585,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 28131577772443576}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.4, y: 0, z: 0.2}
+  m_LocalPosition: {x: 0.6, y: 0, z: 0.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3672,4 +3672,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e17d54ebdf3b8977649d5e41205b8918, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_name: AlienRapidGun_Sprite
+  m_name: AlienRapidGunExtended_Sprite
