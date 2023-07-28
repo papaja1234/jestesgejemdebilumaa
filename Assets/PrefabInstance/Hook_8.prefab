@@ -179,7 +179,7 @@ SphereCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.005
-  m_Center: {x: 0.33, y: 0, z: 0}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &114334085753578758
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -195,5 +195,6 @@ MonoBehaviour:
   m_explosionImpulse: 5
   m_explosionRadius: 4
   m_force: 200
-  m_ttl: 1
+  m_ttl: 5
   m_smokeCloud: {fileID: 1752403835404102, guid: 8c2e85f332e60fbc5835a749ced16a7d, type: 3}
+  m_explosionCount: 5
