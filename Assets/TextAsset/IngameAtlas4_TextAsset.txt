@@ -185,3 +185,5 @@ AlienRapidGun_IconSprite				768		256		210		105		0.3		0.3		768
 AlienRapidGun_Sprite					768		256		210		105		0.4		0.4		768
 AlienMetalTNT_IconSprite				512		128		100		100		0.4		0.4		768
 AlienMetalTNT_Sprite					512		128		100		100		0.4		0.4		768
+AlienRapidGunExtended_IconSprite			768		384		210		105		0.4		0.4		768
+AlienRapidGunExtended_Sprite				768		384		210		105		0.4		0.4		768

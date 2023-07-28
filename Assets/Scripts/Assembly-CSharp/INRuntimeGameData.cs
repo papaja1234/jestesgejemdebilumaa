@@ -346,6 +346,7 @@ public class INRuntimeGameData : Singleton<INRuntimeGameData>
 			AddCustomPart(CreatePartAndSetParent(BasePart.PartType.Spring, 4));
 			AddCustomPart(CreatePartAndSetParent(BasePart.PartType.GrapplingHook, 11));
 			AddCustomPart(CreatePartAndSetParent(BasePart.PartType.TNT, 6));
+			AddCustomPart(CreatePartAndSetParent(BasePart.PartType.GrapplingHook, 12));
 		}
 		else
 		{
@@ -353,6 +354,7 @@ public class INRuntimeGameData : Singleton<INRuntimeGameData>
 			RemoveCustomPart(BasePart.PartType.Spring, 4);
 			RemoveCustomPart(BasePart.PartType.GrapplingHook, 11);
 			RemoveCustomPart(BasePart.PartType.TNT, 7);
+			RemoveCustomPart(BasePart.PartType.GrapplingHook, 12);
 		}
 	}
 
