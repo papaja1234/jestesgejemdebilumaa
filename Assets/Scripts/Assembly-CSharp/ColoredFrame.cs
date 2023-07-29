@@ -94,7 +94,7 @@ public class ColoredFrame : Frame
 				{
 					MeshRenderer[] componentsInChildren = basePart.GetComponentsInChildren<MeshRenderer>(includeInactive: true);
 					m_coloredPartMaterials = new(MeshRenderer, Material)[componentsInChildren.Length];
-					INUnity.LoadShader("Unlit_ColorTransparent_GrayOverlay");
+					INUnity.LoadShader("PreAlpha_Unlit_ColorTransparent_Geometry");
 					for (int i = 0; i < componentsInChildren.Length; i++)
 					{
 						MeshRenderer meshRenderer = componentsInChildren[i];

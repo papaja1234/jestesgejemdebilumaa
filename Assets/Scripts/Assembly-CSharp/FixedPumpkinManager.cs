@@ -75,6 +75,8 @@ public class FixedPumpkinManager : PartManager
 		int layer2 = LayerMask.NameToLayer("Contraption");
 		foreach (BasePart item in parts)
 		{
+			item.m_hp = 3e+38f;
+			item.lateSpeed = Vector3.zero;
 			if (item.m_partType == BasePart.PartType.Pumpkin && item.IsEnabled())
 			{
 				if (item.customPartIndex == 0)

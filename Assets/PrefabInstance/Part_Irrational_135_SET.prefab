@@ -136,6 +136,8 @@ MonoBehaviour:
   m_enclosedPart: {fileID: 0}
   m_enclosedInto: {fileID: 0}
   m_constructionIconSprite: {fileID: 114249723248274557, guid: 013e89dc2e69c10408bb6ea63d8cd7b4, type: 3}
+  lateSpeed: {x: 0, y: 0, z: 0}
+  m_hp: 2414.2
   m_material: 1
   m_brokenTextures:
   - {fileID: 0}

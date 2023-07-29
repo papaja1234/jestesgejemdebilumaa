@@ -2,11 +2,11 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!1 &1162982996586810
 GameObject:
-  serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
   m_Component:
   - component: {fileID: 4741249430604364}
   - component: {fileID: 65413364469986707}
@@ -36,7 +36,6 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: -0, z: -0}
 --- !u!65 &65413364469986707
 BoxCollider:
-  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -45,6 +44,7 @@ BoxCollider:
   m_Material: {fileID: 13400000, guid: 6a4d7c799faeb124ca08e702b11f8f4f, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
+  serializedVersion: 2
   m_Size: {x: 0.95, y: 0.95, z: 0.95}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &114636809868257638
@@ -57,8 +57,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3a6072f49d8965b706917a5fed65e2dc, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   m_jointPreprocessing: 0
   m_eightWay: 0
   m_coordX: 0
@@ -91,19 +91,21 @@ MonoBehaviour:
   m_customJointConnectionDirection: 7
   m_enclosedPart: {fileID: 0}
   m_enclosedInto: {fileID: 0}
-  m_constructionIconSprite: {fileID: 114794897041418197, guid: b652d96f8f6b8f64e9ee5df45e7fa854, type: 2}
+  m_constructionIconSprite: {fileID: 114794897041418197, guid: b652d96f8f6b8f64e9ee5df45e7fa854, type: 3}
+  lateSpeed: {x: 0, y: 0, z: 0}
+  m_hp: 4000
   m_explosionImpulse: 25
   m_explosionRadius: 8
   m_triggerSpeed: 4
-  extraEffect: {fileID: 1248578216424663, guid: e3b68b1631e1b6948ad0ad225233df7d, type: 2}
-  smokeCloud: {fileID: 1752403835404102, guid: 4843a10c2e1635e438139d833da8ec1f, type: 2}
+  extraEffect: {fileID: 1248578216424663, guid: e3b68b1631e1b6948ad0ad225233df7d, type: 3}
+  smokeCloud: {fileID: 1752403835404102, guid: 4843a10c2e1635e438139d833da8ec1f, type: 3}
 --- !u!1 &1868814581247930
 GameObject:
-  serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
   m_Component:
   - component: {fileID: 4562283315355053}
   - component: {fileID: 33405260566266737}
@@ -191,8 +193,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 04a340c55c247513cbdc1b4d88bbdbae, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   m_id: b5cfde37-12ce-43d1-9499-8bf60e1a8cb7
   m_scaleX: 0.4
   m_scaleY: 0.4

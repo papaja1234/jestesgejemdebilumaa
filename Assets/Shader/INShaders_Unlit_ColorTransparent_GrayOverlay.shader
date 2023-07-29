@@ -2,7 +2,7 @@ Shader "INShaders/Unlit_ColorTransparent_GrayOverlay" {
 	Properties {
 		_MainTex ("Base (RGB) Trans (A)", 2D) = "white" {}
 		_Color ("Main Color", Vector) = (1,1,1,1)
-		_Blend ("Blend", Float) = 1
+		_Blend ("Blend", Float) = 0.85
 	}
 	//DummyShaderTextExporter
 	SubShader{

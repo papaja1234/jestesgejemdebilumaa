@@ -2,11 +2,11 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!1 &1027622177762104
 GameObject:
-  serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
   m_Component:
   - component: {fileID: 4502015604754815}
   - component: {fileID: 114928831559627698}
@@ -43,8 +43,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 58505e3616eaeb045bc1894d02eef850, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   m_jointPreprocessing: 0
   m_eightWay: 0
   m_coordX: 0
@@ -78,17 +78,19 @@ MonoBehaviour:
   m_customJointConnectionDirection: 5
   m_enclosedPart: {fileID: 0}
   m_enclosedInto: {fileID: 0}
-  m_constructionIconSprite: {fileID: 114146405115095393, guid: 32a52e5caee082e4b8e066edefa92310, type: 2}
-  m_segment: {fileID: 1232497828351170, guid: 446fe508b205b474e9214b0efecdb883, type: 2}
+  m_constructionIconSprite: {fileID: 114146405115095393, guid: 32a52e5caee082e4b8e066edefa92310, type: 3}
+  lateSpeed: {x: 0, y: 0, z: 0}
+  m_hp: 700
+  m_segment: {fileID: 1232497828351170, guid: 446fe508b205b474e9214b0efecdb883, type: 3}
   m_material: {fileID: 2100000, guid: ed4636905939b1645a08bf243bc4995c, type: 2}
   m_gridVisualizationNode: {fileID: 1072274907106764}
 --- !u!1 &1072274907106764
 GameObject:
-  serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
   m_Component:
   - component: {fileID: 4417672958431500}
   - component: {fileID: 23334644635723049}
@@ -176,8 +178,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 04a340c55c247513cbdc1b4d88bbdbae, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   m_id: 422f0247-a4f3-4a2e-9a8e-464d41b0b751
   m_scaleX: 0.4
   m_scaleY: 0.4

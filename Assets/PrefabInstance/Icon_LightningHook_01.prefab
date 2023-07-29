@@ -109,7 +109,6 @@ GameObject:
   - component: {fileID: 33462933629738231}
   - component: {fileID: 23758865120080773}
   - component: {fileID: -3901632140182232418}
-  - component: {fileID: 2595126975770128842}
   m_Layer: 10
   m_Name: Icon_LightningHook_01
   m_TagString: Untagged
@@ -202,19 +201,6 @@ MonoBehaviour:
   m_pivotX: 0
   m_pivotY: 0
   m_updateCollider: 1
---- !u!114 &2595126975770128842
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1633516436231581}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e17d54ebdf3b8977649d5e41205b8918, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_name: LightningHook
 --- !u!1 &1810805454614991
 GameObject:
   m_ObjectHideFlags: 0
