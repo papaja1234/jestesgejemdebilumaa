@@ -159,7 +159,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1155311346533028}
   serializedVersion: 2
-  m_Mass: 10
+  m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0
   m_UseGravity: 1
@@ -193,8 +193,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_explosionImpulse: 5
-  m_explosionRadius: 4
-  m_force: 200
+  m_explosionRadius: 1
+  m_force: 20
   m_ttl: 5
   m_smokeCloud: {fileID: 1752403835404102, guid: 8c2e85f332e60fbc5835a749ced16a7d, type: 3}
   m_explosionCount: 5
