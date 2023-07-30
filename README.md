@@ -1,5 +1,5 @@
 # Bad Piggies :: Rebooted Edition
-Community-driven Moddification of the game Bad Piggies!
+A Community-driven Modification of the game Bad Piggies!
 Thanks to Miuna for all the prior work from the mod called BPLE, we really hope you had more time to spare for your project.
 
 ## Features:
