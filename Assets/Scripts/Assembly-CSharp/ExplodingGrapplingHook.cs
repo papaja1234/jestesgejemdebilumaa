@@ -32,6 +32,12 @@ public class ExplodingGrapplingHook : BasePart
 	private float m_shootTime;
 	
 	public float m_rapidCooldownTime = 0.5f;
+	
+	public bool m_isToggle = false;
+	
+	public bool m_isMuted = false;
+	
+	private bool m_isActive = false;
 
 	protected float CoolingTime { get; set; }
 
@@ -44,6 +50,10 @@ public class ExplodingGrapplingHook : BasePart
 
 	public override bool IsEnabled()
 	{
+		if (m_isToggle)
+		{
+			return m_isActive;
+		}
 		return m_enabled;
 	}
 
@@ -110,10 +120,25 @@ public class ExplodingGrapplingHook : BasePart
 			m_bottomAttachment.SetActive(value: true);
 		}
 	}
+	
+	private void FixedUpdate()
+	{
+		if (m_isToggle && m_isActive)
+		{
+			Shoot();
+		}
+	}
 
 	protected override void OnTouch()
 	{
-		Shoot();
+		if (m_isToggle)
+		{
+			m_isActive = !m_isActive;
+		}
+		else
+		{
+			Shoot();
+		}
 	}
 
 	protected void Shoot()
@@ -123,7 +148,10 @@ public class ExplodingGrapplingHook : BasePart
 		if (!m_enabled && !(Time.time - m_shootTime < rapidCooldownTime))
 		{
 			m_shootTime = Time.time;
-			Singleton<AudioManager>.Instance.SpawnOneShotEffect(WPFMonoBehaviour.gameData.commonAudioCollection.alienLaserFire, base.transform);
+			if (!m_isMuted)
+			{
+				Singleton<AudioManager>.Instance.SpawnOneShotEffect(WPFMonoBehaviour.gameData.commonAudioCollection.alienLaserFire, base.transform);
+			}
 			currentProjectile = UnityEngine.Object.Instantiate(m_projectilePrefab).GetComponent<ExplodingGrapplingHookProjectile>();
 			m_particleEffect.Play();
 			currentProjectile.transform.parent = base.transform;
