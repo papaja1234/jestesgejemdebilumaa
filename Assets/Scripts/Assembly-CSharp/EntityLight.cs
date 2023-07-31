@@ -209,7 +209,11 @@ public class EntityLight : MonoBehaviour
 		m_transform.localPosition = new Vector3(0f, 0.5f, -0.5f);
 		m_transform.localRotation = new Quaternion(0f, 0f, 0.70710677f, 0.70710677f);
 		m_meshRenderer = m_transform.GetComponent<MeshRenderer>();
-		m_meshRenderer.sharedMaterial = new Material(INUnity.ColorTransparentShader);
+		// BUG: Weird lightings
+		//     m_meshRenderer.sharedMaterial = new Material(INUnity.ColorTransparentShader);
+		// Fix: Use INUnity.CustomTransparentShader
+		// Provided by: Goggs
+		m_meshRenderer.sharedMaterial = new Material(INUnity.CustomTransparentShader);
 		m_meshRenderer.material.color = Color.clear;
 		m_meshFilter = m_transform.GetComponent<MeshFilter>();
 	}

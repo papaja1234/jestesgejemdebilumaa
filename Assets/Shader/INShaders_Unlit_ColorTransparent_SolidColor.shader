@@ -24,7 +24,9 @@ Shader "INShaders/Unlit_ColorTransparent_SolidColor" {
 			//     fixed4 c = tex2D(_MainTex, IN.uv_MainTex) * _Color;
 			// Here is the fix
 			// You will have to experience the bug yourself >:)
-			fixed4 c = _Color;
+			// fixed4 c = _Color;
+			// BUG Fixed, revert the old code
+			fixed4 c = tex2D(_MainTex, IN.uv_MainTex) * _Color;
 			o.Albedo = c.rgb;
 			o.Alpha = c.a;
 		}
