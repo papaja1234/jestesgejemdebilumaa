@@ -2834,6 +2834,7 @@ MonoBehaviour:
   m_hp: 2800
   m_projectilePrefab: {fileID: 1155311346533028, guid: 773c4495590b7d940af8cd68b5a9fc02, type: 3}
   m_particleEffect: {fileID: 198749085496206227}
+  m_rapidCooldownTime: 0.1
 --- !u!65 &65044161297452722
 BoxCollider:
   m_ObjectHideFlags: 0

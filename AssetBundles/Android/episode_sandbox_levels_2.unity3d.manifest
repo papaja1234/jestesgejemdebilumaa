@@ -1,0 +1,20 @@
+ManifestFileVersion: 0
+CRC: 4087305800
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 09dca35e8a23073840a76841ce1bf92e
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 5ad585dd02dfb5016c0dad519eab8f49
+HashAppended: 0
+ClassTypes:
+- Class: 49
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Resources/assetbundles/episode_sandbox_levels_2.unity3d/Episode_6_Dark Sandbox_data.bytes
+- Assets/Resources/assetbundles/episode_sandbox_levels_2.unity3d/Level_Sandbox_01_data.bytes
+- Assets/Resources/assetbundles/episode_sandbox_levels_2.unity3d/Level_Sandbox_06_data.bytes
+- Assets/Resources/assetbundles/episode_sandbox_levels_2.unity3d/MMSandbox_data.bytes
+Dependencies: []

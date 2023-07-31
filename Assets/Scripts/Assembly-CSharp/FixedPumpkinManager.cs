@@ -75,12 +75,12 @@ public class FixedPumpkinManager : PartManager
 		int layer2 = LayerMask.NameToLayer("Contraption");
 		foreach (BasePart item in parts)
 		{
-			item.m_hp = 3e+38f;
-			item.lateSpeed = Vector3.zero;
 			if (item.m_partType == BasePart.PartType.Pumpkin && item.IsEnabled())
 			{
 				if (item.customPartIndex == 0)
 				{
+					item.m_hp = 3e+38f;
+					item.lateSpeed = Vector3.zero;
 					array[item.StrictConnectedComponent] = true;
 				}
 				else
@@ -111,6 +111,8 @@ public class FixedPumpkinManager : PartManager
 						{
 							rigidbody.isKinematic = true;
 						}
+						item2.m_hp = 3e+38f;
+						item2.lateSpeed = Vector3.zero;
 						rigidbody.constraints = RigidbodyConstraints.FreezeAll;
 						rigidbody.gameObject.layer = layer;
 						rigidbody.Sleep();
@@ -131,6 +133,7 @@ public class FixedPumpkinManager : PartManager
 					Rigidbody rigidbody2 = rigidbodyData.Rigidbody;
 					if (rigidbody2 != null)
 					{
+						item2.m_hp = 1000;
 						rigidbody2.isKinematic = false;
 						rigidbody2.constraints = rigidbodyData.Constraints;
 						rigidbody2.gameObject.layer = layer2;

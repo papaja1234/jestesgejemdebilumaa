@@ -1,0 +1,286 @@
+* [33mcommit 76002f59ec1ad564972e8030dd41595dcfcce035[m[33m ([m[1;36mHEAD -> [m[1;32mAnstroGoggsMerge[m[33m)[m
+[31m|[m Author: User Name <the801140@outlook.com>
+[31m|[m Date:   Sat Jul 29 17:41:15 2023 +0800
+[31m|[m 
+[31m|[m     part hp, Colored Frame Partially fixed
+[31m|[m 
+* [33mcommit 50a5c1c649f1b1b43f9697dac603caf4bd0075d3[m[33m ([m[1;31morigin/Test.Ligntning[m[33m, [m[1;32mTest.Ligntning[m[33m, [m[1;32mAnstroGoggsTweaks[m[33m)[m
+[31m|[m Author: Wei Nie <the801140@outlook.com>
+[31m|[m Date:   Sat Jul 22 13:20:08 2023 +0800
+[31m|[m 
+[31m|[m     Added lightning gun
+[31m|[m   
+[31m|[m * [33mcommit b728cf2c6f71907810213ce190095dc6fd986541[m[33m ([m[1;31morigin/AnstroTweaks[m[33m)[m
+[31m|[m [32m|[m Author: Anstro Pleuton <anstro.pleuton@proton.me>
+[31m|[m [32m|[m Date:   Fri Jul 28 16:37:37 2023 +0530
+[31m|[m [32m|[m 
+[31m|[m [32m|[m     Add new part: Longer Rapid Gun
+[31m|[m [32m|[m 
+[31m|[m * [33mcommit 9a559366bab025dcb77b8232aade939d2a1dbc8a[m
+[31m|[m [32m|[m Author: Anstro Pleuton <anstro.pleuton@proton.me>
+[31m|[m [32m|[m Date:   Fri Jul 28 16:04:17 2023 +0530
+[31m|[m [32m|[m 
+[31m|[m [32m|[m     Half completed Alien Rapid Gun Extended 13
+[31m|[m [32m|[m 
+[31m|[m * [33mcommit c95e5d072897e1762d91d49448bfbc7533056f1d[m
+[31m|[m [32m|[m Author: Anstro Pleuton <anstro.pleuton@proton.me>
+[31m|[m [32m|[m Date:   Sun Jul 23 15:12:58 2023 +0530
+[31m|[m [32m|[m 
+[31m|[m [32m|[m     Remove custom mouse pointer for now
+[31m|[m [32m|[m 
+[31m|[m * [33mcommit 69a63b72b3857f85a166553c0a10ce4a7aee0733[m
+[31m|[m [32m|[m Author: Anstro Pleuton <anstro.pleuton@proton.me>
+[31m|[m [32m|[m Date:   Sat Jul 22 17:55:37 2023 +0530
+[31m|[m [32m|[m 
+[31m|[m [32m|[m     Tweak Alien Santa Spring a little
+[31m|[m [32m|[m 
+[31m|[m * [33mcommit ee6d0c6f38d9e0ceeb4eae6019a7d17165be41c2[m
+[31m|[m [32m|[m Author: Anstro Pleuton <anstro.pleuton@proton.me>
+[31m|[m [32m|[m Date:   Sat Jul 22 16:33:54 2023 +0530
+[31m|[m [32m|[m 
+[31m|[m [32m|[m     Make wooden frame a frame not a box frame
+[31m|[m [32m|[m 
+[31m|[m * [33mcommit 8af6569c46b2dfa52a598e80fe2df60ab4331a28[m
+[31m|[m [32m|[m Author: Anstro Pleuton <anstro.pleuton@proton.me>
+[31m|[m [32m|[m Date:   Sat Jul 22 16:33:24 2023 +0530
+[31m|[m [32m|[m 
+[31m|[m [32m|[m     Tweak direction and force of alien rotor and propeller
+[31m|[m [32m|[m 
+[31m|[m * [33mcommit 699694b4d95a7c19f8807c78c7b683686930ce0d[m
+[31m|[m [32m|[m Author: Anstro Pleuton <anstro.pleuton@proton.me>
+[31m|[m [32m|[m Date:   Sat Jul 22 16:32:49 2023 +0530
+[31m|[m [32m|[m 
+[31m|[m [32m|[m     Alien Wooden Frame, not Alien Metal Frame
+[31m|[m [32m|[m 
+[31m|[m * [33mcommit c6740bd8082a0b953e0b3205f4b1cd4dd64c8865[m
+[31m|[m [32m|[m Author: Anstro Pleuton <anstro.pleuton@proton.me>
+[31m|[m [32m|[m Date:   Sat Jul 22 14:19:18 2023 +0530
+[31m|[m [32m|[m 
+[31m|[m [32m|[m     Alien Metal TNT now has power of 1000 (5 times less than Alien Small Engine)
+[31m|[m [32m|[m 
+[31m|[m * [33mcommit 88daa51d3724bd9f0c9dbda83b104eb3bef22557[m
+[31m|[m [32m|[m Author: Anstro Pleuton <anstro.pleuton@proton.me>
+[31m|[m [32m|[m Date:   Sat Jul 22 13:52:12 2023 +0530
+[31m|[m [32m|[m 
+[31m|[m [32m|[m     Make Alien Metal TNT 3 times heavier
+[31m|[m [32m|[m 
+[31m|[m * [33mcommit 8287b7154ccf7585695138065ec08c707708f936[m
+[31m|[m [32m|[m Author: Anstro Pleuton <anstro.pleuton@proton.me>
+[31m|[m [32m|[m Date:   Sat Jul 22 13:29:58 2023 +0530
+[31m|[m [32m|[m 
+[31m|[m [32m|[m     Fix texture alignment of Alien Metal TNT
+[31m|[m [32m|[m 
+[31m|[m * [33mcommit af5cb1d9c98107ec693f8529e620a008579e1303[m
+[31m|[m [32m|[m Author: Anstro Pleuton <anstro.pleuton@proton.me>
+[31m|[m [32m|[m Date:   Sat Jul 22 13:29:33 2023 +0530
+[31m|[m [32m|[m 
+[31m|[m [32m|[m     Tried to fix the weird colored frame bug
+[31m|[m [32m|[m 
+[31m|[m * [33mcommit dc2cfa948c4f87c0a5d23464f6019d4b52a66f15[m
+[31m|[m [32m|[m Author: Anstro Pleuton <anstro.pleuton@proton.me>
+[31m|[m [32m|[m Date:   Sat Jul 22 10:50:29 2023 +0530
+[31m|[m [32m|[m 
+[31m|[m [32m|[m     New part: Alien Metal TNT (MUCH stronger)
+[31m|[m [32m|[m 
+[31m|[m * [33mcommit 28d21bcdca418170b7a623f9b75c1aa01e82c3a1[m
+[31m|[m [32m|[m Author: Anstro Pleuton <anstro.pleuton@proton.me>
+[31m|[m [32m|[m Date:   Sat Jul 22 10:06:26 2023 +0530
+[31m|[m [32m|[m 
+[31m|[m [32m|[m     Buff the Rapid Gun's bullets power
+[31m|[m [32m|[m 
+[31m|[m * [33mcommit 30ac34a0b1d1c40b8df5977976c29afbb82a1dfb[m
+[31m|[m [32m|[m Author: Anstro Pleuton <anstro.pleuton@proton.me>
+[31m|[m [32m|[m Date:   Sat Jul 22 09:56:36 2023 +0530
+[31m|[m [32m|[m 
+[31m|[m [32m|[m     Better cursor
+[31m|[m [32m|[m 
+[31m|[m * [33mcommit 17d68a4391684ce9f3cb63f5229c7934787fa46b[m
+[31m|[m [32m|[m Author: Anstro Pleuton <anstro.pleuton@proton.me>
+[31m|[m [32m|[m Date:   Fri Jul 21 22:56:00 2023 +0530
+[31m|[m [32m|[m 
+[31m|[m [32m|[m     Unadded sound effect: Alien Rapid Laser Fire
+[31m|[m [32m|[m 
+[31m|[m * [33mcommit cd18fce5e6becd5a3c1fac69b1d65017ad4902a2[m
+[31m|[m [32m|[m Author: Anstro Pleuton <anstro.pleuton@proton.me>
+[31m|[m [32m|[m Date:   Fri Jul 21 22:54:08 2023 +0530
+[31m|[m [32m|[m 
+[31m|[m [32m|[m     New Logo and Cursor
+[31m|[m [32m|[m 
+[31m|[m * [33mcommit 88f452468906688de6d503c4df25ba7da1a598ff[m
+[31m|[m [32m|[m Author: Anstro Pleuton <anstro.pleuton@proton.me>
+[31m|[m [32m|[m Date:   Fri Jul 21 18:51:32 2023 +0530
+[31m|[m [32m|[m 
+[31m|[m [32m|[m     Nerf the projectile of Alien Rapid Gun
+[31m|[m [32m|[m 
+[31m|[m * [33mcommit a6a4bbdfa854abce8ebf7a22c6aee57d2a146f35[m
+[31m|[m [32m|[m Author: Anstro Pleuton <anstro.pleuton@proton.me>
+[31m|[m [32m|[m Date:   Fri Jul 21 18:26:24 2023 +0530
+[31m|[m [32m|[m 
+[31m|[m [32m|[m     Update bounding box of Alien Rapid Gun
+[31m|[m [32m|[m 
+[31m|[m * [33mcommit 94c5cd6835522a67ce207ab7db5375d9aad94688[m
+[31m|[m [32m|[m Author: Anstro Pleuton <anstro.pleuton@proton.me>
+[31m|[m [32m|[m Date:   Fri Jul 21 17:50:33 2023 +0530
+[31m|[m [32m|[m 
+[31m|[m [32m|[m     New Part: Alien Rapid Gun
+[31m|[m [32m|[m 
+[31m|[m * [33mcommit 14eedb8742afbc147add11ee6f5c1207b0766b02[m
+[31m|[m [32m|[m Author: Anstro Pleuton <anstro.pleuton@proton.me>
+[31m|[m [32m|[m Date:   Fri Jul 21 15:42:06 2023 +0530
+[31m|[m [32m|[m 
+[31m|[m [32m|[m     Fix new part (bruh moment)
+[31m|[m [32m|[m 
+[31m|[m * [33mcommit a59f75edca54f42d6a965e28b9c85623890b4d99[m
+[31m|[m [32m|[m Author: Anstro Pleuton <anstro.pleuton@proton.me>
+[31m|[m [32m|[m Date:   Fri Jul 21 13:11:12 2023 +0530
+[31m|[m [32m|[m 
+[31m|[m [32m|[m     New part: Alien Santa Spring
+[31m|[m [32m|[m 
+[31m|[m * [33mcommit 1b058b760aa10a00bc3aedda559abcd763fcf7e2[m
+[31m|[m [32m|[m Author: Anstro Pleuton <anstro.pleuton@proton.me>
+[31m|[m [32m|[m Date:   Fri Jul 21 12:53:30 2023 +0530
+[31m|[m [32m|[m 
+[31m|[m [32m|[m     Make adding new parts to be more generalized
+[31m|[m [32m|[m 
+[31m|[m * [33mcommit e8570ebc0043381300155173f93193929f537690[m
+[31m|[m [32m|[m Author: Anstro Pleuton <anstro.pleuton@proton.me>
+[31m|[m [32m|[m Date:   Fri Jul 21 12:18:32 2023 +0530
+[31m|[m [32m|[m 
+[31m|[m [32m|[m     Forgot to save PartListData.asset, add new part
+[31m|[m [32m|[m 
+[31m|[m * [33mcommit 98fb6ab550ee283991f41e30d4d8d4c16a8d142d[m
+[31m|[m [32m|[m Author: Anstro Pleuton <anstro.pleuton@proton.me>
+[31m|[m [32m|[m Date:   Thu Jul 20 23:05:04 2023 +0530
+[31m|[m [32m|[m 
+[31m|[m [32m|[m     New part: Alien Wooden Frame
+[31m|[m [32m|[m 
+[31m|[m * [33mcommit 9e2ef5092b7cf317dee173b641c3faaf2508847c[m
+[31m|[m [32m|[m Author: Anstro Pleuton <anstro.pleuton@proton.me>
+[31m|[m [32m|[m Date:   Thu Jul 20 19:54:49 2023 +0530
+[31m|[m [32m|[m 
+[31m|[m [32m|[m     New intro background
+[31m|[m [32m|[m 
+[31m|[m * [33mcommit 7fc51625870d5c3a2551349e980032c132a312e0[m
+[31m|[m [32m|[m Author: Anstro Pleuton <anstro.pleuton@proton.me>
+[31m|[m [32m|[m Date:   Tue Jul 18 22:19:10 2023 +0530
+[31m|[m [32m|[m 
+[31m|[m [32m|[m     Weird branch management, revert before Goggs' changes
+[31m|[m [32m|[m   
+[31m|[m [32m|[m * [33mcommit 1931fe05adafcd244c5716c5b3858a7b6efde59b[m[33m ([m[1;31morigin/WLMGames.BPLEModded[m[33m)[m
+[31m|[m [32m|[m [33m|[m Author: BedrockDotPng <74654571+BedrockDotPng@users.noreply.github.com>
+[31m|[m [32m|[m [33m|[m Date:   Mon Jul 24 18:50:44 2023 +0400
+[31m|[m [32m|[m [33m|[m 
+[31m|[m [32m|[m [33m|[m     Update README.md
+[31m|[m [32m|[m [33m|[m     
+[31m|[m [32m|[m [33m|[m     In addition to P.S., it's my experience and notice
+[31m|[m [32m|[m [33m|[m 
+[31m|[m [32m|[m * [33mcommit 4909db42b26e604ed63f7372067155992ec78a26[m
+[31m|[m [32m|[m [33m|[m Author: BedrockDotPng <74654571+BedrockDotPng@users.noreply.github.com>
+[31m|[m [32m|[m [33m|[m Date:   Mon Jul 24 18:49:12 2023 +0400
+[31m|[m [32m|[m [33m|[m 
+[31m|[m [32m|[m [33m|[m     Update README.md
+[31m|[m [32m|[m [33m|[m     
+[31m|[m [32m|[m [33m|[m     Added a postscriptum about Unity Pro used for my branch
+[31m|[m [32m|[m [33m|[m 
+[31m|[m [32m|[m * [33mcommit bb59184f2518a7b30ce2880db5a33f8bae93e7f4[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+[31m|[m [32m|[m[31m/[m  Author: BedrockDotPng <74654571+BedrockDotPng@users.noreply.github.com>
+[31m|[m[31m/[m[32m|[m   Date:   Mon Jul 24 17:06:53 2023 +0400
+[31m|[m [32m|[m   
+[31m|[m [32m|[m       Update README.md
+[31m|[m [32m|[m       
+[31m|[m [32m|[m       I fixed some typos: it doesn't matter much, but whatever
+[31m|[m [32m|[m   
+[31m|[m [32m|[m * [33mcommit 9a831a1b88040c86137e304f38033a3a8850b2d6[m[33m ([m[1;31morigin/MTweaksNewParts[m[33m)[m
+[31m|[m [32m|[m [34m|[m Author: Anstro Pleuton <anstro.pleuton@proton.me>
+[31m|[m [32m|[m [34m|[m Date:   Tue Jul 18 21:00:10 2023 +0530
+[31m|[m [32m|[m [34m|[m 
+[31m|[m [32m|[m [34m|[m     8 times stronger nitro tnt
+[31m|[m [32m|[m [34m|[m     
+[31m|[m [32m|[m [34m|[m *   [33mcommit eb4d09193b07228cce36ffaefdda597ff86acce8[m[33m ([m[1;31morigin/AnstroGoggsMerge[m[33m)[m
+[31m|[m [32m|[m [34m|[m [35m|[m[36m\[m  Merge: fe89cc3 3899cf1
+[31m|[m [32m|[m [34m|[m [35m|[m [36m|[m Author: Anstro Pleuton <anstro.pleuton@proton.me>
+[31m|[m [32m|[m [34m|[m [35m|[m [36m|[m Date:   Tue Jul 18 20:49:26 2023 +0530
+[31m|[m [32m|[m [34m|[m [35m|[m [36m|[m 
+[31m|[m [32m|[m [34m|[m [35m|[m [36m|[m     Merge branch 'AnstroTweaks' into AnstroGoggsMerge
+[31m|[m [32m|[m [34m|[m [35m|[m [36m|[m 
+[31m|[m [32m|[m [34m|[m [35m|[m * [33mcommit 3899cf1bc0ccc000b5e447c3b6dda81998675f84[m
+[31m|[m [32m|[m [34m|[m[32m_[m[35m|[m[32m/[m  Author: Anstro Pleuton <anstro.pleuton@proton.me>
+[31m|[m [32m|[m[32m/[m[34m|[m [35m|[m   Date:   Tue Jul 18 20:05:32 2023 +0530
+[31m|[m [32m|[m [34m|[m [35m|[m   
+[31m|[m [32m|[m [34m|[m [35m|[m       Revert "Make jet engine remove parts (Temp Feature)"
+[31m|[m [32m|[m [34m|[m [35m|[m       
+[31m|[m [32m|[m [34m|[m [35m|[m       This reverts commit 00634247d4ba715e4bd594d2dd25462d84b97c46.
+[31m|[m [32m|[m [34m|[m [35m|[m 
+[31m|[m * [34m|[m [35m|[m [33mcommit 00634247d4ba715e4bd594d2dd25462d84b97c46[m[33m ([m[1;31morigin/NewExcavatorPart[m[33m, [m[1;31morigin/JetEngineHacks[m[33m)[m
+[31m|[m [36m|[m [34m|[m [35m|[m Author: Anstro Pleuton <anstro.pleuton@proton.me>
+[31m|[m [36m|[m [34m|[m [35m|[m Date:   Tue Jul 18 16:16:18 2023 +0530
+[31m|[m [36m|[m [34m|[m [35m|[m 
+[31m|[m [36m|[m [34m|[m [35m|[m     Make jet engine remove parts (Temp Feature)
+[31m|[m [36m|[m [34m|[m [35m|[m 
+[31m|[m * [34m|[m [35m|[m [33mcommit 7b9e3ffe249a60f12d841927e1999fa1493a6281[m
+[31m|[m [34m|[m[34m/[m [35m/[m  Author: Anstro Pleuton <anstro.pleuton@proton.me>
+[31m|[m [34m|[m [35m|[m   Date:   Tue Jul 18 16:05:33 2023 +0530
+[31m|[m [34m|[m [35m|[m   
+[31m|[m [34m|[m [35m|[m       Higher the jet engine thrust
+[31m|[m [34m|[m [35m|[m 
+[31m|[m * [35m|[m [33mcommit 2eead601de089c7ffe57a284a6bca5c269ec3b42[m
+[31m|[m [36m|[m [35m|[m Author: Anstro Pleuton <anstro.pleuton@proton.me>
+[31m|[m [36m|[m [35m|[m Date:   Mon Jul 17 22:41:46 2023 +0530
+[31m|[m [36m|[m [35m|[m 
+[31m|[m [36m|[m [35m|[m     Mute music by default
+[31m|[m [36m|[m [35m|[m 
+[31m|[m * [35m|[m [33mcommit 4e3af06e9cb6090ce35ca2f56c18a141cc252de0[m
+[31m|[m [36m|[m [35m|[m Author: Anstro Pleuton <anstro.pleuton@proton.me>
+[31m|[m [36m|[m [35m|[m Date:   Mon Jul 17 22:38:31 2023 +0530
+[31m|[m [36m|[m [35m|[m 
+[31m|[m [36m|[m [35m|[m     Remove Zoom Limit (almost)
+[31m|[m [36m|[m [35m|[m   
+[31m|[m * [35m|[m   [33mcommit ec755dbf07fee545b88f7dc5e233fda2b4cb30cf[m
+[31m|[m [1;31m|[m[1;32m\[m [35m\[m  Merge: 582ad42 2229dba
+[31m|[m [1;31m|[m [1;32m|[m [35m|[m Author: Anstro Pleuton <anstro.pleuton@proton.me>
+[31m|[m [1;31m|[m [1;32m|[m [35m|[m Date:   Mon Jul 17 22:26:41 2023 +0530
+[31m|[m [1;31m|[m [1;32m|[m [35m|[m 
+[31m|[m [1;31m|[m [1;32m|[m [35m|[m     Merge branch 'MuteMusicButtonV2' into AnstroTweaks
+[31m|[m [1;31m|[m [1;32m|[m [35m|[m 
+[31m|[m [1;31m|[m * [35m|[m [33mcommit 2229dba01c4f30ba9c873c77eaafee7e55ffa5ec[m[33m ([m[1;31morigin/MuteMusicButtonV2[m[33m)[m
+[31m|[m [1;31m|[m [1;32m|[m [35m|[m Author: Dart25 <Dart25@users.noreply.github.com>
+[31m|[m [1;31m|[m [1;32m|[m [35m|[m Date:   Mon Jul 17 17:34:06 2023 +0100
+[31m|[m [1;31m|[m [1;32m|[m [35m|[m 
+[31m|[m [1;31m|[m [1;32m|[m [35m|[m     stuff
+[31m|[m [1;31m|[m [1;32m|[m [35m|[m 
+[31m|[m [1;31m|[m * [35m|[m [33mcommit e7b1b005b2b315beb9a12406fc1e5025b06878db[m
+[31m|[m [1;31m|[m [1;32m|[m [35m|[m Author: Anstro Pleuton <anstro.pleuton@proton.me>
+[31m|[m [1;31m|[m [1;32m|[m [35m|[m Date:   Sun Jul 16 13:17:24 2023 +0530
+[31m|[m [1;31m|[m [1;32m|[m [35m|[m 
+[31m|[m [1;31m|[m [1;32m|[m [35m|[m     Little buggy, but better music button
+[31m|[m [1;31m|[m [1;32m|[m [35m|[m   
+[31m|[m * [1;32m|[m [35m|[m   [33mcommit 582ad427f17f8f5ab77b6abe7e0477fe2b860c57[m
+[31m|[m [1;33m|[m[1;34m\[m [1;32m\[m [35m\[m  Merge: e8c9cae 5f7257b
+[31m|[m [1;33m|[m [1;34m|[m [1;32m|[m [35m|[m Author: Anstro Pleuton <anstro.pleuton@proton.me>
+[31m|[m [1;33m|[m [1;34m|[m [1;32m|[m [35m|[m Date:   Mon Jul 17 22:26:22 2023 +0530
+[31m|[m [1;33m|[m [1;34m|[m [1;32m|[m [35m|[m 
+[31m|[m [1;33m|[m [1;34m|[m [1;32m|[m [35m|[m     Merge branch 'NewVersionSelectorBackground' into AnstroTweaks
+[31m|[m [1;33m|[m [1;34m|[m [1;32m|[m [35m|[m 
+[31m|[m [1;33m|[m * [1;32m|[m [35m|[m [33mcommit 5f7257b4815f4ebaba1eb62e456d710f8506c575[m[33m ([m[1;31morigin/NewVersionSelectorBackground[m[33m)[m
+[31m|[m [1;33m|[m [1;34m|[m [1;32m|[m [35m|[m Author: Dart25 <Dart25@users.noreply.github.com>
+[31m|[m [1;33m|[m [1;34m|[m [1;32m|[m [35m|[m Date:   Mon Jul 17 17:34:06 2023 +0100
+[31m|[m [1;33m|[m [1;34m|[m [1;32m|[m [35m|[m 
+[31m|[m [1;33m|[m [1;34m|[m [1;32m|[m [35m|[m     stuff
+[31m|[m [1;33m|[m [1;34m|[m [1;32m|[m [35m|[m 
+[31m|[m [1;33m|[m * [1;32m|[m [35m|[m [33mcommit 207bb712dff25297d5e1f1ea7c74336f009aa97f[m
+[31m|[m [1;33m|[m [1;34m|[m [1;32m|[m [35m|[m Author: Anstro Pleuton <anstro.pleuton@proton.me>
+[31m|[m [1;33m|[m [1;34m|[m [1;32m|[m [35m|[m Date:   Sun Jul 16 17:05:59 2023 +0530
+[31m|[m [1;33m|[m [1;34m|[m [1;32m|[m [35m|[m 
+[31m|[m [1;33m|[m [1;34m|[m [1;32m|[m [35m|[m     Fix the OK button
+[31m|[m [1;33m|[m [1;34m|[m [1;32m|[m [35m|[m 
+[31m|[m [1;33m|[m * [1;32m|[m [35m|[m [33mcommit d39977dea9b51024a59fa9361c97061d9bb4fdaf[m
+[31m|[m [1;33m|[m [1;32m|[m[1;32m/[m [35m/[m  Author: Anstro Pleuton <anstro.pleuton@proton.me>
+[31m|[m [1;33m|[m [1;32m|[m [35m|[m   Date:   Sun Jul 16 16:57:58 2023 +0530
+[31m|[m [1;33m|[m [1;32m|[m [35m|[m   
+[31m|[m [1;33m|[m [1;32m|[m [35m|[m       New background for version selector
+[31m|[m [1;33m|[m [1;32m|[m [35m|[m 
+[31m|[m * [1;32m|[m [35m|[m [33mcommit e8c9caef43a98635e90ce3e734537295430f4d23[m
+[31m|[m [1;34m|[m [1;32m|[m [35m|[m Author: Anstro Pleuton <anstro.pleuton@proton.me>
+[31m|[m [1;34m|[m [1;32m|[m [35m|[m Date:   Sat Jul 15 19:43:23 2023 +0530
+[31m|[m [1;34m|[m [1;32m|[m [35m|[m 
+[31m|[m [1;34m|[m [1;32m|[m [35m|[m     Ignore MonoDevelop crash reports

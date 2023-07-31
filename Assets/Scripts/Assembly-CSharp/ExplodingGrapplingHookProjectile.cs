@@ -29,6 +29,10 @@ public class ExplodingGrapplingHookProjectile : WPFMonoBehaviour
 
 	private int m_explosionCount;
 
+	public bool m_isAP = false;
+
+	public bool m_ignoreSelfCollusion = false;
+
 	private void Start()
 	{
 		m_triggered = false;
@@ -47,9 +51,37 @@ public class ExplodingGrapplingHookProjectile : WPFMonoBehaviour
 
 	private void OnCollisionEnter(Collision collision)
 	{
-		Explode();
+		if (m_ignoreSelfCollusion)
+		{
+			if (!(bool)collision.gameObject.GetComponent<ExplodingGrapplingHookProjectile>())
+			{
+				Explode();
+			}
+		}
+		else
+		{
+			if (m_isAP)
+			{
+				Invoke("Delay2", 0.02f);
+				Invoke("Delay", 0.02f);
+			}
+			else if (!m_isAP)
+			{
+				Explode();
+			}
+		}
 	}
 
+	private void Delay()
+	{
+		Explode();
+	}
+	private void Delay2()
+	{
+		GetComponent<Collider>().isTrigger = true;
+		GetComponent<Rigidbody>().AddForce(this.m_forceDirection * this.m_force / 2, ForceMode.Impulse);
+		GetComponent<Rigidbody>().AddRelativeForce(this.m_forceDirection * this.m_force / 2, ForceMode.Impulse);
+	}
 	public void Explode()
 	{
 		if (m_triggered)
@@ -74,6 +106,11 @@ public class ExplodingGrapplingHookProjectile : WPFMonoBehaviour
 			if ((bool)component && !component.HasGeneratorRef)
 			{
 				component.Explode();
+			}
+			BasePart basePart = collider.GetComponent<BasePart>();
+			if ((bool)basePart)
+			{
+				basePart.Hurt(this.m_explosionImpulse*1.5714f/(Vector3.Distance(this.transform.position, basePart.transform.position)*Vector3.Distance(this.transform.position, basePart.transform.position))+5f);
 			}
 		}
 		WPFMonoBehaviour.effectManager.CreateParticles(m_smokeCloud, base.transform.position - Vector3.forward * 12f, force: true);

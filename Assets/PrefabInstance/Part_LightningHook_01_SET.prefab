@@ -2882,7 +2882,7 @@ MonoBehaviour:
   m_powerConsumption: 0
   m_enginePower: 0
   m_ZOffset: 0
-  customPartIndex: 11
+  customPartIndex: 12
   craftable: 1
   lootCrateReward: 1
   tags: []
