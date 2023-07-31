@@ -138,8 +138,10 @@ public class JetEngine : BasePropulsion
 	private FlameController m_flameController;
 
 	private static System.Random s_random;
-	
+
 	private float m_destroyProbablity = 0.1f; // HACK: Hard code the destroy probablity
+
+	public GameObject dustParticle;
 
 	public float RequiredFuelAmount
 	{
@@ -293,13 +295,14 @@ public class JetEngine : BasePropulsion
 		float point = data.Y;
 		float factor = GetDefenseFactor(part);
 		float num = probability / factor;
+		List<Joint> joints = base.contraption.FindPartJointsFast(part);
 		if (num > 0.02f)
 		{
 			if (part is FuelBox fuelBox && s_random.NextSingle() < (num - 0.05f) * 0.1f)
 			{
 				fuelBox.Explode();
 			}
-			foreach (Joint item in base.contraption.FindPartJointsFast(part))
+			foreach (Joint item in joints)
 			{
 				if (item != null && s_random.NextSingle() < num - 0.02f)
 				{
@@ -309,10 +312,12 @@ public class JetEngine : BasePropulsion
 			}
 		}
 		// Destroy the part when burnt too much
-		if (num * m_destroyProbablity > 0.02f)
+		// And if there are not joints
+		if (num * m_destroyProbablity > 0.02f && joints.Count == 0)
 		{
 			base.contraption.RemovePart(part);
 			UnityEngine.Object.Destroy(part.gameObject);
+			WPFMonoBehaviour.effectManager.CreateParticles(dustParticle, part.gameObject.transform.position, force: true);
 		}
 		float r = INContraption.GetBounds(part.rigidbody).R;
 		function.Set(delegate(float x, float y)
