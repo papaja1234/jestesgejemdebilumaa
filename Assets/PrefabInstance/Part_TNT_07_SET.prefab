@@ -213,4 +213,4 @@ MonoBehaviour:
   m_explosionRadius: 100
   m_triggerSpeed: 12
   extraEffect: {fileID: 0}
-  smokeCloud: {fileID: 1752403835404102, guid: 4843a10c2e1635e438139d833da8ec1f, type: 3}
+  smokeCloud: {fileID: 1752403835404102, guid: 3034ecec35c919d8888ee06b314fe2bf, type: 3}
