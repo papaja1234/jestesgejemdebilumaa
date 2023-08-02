@@ -1013,6 +1013,11 @@
 			"name": "ElectricalSystem",
 			"type": "Boolean",
 			"value": false
+		},
+		{
+			"name": "AlienExtras",
+			"type": "Boolean",
+			"value": true
 		}
 	]
 }

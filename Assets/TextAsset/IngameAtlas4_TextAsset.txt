@@ -176,3 +176,16 @@ DigitalDisplay_IconSprite				1280	1152	100		100		0.4		0.4		768
 DigitalDisplay_Sprite					1408	1152	100		100		0.4		0.4		768
 
 Save_Button_Sprite						0		896		120		121		1		1		768
+
+AlienWoodenFrame_IconSprite				512		256		105		105		0.4		0.4		768
+AlienWoodenFrame_Sprite					512		256		105		105		0.4		0.4		768
+AlienSantaSpring_IconSprite				640		256		105		105		0.4		0.4		768
+AlienSantaSpring_Sprite					640		256		105		105		0.4		0.4		768
+AlienRapidGun_IconSprite				768		256		210		105		0.3		0.3		768
+AlienRapidGun_Sprite					768		256		210		105		0.4		0.4		768
+AlienMetalTNT_IconSprite				512		128		100		100		0.4		0.4		768
+AlienMetalTNT_Sprite					512		128		100		100		0.4		0.4		768
+AlienRapidGunExtended_IconSprite			768		384		210		105		0.4		0.4		768
+AlienRapidGunExtended_Sprite				768		384		210		105		0.4		0.4		768
+AlienExplodingBullet					768		512		105		105		0.4		0.4		768
+AlienExplodingBulletParticle				896		512		105		105		0.4		0.4		768

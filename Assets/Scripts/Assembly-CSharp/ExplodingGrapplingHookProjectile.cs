@@ -27,12 +27,14 @@ public class ExplodingGrapplingHookProjectile : WPFMonoBehaviour
 
 	private Vector3 m_forceDirection;
 
-	private int m_explosionCount;
+	public int m_explosionCount = -1;
 
 	private void Start()
 	{
 		m_triggered = false;
-		m_explosionCount = INSettings.GetInt(INFeature.GunProjectileExplosionCount);
+		if (m_explosionCount == -1) {
+			m_explosionCount = INSettings.GetInt(INFeature.GunProjectileExplosionCount);
+		}
 		m_renderer = GetComponentInChildren<Renderer>();
 		EventManager.Connect<UIEvent>(OnUIEvent);
 		m_forceDirection = base.transform.parent.TransformDirection(Vector3.right);
@@ -47,7 +49,10 @@ public class ExplodingGrapplingHookProjectile : WPFMonoBehaviour
 
 	private void OnCollisionEnter(Collision collision)
 	{
-		Explode();
+		if (!(bool)collision.gameObject.GetComponent<ExplodingGrapplingHookProjectile>())
+		{
+			Explode();
+		}
 	}
 
 	public void Explode()

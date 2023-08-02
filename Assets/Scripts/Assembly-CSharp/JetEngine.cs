@@ -139,6 +139,10 @@ public class JetEngine : BasePropulsion
 
 	private static System.Random s_random;
 
+	private float m_destroyProbablity = 0.1f; // HACK: Hard code the destroy probablity
+
+	public GameObject dustParticle;
+
 	public float RequiredFuelAmount
 	{
 		get
@@ -224,10 +228,10 @@ public class JetEngine : BasePropulsion
 	{
 		if (customPartIndex == 0)
 		{
-			yield return new UIPartSliderButtonInfo(UIPartButtonType.Slider, 2, base.Type, m_fuelComponentIndex, base.ConnectedComponent, new UIPartSliderButton.Range(m_maxForce, 1500f, -1500f, 3000f, 100f, 0.02f));
+			yield return new UIPartSliderButtonInfo(UIPartButtonType.Slider, 2, base.Type, m_fuelComponentIndex, base.ConnectedComponent, new UIPartSliderButton.Range(m_maxForce, 1500f, -2000f, 6000f, 100f, 0.02f));
 			yield break;
 		}
-		yield return new UIPartSliderButtonInfo(UIPartButtonType.Slider, 2, base.Type, m_fuelComponentIndex, base.ConnectedComponent, new UIPartSliderButton.Range(m_maxForce, 1500f, 0f, 3000f, 100f, 0.02f));
+		yield return new UIPartSliderButtonInfo(UIPartButtonType.Slider, 2, base.Type, m_fuelComponentIndex, base.ConnectedComponent, new UIPartSliderButton.Range(m_maxForce, 1500f, 0f, 6000f, 100f, 0.02f));
 		yield return new UIPartSliderButtonInfo(UIPartButtonType.Slider, 3, base.Type, m_fuelComponentIndex, base.ConnectedComponent, new UIPartSliderButton.Range(m_angle, 0f, -45f, 45f, 2.5f, 0.02f));
 	}
 
@@ -291,13 +295,14 @@ public class JetEngine : BasePropulsion
 		float point = data.Y;
 		float factor = GetDefenseFactor(part);
 		float num = probability / factor;
+		List<Joint> joints = base.contraption.FindPartJointsFast(part);
 		if (num > 0.02f)
 		{
 			if (part is FuelBox fuelBox && s_random.NextSingle() < (num - 0.05f) * 0.1f)
 			{
 				fuelBox.Explode();
 			}
-			foreach (Joint item in base.contraption.FindPartJointsFast(part))
+			foreach (Joint item in joints)
 			{
 				if (item != null && s_random.NextSingle() < num - 0.02f)
 				{
@@ -305,6 +310,14 @@ public class JetEngine : BasePropulsion
 					result = true;
 				}
 			}
+		}
+		// Destroy the part when burnt too much
+		// And if there are not joints
+		if (num * m_destroyProbablity > 0.02f && joints.Count == 0)
+		{
+			base.contraption.RemovePart(part);
+			UnityEngine.Object.Destroy(part.gameObject);
+			WPFMonoBehaviour.effectManager.CreateParticles(dustParticle, part.gameObject.transform.position, force: true);
 		}
 		float r = INContraption.GetBounds(part.rigidbody).R;
 		function.Set(delegate(float x, float y)
