@@ -2,11 +2,11 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!1 &1127248551603074
 GameObject:
-  serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
   m_Component:
   - component: {fileID: 4106392198936803}
   - component: {fileID: 65144487329093827}
@@ -40,7 +40,6 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: -0, z: -0}
 --- !u!65 &65144487329093827
 BoxCollider:
-  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -49,17 +48,18 @@ BoxCollider:
   m_Material: {fileID: 13400000, guid: 6a4d7c799faeb124ca08e702b11f8f4f, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
+  serializedVersion: 2
   m_Size: {x: 0.67, y: 0.84, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!82 &82145770886546634
 AudioSource:
-  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1127248551603074}
   m_Enabled: 1
+  serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
@@ -157,8 +157,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 155da75b6a5d9da223ac2d0a2b8e2158, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114041213196666796
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -169,8 +169,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ac796a3cf825fdf341f5ad8ec0d1d814, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   m_jointPreprocessing: 0
   m_eightWay: 0
   m_coordX: 0
@@ -205,7 +205,9 @@ MonoBehaviour:
   m_customJointConnectionDirection: 7
   m_enclosedPart: {fileID: 0}
   m_enclosedInto: {fileID: 0}
-  m_constructionIconSprite: {fileID: 114666551578996608, guid: 42ff6eb348c8b364d9f4225fdf4296c0, type: 2}
+  m_constructionIconSprite: {fileID: 114666551578996608, guid: 42ff6eb348c8b364d9f4225fdf4296c0, type: 3}
+  lateSpeed: {x: 0, y: 0, z: 0}
+  m_hp: 3000
   activeSprite: {fileID: 1963174394324115}
   inactiveSprite: {fileID: 1775809895103481}
 --- !u!114 &114380429472110959
@@ -218,8 +220,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dd12e61e2eb13198819ee096a67e3721, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   lightType: 0
   size: 7
   borderWidth: 0.5
@@ -296,11 +298,11 @@ MonoBehaviour:
   usesCurves: 1
 --- !u!1 &1775809895103481
 GameObject:
-  serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
   m_Component:
   - component: {fileID: 4151551297290598}
   - component: {fileID: 33745845465532647}
@@ -388,16 +390,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e17d54ebdf3b8977649d5e41205b8918, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   m_name: DecelerationPointLight_InactiveSprite
 --- !u!1 &1963174394324115
 GameObject:
-  serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
   m_Component:
   - component: {fileID: 4322330741552469}
   - component: {fileID: 33624132524579704}
@@ -485,6 +487,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e17d54ebdf3b8977649d5e41205b8918, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   m_name: DecelerationPointLight_ActiveSprite

@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: IngameAtlas4
-  m_Shader: {fileID: 4800000, guid: 9314d3baee297234a89bc213eb1d81e8, type: 3}
+  m_Shader: {fileID: 4800000, guid: ebf760b637c3635408ef1edd89eacc97, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 5
   m_EnableInstancingVariants: 0
@@ -24,9 +24,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
-    m_Floats:
-    - _Center: 0
-    - _Scale: 0
+    m_Floats: []
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []

@@ -175,6 +175,16 @@ PressureSensor_Sprite					1152	1152	100		100		0.4		0.4		768
 DigitalDisplay_IconSprite				1280	1152	100		100		0.4		0.4		768
 DigitalDisplay_Sprite					1408	1152	100		100		0.4		0.4		768
 
+60Triangle								0		1024	105		105		0.4		0.4		768
+HalfHorizontal							127		1024	105		66		0.4		0.4		768
+45Triangle								255		1024	104		104		0.4		0.4		768
+LightningHook							365		1024	106		58		0.4		0.4		768
+Lightning								511		1024	105		21		0.4		0.4		768
+Piston									640		1024	100		100		0.4		0.4		768
+PistonHandle							768		1024	100		50		0.4		0.4		768
+Gatling									0		924		199		55		0.4		0.4		768
+Gatling_IconSprite						0		924		199		55		0.2		0.2		768
+
 Save_Button_Sprite						0		896		120		121		1		1		768
 
 AlienWoodenFrame_IconSprite				512		256		105		105		0.4		0.4		768

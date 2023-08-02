@@ -71,7 +71,8 @@ public class BasePart : WPFMonoBehaviour
 		SpotLight = 47,
 		TimeBomb = 48,
 		ElectricalPart = 49,
-		MAX = 50
+		Irrational = 50,
+		MAX = 51
 	}
 
 	public enum AutoAlignType
@@ -227,6 +228,25 @@ public class BasePart : WPFMonoBehaviour
 	protected SpriteManager m_spriteManager;
 
 	private Vector3 m_windVelocity;
+
+	public Vector3 lateSpeed;
+	
+	public float m_hp = 1000f;
+
+	public const float m_minDamage = 5f;
+
+	public void Hurt(float damage)
+    {
+        if(damage < m_minDamage)
+        {
+            return;
+        }
+        m_hp -= damage;
+        if (m_hp <= 0f)
+        {
+            Destroy(gameObject);
+        }
+    }
 
 	public bool VisibleOnPartListBeforeUnlocking
 	{
@@ -856,6 +876,10 @@ public class BasePart : WPFMonoBehaviour
 
 	public virtual void OnCollisionEnter(Collision c)
 	{
+		var target = c.collider.gameObject.GetComponent<BasePart>();
+		if ((bool)target)
+		{target.Hurt((0.1f * (MathF.Abs(lateSpeed.x - target.lateSpeed.x) + MathF.Abs(lateSpeed.y - target.lateSpeed.y)) * ((MathF.Abs(lateSpeed.x - target.lateSpeed.x) + MathF.Abs(lateSpeed.y - target.lateSpeed.y)) * rigidbody.mass / 2)));}
+		//from homewool^^}
 		Collider collider = c.collider;
 		GameObject gameObject = collider.gameObject;
 		int layer = gameObject.layer;
@@ -924,6 +948,10 @@ public class BasePart : WPFMonoBehaviour
 
 	protected void LateUpdate()
 	{
+		if ((bool)rigidbody)
+		{
+			lateSpeed = rigidbody.velocity;
+		}
 		UpdateSoundEffect();
 	}
 
@@ -1366,4 +1394,5 @@ public class BasePart : WPFMonoBehaviour
 	{
 		(x, y) = GetDirection(rotation);
 	}
+	
 }

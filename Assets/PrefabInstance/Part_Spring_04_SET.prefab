@@ -2,11 +2,11 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!1 &1026830790612800
 GameObject:
-  serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
   m_Component:
   - component: {fileID: 4100305298226022}
   - component: {fileID: 114711064812659702}
@@ -44,8 +44,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3232c9c6eb6c1b4cbec3bb79c444e3d3, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   m_jointPreprocessing: 0
   m_eightWay: 0
   m_coordX: 0
@@ -79,11 +79,12 @@ MonoBehaviour:
   m_customJointConnectionDirection: 4
   m_enclosedPart: {fileID: 0}
   m_enclosedInto: {fileID: 0}
-  m_constructionIconSprite: {fileID: 114292076363292694, guid: 647cccce9abbf4f4c958025a8ab9195f, type: 2}
-  m_endPointPrefab: {fileID: 1802172350991755, guid: 53086576cc7026c42bbfe2bf4c6430f2, type: 2}
+  m_constructionIconSprite: {fileID: 114292076363292694, guid: 647cccce9abbf4f4c958025a8ab9195f, type: 3}
+  lateSpeed: {x: 0, y: 0, z: 0}
+  m_hp: 2000
+  m_endPointPrefab: {fileID: 1802172350991755, guid: 53086576cc7026c42bbfe2bf4c6430f2, type: 3}
 --- !u!65 &65665420087674489
 BoxCollider:
-  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -92,15 +93,16 @@ BoxCollider:
   m_Material: {fileID: 13400000, guid: 6a4d7c799faeb124ca08e702b11f8f4f, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
+  serializedVersion: 2
   m_Size: {x: 0.7, y: 0.2, z: 1}
   m_Center: {x: 0, y: 0.4, z: 0}
 --- !u!1 &1200333420613583
 GameObject:
-  serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
   m_Component:
   - component: {fileID: 4638449419518217}
   - component: {fileID: 23057091197444333}
@@ -188,8 +190,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 04a340c55c247513cbdc1b4d88bbdbae, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   m_id: cbca4d7e-2e36-40b0-b4de-08638fcfcf26
   m_scaleX: 0.4
   m_scaleY: 0.4

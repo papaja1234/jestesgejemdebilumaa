@@ -1,109 +1,12 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1804383868333399
-GameObject:
-  serializedVersion: 6
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Component:
-  - component: {fileID: 4299637669171439}
-  - component: {fileID: 65067475115414437}
-  - component: {fileID: 114119851209872551}
-  m_Layer: 9
-  m_Name: Part_WoodenWings_05_SET
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &4299637669171439
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1804383868333399}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 12.106, y: -21.885, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 4798481157288850}
-  - {fileID: 4662777224711043}
-  - {fileID: 4121668478726287}
-  m_Father: {fileID: 0}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: -0, z: -0}
---- !u!65 &65067475115414437
-BoxCollider:
-  serializedVersion: 2
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1804383868333399}
-  m_Material: {fileID: 13400000, guid: 6a4d7c799faeb124ca08e702b11f8f4f, type: 2}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Size: {x: 1.9, y: 0.6122213, z: 1.5}
-  m_Center: {x: -0.5, y: -0.15, z: 0}
---- !u!114 &114119851209872551
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1804383868333399}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 89fe0117668fae08ebbb818a2b566b58, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
-  m_jointPreprocessing: 0
-  m_eightWay: 0
-  m_coordX: 0
-  m_coordY: 0
-  m_mass: 0.75
-  m_interactiveRadius: 0.5
-  m_breakVelocity: 2
-  m_powerConsumption: 0
-  m_enginePower: 0
-  m_ZOffset: 0
-  customPartIndex: 4
-  craftable: 1
-  lootCrateReward: 1
-  tags:
-  - Gold
-  audioMaterial: 1
-  m_jointType: 0
-  m_partTier: 3
-  m_partType: 14
-  m_autoAlign: 2
-  m_flipped: 0
-  m_gridRotation: 0
-  m_gridXmin: 0
-  m_gridXmax: 0
-  m_gridYmin: 0
-  m_gridYmax: 0
-  m_static: 0
-  m_jointConnectionStrength: 1
-  m_jointConnectionType: 2
-  m_jointConnectionDirection: 0
-  m_customJointConnectionDirection: 7
-  m_enclosedPart: {fileID: 0}
-  m_enclosedInto: {fileID: 0}
-  m_constructionIconSprite: {fileID: 114500463629014412, guid: b2f1f3aaaff34d24d92c92b5209391ec, type: 2}
-  liftConstant: 0.8
-  dragConstant: 0.8
 --- !u!1 &1156211974358665
 GameObject:
-  serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
   m_Component:
   - component: {fileID: 4798481157288850}
   - component: {fileID: 33469178560477964}
@@ -191,8 +94,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 04a340c55c247513cbdc1b4d88bbdbae, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   m_id: 62fc664d-7bc9-4090-985b-c197dae8751c
   m_scaleX: 0.3984375
   m_scaleY: 0.390625
@@ -201,11 +104,11 @@ MonoBehaviour:
   m_updateCollider: 0
 --- !u!1 &1251752462736130
 GameObject:
-  serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
   m_Component:
   - component: {fileID: 4662777224711043}
   - component: {fileID: 33029882357239552}
@@ -293,8 +196,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 04a340c55c247513cbdc1b4d88bbdbae, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   m_id: 62fc664d-7bc9-4090-985b-c197dae8751c
   m_scaleX: 0.3984375
   m_scaleY: 0.390625
@@ -303,11 +206,11 @@ MonoBehaviour:
   m_updateCollider: 0
 --- !u!1 &1804177298112315
 GameObject:
-  serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
   m_Component:
   - component: {fileID: 4121668478726287}
   - component: {fileID: 33475735306998701}
@@ -395,11 +298,110 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 04a340c55c247513cbdc1b4d88bbdbae, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   m_id: 5f952661-8a01-4ece-8d2d-540d5629ce2c
   m_scaleX: 0.4
   m_scaleY: 0.4
   m_pivotX: 0
   m_pivotY: 0
   m_updateCollider: 0
+--- !u!1 &1804383868333399
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4299637669171439}
+  - component: {fileID: 65067475115414437}
+  - component: {fileID: 114119851209872551}
+  m_Layer: 9
+  m_Name: Part_WoodenWings_05_SET
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4299637669171439
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1804383868333399}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 12.106, y: -21.885, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 4798481157288850}
+  - {fileID: 4662777224711043}
+  - {fileID: 4121668478726287}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: -0, z: -0}
+--- !u!65 &65067475115414437
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1804383868333399}
+  m_Material: {fileID: 13400000, guid: 6a4d7c799faeb124ca08e702b11f8f4f, type: 2}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.9, y: 0.6122213, z: 1.5}
+  m_Center: {x: -0.5, y: -0.15, z: 0}
+--- !u!114 &114119851209872551
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1804383868333399}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89fe0117668fae08ebbb818a2b566b58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_jointPreprocessing: 0
+  m_eightWay: 0
+  m_coordX: 0
+  m_coordY: 0
+  m_mass: 0.75
+  m_interactiveRadius: 0.5
+  m_breakVelocity: 2
+  m_powerConsumption: 0
+  m_enginePower: 0
+  m_ZOffset: 0
+  customPartIndex: 4
+  craftable: 1
+  lootCrateReward: 1
+  tags:
+  - Gold
+  audioMaterial: 1
+  m_jointType: 0
+  m_partTier: 3
+  m_partType: 14
+  m_autoAlign: 2
+  m_flipped: 0
+  m_gridRotation: 0
+  m_gridXmin: 0
+  m_gridXmax: 0
+  m_gridYmin: 0
+  m_gridYmax: 0
+  m_static: 0
+  m_jointConnectionStrength: 1
+  m_jointConnectionType: 2
+  m_jointConnectionDirection: 0
+  m_customJointConnectionDirection: 7
+  m_enclosedPart: {fileID: 0}
+  m_enclosedInto: {fileID: 0}
+  m_constructionIconSprite: {fileID: 114500463629014412, guid: b2f1f3aaaff34d24d92c92b5209391ec, type: 3}
+  lateSpeed: {x: 0, y: 0, z: 0}
+  m_hp: 600
+  liftConstant: 0.8
+  dragConstant: 0.8

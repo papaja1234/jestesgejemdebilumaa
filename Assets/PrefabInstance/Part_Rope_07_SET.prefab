@@ -2,11 +2,11 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!1 &1290263939281363
 GameObject:
-  serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
   m_Component:
   - component: {fileID: 4564141500092408}
   - component: {fileID: 114119637555670467}
@@ -44,8 +44,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e4d90d858db8d2fc39d180676162903, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   m_jointPreprocessing: 0
   m_eightWay: 0
   m_coordX: 0
@@ -78,15 +78,17 @@ MonoBehaviour:
   m_customJointConnectionDirection: 5
   m_enclosedPart: {fileID: 0}
   m_enclosedInto: {fileID: 0}
-  m_constructionIconSprite: {fileID: 114143558950312261, guid: 4788693b56fa1404db0404ae3ff23ac5, type: 2}
+  m_constructionIconSprite: {fileID: 114143558950312261, guid: 4788693b56fa1404db0404ae3ff23ac5, type: 3}
+  lateSpeed: {x: 0, y: 0, z: 0}
+  m_hp: 4000
   m_type: 0
 --- !u!1 &1331631490150037
 GameObject:
-  serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
   m_Component:
   - component: {fileID: 4145665284534158}
   - component: {fileID: 23585985171020117}
@@ -167,7 +169,6 @@ MeshFilter:
   m_Mesh: {fileID: 0}
 --- !u!65 &65375756798281565
 BoxCollider:
-  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -176,6 +177,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
+  serializedVersion: 2
   m_Size: {x: 0.6, y: 0.35, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &114295681159196942
@@ -188,16 +190,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e17d54ebdf3b8977649d5e41205b8918, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   m_name: HingePlateSilver_Sprite
 --- !u!1 &1743020787934819
 GameObject:
-  serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
   m_Component:
   - component: {fileID: 4460031918775962}
   - component: {fileID: 23663303299795872}
@@ -278,7 +280,6 @@ MeshFilter:
   m_Mesh: {fileID: 0}
 --- !u!65 &65537665453083538
 BoxCollider:
-  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -287,6 +288,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
+  serializedVersion: 2
   m_Size: {x: 0.6, y: 0.35, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &114708905668534366
@@ -299,6 +301,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e17d54ebdf3b8977649d5e41205b8918, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   m_name: HingePlateSilver_Sprite

@@ -58,6 +58,7 @@ public class INRuntimeGameData : Singleton<INRuntimeGameData>
 		InitializePart(INFeature.AutoControlLight, SetAutoControlLight);
 		InitializePart(INFeature.ElectricalSystem, SetElectricalSystem);
 		InitializePart(INFeature.AlienExtras, SetAlienExtras);
+		InitializePart(INFeature.Irrational, SetIrrational);
 	}
 
 	private void InitializePart(INFeature feature, Action action)
@@ -78,7 +79,7 @@ public class INRuntimeGameData : Singleton<INRuntimeGameData>
 			float num = INSettings.GetFloat(INFeature.ColoredFrameAlpha);
 			float num2 = INSettings.GetFloat(INFeature.ColoredFrameForegroundAlpha);
 			float num3 = INSettings.GetFloat(INFeature.ColoredFrameBackgroundAlpha);
-			Shader shader = INUnity.LoadShader("Unlit_ColorTransparent_SolidColor");
+			Shader shader = INUnity.LoadShader("PreAlpha_Unlit_ColorTransparent_Geometry" /* "Unlit_ColorTransparent_SolidColor" */);
 			for (int i = 0; i < 120; i++)
 			{
 				int num4 = i - 118;
@@ -358,6 +359,27 @@ public class INRuntimeGameData : Singleton<INRuntimeGameData>
 		}
 	}
 
+	private void SetIrrational()
+	{
+		if (!INSettings.GetBool(INFeature.Irrational)) return;
+
+		foreach (BasePart part in m_partListBuilder.GetParts(BasePart.PartType.Irrational))
+		{
+			BasePart basePart = CreatePartAndSetParent(part);
+			if (basePart.customPartIndex == 0) AddPart(basePart);
+			else AddCustomPart(basePart);
+		}
+
+		foreach (PartListBuilder.PartRangeValue partRange in m_partListBuilder.GetPartRanges(BasePart.PartType.Irrational))
+		{
+			foreach (BasePart item in m_partListBuilder.CreatePartRange(partRange))
+			{
+				SetParent(item);
+				if (item.customPartIndex == 0) AddPart(item);
+				else AddCustomPart(item);
+			}
+		}
+	}
 	private GameData CreateGameData()
 	{
 		GameData gameData = UnityEngine.Object.Instantiate(Singleton<GameManager>.Instance.gameData);

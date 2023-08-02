@@ -94,8 +94,10 @@ MonoBehaviour:
   m_enclosedPart: {fileID: 0}
   m_enclosedInto: {fileID: 0}
   m_constructionIconSprite: {fileID: 114012790302219782, guid: 717731f27cc2b814f8960cff3fdcee52, type: 3}
-  m_force: 75
-  m_forceDirection: 0
+  lateSpeed: {x: 0, y: 0, z: 0}
+  m_hp: 2000
+  m_force: 37
+  m_forceDirection: 2
   m_isRotor: 0
   m_enabled: 1
   m_defaultSpeed: 16
