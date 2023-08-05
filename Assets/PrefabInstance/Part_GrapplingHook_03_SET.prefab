@@ -911,6 +911,7 @@ MonoBehaviour:
   m_constructionIconSprite: {fileID: 114370283037574341, guid: 828df2d420efa7c43b97b7d51ee2879a, type: 3}
   lateSpeed: {x: 0, y: 0, z: 0}
   m_hp: 1350
+  m_maxHp: 1350
   m_GrapplingHookPrefab: {fileID: 1023531695245642, guid: d5f869e4f122ce44faebb8e669096abe, type: 3}
   m_rewindingTime: 1
   m_ShootTime: 0.4

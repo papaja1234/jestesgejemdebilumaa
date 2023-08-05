@@ -83,6 +83,7 @@ MonoBehaviour:
   m_constructionIconSprite: {fileID: 114416543543406128, guid: 5ba838dbebe2a4f4a85585a924fb9119, type: 3}
   lateSpeed: {x: 0, y: 0, z: 0}
   m_hp: 1400
+  m_maxHp: 1400
   m_autoRotationIndex: 0
 --- !u!65 &65068658417557817
 BoxCollider:

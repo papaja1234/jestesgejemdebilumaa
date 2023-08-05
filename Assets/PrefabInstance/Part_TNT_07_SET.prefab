@@ -143,7 +143,7 @@ Transform:
   m_GameObject: {fileID: 1797414415238928}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 10, y: -42, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.25, y: 1.25, z: 1.25}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4212522461561273}
@@ -202,7 +202,7 @@ MonoBehaviour:
   m_gridYmin: 0
   m_gridYmax: 0
   m_static: 0
-  m_jointConnectionStrength: 0
+  m_jointConnectionStrength: 2
   m_jointConnectionType: 2
   m_jointConnectionDirection: 0
   m_customJointConnectionDirection: 7
@@ -210,7 +210,8 @@ MonoBehaviour:
   m_enclosedInto: {fileID: 0}
   m_constructionIconSprite: {fileID: 114692536989676908, guid: 5281b449eb18d134ab6a4f994c61f7ed, type: 3}
   lateSpeed: {x: 0, y: 0, z: 0}
-  m_hp: 1000
+  m_hp: 10000
+  m_maxHp: 10000
   m_explosionImpulse: 500
   m_explosionRadius: 100
   m_triggerSpeed: 12

@@ -99,7 +99,7 @@ MonoBehaviour:
   m_turboChargeEffect: {fileID: 1274105582125900, guid: 88b37ef3b75722f4b91d7679fa96482a, type: 3}
   m_audioAmbience: {fileID: 0}
   m_jointConnectionStrengthWeak: 125
-  m_jointConnectionStrengthNormal: 125
+  m_jointConnectionStrengthNormal: 250
   m_jointConnectionStrengthHigh: 600
   m_jointConnectionStrengthExtreme: 900
   m_jointConnectionStrengthHighlyExtreme: 1200
@@ -462,6 +462,7 @@ MonoBehaviour:
     - {fileID: 114185732719708184, guid: c3fef07aac5b161408f91542e508c0c3, type: 3}
     - {fileID: 114803079843049274, guid: ffef8820d964602498487cfcf8dead5c, type: 3}
     - {fileID: 114110278455460803, guid: b8377cfdfa596e84a82833d6bf63e026, type: 3}
+    - {fileID: 2689731610518033077, guid: 49bbfb688d3506a4ea03dbc6cf17880b, type: 3}
   - partType: 47
     customParts:
     - {fileID: 114788049636241713, guid: 1603dfa5aaf0cf745a840344cefa7f87, type: 3}
@@ -505,6 +506,10 @@ MonoBehaviour:
     - {fileID: 114349524820397283, guid: cee2312753e809043a61655a88237db0, type: 3}
     - {fileID: 114349524820397283, guid: 0b44cb93f8cc2e44590ac33549391689, type: 3}
     - {fileID: 114349524820397283, guid: 48a2a48eae4c60b4f884049cb0073ede, type: 3}
+  - partType: 49
+    customParts:
+    - {fileID: 445477866284809951, guid: f8799e6024677744792415e09ed02282, type: 3}
+    - {fileID: 114849973470915591, guid: 5e251fc33f6f63042ac69f2d52d2d426, type: 3}
   m_episodeLevels:
   - {fileID: 114863267608396748, guid: 7c1239181347ac14785f11970b12409a, type: 3}
   - {fileID: 114778965027394414, guid: a66b4b06f8572fc40b3d79a02517362e, type: 3}

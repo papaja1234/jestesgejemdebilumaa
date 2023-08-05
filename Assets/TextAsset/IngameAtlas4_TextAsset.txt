@@ -184,6 +184,11 @@ Piston									640		1024	100		100		0.4		0.4		768
 PistonHandle							768		1024	100		50		0.4		0.4		768
 Gatling									0		924		199		55		0.4		0.4		768
 Gatling_IconSprite						0		924		199		55		0.2		0.2		768
+HealingLight_Off						0		1152	81		101		0.4		0.4		768
+HealingLight_On							100		1152	88		101		0.4		0.4		768
+Oscillator_On							1536	896		100		100		0.4		0.4		768
+Oscillator_Off							1408	896		100		100		0.4		0.4		768
+TriplePartTrigger_Sprite				1664	896		100		100		0.4		0.4		768
 
 Save_Button_Sprite						0		896		120		121		1		1		768
 

@@ -150,7 +150,7 @@ Rigidbody:
   m_AngularDrag: 0
   m_UseGravity: 0
   m_IsKinematic: 0
-  m_Interpolate: 1
+  m_Interpolate: 2
   m_Constraints: 120
   m_CollisionDetection: 1
 --- !u!135 &135086320307592510
@@ -184,3 +184,4 @@ MonoBehaviour:
   m_ttl: 1.3
   m_smokeCloud: {fileID: 1752403835404102, guid: 4843a10c2e1635e438139d833da8ec1f, type: 3}
   m_isAP: 1
+  m_ignoreSelfCollusion: 0

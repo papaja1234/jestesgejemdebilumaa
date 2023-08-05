@@ -198,6 +198,7 @@ MonoBehaviour:
   m_constructionIconSprite: {fileID: 114645153564357800, guid: bac27f7cc8b327344bee8b4409b84688, type: 3}
   lateSpeed: {x: 0, y: 0, z: 0}
   m_hp: 300
+  m_maxHp: 300
   m_running: 0
   smokeEmitter: {fileID: 0}
   flameEmitter: {fileID: 0}

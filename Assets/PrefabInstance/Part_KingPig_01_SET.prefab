@@ -8176,6 +8176,7 @@ MonoBehaviour:
   m_constructionIconSprite: {fileID: 114783353333450104, guid: 50a8fe8ede0b4724ebab8070df9364d8, type: 3}
   lateSpeed: {x: 0, y: 0, z: 0}
   m_hp: 3e+38
+  m_maxHp: 3e+38
   collisionStars: {fileID: 198684924258754343}
   collisionSweat: {fileID: 198501345176286515}
   sweatLoop: {fileID: 198974052065676094}

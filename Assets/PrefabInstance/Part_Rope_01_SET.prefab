@@ -82,6 +82,7 @@ MonoBehaviour:
   m_constructionIconSprite: {fileID: 114914609532942314, guid: 7fd40bfb929852e42853f414b26498b9, type: 3}
   lateSpeed: {x: 0, y: 0, z: 0}
   m_hp: 400
+  m_maxHp: 400
   m_segment: {fileID: 1232497828351170, guid: 446fe508b205b474e9214b0efecdb883, type: 3}
   m_material: {fileID: 2100000, guid: a8ed184bd7185954e9e2f6a60ccefbad, type: 2}
   m_gridVisualizationNode: {fileID: 0}

@@ -208,6 +208,7 @@ MonoBehaviour:
   m_constructionIconSprite: {fileID: 114364843859647189, guid: b33d3d1d21e0cba409ac44bfa6971803, type: 3}
   lateSpeed: {x: 0, y: 0, z: 0}
   m_hp: 3000
+  m_maxHp: 3000
   activeSprite: {fileID: 1633241513102640}
   inactiveSprite: {fileID: 1498811109052415}
 --- !u!114 &114280068366452608

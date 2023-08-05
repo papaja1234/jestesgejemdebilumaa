@@ -114,7 +114,6 @@ public class PointLight : BasePart
 			}
 		}
 	}
-
 	public override void Initialize()
 	{
 		if (INSettings.GetBool(INFeature.LightSystem) && this.IsEntityLight())

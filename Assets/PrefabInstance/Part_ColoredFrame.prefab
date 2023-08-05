@@ -161,7 +161,7 @@ MonoBehaviour:
   craftable: 1
   lootCrateReward: 1
   tags: []
-  audioMaterial: 2
+  audioMaterial: 0
   m_jointType: 0
   m_partTier: 0
   m_partType: 18
@@ -181,7 +181,8 @@ MonoBehaviour:
   m_enclosedInto: {fileID: 0}
   m_constructionIconSprite: {fileID: 114359553401168665, guid: bb71e33d9e20f7c4abb1bb90cfbd4ed2, type: 3}
   lateSpeed: {x: 0, y: 0, z: 0}
-  m_hp: 1000
+  m_hp: 1400
+  m_maxHp: 1400
   m_material: 1
   m_brokenTextures:
   - {fileID: 0}

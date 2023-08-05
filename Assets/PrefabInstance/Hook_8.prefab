@@ -164,7 +164,7 @@ Rigidbody:
   m_AngularDrag: 0
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 1
+  m_Interpolate: 2
   m_Constraints: 120
   m_CollisionDetection: 1
 --- !u!135 &135086320307592510
@@ -192,10 +192,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee552cdd9fd5082f402aca99d3f8e40b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_explosionImpulse: 5
-  m_explosionRadius: 4
-  m_force: 400
-  m_ttl: 5
+  m_explosionImpulse: 6
+  m_explosionRadius: 3
+  m_force: 325
+  m_ttl: 10
   m_smokeCloud: {fileID: 1752403835404102, guid: d7083fe6846680041bc7d5f73a3b4e0e, type: 3}
   m_isAP: 0
   m_ignoreSelfCollusion: 1

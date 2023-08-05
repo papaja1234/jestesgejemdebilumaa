@@ -286,6 +286,7 @@ MonoBehaviour:
   m_constructionIconSprite: {fileID: 114529772401591181, guid: 06ea2b0995a76f847a39ca1e3b23c0bd, type: 3}
   lateSpeed: {x: 0, y: 0, z: 0}
   m_hp: 2000
+  m_maxHp: 2000
   m_BoxingGlovePrefab: {fileID: 1002385803689585, guid: a51bb18ac69c6fc47a449931db7acd42, type: 3}
   m_targetDistanceY: 2.5
   m_targetDeviationX: 0

@@ -79,7 +79,8 @@ MonoBehaviour:
   m_enclosedInto: {fileID: 0}
   m_constructionIconSprite: {fileID: 114478363077089011, guid: 962395cdcada7a948b56aa470c3d2287, type: 3}
   lateSpeed: {x: 0, y: 0, z: 0}
-  m_hp: 3
+  m_hp: 13
+  m_maxHp: 13
   m_force: 11.5
   m_maximumSpeed: 10
   m_inWorldCoordinates: 1

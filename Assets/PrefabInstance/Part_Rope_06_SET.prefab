@@ -302,5 +302,6 @@ MonoBehaviour:
   m_enclosedInto: {fileID: 0}
   m_constructionIconSprite: {fileID: 114939559028370497, guid: 7e4d2a6e4100b4d47829ab48cc750e2a, type: 3}
   lateSpeed: {x: 0, y: 0, z: 0}
-  m_hp: 4000
+  m_hp: 6600
+  m_maxHp: 6600
   m_type: 1

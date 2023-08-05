@@ -153,7 +153,7 @@ public class TNT : BasePart
 			BasePart basePart = collider.GetComponent<BasePart>();
 			if ((bool)basePart)
 			{
-				basePart.Hurt(this.m_explosionImpulse*120f/(Vector3.Distance(this.transform.position, basePart.transform.position)*Vector3.Distance(this.transform.position, basePart.transform.position))+5f);
+				basePart.Hurt(this.m_explosionImpulse*30f/(Vector3.Distance(this.transform.position, basePart.transform.position)*Vector3.Distance(this.transform.position, basePart.transform.position)+0.04f)+5f);
 			}
 		}
 		Singleton<AudioManager>.Instance.SpawnOneShotEffect(WPFMonoBehaviour.gameData.commonAudioCollection.tntExplosion, base.transform.position);

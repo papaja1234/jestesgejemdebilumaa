@@ -8,7 +8,8 @@ public class PartTrigger : ElectricalPart
 
 	private LogicLevel m_newLevel;
 
-	private BasePart m_connectedPart;
+	private BasePart[] m_connectedParts;
+	public bool m_isTriple;
 
 	public override IEnumerable<ElectricalElement> ElectricalElements => m_wire.ToEnumerable();
 
@@ -25,20 +26,36 @@ public class PartTrigger : ElectricalPart
 
 	public override void InitializeElectricalElements()
 	{
+		m_connectedParts = new BasePart[3];
 		m_level = LogicLevel.Invalid;
-		int num = 1;
-		int num2 = 0;
+		int x_coord = 1;
+		int y_coord = 0;
 		for (int i = 0; i < (int)m_gridRotation; i++)
 		{
-			int num3 = num;
-			num = -num2;
-			num2 = num3;
-		}
-		BasePart basePart = base.contraption.FindPartAt(m_coordX + num, m_coordY + num2, this);
-		if (basePart != null && basePart.ConnectedComponent == base.ConnectedComponent)
+			int num3 = x_coord;
+			x_coord = -y_coord;
+			y_coord = num3;
+		}//direction function, 90 deg only
+
+		if (!m_isTriple)
 		{
-			basePart = ((basePart.m_enclosedPart != null) ? basePart.m_enclosedPart : basePart);
-			m_connectedPart = basePart;
+			BasePart basePart = base.contraption.FindPartAt(m_coordX + x_coord, m_coordY + y_coord, this);
+			if (basePart != null && basePart.ConnectedComponent == base.ConnectedComponent)
+			{
+				basePart = ((basePart.m_enclosedPart != null) ? basePart.m_enclosedPart : basePart);
+				m_connectedParts[0] = basePart;
+			}
+		}else if (m_isTriple)
+		{
+			for (int i = 1; i <= 3; i++)
+			{
+				BasePart basePart = base.contraption.FindPartAt(m_coordX + i*x_coord, m_coordY + i*y_coord, this);//yeah we're using complex i LOLOLOL
+				if (basePart != null && basePart.ConnectedComponent == base.ConnectedComponent)
+				{
+					basePart = ((basePart.m_enclosedPart != null) ? basePart.m_enclosedPart : basePart);
+					m_connectedParts[i-1] = basePart;
+				}
+			}
 		}
 	}
 
@@ -58,10 +75,26 @@ public class PartTrigger : ElectricalPart
 	public override void PostUpdateElements()
 	{
 		SetInvalid(m_newLevel == LogicLevel.Invalid);
-		if (m_level != 0 && m_newLevel != 0 && m_level != m_newLevel && m_connectedPart != null && m_connectedPart.ConnectedComponent == base.ConnectedComponent)
+		/*if (!m_isTriple)
 		{
-			m_connectedPart.ProcessTouch();
+			if (m_level != 0 && m_newLevel != 0 && m_level != m_newLevel && m_connectedParts[0] != null &&
+			    m_connectedParts[0].ConnectedComponent == base.ConnectedComponent)
+			{
+				m_connectedParts[0].ProcessTouch();
+			}
 		}
+		else if (m_isTriple)
+		{*/
+			foreach (var basepart in m_connectedParts)
+			{
+				if (m_level != 0 && m_newLevel != 0 && m_level != m_newLevel && basepart != null &&
+				    basepart.ConnectedComponent == base.ConnectedComponent)
+				{
+					basepart.ProcessTouch();
+				}
+			}
+		/*}*/
+
 		m_level = m_newLevel;
 	}
 }

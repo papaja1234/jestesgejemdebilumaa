@@ -139,6 +139,7 @@ public class LightningHook : BasePart
 				currentProjectile.collider.material.dynamicFriction = 0f;
 			}
 			currentProjectile.rigidbody.drag = INSettings.GetFloat(INFeature.GunProjectileDrag);
+			this.m_enabled = false;
 			Physics.IgnoreCollision(currentProjectile.GetComponentInChildren<Collider>(), base.gameObject.GetComponentInChildren<Collider>());
 			currentProjectile.OnExplosion = (Action)Delegate.Combine(currentProjectile.OnExplosion, (Action)delegate
 			{

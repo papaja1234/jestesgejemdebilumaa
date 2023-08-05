@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,6 +16,12 @@ public class INSpriteManager : Singleton<INSpriteManager>
 	{
 		SetAsPersistant();
 	}
+	/*
+	private float CultureInvariantParse(string a)
+	{
+		float.TryParse(a, NumberStyles.Float, CultureInfo.InvariantCulture, out float b);
+		return b;//fix big textures??
+	}*/
 
 	public void Initialize()
 	{
@@ -46,8 +53,8 @@ public class INSpriteManager : Singleton<INSpriteManager>
 		{
 			array2 = array[i].Split(new char[2] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
 			string key2 = array2[0];
-			Rect rect = new Rect(float.Parse(array2[1]), float.Parse(array2[2]), float.Parse(array2[3]), float.Parse(array2[4]));
-			Vector2 scale = new Vector2(float.Parse(array2[5]), float.Parse(array2[6]));
+			Rect rect = new Rect(float.Parse(array2[1], CultureInfo.InvariantCulture), float.Parse(array2[2], CultureInfo.InvariantCulture), float.Parse(array2[3], CultureInfo.InvariantCulture), float.Parse(array2[4]));
+			Vector2 scale = new Vector2(float.Parse(array2[5], CultureInfo.InvariantCulture), float.Parse(array2[6], CultureInfo.InvariantCulture));
 			int screenHeight = int.Parse(array2[7]);
 			dictionary[key2] = new INSpriteData(rect, scale, screenHeight, textureSize);
 		}

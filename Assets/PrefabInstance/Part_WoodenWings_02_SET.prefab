@@ -402,5 +402,6 @@ MonoBehaviour:
   m_constructionIconSprite: {fileID: 114946490107193315, guid: 743c1a1095538e24384273b35eb1d2b8, type: 3}
   lateSpeed: {x: 0, y: 0, z: 0}
   m_hp: 600
+  m_maxHp: 600
   liftConstant: 0.8
   dragConstant: 0.8
