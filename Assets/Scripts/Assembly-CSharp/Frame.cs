@@ -95,9 +95,9 @@ public class Frame : BasePart
 				{
 					// BUG: Weird colored frame
 					//     meshRenderer.material.shader = INUnity.LoadShader("Unlit_ColorTransparent_GrayOverlay");
-					// Fix: Use "_Custom_PreAlpha_Unlit_ColorTransparent_Geometry"
+					// Fix: Use "Unlit_ColorTransparent_GrayOverlay"
 					// Provided by: Goggs
-					meshRenderer.material.shader = INUnity.LoadShader("_Custom_PreAlpha_Unlit_ColorTransparent_Geometry");
+					meshRenderer.material.shader = INUnity.LoadShader("Unlit_ColorTransparent_GrayOverlay");
 				}
 				meshRenderer.material.color = clear;
 			}
