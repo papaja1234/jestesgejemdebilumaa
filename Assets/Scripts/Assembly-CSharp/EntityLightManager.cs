@@ -182,13 +182,16 @@ public class EntityLightManager : PartManager
 		m_lights.Clear();
 		foreach (BasePart part in Contraption.Instance.Parts)
 		{
-			if (part is PointLight pointLight && pointLight.EntityLight != null)
+			if ((bool)part)
 			{
-				m_lights.Add(pointLight.EntityLight);
-			}
-			else if (part is SpotLight spotLight && spotLight.EntityLight != null)
-			{
-				m_lights.Add(spotLight.EntityLight);
+				if (part is PointLight pointLight && pointLight.EntityLight != null)
+				{
+					m_lights.Add(pointLight.EntityLight);
+				}
+				else if (part is SpotLight spotLight && spotLight.EntityLight != null)
+				{
+					m_lights.Add(spotLight.EntityLight);
+				}
 			}
 		}
 		_ = m_lights.Count;
@@ -197,7 +200,7 @@ public class EntityLightManager : PartManager
 		UpdateAlienLights(lights);
 		foreach (EntityLight item in lights)
 		{
-			if (item.Type != 4)
+			if (item.Type != 4&&(bool)item)
 			{
 				item.Data.Set(item);
 			}

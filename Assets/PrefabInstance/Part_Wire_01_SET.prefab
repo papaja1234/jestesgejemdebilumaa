@@ -191,4 +191,5 @@ MonoBehaviour:
   m_constructionIconSprite: {fileID: 0}
   lateSpeed: {x: 0, y: 0, z: 0}
   m_hp: 2000
+  m_maxHp: 2000
   m_autoRotationIndex: 0

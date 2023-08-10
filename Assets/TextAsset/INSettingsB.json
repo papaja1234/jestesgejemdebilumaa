@@ -641,11 +641,6 @@
 			"value": true
 		},
 		{
-			"name": "AlienExtras",
-			"scope": "Global",
-			"value": true
-		},
-		{
 			"name": "Irrational",
 			"scope": "Global",
 			"value": true

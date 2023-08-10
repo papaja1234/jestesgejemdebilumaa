@@ -26,7 +26,7 @@ public class APProjectile : MonoBehaviour
 
 	private Renderer m_renderer;
 
-	private Vector3 m_forceDirection;
+	public Vector3 m_forceDirection;
 
 	private int m_explosionCount;
 

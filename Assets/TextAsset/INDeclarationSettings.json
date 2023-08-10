@@ -1015,11 +1015,6 @@
 			"value": false
 		},
 		{
-			"name": "AlienExtras",
-			"type": "Boolean",
-			"value": true
-		},
-		{
 			"name": "Irrational",
 			"type": "Boolean",
 			"value": false

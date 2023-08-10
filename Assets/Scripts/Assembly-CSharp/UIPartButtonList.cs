@@ -47,6 +47,7 @@ public class UIPartButtonList : MonoBehaviour
 	{
 		public int Compare(UIPartButton x, UIPartButton y)
 		{
+			//what the hell is this?
 			int componentRank = x.Info.ComponentRank;
 			int componentRank2 = y.Info.ComponentRank;
 			if (componentRank < componentRank2)
@@ -57,6 +58,7 @@ public class UIPartButtonList : MonoBehaviour
 			{
 				return 1;
 			}
+			//sorting buttons!
 			Vector2 averagePosition = x.AveragePosition;
 			Vector2 averagePosition2 = y.AveragePosition;
 			if (averagePosition.x < averagePosition2.x)
@@ -97,7 +99,7 @@ public class UIPartButtonList : MonoBehaviour
 			{
 				return 1;
 			}
-			return 0;
+			return 0;//indicating those 2 are the same 
 		}
 	}
 
@@ -134,7 +136,7 @@ public class UIPartButtonList : MonoBehaviour
 	}
 
 	[SerializeField]
-	private Canvas m_canvas;
+	private Canvas m_canvas;//here we go
 
 	[SerializeField]
 	private ScrollRect m_scrollView;
@@ -222,7 +224,7 @@ public class UIPartButtonList : MonoBehaviour
 	private void CreateSpriteInfoMap()
 	{
 		m_spriteInfoMap = new Dictionary<UIPartButtonInfo, ButtonSpriteInfo>();
-		Texture texture = INUnity.LoadTexture("UIPartButtonAtlas");
+		Texture texture = INUnity.LoadTexture("UIPartButtonAtlas");//here it comes, the source of button textures
 		foreach (GadgetButton button in WPFMonoBehaviour.levelManager.InGameGUI.flightMenuPrefab.GetComponent<InGameFlightMenu>().ButtonList.Buttons)
 		{
 			UIPartButtonInfo key = GetButtonInfo(button.m_partType, (int)button.m_direction);
@@ -378,7 +380,11 @@ public class UIPartButtonList : MonoBehaviour
 			key10.ButtonType = UIPartButtonType.Trigger;
 			key10.PartIndex = 5;
 			spriteInfo15 = GetSpriteInfo(texture, "MagneticFieldGenerator_Sprite");
-			m_spriteInfoMap.Add(key10, spriteInfo15);
+			m_spriteInfoMap.Add(key10, spriteInfo15);//follow things above and add button for movable light
+			spriteInfo15 = GetSpriteInfo(texture, "MovableLight_Sprite");
+			key10.ButtonType = UIPartButtonType.Trigger;
+			key10.PartIndex = 50;
+			m_spriteInfoMap.Add(key10,spriteInfo15);
 		}
 		static UIPartButtonInfo GetButtonInfo(BasePart.PartType partType, int partIndex)
 		{

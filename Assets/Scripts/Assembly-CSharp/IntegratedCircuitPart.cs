@@ -179,7 +179,7 @@ public class IntegratedCircuitPart : ElectricalPart
 
 	public override ElectricalElement GetElectricalElementByDirection(BitDirection direction)
 	{
-		direction = direction.Rotate(0 - m_gridRotation);
+		direction = direction.Rotate(0 - (int)m_gridRotation);
 		if (direction == GetInput1Direction())
 		{
 			return m_input1;

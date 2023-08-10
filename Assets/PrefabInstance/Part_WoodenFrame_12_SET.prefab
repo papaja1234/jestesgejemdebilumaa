@@ -69,13 +69,13 @@ MonoBehaviour:
   m_interactiveRadius: 0.5
   m_breakVelocity: 10
   m_powerConsumption: 0
-  m_enginePower: 0
+  m_enginePower: 77
   m_ZOffset: 0.1
   customPartIndex: 11
   craftable: 1
   lootCrateReward: 1
   tags: []
-  audioMaterial: 1
+  audioMaterial: 0
   m_jointType: 0
   m_partTier: 4
   m_partType: 5
@@ -93,8 +93,11 @@ MonoBehaviour:
   m_customJointConnectionDirection: 7
   m_enclosedPart: {fileID: 0}
   m_enclosedInto: {fileID: 0}
-  m_constructionIconSprite: {fileID: 114411771606543456, guid: f74a4cdb02ac0ec8b8205812b078fde5, type: 3}
-  m_material: 1
+  m_constructionIconSprite: {fileID: 114411771606543456, guid: 405b9817781b292448fef71733e10c51, type: 3}
+  lateSpeed: {x: 0, y: 0, z: 0}
+  m_hp: 1000
+  m_maxHp: 1000
+  m_material: 0
   m_brokenTextures: []
 --- !u!33 &33333774051940575
 MeshFilter:

@@ -94,10 +94,6 @@ public class ColoredFrame : Frame
 				{
 					MeshRenderer[] componentsInChildren = basePart.GetComponentsInChildren<MeshRenderer>(includeInactive: true);
 					m_coloredPartMaterials = new(MeshRenderer, Material)[componentsInChildren.Length];
-					// BUG: Weird colored frame
-					//     INUnity.LoadShader("PreAlpha_Unlit_ColorTransparent_Geometry");
-					// Fix: Use "PreAlpha_Unlit_ColorTransparent_Geometry"
-					// Provided by: Goggs
 					INUnity.LoadShader("PreAlpha_Unlit_ColorTransparent_Geometry");
 					for (int i = 0; i < componentsInChildren.Length; i++)
 					{
@@ -106,10 +102,6 @@ public class ColoredFrame : Frame
 						{
 							m_coloredPartMaterials[i] = (meshRenderer, meshRenderer.sharedMaterial);
 							float num2 = ((m_color.a > 0.5f) ? m_color.a : 0.5f);
-							// BUG: Weird colored frame
-							//     meshRenderer.material.shader = INUnity.LoadShader("Unlit_ColorTransparent_Geometry");
-							// Fix: Use "PreAlpha_Unlit_ColorTransparent_Geometry"
-							// Provided by: Goggs
 							meshRenderer.material.shader = INUnity.LoadShader("PreAlpha_Unlit_ColorTransparent_Geometry");
 							meshRenderer.material.color = new Color(m_color.r, m_color.g, m_color.b, num2 * meshRenderer.material.color.a);
 							meshRenderer.material.SetFloat("_Blend", @float);
@@ -118,6 +110,7 @@ public class ColoredFrame : Frame
 				}
 				else
 				{
+					//INUnity.LoadShader("PreAlpha_Unlit_ColorTransparent_Geometry");
 					m_coloredPartMaterials = null;
 				}
 				m_coloredPart = basePart;

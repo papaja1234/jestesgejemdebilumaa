@@ -303,8 +303,9 @@ MonoBehaviour:
   m_constructionIconSprite: {fileID: 114748287707219577, guid: 15a9648babedadf408068421912535eb, type: 3}
   lateSpeed: {x: 0, y: 0, z: 0}
   m_hp: 4000
-  m_explosionImpulse: 25
-  m_explosionRadius: 8
+  m_maxHp: 4000
+  m_explosionImpulse: 35
+  m_explosionRadius: 10
   m_triggerSpeed: 4
   extraEffect: {fileID: 0}
   smokeCloud: {fileID: 1752403835404102, guid: 4843a10c2e1635e438139d833da8ec1f, type: 3}

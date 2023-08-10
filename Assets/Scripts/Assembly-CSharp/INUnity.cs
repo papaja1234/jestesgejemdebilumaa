@@ -38,8 +38,8 @@ public static class INUnity
 
 	static INUnity()
 	{
-		// BUG: Parse errors
-		// Version = Version.Parse(Application.version);
+		//Bug below!
+		//Version = Version.Parse(Application.version);
 		VersionText = Application.version;
 		DataPath = Application.persistentDataPath;
 		SettingsPath = Application.persistentDataPath + "/Settings";

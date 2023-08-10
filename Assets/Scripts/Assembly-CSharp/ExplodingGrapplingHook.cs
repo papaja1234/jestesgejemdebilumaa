@@ -32,12 +32,6 @@ public class ExplodingGrapplingHook : BasePart
 	private float m_shootTime;
 	
 	public float m_rapidCooldownTime = 0.5f;
-	
-	public bool m_isToggle = false;
-	
-	public bool m_isMuted = false;
-	
-	private bool m_isActive = false;
 
 	protected float CoolingTime { get; set; }
 
@@ -50,10 +44,6 @@ public class ExplodingGrapplingHook : BasePart
 
 	public override bool IsEnabled()
 	{
-		if (m_isToggle)
-		{
-			return m_isActive;
-		}
 		return m_enabled;
 	}
 
@@ -120,25 +110,10 @@ public class ExplodingGrapplingHook : BasePart
 			m_bottomAttachment.SetActive(value: true);
 		}
 	}
-	
-	private void FixedUpdate()
-	{
-		if (m_isToggle && m_isActive)
-		{
-			Shoot();
-		}
-	}
 
 	protected override void OnTouch()
 	{
-		if (m_isToggle)
-		{
-			m_isActive = !m_isActive;
-		}
-		else
-		{
-			Shoot();
-		}
+		Shoot();
 	}
 
 	protected void Shoot()
@@ -148,10 +123,7 @@ public class ExplodingGrapplingHook : BasePart
 		if (!m_enabled && !(Time.time - m_shootTime < rapidCooldownTime))
 		{
 			m_shootTime = Time.time;
-			if (!m_isMuted)
-			{
-				Singleton<AudioManager>.Instance.SpawnOneShotEffect(WPFMonoBehaviour.gameData.commonAudioCollection.alienLaserFire, base.transform);
-			}
+			Singleton<AudioManager>.Instance.SpawnOneShotEffect(WPFMonoBehaviour.gameData.commonAudioCollection.alienLaserFire, base.transform);
 			currentProjectile = UnityEngine.Object.Instantiate(m_projectilePrefab).GetComponent<ExplodingGrapplingHookProjectile>();
 			m_particleEffect.Play();
 			currentProjectile.transform.parent = base.transform;
@@ -166,6 +138,7 @@ public class ExplodingGrapplingHook : BasePart
 				currentProjectile.collider.material.dynamicFriction = 0f;
 			}
 			currentProjectile.rigidbody.drag = INSettings.GetFloat(INFeature.GunProjectileDrag);
+			this.m_enabled = false;
 			Physics.IgnoreCollision(currentProjectile.GetComponentInChildren<Collider>(), base.gameObject.GetComponentInChildren<Collider>());
 			currentProjectile.OnExplosion = (Action)Delegate.Combine(currentProjectile.OnExplosion, (Action)delegate
 			{

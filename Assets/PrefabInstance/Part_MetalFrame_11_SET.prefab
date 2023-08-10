@@ -88,7 +88,7 @@ MonoBehaviour:
   lootCrateReward: 1
   tags:
   - Bone
-  audioMaterial: 2
+  audioMaterial: 1
   m_jointType: 0
   m_partTier: 2
   m_partType: 18
@@ -109,6 +109,7 @@ MonoBehaviour:
   m_constructionIconSprite: {fileID: 114244343911686699, guid: f85fe1cd566190a43a418997a13e49c9, type: 3}
   lateSpeed: {x: 0, y: 0, z: 0}
   m_hp: 995
+  m_maxHp: 1000
   m_material: 1
   m_brokenTextures:
   - {fileID: 0}

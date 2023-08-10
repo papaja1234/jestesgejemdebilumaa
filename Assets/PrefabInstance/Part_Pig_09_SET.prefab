@@ -8067,6 +8067,7 @@ MonoBehaviour:
   m_constructionIconSprite: {fileID: 114960093161136806, guid: 1ddc231832e4d6745bc0164e56802504, type: 3}
   lateSpeed: {x: 0, y: 0, z: 0}
   m_hp: 3e+38
+  m_maxHp: 3e+38
   m_expressions:
   - type: 0
     texture: {fileID: 0}

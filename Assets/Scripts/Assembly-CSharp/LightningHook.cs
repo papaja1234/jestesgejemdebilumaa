@@ -128,7 +128,7 @@ public class LightningHook : BasePart
 			currentProjectile = UnityEngine.Object.Instantiate(m_projectilePrefab).GetComponent<LightningProjectile>();
 			m_particleEffect.Play();
 			currentProjectile.transform.parent = base.transform;
-			currentProjectile.transform.localPosition = Vector3.forward * 0.1f;
+			currentProjectile.transform.localPosition = Vector3.forward * 0.05f;
 			currentProjectile.transform.rotation = base.transform.rotation;
 			if (INSettings.GetBool(INFeature.InertialGunProjectile))
 			{
@@ -139,6 +139,7 @@ public class LightningHook : BasePart
 				currentProjectile.collider.material.dynamicFriction = 0f;
 			}
 			currentProjectile.rigidbody.drag = INSettings.GetFloat(INFeature.GunProjectileDrag);
+			this.m_enabled = false;
 			Physics.IgnoreCollision(currentProjectile.GetComponentInChildren<Collider>(), base.gameObject.GetComponentInChildren<Collider>());
 			currentProjectile.OnExplosion = (Action)Delegate.Combine(currentProjectile.OnExplosion, (Action)delegate
 			{

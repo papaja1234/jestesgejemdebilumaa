@@ -113,7 +113,7 @@ GameObject:
   - component: {fileID: 4363823884514214}
   - component: {fileID: 54738046613022225}
   - component: {fileID: 135086320307592510}
-  - component: {fileID: 114334085753578758}
+  - component: {fileID: 3787163539820350836}
   m_Layer: 9
   m_Name: Hook_7
   m_TagString: Sharp
@@ -150,7 +150,7 @@ Rigidbody:
   m_AngularDrag: 0
   m_UseGravity: 0
   m_IsKinematic: 0
-  m_Interpolate: 1
+  m_Interpolate: 2
   m_Constraints: 120
   m_CollisionDetection: 1
 --- !u!135 &135086320307592510
@@ -166,7 +166,7 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.12
   m_Center: {x: 0.33, y: 0, z: 0}
---- !u!114 &114334085753578758
+--- !u!114 &3787163539820350836
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -181,5 +181,7 @@ MonoBehaviour:
   m_explosionImpulse: 15
   m_explosionRadius: 8
   m_force: 20
-  m_ttl: 1
+  m_ttl: 1.3
   m_smokeCloud: {fileID: 1752403835404102, guid: 4843a10c2e1635e438139d833da8ec1f, type: 3}
+  m_isAP: 1
+  m_ignoreSelfCollusion: 0

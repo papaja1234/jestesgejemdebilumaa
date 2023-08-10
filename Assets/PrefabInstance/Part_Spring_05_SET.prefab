@@ -60,7 +60,7 @@ MonoBehaviour:
   craftable: 1
   lootCrateReward: 1
   tags: []
-  audioMaterial: 2
+  audioMaterial: 0
   m_jointType: 0
   m_partTier: 4
   m_partType: 28
@@ -72,13 +72,16 @@ MonoBehaviour:
   m_gridYmin: 0
   m_gridYmax: 0
   m_static: 0
-  m_jointConnectionStrength: 1
+  m_jointConnectionStrength: 3
   m_jointConnectionType: 1
   m_jointConnectionDirection: 6
   m_customJointConnectionDirection: 4
   m_enclosedPart: {fileID: 0}
   m_enclosedInto: {fileID: 0}
-  m_constructionIconSprite: {fileID: 114292076363292694, guid: ae1f17acfdc0232c19dc46cce1337458, type: 3}
+  m_constructionIconSprite: {fileID: 114292076363292694, guid: 54f7a6ea933b177469856ec4d70f0764, type: 3}
+  lateSpeed: {x: 0, y: 0, z: 0}
+  m_hp: 3000
+  m_maxHp: 3000
   m_endPointPrefab: {fileID: 1802172350991755, guid: 53086576cc7026c42bbfe2bf4c6430f2, type: 3}
 --- !u!65 &65665420087674489
 BoxCollider:

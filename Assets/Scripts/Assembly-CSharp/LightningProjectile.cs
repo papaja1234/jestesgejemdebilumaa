@@ -108,6 +108,11 @@ public class LightningProjectile : WPFMonoBehaviour
 			{
 				component.Explode();
 			}
+			BasePart basePart = collider.GetComponent<BasePart>();
+			if ((bool)basePart)
+			{
+				basePart.Hurt(this.m_explosionImpulse*1.5714f/(Vector3.Distance(this.transform.position, basePart.transform.position)*Vector3.Distance(this.transform.position, basePart.transform.position)+0.04f)+5f);
+			}
 		}
 		WPFMonoBehaviour.effectManager.CreateParticles(m_smokeCloud, base.transform.position - Vector3.forward * 12f, force: true);
 		Singleton<AudioManager>.Instance.SpawnOneShotEffect(WPFMonoBehaviour.gameData.commonAudioCollection.tntExplosion, base.transform.position);

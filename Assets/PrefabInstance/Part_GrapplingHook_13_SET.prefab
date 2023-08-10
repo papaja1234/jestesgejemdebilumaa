@@ -2803,12 +2803,12 @@ MonoBehaviour:
   m_powerConsumption: 0
   m_enginePower: 0
   m_ZOffset: 0
-  customPartIndex: 12
+  customPartIndex: 13
   craftable: 1
   lootCrateReward: 1
   tags:
   - Alien_part
-  audioMaterial: 1
+  audioMaterial: 2
   m_jointType: 0
   m_partTier: 4
   m_partType: 41
@@ -2826,12 +2826,13 @@ MonoBehaviour:
   m_customJointConnectionDirection: 7
   m_enclosedPart: {fileID: 0}
   m_enclosedInto: {fileID: 0}
-  m_constructionIconSprite: {fileID: 114290017204915766, guid: 0ca116b54830eb643b02a7f186451741, type: 3}
-  m_projectilePrefab: {fileID: 1155311346533028, guid: a92f9eccd2cae1e9ebad958e9b8b2963, type: 3}
+  m_constructionIconSprite: {fileID: 114290017204915766, guid: 625a5a2e021a7e64382067d1734bb625, type: 3}
+  lateSpeed: {x: 0, y: 0, z: 0}
+  m_hp: 1000
+  m_maxHp: 1000
+  m_projectilePrefab: {fileID: 1155311346533028, guid: ce2c6a92f2f72f1459be3e91a2a0511a, type: 3}
   m_particleEffect: {fileID: 198749085496206227}
-  m_rapidCooldownTime: 0
-  m_isToggle: 1
-  m_isMuted: 1
+  m_rapidCooldownTime: 0.05
 --- !u!65 &65044161297452722
 BoxCollider:
   m_ObjectHideFlags: 0

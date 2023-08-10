@@ -96,6 +96,7 @@ MonoBehaviour:
   m_constructionIconSprite: {fileID: 114851336127844036, guid: 4c91837bea2667a4ebbe7b50ff1c8029, type: 3}
   lateSpeed: {x: 0, y: 0, z: 0}
   m_hp: 400
+  m_maxHp: 400
   liftConstant: 0.2
 --- !u!33 &33391774857054982
 MeshFilter:

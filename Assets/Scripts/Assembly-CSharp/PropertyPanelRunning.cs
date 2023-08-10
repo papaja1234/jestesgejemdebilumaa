@@ -12,8 +12,6 @@ public class PropertyPanelRunning : PropertyPanel
 
 	private Camera m_camera;
 
-	private bool m_isVisible;
-
 	public static PropertyPanelRunning Instance => s_instance;
 
 	public static PropertyPanelRunning Create()
@@ -27,7 +25,6 @@ public class PropertyPanelRunning : PropertyPanel
 	{
 		base.Initialize();
 		m_status = StatusCode.Running;
-		m_isVisible = false;
 	}
 
 	public override void Start()
@@ -98,14 +95,6 @@ public class PropertyPanelRunning : PropertyPanel
 		default:
 			m_textMesh.text = string.Empty;
 			break;
-		}
-		if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.Space))
-		{
-			m_isVisible = !m_isVisible;
-		}
-		if (!m_isVisible)
-		{
-			m_textMesh.text = string.Empty;
 		}
 	}
 }

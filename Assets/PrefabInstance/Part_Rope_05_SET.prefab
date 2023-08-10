@@ -80,7 +80,8 @@ MonoBehaviour:
   m_enclosedInto: {fileID: 0}
   m_constructionIconSprite: {fileID: 114506321103421458, guid: 518552d1b7994a34aa3c293d014e26c2, type: 3}
   lateSpeed: {x: 0, y: 0, z: 0}
-  m_hp: 4000
+  m_hp: 6000
+  m_maxHp: 6000
   m_type: 0
 --- !u!1 &1830347730767812
 GameObject:

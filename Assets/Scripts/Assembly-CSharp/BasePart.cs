@@ -75,6 +75,115 @@ public class BasePart : WPFMonoBehaviour
 		MAX = 51
 	}
 
+	public float GetMaxHp( BasePart basePart)
+	{
+		switch (basePart.m_partType)
+		{
+		    case PartType.Balloon:
+		        return 13f;
+		    case PartType.Balloons2:
+		        return 26f;
+		    case PartType.Balloons3:
+		        return 39f;
+		    case PartType.Fan:
+		        return 4f;
+		    case PartType.WoodenFrame:
+		        return 5f;
+		    case PartType.Bellows:
+		        return 6f;
+		    case PartType.CartWheel:
+		        return 7f;
+		    case PartType.Basket:
+		        return 8f;
+		    case PartType.Sandbag:
+		        return 9f;
+		    case PartType.Pig:
+		        return 3e+38f;
+		    case PartType.Sandbag2:
+		        return 11f;
+		    case PartType.Sandbag3:
+		        return 12f;
+		    case PartType.Propeller:
+		        return 13f;
+		    case PartType.Wings:
+		        return 14f;
+		    case PartType.Tailplane:
+		        return 15f;
+		    case PartType.Engine:
+		        return 16f;
+		    case PartType.Rocket:
+		        return 17f;
+		    case PartType.MetalFrame:
+		        return 18f;
+		    case PartType.SmallWheel:
+		        return 19f;
+		    case PartType.MetalWing:
+		        return 20f;
+		    case PartType.MetalTail:
+		        return 21f;
+		    case PartType.Rotor:
+		        return 22f;
+		    case PartType.MotorWheel:
+		        return 23f;
+		    case PartType.TNT:
+		        return 24f;
+		    case PartType.EngineSmall:
+		        return 25f;
+		    case PartType.EngineBig:
+		        return 26f;
+		    case PartType.NormalWheel:
+		        return 27f;
+		    case PartType.Spring:
+		        return 28f;
+		    case PartType.Umbrella:
+		        return 29f;
+		    case PartType.Rope:
+		        return 30f;
+		    case PartType.CokeBottle:
+		        return 31f;
+		    case PartType.KingPig:
+		        return 3e+38f;
+		    case PartType.RedRocket:
+		        return 33f;
+		    case PartType.SodaBottle:
+		        return 34f;
+		    case PartType.PoweredUmbrella:
+		        return 35f;
+		    case PartType.Egg:
+		        return 3e+38f;
+		    case PartType.JetEngine:
+		        return 37f;
+		    case PartType.ObsoleteWheel:
+		        return 38f;
+		    case PartType.SpringBoxingGlove:
+		        return 39f;
+		    case PartType.StickyWheel:
+		        return 40f; 
+			case PartType.GrapplingHook: 
+				return 41f; 
+			case PartType.Pumpkin: 
+				return 3e+38f; 
+			case PartType.Kicker: 
+				return 2000f; 
+			case PartType.Gearbox: 
+				return 44f; 
+			case PartType.GoldenPig: 
+				return 45f; 
+			case PartType.PointLight: 
+				return 46f; 
+			case PartType.SpotLight: 
+				return 47f; 
+			case PartType.TimeBomb: 
+				return 48f; 
+			case PartType.ElectricalPart: 
+				return 2000f; 
+			case PartType.Irrational: 
+				return 50f;  
+			default: // MAX
+				return 51f;  
+		}
+	}
+
 	public enum AutoAlignType
 	{
 		None = 0,
@@ -232,8 +341,9 @@ public class BasePart : WPFMonoBehaviour
 	public Vector3 lateSpeed;
 	
 	public float m_hp = 1000f;
+	public float m_maxHp;
 
-	public const float m_minDamage = 5f;
+	public const float m_minDamage = 4f;
 
 	public void Hurt(float damage)
     {
@@ -244,7 +354,9 @@ public class BasePart : WPFMonoBehaviour
         m_hp -= damage;
         if (m_hp <= 0f)
         {
-            Destroy(gameObject);
+	        //may cause bug when there's a single line of Destroy(gameObject);
+	        contraption.RemovePart(this);
+	        Destroy(gameObject);
         }
     }
 

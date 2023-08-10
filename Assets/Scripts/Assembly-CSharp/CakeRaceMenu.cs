@@ -870,7 +870,7 @@ public class CakeRaceMenu : WPFMonoBehaviour
 
 	private int SeasonDaysLeft()
 	{
-		return (0 - Singleton<TimeManager>.Instance.ServerTime.DayOfWeek + 7) % 7;
+		return (0 - (int)Singleton<TimeManager>.Instance.ServerTime.DayOfWeek + 7) % 7;
 	}
 
 	public void GoToMainMenu()

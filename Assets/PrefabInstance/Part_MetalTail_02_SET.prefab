@@ -97,7 +97,8 @@ MonoBehaviour:
   m_constructionIconSprite: {fileID: 114663252241001222, guid: 0d624640f5baa08468095c8867468f83, type: 3}
   lateSpeed: {x: 0, y: 0, z: 0}
   m_hp: 1000
-  liftConstant: 1
+  m_maxHp: 1000
+  liftConstant: 2
 --- !u!114 &114203650746078900
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -9,8 +9,6 @@ public class PropertyPanelBuilding : PropertyPanel
 
 	private Camera m_camera;
 
-	private bool m_isVisible;
-
 	public static PropertyPanelBuilding Instance => s_instance;
 
 	public static PropertyPanelBuilding Create()
@@ -30,7 +28,6 @@ public class PropertyPanelBuilding : PropertyPanel
 	{
 		CreateText("PropertyTextBuilding", new Vector2(38f, -216f));
 		m_camera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
-		m_isVisible = false;
 	}
 
 	public override void FixedUpdate()
@@ -61,14 +58,6 @@ public class PropertyPanelBuilding : PropertyPanel
 		default:
 			m_textMesh.text = string.Empty;
 			break;
-		}
-		if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.Space))
-		{
-			m_isVisible = !m_isVisible;
-		}
-		if (!m_isVisible)
-		{
-			m_textMesh.text = string.Empty;
 		}
 	}
 

@@ -3,13 +3,13 @@ using UnityEngine;
 
 public class VccPart : ElectricalPart
 {
-	private GameObject m_inactiveSprite;
+	public GameObject m_inactiveSprite;
 
-	private GameObject m_activeSprite;
+	public GameObject m_activeSprite;
 
-	private Vcc m_vcc;
+	public Vcc m_vcc;
 
-	private bool m_enabled;
+	public bool m_enabled;
 
 	public override IEnumerable<ElectricalElement> ElectricalElements => m_vcc.ToEnumerable();
 
