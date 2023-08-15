@@ -2,8 +2,14 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Created when enter playmode(in game).
+/// This contains a set of all <c>BasePart</c>, with a cameraman <c>Pig</c>. 
+/// Use <code>Contraption.Instance</code> to reference!
+/// </summary>
 public class Contraption : WPFMonoBehaviour
 {
+	
 	public struct JointConnection
 	{
 		public BasePart partA;
@@ -119,7 +125,7 @@ public class Contraption : WPFMonoBehaviour
 
 		private long GetKey(int x, int y, int level)
 		{
-			return x + ((long)y << 16) + ((long)level << 32);
+			return x + ((long)y << 16) + ((long)level << 32);//evil bit shift hack
 		}
 	}
 
@@ -129,6 +135,10 @@ public class Contraption : WPFMonoBehaviour
 
 	public int m_enginesAmount;
 
+	/// <summary>
+	/// The place of every BasePart, assigned when:
+	/// <see cref="StartContraption"/>
+	/// </summary>
 	protected List<BasePart> m_parts = new List<BasePart>();
 
 	protected Dictionary<int, BasePart> m_partMap = new Dictionary<int, BasePart>();
@@ -647,6 +657,13 @@ public class Contraption : WPFMonoBehaviour
 		return default(Rect);
 	}
 
+	/// <summary>
+	/// Can 2 parts connect in given direction
+	/// </summary>
+	/// <param name="part1">First Part</param>
+	/// <param name="part2">Second Part</param>
+	/// <param name="direction">Connection direction</param>
+	/// <returns>(bool)Can Parts Connect in given direction</returns>
 	public bool CanConnectTo(BasePart part1, BasePart part2, BasePart.Direction direction)
 	{
 		bool num;
@@ -670,20 +687,21 @@ public class Contraption : WPFMonoBehaviour
 				{
 					if (part1.m_gridRotation == part2.m_gridRotation)
 					{
-						if (part1.m_gridRotation != 0 && part1.m_gridRotation != BasePart.GridRotation.Deg_180)
+						if (part1.m_gridRotation != (BasePart.GridRotation)0 && part1.m_gridRotation != BasePart.GridRotation.Deg_180)
 						{
 							if (direction != BasePart.Direction.Left)
 							{
+								//annoying wing rotation check, do not change
 								num = direction == BasePart.Direction.Right;
-								goto IL_00c2;
+								goto CONDITION_CHECK;
 							}
 						}
 						else if (direction != BasePart.Direction.Down)
 						{
 							num = direction == BasePart.Direction.Up;
-							goto IL_00c2;
+							goto CONDITION_CHECK;
 						}
-						goto IL_00c4;
+						goto RETURN_TRUE;
 					}
 				}
 				else if (direction == BasePart.Direction.Down || direction == BasePart.Direction.Up)
@@ -692,17 +710,19 @@ public class Contraption : WPFMonoBehaviour
 				}
 			}
 		}
-		goto IL_00d0;
-		IL_00d0:
+		//what the hell is this!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		//INSANE JUMP
+		goto RETURN_FALSE;
+		RETURN_FALSE:
 		return false;
-		IL_00c4:
+		RETURN_TRUE:
 		return true;
-		IL_00c2:
+		CONDITION_CHECK:
 		if (num)
 		{
-			goto IL_00c4;
+			goto RETURN_TRUE;
 		}
-		goto IL_00d0;
+		goto RETURN_FALSE;
 	}
 
 	public bool CanConnectTo(BasePart part, BasePart.JointConnectionDirection direction)
@@ -777,11 +797,14 @@ public class Contraption : WPFMonoBehaviour
 		};
 	}
 
+	/// <summary>
+	/// Initialize your in-game contraption
+	/// </summary>
 	public void StartContraption()
 	{
 		m_broken = false;
 		m_stopTimer = 0f;
-		m_parts = new List<BasePart>(GetComponentsInChildren<BasePart>());
+		m_parts = new List<BasePart>(GetComponentsInChildren<BasePart>());//Get every BasePart(s)
 		m_ropes.Clear();
 		m_powerConsumption = 0f;
 		m_enginesAmount = 0;
@@ -794,22 +817,23 @@ public class Contraption : WPFMonoBehaviour
 			Vector3 localPosition = part.transform.localPosition;
 			int x = Mathf.RoundToInt(localPosition.x);
 			int y = Mathf.RoundToInt(localPosition.y);
-			SetPartPos(x, y, part);
+			SetPartPos(x, y, part);//Set outer part
 			if (part.enclosedInto != null)
 			{
-				SetPartPos(x, y, part.enclosedInto);
+				SetPartPos(x, y, part.enclosedInto);//Set inner part
 			}
 			if (part.IsIntegralPart())
 			{
 				m_integralParts.Add(part);
 			}
+			//
 			part.gameObject.tag = "Contraption";
 			for (int i = 0; i < part.transform.childCount; i++)
 			{
 				part.transform.GetChild(i).gameObject.tag = "Contraption";
 			}
-			int @int = INSettings.GetInt(INFeature.CameraTargetPartType);
-			if (part.m_partType == ((SortedPartType)@int).ToPartType())
+			int partTypeAsInt = INSettings.GetInt(INFeature.CameraTargetPartType);
+			if (part.m_partType == /*Converted to The Camera Targeted Part Type, Usually "Pig"*/((SortedPartType)partTypeAsInt).ToPartType())
 			{
 				m_cameraTarget = part;
 			}
@@ -818,22 +842,30 @@ public class Contraption : WPFMonoBehaviour
 				m_pig = part;
 			}
 			m_powerConsumption += part.m_powerConsumption;
+			//-----------------------FIRST LOOP-----------------------
+			//END OF BASIC DATA INITIALIZATION
 		}
+		
 		foreach (BasePart part2 in m_parts)
 		{
 			int coordX = part2.m_coordX;
 			int coordY = part2.m_coordY;
-			m_contraptionDataSet.AddPart(coordX, coordY, (int)part2.m_partType, part2.customPartIndex, part2.m_gridRotation, part2.m_flipped);
+			m_contraptionDataSet.AddPart(coordX, coordY, (int)part2.m_partType, part2.customPartIndex, part2.m_gridRotation, part2.m_flipped);//Load Parts
 			part2.contraption = this;
 			part2.EnsureRigidbody();
+			//-----------------------SECOND LOOP-----------------------
+			//END OF PART DATA ASSIGNMENT
 		}
 		foreach (BasePart part3 in m_parts)
 		{
+			//-----------------------THIRD LOOP|SEASON ONE-----------------------
+			//START OF PART CONNECTION ASSIGNMENT
 			int coordX2 = part3.m_coordX;
 			int coordY2 = part3.m_coordY;
 			BasePart.JointConnectionDirection customJointConnectionDirection = part3.GetCustomJointConnectionDirection();
-			if (part3.m_jointConnectionType != 0)
+			if (part3.m_jointConnectionType != BasePart.JointConnectionType.None)//THIS PART CONNECTS!
 			{
+				//BLOODY HELL OF CONNECTION CALCULATION
 				BasePart basePart = FindPartAt(coordX2 + 1, coordY2, part3);
 				BasePart basePart2 = FindPartAt(coordX2, coordY2 - 1, part3);
 				if (CanConnectTo(part3, basePart, BasePart.Direction.Right))
@@ -997,6 +1029,8 @@ public class Contraption : WPFMonoBehaviour
 				}
 			}
 		}
+		//-----------------------THIRD LOOP|SEASON TWO-----------------------
+		//START POST-INITIALIZATION
 		INContraption.Instance.IsRunning = true;
 		INContraption.Instance.Initialize();
 		for (int m = 0; m < m_parts.Count; m++)
@@ -2674,17 +2708,13 @@ public class Contraption : WPFMonoBehaviour
 		}
 	}
 
-	public BasePart FindPartAt(int x, int y)
-	{
-		return FindPartAt(x, y, 0);
-	}
-
+	//Integrated a variation method of FindPartAt by adding a default value
 	public BasePart FindPartAt(int x, int y, BasePart part)
 	{
 		return FindPartAt(x, y, (part != null) ? part.GenerationIndex : 0);
 	}
 
-	public BasePart FindPartAt(int x, int y, int level)
+	public BasePart FindPartAt(int x, int y, int level = 0)
 	{
 		m_runtimePartMap.TryGet(x, y, level, out var part);
 		return part;

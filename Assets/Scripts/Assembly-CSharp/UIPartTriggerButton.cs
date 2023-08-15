@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 public class UIPartTriggerButton : UIPartButton
 {
+	//used in UIPartButtonList.prefab as a public field for script UIPartButtonList.cs
 	private enum TriggerButtonState
 	{
 		Disabled = 0,
@@ -62,18 +63,20 @@ public class UIPartTriggerButton : UIPartButton
 
 	public void OnTriggered()
 	{
-		bool flag = false;
+		//basic button logic
+		bool isPartEnabled = false;
 		foreach (BasePart part in m_parts)
 		{
 			if (part.IsEnabled())
 			{
-				flag = true;
+				isPartEnabled = true;
 				break;
 			}
 		}
 		foreach (BasePart part2 in m_parts)
 		{
-			if (!m_consistent || (!flag ^ part2.IsEnabled()))
+			/*m_consistent is ture for parts with continuous effects*/
+			if (!m_consistent || (!isPartEnabled /*XOR*/^ part2.IsEnabled()))
 			{
 				part2.OnButtonTriggered(this);
 			}

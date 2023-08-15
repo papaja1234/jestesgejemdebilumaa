@@ -479,6 +479,26 @@ public class UIPartButtonList : MonoBehaviour
 
 	private void CreateButtons()
 	{
+		static IEnumerable<(int, int)> GetComponentInfo()
+		{
+			int componentCount = Contraption.Instance.ConnectedComponentCount;
+			for (int k = 0; k < componentCount; k++)
+			{
+				yield return (-Contraption.Instance.ComponentPartCount(k), k);
+			}
+		}
+		static IEnumerable<UIPartButtonInfo> GetAllButtonInfo(BasePart part)
+		{
+			foreach (UIPartTriggerButtonInfo item4 in part.GetTriggerButtonInfo())
+			{
+				yield return item4.Value;
+			}
+			foreach (UIPartSliderButtonInfo item5 in part.GetSliderButtonInfo())
+			{
+				yield return item5.Value;
+			}
+		}
+		//Main part starts here
 		int connectedComponentCount = Contraption.Instance.ConnectedComponentCount;
 		int num = Math.Min(Settings.MaxSeparationCount, connectedComponentCount);
 		m_componentHeap.Clear();
@@ -582,25 +602,7 @@ public class UIPartButtonList : MonoBehaviour
 			}
 		}
 		m_currentButtons = list;
-		static IEnumerable<UIPartButtonInfo> GetAllButtonInfo(BasePart part)
-		{
-			foreach (UIPartTriggerButtonInfo item4 in part.GetTriggerButtonInfo())
-			{
-				yield return item4.Value;
-			}
-			foreach (UIPartSliderButtonInfo item5 in part.GetSliderButtonInfo())
-			{
-				yield return item5.Value;
-			}
-		}
-		static IEnumerable<(int, int)> GetComponentInfo()
-		{
-			int componentCount = Contraption.Instance.ConnectedComponentCount;
-			for (int k = 0; k < componentCount; k++)
-			{
-				yield return (-Contraption.Instance.ComponentPartCount(k), k);
-			}
-		}
+		
 	}
 
 	private void SetButtonSprite(UIPartButtonInfo buttonInfo, UIPartButton button)
@@ -631,7 +633,7 @@ public class UIPartButtonList : MonoBehaviour
 		bool displayButtonIndex = Settings.DisplayButtonIndex;
 		for (int i = 0; i < m_currentButtons.Count; i++)
 		{
-			char c = (char)(65 + i % 26);
+			char c = (char)(65 + i % 26);//get alphabetical order button index for keyboard control
 			char c2 = (char)(48 + i / 26);
 			string text = (displayButtonIndex ? ((i < 26) ? c.ToString() : (c.ToString() + c2)) : string.Empty);
 			m_currentButtons[i].DisplayIndexText(text);

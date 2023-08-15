@@ -75,7 +75,7 @@ public class BasePart : WPFMonoBehaviour
 		MAX = 51
 	}
 
-	public float GetMaxHp( BasePart basePart)
+	public float GetMaxHp( BasePart basePart)//this is still WIP
 	{
 		switch (basePart.m_partType)
 		{
@@ -162,7 +162,7 @@ public class BasePart : WPFMonoBehaviour
 			case PartType.GrapplingHook: 
 				return 41f; 
 			case PartType.Pumpkin: 
-				return 3e+38f; 
+				return float.PositiveInfinity; 
 			case PartType.Kicker: 
 				return 2000f; 
 			case PartType.Gearbox: 
@@ -190,7 +190,10 @@ public class BasePart : WPFMonoBehaviour
 		Rotate = 1,
 		FlipVertically = 2
 	}
-
+/// <summary>
+/// An alternate expression for BasePart.GridRotation but directional.
+/// DON'T USE (BasePart.Direction)Integer !
+/// </summary>
 	public enum Direction
 	{
 		Right = 0,
@@ -202,7 +205,21 @@ public class BasePart : WPFMonoBehaviour
 		DownLeft = 6,
 		DownRight = 7
 	}
-
+/// <summary>
+/// Mathematically Counterclockwise, [0..3]=>0 to 270 deg
+/// DON'T USE (BasePart.GridRotation)Integer !
+/// <example>
+/// Deg_0 = 0,
+/// Deg_90 = 1,
+/// Deg_180 = 2,
+/// Deg_270 = 3,
+/// Deg_45 = 4,
+/// Deg_135 = 5,
+/// Deg_225 = 6,
+/// Deg_315 = 7,
+/// Deg_Max = 8
+/// </example>
+/// </summary>
 	public enum GridRotation
 	{
 		Deg_0 = 0,
@@ -759,6 +776,11 @@ public class BasePart : WPFMonoBehaviour
 		return jointConnectionDirection;
 	}
 
+	/// <summary>
+	/// Inverse any given <c>BasePart.Direction</c>
+	/// </summary>
+	/// <param name="direction">Given direction</param>
+	/// <returns>(BasePart.Direction)Inverse direction of given direction</returns>
 	public static Direction InverseDirection(Direction direction)
 	{
 		return direction switch
@@ -771,6 +793,15 @@ public class BasePart : WPFMonoBehaviour
 		};
 	}
 
+	/// <summary>
+	/// Extension method to <c>BasePart</c>
+	/// [Check this function to add more connection directions]
+	/// </summary>
+	/// <param name="direction">The connection direction that will be checked</param>
+	/// <returns>(bool)Can this part connect to given direction</returns>
+	/// <seealso cref="JointConnectionDirection"/>
+	/// <seealso cref="Direction"/>
+	/// <seealso cref="GridRotation"/>
 	public bool CanConnectTo(Direction direction)
 	{
 		switch (GetJointConnectionDirection())
@@ -1235,7 +1266,9 @@ public class BasePart : WPFMonoBehaviour
 	{
 		return true;
 	}
-
+/// <summary>
+/// Add and Ensure RigidBody to this BasePart
+/// </summary>
 	public virtual void EnsureRigidbody()
 	{
 		if (base.rigidbody == null)
