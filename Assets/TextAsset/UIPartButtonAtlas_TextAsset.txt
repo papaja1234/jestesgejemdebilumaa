@@ -30,4 +30,4 @@ SliderButton_UpTrigger_Sprite			0		896		83		48		0.7		0.7		768
 SliderButton_DownTrigger_Sprite			128		896		83		48		0.7		0.7		768
 SliderButton_ResetTrigger_Sprite		256		896		84		84		0.7		0.7		768
 
-MovableLight_Sprite						760		604		80		80		0.7		0.7		768
+MovableLight_Sprite						760		640		80		80		0.7		0.7		768

@@ -180,25 +180,25 @@ public class SpotLight : BasePart
 			EntityLight entityLight = base.gameObject.AddComponent<EntityLight>();
 			if (m_partTier == PartTier.Regular)
 			{
-				entityLight.Type = 0;
+				entityLight.Type = (EntityLight.EntityLightType)0;
 				entityLight.HalfWidth = INSettings.GetFloat(INFeature.LinearLightWidth1) * 0.5f;
 				entityLight.Length = INSettings.GetFloat(INFeature.LinearLightLength2);
 			}
 			else if (m_partTier == PartTier.Common)
 			{
-				entityLight.Type = 0;
+				entityLight.Type = (EntityLight.EntityLightType)0;
 				entityLight.HalfWidth = INSettings.GetFloat(INFeature.LinearLightWidth1) * 0.5f;
 				entityLight.Length = INSettings.GetFloat(INFeature.LinearLightLength1);
 			}
 			else if (m_partTier == PartTier.Rare)
 			{
-				entityLight.Type = 1;
+				entityLight.Type = (EntityLight.EntityLightType)1;
 				entityLight.HalfWidth = INSettings.GetFloat(INFeature.LinearLightWidth2) * 0.5f;
 				entityLight.Length = INSettings.GetFloat(INFeature.LinearLightLength2);
 			}
 			else if (m_partTier == PartTier.Epic)
 			{
-				entityLight.Type = 1;
+				entityLight.Type = (EntityLight.EntityLightType)1;
 				entityLight.HalfWidth = INSettings.GetFloat(INFeature.LinearLightWidth2) * 0.5f;
 				entityLight.Length = INSettings.GetFloat(INFeature.LinearLightLength1);
 			}

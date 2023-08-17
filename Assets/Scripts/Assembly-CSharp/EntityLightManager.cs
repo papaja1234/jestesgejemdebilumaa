@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class EntityLightManager : PartManager
 {
+	/// <summary>
+	/// Data Container for Rigidbody
+	/// </summary>
 	public struct RigidbodyData
 	{
 		public Rigidbody Rigidbody;
@@ -25,6 +28,9 @@ public class EntityLightManager : PartManager
 		}
 	}
 
+	/// <summary>
+	/// Data Container for Time of Impact, used for physics
+	/// </summary>
 	public readonly struct TOIResult
 	{
 		public readonly float TimeOfImpact;
@@ -57,6 +63,9 @@ public class EntityLightManager : PartManager
 		}
 	}
 
+	/// <summary>
+	/// Data Container for Continuous Collision Detection
+	/// </summary>
 	public struct CCDData
 	{
 		public Rigidbody Rigidbody;
@@ -101,6 +110,9 @@ public class EntityLightManager : PartManager
 		}
 	}
 
+	/// <summary>
+	/// Data Container for Entity Light Physics
+	/// </summary>
 	public readonly struct ImpulseData
 	{
 		public readonly EntityLight Light;
@@ -151,6 +163,9 @@ public class EntityLightManager : PartManager
 
 	private RigidbodyData[] m_rigidbodyData;
 
+	/// <summary>
+	/// List of all Entity Lights
+	/// </summary>
 	private List<EntityLight> m_lights;
 
 	private List<ImpulseData>[] m_lightImpulses;
@@ -192,19 +207,21 @@ public class EntityLightManager : PartManager
 				{
 					m_lights.Add(spotLight.EntityLight);
 				}
-			}
+			}// assign every entity light
 		}
-		_ = m_lights.Count;
+		_ = m_lights.Count;//?????????????????????????????????????????????????????????????????
 		List<EntityLight> lights = m_lights;
 		UpdateLights(lights);
+		//update lights
 		UpdateAlienLights(lights);
-		foreach (EntityLight item in lights)
+		
+		foreach (EntityLight entityLight in lights)
 		{
-			if (item.Type != 4&&(bool)item)
+			if (entityLight.Type != EntityLight.EntityLightType.LightBox&&(bool)entityLight)
 			{
-				item.Data.Set(item);
+				entityLight.Data.Set(entityLight);
 			}
-			item.UpdateSelf();
+			entityLight.UpdateSelf();
 		}
 		CCDData data = default(CCDData);
 		bool[] array = new bool[m_componentCount];
@@ -225,7 +242,7 @@ public class EntityLightManager : PartManager
 				{
 					continue;
 				}
-				if (item2.Type == 4)
+				if (item2.Type == EntityLight.EntityLightType.SmallLightShield)
 				{
 					if (array[item2.Index / 5])
 					{
@@ -238,11 +255,10 @@ public class EntityLightManager : PartManager
 					list.Add(item2);
 				}
 			}
-			int num = 4;
 			int count = list.Count;
 			int num2 = -1;
 			int num3 = -1;
-			for (int j = 0; j < num; j++)
+			for (int j = 0; j < 4; j++)
 			{
 				num3 = -1;
 				TOIResult result = TOIResult.Default;
@@ -278,7 +294,7 @@ public class EntityLightManager : PartManager
 				Rigidbody rigidbody = item4.Rigidbody;
 				float num6 = item4.Electricity * num5 * num5;
 				float num7 = num5 * Defend(item4.Light.Data.Position1, item4.Position, num6, m_electricities[light.Index]);
-				if (light.Type == 4)
+				if (light.Type == EntityLight.EntityLightType.SmallLightShield)
 				{
 					foreach (EntityLight item5 in lights)
 					{
@@ -316,9 +332,9 @@ public class EntityLightManager : PartManager
 
 	private bool BroadPhaseDetect(EntityLight light, ref CCDData data)
 	{
-		int type = light.Type;
+		EntityLight.EntityLightType type = light.Type;
 		EntityLight.LightData data2 = light.Data;
-		if (type == 0 || type == 1)
+		if (type is EntityLight.EntityLightType.ThinLightPillar or EntityLight.EntityLightType.BoldLightPillar)
 		{
 			float valueX = data.Position0.x - data2.Position0.x;
 			float valueY = data.Position0.y - data2.Position0.y;
@@ -343,23 +359,28 @@ public class EntityLightManager : PartManager
 			}
 			return true;
 		}
-		float num = data.Position0.x - data2.Position0.x;
-		float num2 = data.Position1.x - data2.Position1.x;
-		float num3 = data.Position1.y - data2.Position1.y;
-		float num4 = num * num + num * num;
-		float num5 = num2 * num2 + num3 * num3;
+		//WHAT THE HECK IS THIS
+		// float num = data.Position0.x - data2.Position0.x;
+		// float num2 = data.Position1.x - data2.Position1.x;
+		// float num3 = data.Position1.y - data2.Position1.y;
+		// float num4 = num * num + num * num;
+		// float num5 = num2 * num2 + num3 * num3;
+		// float num6 = light.Length + m_maxDetectionDistance;
+		// float num7 = num6 * num6;
+		// return !(num4 > num7) || !(num5 > num7);
+		float deltaX1 = data.Position0.x - data2.Position0.x;
+		float deltaX2 = data.Position1.x - data2.Position1.x;
+		float deltaY2 = data.Position1.y - data2.Position1.y;
+		float twoTimesSquaredDeltaX1 = deltaX1 * deltaX1 + deltaX1 * deltaX1;
+		float num5 = deltaX2 * deltaX2 + deltaY2 * deltaY2;
 		float num6 = light.Length + m_maxDetectionDistance;
 		float num7 = num6 * num6;
-		if (num4 > num7 && num5 > num7)
-		{
-			return false;
-		}
-		return true;
+		return !(twoTimesSquaredDeltaX1 > num7) || !(num5 > num7);
 	}
 
 	private bool ComputeTimeOfImpact(EntityLight light, ref CCDData data, out TOIResult result)
 	{
-		switch (light.Type)
+		switch ((int)light.Type)
 		{
 		case 0:
 		case 1:
@@ -372,7 +393,7 @@ public class EntityLightManager : PartManager
 		}
 	}
 
-	private bool ComputeTimeOfImpactRect(EntityLight light, ref CCDData data, out TOIResult result)
+	private static bool ComputeTimeOfImpactRect(EntityLight light, ref CCDData data, out TOIResult result)
 	{
 		result = TOIResult.Default;
 		EntityLight.LightData data2 = light.Data;
@@ -750,9 +771,7 @@ public class EntityLightManager : PartManager
 			(float, int) tuple2 = (item2, 1);
 			if (tuple.CompareTo(tuple2) > 0)
 			{
-				(float, int) tuple3 = tuple;
-				tuple = tuple2;
-				tuple2 = tuple3;
+				(tuple, tuple2) = (tuple2, tuple);//tuple swap
 			}
 			int num19 = -1;
 			int num20 = -1;
@@ -776,7 +795,10 @@ public class EntityLightManager : PartManager
 				float num27 = (float)num24 * num + bounds.A;
 				float num28 = (float)num25 * num6;
 				float num29 = (float)num25 * num2 + bounds.B;
-				QuadraticFunction quadraticFunction = new QuadraticFunction(num26 * num26 + num28 * num28, 2f * (num26 * num27 + num28 * num29), num27 * num27 + num29 * num29);
+				QuadraticFunction quadraticFunction = new QuadraticFunction(/*good old quadratic, f(x)=ax^2+bx+c*/
+					num26 * num26 + num28 * num28,
+					2f * (num26 * num27 + num28 * num29),
+					num27 * num27 + num29 * num29);
 				QuadraticFunction.IntersectResult intersections = quadraticFunction.GetIntersections(num9);
 				QuadraticFunction.IntersectResult intersections2 = quadraticFunction.GetIntersections(num10);
 				for (int j = 0; j < intersections.Count; j++)
@@ -877,35 +899,37 @@ public class EntityLightManager : PartManager
 		float num4 = dX * num2 - dY * num;
 		float num5 = dX * dX + dY * dY;
 		float num6 = r * r * num5 - num4 * num4;
-		float num7 = 1E-10f;
-		if (num6 < 0f - num7)
+		const float epsilon = 1E-10f;
+		switch (num6)
 		{
-			resultCount = 0;
-			result1 = float.NaN;
-			result2 = float.NaN;
-		}
-		else if (num6 < num7)
-		{
-			resultCount = 1;
-			result1 = (0f - num3) / num5;
-			result2 = (0f - num3) / num5;
-		}
-		else
-		{
-			float num8 = (float)Math.Sqrt(num6);
-			resultCount = 2;
-			result1 = (0f - num3 - num8) / num5;
-			result2 = (0f - num3 + num8) / num5;
+			case < 0f - epsilon:
+				resultCount = 0;
+				result1 = float.NaN;
+				result2 = float.NaN;
+				break;
+			case < epsilon:
+				resultCount = 1;
+				result1 = (0f - num3) / num5;
+				result2 = (0f - num3) / num5;
+				break;
+			default:
+			{
+				float num8 = (float)Math.Sqrt(num6);
+				resultCount = 2;
+				result1 = (0f - num3 - num8) / num5;
+				result2 = (0f - num3 + num8) / num5;
+				break;
+			}
 		}
 	}
 
 	private void UpdateLights(List<EntityLight> lights)
 	{
 		int num = 0;
-		int num2 = 5;
+		const int num2 = 5;
 		float num3 = 20000f * INSettings.GetFloat(INFeature.LightElectricityFactor);
 		float @float = INSettings.GetFloat(INFeature.LightChargingSpeedFactor);
-		float num4 = 5000f;
+		const float num4 = 5000f;
 		List<BasePart> parts = Contraption.Instance.Parts;
 		int[] array = new int[Contraption.Instance.ConnectedComponentCount];
 		for (int i = 0; i < array.Length; i++)
@@ -927,7 +951,7 @@ public class EntityLightManager : PartManager
 			int componentIndex2 = light2.ComponentIndex;
 			if (componentIndex2 != -1)
 			{
-				light2.Index = array[componentIndex2] * num2 + light2.Type;
+				light2.Index = array[componentIndex2] * num2 + (int)light2.Type;
 			}
 		}
 		m_electricities = new float[num * num2];
@@ -965,12 +989,11 @@ public class EntityLightManager : PartManager
 			{
 				num5 += m_lightCounts[k * num2 + l];
 			}
-			if (num5 != 0)
+
+			if (num5 == 0) continue;
+			for (int m = 0; m < num2; m++)
 			{
-				for (int m = 0; m < num2; m++)
-				{
-					m_capacities[k * num2 + m] += array2[k] * (float)m_lightCounts[k * num2 + m] / (float)num5;
-				}
+				m_capacities[k * num2 + m] += array2[k] * (float)m_lightCounts[k * num2 + m] / (float)num5;
 			}
 		}
 		for (int n = 0; n < num * num2; n++)
@@ -985,28 +1008,24 @@ public class EntityLightManager : PartManager
 		{
 			int num10 = 0;
 			float num11 = 0f;
-			for (int num12 = 0; num12 < num2; num12++)
+			for (int LOOP_INDEX_1 = 0; LOOP_INDEX_1 < num2; LOOP_INDEX_1++)
 			{
-				num11 += m_electricities[num9 * num2 + num12];
+				num11 += m_electricities[num9 * num2 + LOOP_INDEX_1];
 			}
-			for (int num13 = num2; num13 > 0; num13--)
+			for (int LOOP_INDEX_2 = num2; LOOP_INDEX_2 > 0; LOOP_INDEX_2--)
 			{
 				int num14 = 0;
 				float num15 = float.MaxValue;
 				for (int num16 = 0; num16 < num2; num16++)
 				{
-					if ((num10 & (1 << num16)) == 0)
-					{
-						float num17 = m_capacities[num9 * num2 + num16];
-						if (num17 < num15)
-						{
-							num14 = num16;
-							num15 = num17;
-						}
-					}
+					if ((num10 & (1 << num16)) != 0) continue;//EVIL BIT SHIFT
+					float num17 = m_capacities[num9 * num2 + num16];
+					if (num17 >= num15/*num17 is infinity*/) continue;
+					num14 = num16;
+					num15 = num17;
 				}
 				num10 |= 1 << num14;
-				float num18 = ((num15 < num11 / (float)num13) ? num15 : (num11 / (float)num13));
+				float num18 = ((num15 < num11 / (float)LOOP_INDEX_2) ? num15 : (num11 / (float)LOOP_INDEX_2));
 				num11 -= num18;
 				int num19 = m_lightCounts[num9 * num2 + num14];
 				if (num19 != 0)
@@ -1032,8 +1051,17 @@ public class EntityLightManager : PartManager
 		a4 = b4;
 	}
 
+	/// <summary>
+	/// Quick sort 4 <c>IComparable</c>, from small to big: b1, b2, b3, b4
+	/// </summary>
+	/// <param name="a1"></param>
+	/// <param name="a2"></param>
+	/// <param name="a3"></param>
+	/// <param name="a4"></param>
+	/// <typeparam name="T">T is IComparable</typeparam>
 	private void SortFour<T>(T a1, T a2, T a3, T a4, out T b1, out T b2, out T b3, out T b4) where T : IComparable<T>
 	{
+		//ignore all things below lol
 		T val;
 		T val2;
 		if (a1.CompareTo(a2) <= 0)
@@ -1080,9 +1108,7 @@ public class EntityLightManager : PartManager
 		}
 		if (b2.CompareTo(b3) > 0)
 		{
-			T val5 = b2;
-			b2 = b3;
-			b3 = val5;
+			(b2, b3) = (b3, b2);
 		}
 	}
 
@@ -1097,38 +1123,38 @@ public class EntityLightManager : PartManager
 		foreach (EntityLight light in lights)
 		{
 			int connectedComponent = light.Part.ConnectedComponent;
-			if (light.Type == 4 && connectedComponent != -1)
+			if (light.Type == EntityLight.EntityLightType.SmallLightShield && connectedComponent != -1)
 			{
 				array[connectedComponent] = num++;
 			}
 		}
 		m_alienComponentCount = num;
-		List<BasePart> parts = Contraption.Instance.Parts;
-		List<BasePart>[] array2 = new List<BasePart>[num];
-		List<EntityLight>[] array3 = new List<EntityLight>[num];
+		List<BasePart> everyBasePart = Contraption.Instance.Parts;
+		List<BasePart>[] allBasePartsArray = new List<BasePart>[num];
+		List<EntityLight>[] entityLightListArray = new List<EntityLight>[num];
 		for (int j = 0; j < num; j++)
 		{
-			array2[j] = new List<BasePart>();
-			array3[j] = new List<EntityLight>();
+			allBasePartsArray[j] = new List<BasePart>();
+			entityLightListArray[j] = new List<EntityLight>();
 		}
-		foreach (BasePart item in parts)
+		foreach (BasePart item in everyBasePart)
 		{
 			if (item.ConnectedComponent != -1)
 			{
 				int num2 = array[item.ConnectedComponent];
 				if (num2 != -1)
 				{
-					array2[num2].Add(item);
+					allBasePartsArray[num2].Add(item);
 				}
 			}
 		}
 		foreach (EntityLight light2 in lights)
 		{
 			int connectedComponent2 = light2.Part.ConnectedComponent;
-			if (light2.Type == 4 && connectedComponent2 != -1)
+			if (light2.Type == EntityLight.EntityLightType.SmallLightShield && connectedComponent2 != -1)
 			{
 				int num3 = array[connectedComponent2];
-				array3[num3].Add(light2);
+				entityLightListArray[num3].Add(light2);
 			}
 		}
 		float fixedDeltaTime = Time.fixedDeltaTime;
@@ -1139,7 +1165,7 @@ public class EntityLightManager : PartManager
 			float num5 = 0f;
 			Vector2 position = default(Vector2);
 			Vector2 prePosition = default(Vector2);
-			List<BasePart> list = array2[k];
+			List<BasePart> list = allBasePartsArray[k];
 			foreach (BasePart item2 in list)
 			{
 				if (!item2.HasMultipleRigidbodies())
@@ -1166,7 +1192,7 @@ public class EntityLightManager : PartManager
 			float num8 = 2f * Mathf.Sqrt(list.Count) * @float;
 			float num9 = Mathf.Sqrt(num5);
 			num9 = ((num9 < num8) ? num9 : num8) + 4f;
-			foreach (EntityLight item4 in array3[k])
+			foreach (EntityLight item4 in entityLightListArray[k])
 			{
 				if (item4.Enabled)
 				{
@@ -1180,7 +1206,7 @@ public class EntityLightManager : PartManager
 				item4.Data.SetPosition(position, prePosition);
 			}
 			float coefficient = ((num7 <= 1) ? 1 : num7);
-			foreach (EntityLight item5 in array3[k])
+			foreach (EntityLight item5 in entityLightListArray[k])
 			{
 				item5.m_coefficient = coefficient;
 			}
@@ -1201,32 +1227,31 @@ public class EntityLightManager : PartManager
 		for (int i = 0; i < components.Length; i++)
 		{
 			EntityLight entityLight = components[i];
-			if (!entityLight.Enabled || entityLight.Type != 4 || !(m_electricities[entityLight.Index] / m_capacities[entityLight.Index] > 0f))
+			if (!entityLight.Enabled || entityLight.Type != EntityLight.EntityLightType.SmallLightShield || !(m_electricities[entityLight.Index] / m_capacities[entityLight.Index] > 0f))
 			{
 				continue;
 			}
 			Vector2 position = entityLight.Data.Position1;
+			//WHAT THE HELL IS THIS
 			float num2 = position.x - from.x;
 			float num3 = position.y - from.y;
 			float num4 = position.x - to.x;
 			float num5 = position.y - to.y;
 			float num6 = entityLight.Length - entityLight.HalfWidth;
 			float num7 = num6 * num6;
-			if (num4 * num4 + num5 * num5 < num7 && num2 * num2 + num3 * num3 > num7)
+			if (!(num4 * num4 + num5 * num5 < num7) || !(num2 * num2 + num3 * num3 > num7)) continue;
+			float num8 = MathF.Sqrt(m_electricities[entityLight.Index]);
+			if (list == null)
 			{
-				float num8 = MathF.Sqrt(m_electricities[entityLight.Index]);
-				if (list == null)
-				{
-					list = new List<(int, float)>();
-					array = new int[m_componentCount * 5];
-				}
-				if (array[entityLight.Index] == 0)
-				{
-					num += num8;
-				}
-				array[entityLight.Index]++;
-				list.Add((i, num8));
+				list = new List<(int, float)>();
+				array = new int[m_componentCount * 5];
 			}
+			if (array[entityLight.Index] == 0)
+			{
+				num += num8;
+			}
+			array[entityLight.Index]++;
+			list.Add((i, num8));
 		}
 		float num9 = 0.7f;
 		if (electricity > 0f)
@@ -1236,9 +1261,8 @@ public class EntityLightManager : PartManager
 		if (m_consumePower && list != null && work < 0f)
 		{
 			float num10 = work * num9 / num;
-			for (int j = 0; j < list.Count; j++)
+			foreach ((int, float) tuple in list)
 			{
-				(int, float) tuple = list[j];
 				components[tuple.Item1].m_electricity += num10 * tuple.Item2;
 			}
 		}

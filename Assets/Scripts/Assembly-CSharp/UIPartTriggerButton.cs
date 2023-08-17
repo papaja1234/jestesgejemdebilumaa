@@ -2,6 +2,10 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+/// <summary>
+/// Implements Part Trigger Button
+/// Used in <c>UIPartButtonList.prefab</c> as a public field in script <see cref="UIPartButtonList"/>
+/// </summary>
 public class UIPartTriggerButton : UIPartButton
 {
 	//used in UIPartButtonList.prefab as a public field for script UIPartButtonList.cs
@@ -61,6 +65,9 @@ public class UIPartTriggerButton : UIPartButton
 		m_texture.canvasRenderer.SetColor(m_color);
 	}
 
+	/// <summary>
+	/// Implements basic logic for <see cref="UIPartTriggerButton"/>
+	/// </summary>
 	public void OnTriggered()
 	{
 		//basic button logic
@@ -84,6 +91,10 @@ public class UIPartTriggerButton : UIPartButton
 		Contraption.Instance.OnButtonTriggered(this);
 	}
 
+	/// <summary>
+	/// Event wrapper for <see cref="OnTriggered"/> 
+	/// </summary>
+	/// <param name="eventData">unused parameter</param>
 	private void OnPointerDown(PointerEventData eventData)
 	{
 		OnTriggered();

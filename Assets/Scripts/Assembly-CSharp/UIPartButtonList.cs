@@ -43,6 +43,10 @@ public class UIPartButtonList : MonoBehaviour
 		}
 	}
 
+	/// <summary>
+	/// Used to sort all buttons
+	/// </summary>
+	/// <seealso cref="UIPartButton"/>
 	private class ButtonComparer : IComparer<UIPartButton>
 	{
 		public int Compare(UIPartButton x, UIPartButton y)
@@ -103,6 +107,9 @@ public class UIPartButtonList : MonoBehaviour
 		}
 	}
 
+	/// <summary>
+	/// Data Container for <see cref="UIPartButton"/> 
+	/// </summary>
 	private struct ButtonSpriteInfo
 	{
 		public Texture Texture;
@@ -147,8 +154,6 @@ public class UIPartButtonList : MonoBehaviour
 	[SerializeField]
 	private GameObject m_sliderButtonPrefab;
 
-	private bool m_needsUpdate;
-
 	private ButtonComparer m_comparer;
 
 	private UIPartButton m_selectedButton;
@@ -167,17 +172,7 @@ public class UIPartButtonList : MonoBehaviour
 
 	private Dictionary<(BasePart, int), ButtonState> m_buttonStateMap;
 
-	public bool NeedsUpdate
-	{
-		get
-		{
-			return m_needsUpdate;
-		}
-		set
-		{
-			m_needsUpdate = value;
-		}
-	}
+	public bool NeedsUpdate { get; set; }
 
 	public UIPartButton SelectedButton => m_selectedButton;
 
@@ -187,25 +182,18 @@ public class UIPartButtonList : MonoBehaviour
 
 	public GameObject SliderButtonPrefab => m_sliderButtonPrefab;
 
-	public static bool Enabled
-	{
-		get
-		{
-			if (Instance != null)
-			{
-				return Instance.gameObject.activeSelf;
-			}
-			return false;
-		}
-	}
+	public static bool Enabled => Instance != null && Instance.gameObject.activeSelf;
 
 	public static UIPartButtonList Instance { get; private set; }
 
 	public static ButtonSettings Settings => INUserSettings.Instance.ButtonSettings;
 
+	/// <summary>
+	/// set fields
+	/// </summary>
 	private void Awake()
 	{
-		Instance = this;
+		Instance = this;//oh no self reference im gonna die xd
 		m_comparer = new ButtonComparer();
 		m_currentButtons = new List<UIPartButton>();
 		m_triggerButtonPool = new List<UIPartTriggerButton>();
@@ -228,14 +216,14 @@ public class UIPartButtonList : MonoBehaviour
 		foreach (GadgetButton button in WPFMonoBehaviour.levelManager.InGameGUI.flightMenuPrefab.GetComponent<InGameFlightMenu>().ButtonList.Buttons)
 		{
 			UIPartButtonInfo key = GetButtonInfo(button.m_partType, (int)button.m_direction);
-			Transform transform = button.transform.Find("Gadget");
-			MeshRenderer componentInChildren = transform.GetComponentInChildren<MeshRenderer>();
-			Sprite component = transform.GetComponent<Sprite>();
+			Transform gadgetTransform = button.transform.Find("Gadget");
+			MeshRenderer componentInChildren = gadgetTransform.GetComponentInChildren<MeshRenderer>();
+			Sprite component = gadgetTransform.GetComponent<Sprite>();
 			if (componentInChildren != null && component != null && !m_spriteInfoMap.ContainsKey(key))
 			{
 				Texture mainTexture = componentInChildren.sharedMaterial.mainTexture;
 				SpriteData spriteData = Singleton<RuntimeSpriteDatabase>.Instance.Find(component.Id);
-				m_spriteInfoMap.Add(key, new ButtonSpriteInfo(mainTexture, spriteData.uv, new Vector2((float)spriteData.width * component.m_scaleX, (float)spriteData.height * component.m_scaleY), transform.transform.rotation));
+				m_spriteInfoMap.Add(key, new ButtonSpriteInfo(mainTexture, spriteData.uv, new Vector2((float)spriteData.width * component.m_scaleX, (float)spriteData.height * component.m_scaleY), gadgetTransform.transform.rotation));
 			}
 		}
 		for (int i = 0; i < 4; i++)
@@ -361,29 +349,35 @@ public class UIPartButtonList : MonoBehaviour
 			key10.PartIndex = 0;
 			ButtonSpriteInfo spriteInfo15 = GetSpriteInfo(texture, "SwitchButton_Sprite");
 			m_spriteInfoMap.Add(key10, spriteInfo15);
+			//
 			key10.ButtonType = UIPartButtonType.Trigger;
 			key10.PartIndex = 1;
 			spriteInfo15 = GetSpriteInfo(texture, "SPDTSwitchButton_Sprite");
 			m_spriteInfoMap.Add(key10, spriteInfo15);
+			//
 			key10.ButtonType = UIPartButtonType.Slider;
 			key10.PartIndex = 2;
 			spriteInfo15 = GetSpriteInfo(texture, "VariableResistorButton_Sprite");
 			m_spriteInfoMap.Add(key10, spriteInfo15);
+			//
 			key10.ButtonType = UIPartButtonType.Trigger;
 			key10.PartIndex = 3;
 			spriteInfo15 = GetSpriteInfo(texture, "VccButton_Sprite");
 			m_spriteInfoMap.Add(key10, spriteInfo15);
+			//
 			key10.ButtonType = UIPartButtonType.Trigger;
 			key10.PartIndex = 4;
 			spriteInfo15 = GetSpriteInfo(texture, "ElectricFieldGenerator_Sprite");
 			m_spriteInfoMap.Add(key10, spriteInfo15);
+			//
 			key10.ButtonType = UIPartButtonType.Trigger;
 			key10.PartIndex = 5;
 			spriteInfo15 = GetSpriteInfo(texture, "MagneticFieldGenerator_Sprite");
-			m_spriteInfoMap.Add(key10, spriteInfo15);//follow things above and add button for movable light
-			spriteInfo15 = GetSpriteInfo(texture, "MovableLight_Sprite");
+			m_spriteInfoMap.Add(key10, spriteInfo15);
+			//follow things above and add button for movable light
 			key10.ButtonType = UIPartButtonType.Trigger;
-			key10.PartIndex = 50;
+			key10.PartIndex = 6;
+			spriteInfo15 = GetSpriteInfo(texture, "MovableLight_Sprite");
 			m_spriteInfoMap.Add(key10,spriteInfo15);
 		}
 		static UIPartButtonInfo GetButtonInfo(BasePart.PartType partType, int partIndex)
@@ -392,14 +386,14 @@ public class UIPartButtonList : MonoBehaviour
 		}
 	}
 
-	private ButtonSpriteInfo GetSpriteInfo(Texture texture, string name)
+	private ButtonSpriteInfo GetSpriteInfo(Texture texture, string spriteName)
 	{
-		return GetSpriteInfo(texture, name, Quaternion.identity);
+		return GetSpriteInfo(texture, spriteName, Quaternion.identity);
 	}
 
-	private ButtonSpriteInfo GetSpriteInfo(Texture texture, string name, Quaternion rotation)
+	private ButtonSpriteInfo GetSpriteInfo(Texture texture, string spriteName, Quaternion rotation)
 	{
-		INSpriteData iNSpriteData = Singleton<INSpriteManager>.Instance.GetAtlasData(texture.name)[name];
+		INSpriteData iNSpriteData = Singleton<INSpriteManager>.Instance.GetAtlasData(texture.name)[spriteName];
 		return new ButtonSpriteInfo(texture, iNSpriteData.FlippedUVRect, iNSpriteData.PixelSize, rotation);
 	}
 
@@ -432,10 +426,10 @@ public class UIPartButtonList : MonoBehaviour
 
 	private void Update()
 	{
-		if (m_needsUpdate)
+		if (NeedsUpdate)
 		{
 			UpdateButtons();
-			m_needsUpdate = false;
+			NeedsUpdate = false;
 		}
 		int num = -1;
 		int num2 = 0;

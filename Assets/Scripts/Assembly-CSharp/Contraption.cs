@@ -219,6 +219,9 @@ public class Contraption : WPFMonoBehaviour
 
 	public ContraptionDataset DataSet => m_contraptionDataSet;
 
+	/// <summary>
+	/// List of every part, This Field is Read-only
+	/// </summary>
 	public List<BasePart> Parts => m_parts;
 
 	public bool HasSuperMagnet
@@ -2757,6 +2760,11 @@ public class Contraption : WPFMonoBehaviour
 		this.ConnectedComponentsChanged?.Invoke();
 	}
 
+	/// <summary>
+	/// Sub-Method for UIPartTriggerButton.<see cref="UIPartTriggerButton.OnTriggered"/>;
+	/// This method checks for <see cref="ActivateAllPoweredParts()"/>
+	/// </summary>
+	/// <param name="button">Triggered Button</param>
 	public void OnButtonTriggered(UIPartTriggerButton button)
 	{
 		BasePart.PartType partType = button.Info.PartType;

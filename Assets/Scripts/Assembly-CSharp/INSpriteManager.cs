@@ -3,8 +3,12 @@ using System.Globalization;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Attached to INSpriteManager.prefab;
+/// </summary>
 public class INSpriteManager : Singleton<INSpriteManager>
 {
+	
 	[SerializeField]
 	private List<TextAsset> m_textAssets;
 
@@ -16,12 +20,7 @@ public class INSpriteManager : Singleton<INSpriteManager>
 	{
 		SetAsPersistant();
 	}
-	/*
-	private float CultureInvariantParse(string a)
-	{
-		float.TryParse(a, NumberStyles.Float, CultureInfo.InvariantCulture, out float b);
-		return b;//fix big textures??
-	}*/
+	
 
 	public void Initialize()
 	{

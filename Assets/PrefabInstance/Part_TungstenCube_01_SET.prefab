@@ -108,7 +108,7 @@ MonoBehaviour:
   m_eightWay: 0
   m_coordX: 0
   m_coordY: 0
-  m_mass: 1
+  m_mass: 5
   m_interactiveRadius: 0.5
   m_breakVelocity: 0
   m_powerConsumption: 0

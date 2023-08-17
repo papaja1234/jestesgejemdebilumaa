@@ -1,5 +1,8 @@
 using System;
 
+/// <summary>
+/// Data Container for UIPartButton, inherits System.ValueType
+/// </summary>
 public struct UIPartButtonInfo : IEquatable<UIPartButtonInfo>
 {
 	public UIPartButtonType ButtonType;
@@ -29,6 +32,7 @@ public struct UIPartButtonInfo : IEquatable<UIPartButtonInfo>
 		ComponentRank = componentRank;
 	}
 
+	//No need to look below, just some boring equal methods
 	public bool Equals(UIPartButtonInfo other)
 	{
 		return this == other;
