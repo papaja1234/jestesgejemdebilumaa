@@ -360,7 +360,7 @@ public class BasePart : WPFMonoBehaviour
 	public float m_hp = 1000f;
 	public float m_maxHp;
 
-	public const float m_minDamage = 4f;
+	public const float m_minDamage = 31.4f;
 
 	public void Hurt(float damage)
     {
@@ -371,11 +371,32 @@ public class BasePart : WPFMonoBehaviour
         m_hp -= damage;
         if (m_hp <= 0f)
         {
-	        //may cause bug when there's a single line of Destroy(gameObject);
-	        contraption.RemovePart(this);
-	        Destroy(gameObject);
+	        //bug when there's a single line of Destroy(gameObject);
+	        LowHpDestruction(damage);
         }
     }
+
+	public void LowHpDestruction(float passDamage)
+	{
+		contraption.RemovePart(this);
+		Joint[] joints = this.gameObject.GetComponents<Joint>();
+		foreach (Joint V in joints)//still bug
+		{
+			if(V)Destroy(V);
+		}
+		Collider[] colliders = Physics.OverlapSphere(transform.position, passDamage * 0.1f + 0.5f);
+		foreach (Collider _collider in colliders)
+		{
+
+			BasePart basePart = _collider.GetComponent<BasePart>();
+			if (basePart)
+			{
+				Physics.IgnoreCollision(_collider, collider);
+				//basePart.Hurt(passDamage/(4f+4f*Vector3.SqrMagnitude(_collider.transform.position-transform.position)));//hidden recursion, use big denominator to avoid stackoverflow
+			}
+			
+		}
+	}
 
 	public bool VisibleOnPartListBeforeUnlocking
 	{
@@ -1281,6 +1302,7 @@ public class BasePart : WPFMonoBehaviour
 		base.rigidbody.angularDrag = 0.05f;
 		base.rigidbody.useGravity = true;
 		base.rigidbody.interpolation = RigidbodyInterpolation.Interpolate;
+		base.rigidbody.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
 		if (base.gameObject.layer == LayerMask.NameToLayer("Default") || base.gameObject.layer == LayerMask.NameToLayer("Contraption"))
 		{
 			base.gameObject.layer = LayerMask.NameToLayer("Contraption");

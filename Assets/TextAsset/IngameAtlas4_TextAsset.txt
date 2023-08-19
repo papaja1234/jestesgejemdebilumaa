@@ -193,6 +193,8 @@ ForceFieldLight_Off						256		1152	101		102		0.4		0.4		768
 ForceFieldLight_On						368		1152	101		103		0.4		0.4		768
 TungstenCube							512		1152	106		105		0.4		0.4		768
 MovableLight							640		1152	100		100		0.4		0.4		768
+ForceFieldLightVariant_Off				768		1152	101		102		0.4		0.4		768
+ForceFieldLightVariant_On				896		1152	101		102		0.4		0.4		768
 
 
 Save_Button_Sprite						0		896		120		121		1		1		768

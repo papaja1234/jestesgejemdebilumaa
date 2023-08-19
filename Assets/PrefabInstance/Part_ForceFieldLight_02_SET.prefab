@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 1791194212841921182}
   - component: {fileID: 1791194212841924561}
   m_Layer: 9
-  m_Name: Part_ForceFieldLight_01_SET
+  m_Name: Part_ForceFieldLight_02_SET
   m_TagString: 
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -249,7 +249,8 @@ MonoBehaviour:
   customPartIndex: 8
   craftable: 1
   lootCrateReward: 1
-  tags: []
+  tags:
+  - Unused
   audioMaterial: 0
   m_jointType: 0
   m_partTier: 4
@@ -274,7 +275,7 @@ MonoBehaviour:
   m_maxHp: 3000
   activeSprite: {fileID: 1791194210946079398}
   inactiveSprite: {fileID: 1791194210946078737}
-  m_ForceCoefficent: 5
+  m_ForceCoefficent: -5
   m_ForceRange: 4
 --- !u!114 &1791194212841924561
 MonoBehaviour:

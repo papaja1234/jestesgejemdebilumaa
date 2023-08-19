@@ -44,7 +44,7 @@ public static class INUnity
 		DataPath = Application.persistentDataPath;
 		SettingsPath = Application.persistentDataPath + "/Settings";
 		SystemLanguage systemLanguage = Application.systemLanguage;
-		if (systemLanguage == SystemLanguage.Chinese || systemLanguage == SystemLanguage.ChineseSimplified || systemLanguage == SystemLanguage.ChineseTraditional)
+		if (systemLanguage is SystemLanguage.Chinese or SystemLanguage.ChineseSimplified or SystemLanguage.ChineseTraditional)
 		{
 			Language = SystemLanguage.Chinese;
 		}
