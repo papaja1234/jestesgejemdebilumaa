@@ -1,3 +1,4 @@
+#nullable enable
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Emit;
@@ -38,7 +39,12 @@ public class ScriptEngine : MonoBehaviour
         Debug.LogError(Assembly.GetCallingAssembly().GetName());
     }
 
-    //returns null on error
+    /// <summary>
+    /// Returns null on error
+    /// </summary>
+    /// <param name="code">Literal code to be compiled</param>
+    /// <param name="fileName">Filename of the code</param>
+    /// <returns></returns>
     public static Assembly? Compile(string code, string fileName)
     {
         //actual compilation happens here

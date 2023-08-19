@@ -80,7 +80,15 @@ public class INAppInterface : MonoBehaviour
 
 	public GameObject FindElement(string name)
 	{
-		return m_main.transform.Find(name).gameObject;
+		try
+		{
+			return m_main.transform.Find(name).gameObject;
+		}
+		catch (Exception e)
+		{
+			
+			throw;
+		}
 	}
 
 	public void SetTitle(string text)
@@ -90,12 +98,12 @@ public class INAppInterface : MonoBehaviour
 
 	private void OnEnterButtonClick()
 	{
-		SetEnabled(enabled: true);
+		SetEnabled(isEnabled: true);
 	}
 
 	private void OnBackButtonClick()
 	{
-		SetEnabled(enabled: false);
+		SetEnabled(isEnabled: false);
 	}
 
 	private void OnMenuButtonClick()
@@ -104,15 +112,15 @@ public class INAppInterface : MonoBehaviour
 		component.SetEnabled(!component.Enabled);
 	}
 
-	private void SetEnabled(bool enabled)
+	private void SetEnabled(bool isEnabled)
 	{
-		if (enabled == m_enabled)
+		if (isEnabled == m_enabled)
 		{
 			return;
 		}
-		m_enabled = enabled;
-		m_enterButton.gameObject.SetActive(!enabled);
-		m_panel.gameObject.SetActive(enabled);
+		m_enabled = isEnabled;
+		m_enterButton.gameObject.SetActive(!isEnabled);
+		m_panel.gameObject.SetActive(isEnabled);
 		Singleton<GuiManager>.Instance.IsEnabled = !m_enabled;
 		Singleton<GuiManager>.Instance.gameObject.SetActive(!m_enabled);
 		if (m_enabled)

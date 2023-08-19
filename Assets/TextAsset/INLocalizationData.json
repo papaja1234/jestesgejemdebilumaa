@@ -36,6 +36,13 @@
 			}
 		},
 		{
+			"id": "AppInterface_CommandPanel",
+			"text": {
+				"en-US": "Command Panel (C# Runtime Compilation)",
+				"zh-Hans": "指令界面(C#运行时编译)"
+			}
+		},
+		{
 			"id": "UserSettings_Save",
 			"text": {
 				"en-US": "Save",
@@ -68,6 +75,13 @@
 			"text": {
 				"en-US": "Button Scale",
 				"zh-Hans": "按键大小比例"
+			}
+		},
+		{
+			"id": "ButtonTexts_Enter",
+			"text": {
+				"en-US": "⨌⨌ⅾπⅾπ",
+				"zh-Hans": "⨌ⅾπ"
 			}
 		},
 		{
