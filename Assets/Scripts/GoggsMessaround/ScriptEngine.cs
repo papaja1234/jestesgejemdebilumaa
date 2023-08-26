@@ -15,7 +15,8 @@ public class ScriptEngine : MonoBehaviour
     //list of reference assemblies to use when compiling, library mods are loaded first and added to the end of this list
     //all assemblies currently loaded are added to this list by the constructor
     private static List<PortableExecutableReference> references = new List<PortableExecutableReference>();
-
+    public static string ExceptionMassager = "";
+    
     static ScriptEngine()
     {
         //add all currently referenced assemblies so mods have access to them
@@ -32,18 +33,18 @@ public class ScriptEngine : MonoBehaviour
             }
             catch (NotSupportedException e)
             {
-                Debug.LogError("Assembly location not supported, probably loaded from memory\n" + e);
+                Debug.Log("Assembly location not supported, probably loaded from memory\n" + e);
             }
         }
 
-        Debug.LogError(Assembly.GetCallingAssembly().GetName());
+        //Debug.LogError(Assembly.GetCallingAssembly().GetName());
     }
 
     /// <summary>
     /// Returns null on error
     /// </summary>
     /// <param name="code">Literal code to be compiled</param>
-    /// <param name="fileName">Filename of the code</param>
+    /// <param name="fileName">Name of the code</param>
     /// <returns></returns>
     public static Assembly? Compile(string code, string fileName)
     {
@@ -56,37 +57,35 @@ public class ScriptEngine : MonoBehaviour
             .WithReferences(references)
             .AddSyntaxTrees(tree);
 
-        //the compiled dll is output to this memorystream
-        using (MemoryStream ms = new MemoryStream())
+        //the compiled dll is outputted to this memory stream
+        using MemoryStream ms = new MemoryStream();
+        EmitResult? compilationResult = null;
+        string? errorMessage = null;
+
+        //woah we actually compile it here
+        compilationResult = compilation.Emit(ms);
+
+        //error handling
+        if (!compilationResult.Success)
         {
-            EmitResult? compilationResult = null;
-            string? errorMessage = null;
+            StringBuilder errMessageBuilder = new StringBuilder($"Error compiling code for mod {fileName}!");
 
-            //woah we actually compile it here
-            compilationResult = compilation.Emit(ms);
-
-            //error handling
-            if (!compilationResult.Success)
+            foreach (Diagnostic diagnostic in compilationResult.Diagnostics)
             {
-                StringBuilder errMessageBuilder = new StringBuilder($"Error compiling code for mod {fileName}!");
-
-                foreach (Diagnostic diagnostic in compilationResult.Diagnostics)
-                {
-                    errMessageBuilder.AppendLine(diagnostic.ToString());
-                }
-                errorMessage = errMessageBuilder.ToString();
-
-                Debug.LogError(errorMessage);
-
-                return null;
+                errMessageBuilder.AppendLine(diagnostic.ToString());
             }
+            errorMessage = errMessageBuilder.ToString();
 
-            //and finally, we load the assembly ^-^
-            return Assembly.Load(ms.ToArray());
+            Debug.LogError(errorMessage);
+            ExceptionMassager = errorMessage;
+            return null;
         }
+
+        //and finally, we load the assembly ^-^
+        return Assembly.Load(ms.ToArray());
     }
 
-    //returns true on success, false on failiure
+    //returns true on success, false on failure
     private static bool AddAssemblyFromPath(string path)
     {
         //ignore empty paths

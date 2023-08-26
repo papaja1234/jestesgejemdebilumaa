@@ -183,7 +183,12 @@ public static class INSettings
 			return new WrappedSettingData(s_declarations.GetDeclaration(name), s_runtimeSettings.GetData(name));
 		}
 
-		private Variant GetVariant()
+		public void AlterValue(INFeature inFeature, object newValue)
+		{
+			Variant variant = GetVariant();
+		}
+
+		public Variant GetVariant()
 		{
 			if (!IsEnabled(m_data.Scope))
 			{
