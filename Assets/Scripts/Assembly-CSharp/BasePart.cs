@@ -360,10 +360,11 @@ public class BasePart : WPFMonoBehaviour
 	public float m_hp = 1000f;
 	public float m_maxHp;
 
-	public const float m_minDamage = 31.4f;
+	public float m_minDamage = 31.4f;//do not change without purpose
 
 	public void Hurt(float damage)
-    {
+	{
+		if (INSettings.PartHPStatus == 0) return;
         if(damage < m_minDamage)
         {
             return;
@@ -371,20 +372,31 @@ public class BasePart : WPFMonoBehaviour
         m_hp -= damage;
         if (m_hp <= 0f)
         {
-	        //bug when there's a single line of Destroy(gameObject);
+	        
 	        LowHpDestruction(damage);
         }
     }
 
 	public void LowHpDestruction(float passDamage)
 	{
-		contraption.RemovePart(this);
+		switch (INSettings.PartHPStatus)
+		{
+			case 0:
+				return;
+			case 1:
+				contraption.RemovePart(this);
+				Destroy(gameObject);
+				return;
+		}
+
+		//Destroy(gameObject);
+		m_minDamage = -1f;
 		Joint[] joints = this.gameObject.GetComponents<Joint>();
-		foreach (Joint V in joints)//still bug
+		foreach (Joint V in joints)
 		{
 			if(V)Destroy(V);
 		}
-		Collider[] colliders = Physics.OverlapSphere(transform.position, passDamage * 0.1f + 0.5f);
+		Collider[] colliders = Physics.OverlapSphere(transform.position, passDamage * 0.04f + 0.5f);
 		foreach (Collider _collider in colliders)
 		{
 
@@ -392,10 +404,13 @@ public class BasePart : WPFMonoBehaviour
 			if (basePart)
 			{
 				Physics.IgnoreCollision(_collider, collider);
-				//basePart.Hurt(passDamage/(4f+4f*Vector3.SqrMagnitude(_collider.transform.position-transform.position)));//hidden recursion, use big denominator to avoid stackoverflow
+				//this thing makes stackoverflow --> basePart.Hurt(passDamage/(4f+64f*Vector3.SqrMagnitude(_collider.transform.position-transform.position)));//hidden recursion, use big denominator to avoid stackoverflow
 			}
-			
 		}
+
+		gameObject.isStatic = true;
+		contraption.RemovePart(this);
+		
 	}
 
 	public bool VisibleOnPartListBeforeUnlocking
@@ -1098,13 +1113,13 @@ public class BasePart : WPFMonoBehaviour
 
 	public virtual void OnCollisionExit(Collision c)
 	{
-		GameObject gameObject = c.gameObject;
-		int layer = gameObject.layer;
+		GameObject _gameObject = c.gameObject;
+		int layer = _gameObject.layer;
 		if (layer == m_iceGroundLayer)
 		{
 			m_isOnIce = false;
 		}
-		if (layer == m_groundLayer || gameObject.CompareTag("Ground"))
+		if (layer == m_groundLayer || _gameObject.CompareTag("Ground"))
 		{
 			m_isOnGround = false;
 		}
@@ -1302,7 +1317,7 @@ public class BasePart : WPFMonoBehaviour
 		base.rigidbody.angularDrag = 0.05f;
 		base.rigidbody.useGravity = true;
 		base.rigidbody.interpolation = RigidbodyInterpolation.Interpolate;
-		base.rigidbody.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
+		base.rigidbody.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
 		if (base.gameObject.layer == LayerMask.NameToLayer("Default") || base.gameObject.layer == LayerMask.NameToLayer("Contraption"))
 		{
 			base.gameObject.layer = LayerMask.NameToLayer("Contraption");

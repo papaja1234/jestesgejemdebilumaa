@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Security.Cryptography;
 using System.Text;
 using UnityEngine;
 
@@ -16,6 +17,7 @@ public class ScriptEngine : MonoBehaviour
     //all assemblies currently loaded are added to this list by the constructor
     private static List<PortableExecutableReference> references = new List<PortableExecutableReference>();
     public static string ExceptionMassager = "";
+    private static RandomNumberGenerator randomNumberGenerator = RandomNumberGenerator.Create();
     
     static ScriptEngine()
     {
@@ -36,7 +38,7 @@ public class ScriptEngine : MonoBehaviour
                 Debug.Log("Assembly location not supported, probably loaded from memory\n" + e);
             }
         }
-
+        //Goggs: should be for windows platform
         //Debug.LogError(Assembly.GetCallingAssembly().GetName());
     }
 
@@ -50,10 +52,13 @@ public class ScriptEngine : MonoBehaviour
     {
         //actual compilation happens here
         SyntaxTree tree = SyntaxFactory.ParseSyntaxTree(code);
+        //tree.Options = new CSharpParseOptions().WithLanguageVersion(LanguageVersion.CSharp10)
+        //    .WithDocumentationMode(DocumentationMode.Diagnose);
         CSharpCompilation compilation = CSharpCompilation.Create(fileName)
             .WithOptions(new CSharpCompilationOptions(
-                outputKind: OutputKind.DynamicallyLinkedLibrary, //build a dll
-                optimizationLevel: OptimizationLevel.Release)) //optimize the code, we may change this to debug later if it's too slow
+                outputKind: OutputKind.DynamicallyLinkedLibrary, //build a dll...?
+                optimizationLevel: OptimizationLevel.Debug)//optimize the code, we may change this to debug later if it's too slow
+                .WithPlatform(Platform.X64)) 
             .WithReferences(references)
             .AddSyntaxTrees(tree);
 
@@ -108,5 +113,106 @@ public class ScriptEngine : MonoBehaviour
         }
 
         return true;
+    }
+
+    public static Func<InputType, OutputType>? CompileAsFunc<InputType, OutputType>(string code, string inputTypeName)
+    {
+        string randomClassName = RandomString(42, "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ");
+        string wrappedCode = $"using System;\nusing System.Collections.Generic;\nusing System.IO;\nusing System.Linq;\nusing System.Reflection;\nusing System.Text;\nusing UnityEngine;\n" +
+            "public class "+randomClassName+" : MonoBehaviour\n{public "+typeof(OutputType)+" Main("+typeof(InputType)+" "+inputTypeName+")\n{return "+code+";\n}}";
+        Assembly? nullableAssembly = Compile(wrappedCode, $"eval{randomClassName}");
+        if (nullableAssembly == null)
+        {
+            return null;
+        }
+        else
+        {
+            object assemblyInstance = nullableAssembly.CreateInstance(randomClassName)!;
+            MethodInfo methodInfo = nullableAssembly.GetType(randomClassName).GetMethod("Main")!;
+            return delegate(InputType type) 
+            { 
+                OutputType returnValue = (OutputType)methodInfo.Invoke(assemblyInstance, new object[]{type});
+                return returnValue;
+            };
+        }
+    }
+    public static string RandomString(int length, string allowedChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789")
+    {
+        if (length < 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(length), "length cannot be less than zero.");
+        }
+			
+        if (string.IsNullOrEmpty(allowedChars))
+        {
+            throw new ArgumentException("allowedChars may not be empty.");
+        }
+        var allowedCharSet = new HashSet<char>(allowedChars).ToArray();
+			
+        if (256 < allowedCharSet.Length)
+        {
+            throw new ArgumentException($"allowedChars may contain no more than 256 characters.");
+        }
+
+        
+        var result = new StringBuilder();
+        var buf = new byte[128];
+        while (result.Length < length)
+        {
+            randomNumberGenerator.GetBytes(buf);
+            var i = 0;
+            while (i < buf.Length && result.Length < length)
+            {
+                var outOfRangeStart = 256 - 256 % allowedCharSet.Length;
+                if (outOfRangeStart > buf[i])
+                {
+                    result.Append(allowedCharSet[buf[i] % allowedCharSet.Length]);
+                }
+                i++;
+            }
+        }
+        var result2 = result.ToString();
+        return result2;
+    }
+    public string WarpCodeSnippet(string snippet, string randomClassName = "Start")
+    {
+        string[] lines = snippet.Split('\n');
+        string usings = "";
+        string regularCode = "";
+        foreach (string line in lines)
+        {
+            if (line.Contains("using"))
+            {
+                usings += line + '\n';
+            }
+            else
+            {
+                regularCode += line + '\n';
+            }
+        }
+
+        return @"
+        using System;
+        using System.Collections.Generic;
+        using System.IO;
+        using System.Linq;
+        using System.Reflection;
+        using System.Text;
+        using UnityEngine;
+        "
+               + usings
+               + @"
+        
+        public class "+randomClassName+@" : MonoBehaviour
+        {
+            public static object Main()
+            {
+                "
+               + regularCode
+               + @"
+                return ""No return statement!"";
+            }
+        }
+        ";
     }
 }

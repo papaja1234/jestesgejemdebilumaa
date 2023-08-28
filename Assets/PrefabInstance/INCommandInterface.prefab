@@ -345,6 +345,7 @@ MonoBehaviour:
   ConsoleOutput: {fileID: 7811980617303337898}
   EnterButton: {fileID: 114395278610291518}
   ClearButton: {fileID: 2493178313038992670}
+  randomClassName: STwPgRaTewUhC
 --- !u!1 &1591929047281958
 GameObject:
   m_ObjectHideFlags: 0
@@ -952,7 +953,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
+  m_Text: 'return "Your code here";
+
+'
 --- !u!1 &2209905551925421479
 GameObject:
   m_ObjectHideFlags: 0
@@ -1033,7 +1036,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 0}
+  m_TargetGraphic: {fileID: 1917076920812796005}
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
@@ -1200,7 +1203,7 @@ MonoBehaviour:
   m_LineType: 2
   m_HideMobileInput: 0
   m_CharacterValidation: 0
-  m_CharacterLimit: 0
+  m_CharacterLimit: 2147000000
   m_OnSubmit:
     m_PersistentCalls:
       m_Calls: []
@@ -1213,7 +1216,9 @@ MonoBehaviour:
   m_CaretColor: {r: 1, g: 1, b: 1, a: 1}
   m_CustomCaretColor: 1
   m_SelectionColor: {r: 0.65882355, g: 0.80784315, b: 1, a: 0.7529412}
-  m_Text: EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
+  m_Text: 'return "Your code here";
+
+'
   m_CaretBlinkRate: 0.85
   m_CaretWidth: 2
   m_ReadOnly: 0
@@ -1297,9 +1302,10 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
-
-'
+  m_Text: "Bad Piggies Command System (C# Runtime Compilation)\nBuild Version \u0393\nThis
+    console enables you to change almost anything in this game.\nExercise caution,
+    check other's code before executing it in case of ruining your device!\nReturn
+    value of the code is displayed via console output text."
 --- !u!1 &6168941941138005973
 GameObject:
   m_ObjectHideFlags: 0

@@ -235,7 +235,7 @@ public class Pig : BasePart
 		base.rigidbody.mass = m_mass;
 		base.rigidbody.drag = 0.2f;
 		base.rigidbody.angularDrag = 0.05f;
-		base.rigidbody.collisionDetectionMode = CollisionDetectionMode.Discrete;
+		base.rigidbody.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
 		base.rigidbody.interpolation = RigidbodyInterpolation.Interpolate;
 	}
 

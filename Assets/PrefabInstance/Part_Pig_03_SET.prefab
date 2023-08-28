@@ -5183,14 +5183,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1650858833042719}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.014, y: 0.375, z: -0.101}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: 0, y: 0, z: -0.08541691, w: 0.99634534}
+  m_LocalPosition: {x: 0.0455, y: 0.2879, z: -0.101}
+  m_LocalScale: {x: 0.9, y: 1.35168, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4159384400168124}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: -0, z: -0}
+  m_LocalEulerAnglesHint: {x: 0, y: -0, z: -9.8}
 --- !u!23 &23443695218797714
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -5254,8 +5254,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_id: 4a19be0a-9133-420d-922a-d05f4388c856
-  m_scaleX: 0.4
-  m_scaleY: 0.4
+  m_scaleX: 0.36
+  m_scaleY: 0.5
   m_pivotX: 0
   m_pivotY: 0
   m_updateCollider: 1
@@ -8157,6 +8157,7 @@ MonoBehaviour:
   lateSpeed: {x: 0, y: 0, z: 0}
   m_hp: 3e+38
   m_maxHp: 3e+38
+  m_minDamage: 31.4
   m_expressions:
   - type: 0
     texture: {fileID: 0}
@@ -8277,7 +8278,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f5cc28b46793a07ec2b0bc26f5027f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_speedThreshold: 15
+  m_speedThreshold: 999999000
   m_hats: []
 --- !u!1 &1892654916055060
 GameObject:

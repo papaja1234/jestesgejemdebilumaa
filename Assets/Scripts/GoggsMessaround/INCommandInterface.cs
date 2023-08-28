@@ -15,14 +15,29 @@ public class INCommandInterface : MonoBehaviour
     public Text ConsoleOutput;
     [FormerlySerializedAs("Enter")] public UnityEngine.UI.Button EnterButton;
     public UnityEngine.UI.Button ClearButton;
+    public string randomClassName = ScriptEngine.RandomString(13, "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ");
 
     private int index = 0;
     
     private void Start()
     {
+        ScriptEngine = gameObject.AddComponent<ScriptEngine>();
         ScriptEngine.print("STASIS");
         EnterButton.onClick.AddListener(ExecuteCode);
         ClearButton.onClick.AddListener(ClearConsole);
+        /*//testing
+        var func = ScriptEngine.CompileAsFunc<double,double>("1d/Math.Sqrt(x)","x");
+        string outut = "";
+        int i = 1;
+        while(i < 25)
+        {
+            outut+=func(i).ToString()+"\n";
+            i++;
+        }
+
+        ConsoleOutput.text = outut;
+        ConsoleOutput.text += func(func(func(func(func(func(func(func(func(func(func(func(func(145)))))))))))));
+        */
     }
 
     private void ClearConsole()
@@ -32,12 +47,13 @@ public class INCommandInterface : MonoBehaviour
 
     private void ExecuteCode()
     {
-        string code = WarpCodeSnippet(ConsoleInput.text);
+        randomClassName = ScriptEngine.RandomString(13, "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ");
+        string code = ScriptEngine.WarpCodeSnippet(ConsoleInput.text, randomClassName);
         Assembly? nullableAssembly= ScriptEngine.Compile(code, index.ToString());
         if (nullableAssembly != null)
         {
-            object assemblyInstance = nullableAssembly.CreateInstance("Start")!;
-            MethodInfo methodInfo = nullableAssembly.GetType("Start").GetMethod("Main")!;
+            object assemblyInstance = nullableAssembly.CreateInstance(randomClassName)!;
+            MethodInfo methodInfo = nullableAssembly.GetType(randomClassName).GetMethod("Main")!;
             try
             {
                 object returnValue = methodInfo.Invoke(assemblyInstance, new object[]{});
@@ -58,13 +74,4 @@ public class INCommandInterface : MonoBehaviour
 
         index++;
     }
-
-    private string WarpCodeSnippet(string snippet)
-    {
-        //may be changed later
-        return
-            $"using System;\nusing System.Collections.Generic;\nusing System.IO;\nusing System.Linq;\nusing System.Reflection;\nusing System.Text;\nusing UnityEngine;\n" +
-            "public class Start : MonoBehaviour\n{public object Main()\n{"+snippet+"\nreturn \"No return statement!\";\n}}";
-    }                                                                                         //^ return something just in case
-
 }

@@ -23,6 +23,20 @@ public static class INSettings
 		Array = 5
 	}
 
+	public static int PartHPStatus = 2;
+
+	public static string SetPartHPMode(int mode)
+	{
+		PartHPStatus = mode;
+		return mode switch
+		{
+			0=> "Disabled",
+			1=> "Disappear only",
+			_=> "Debris and No function"
+		};
+
+	}
+
 	private class SettingType
 	{
 		private SettingTypeCode m_mainType;
@@ -335,6 +349,7 @@ public static class INSettings
 	{
 		s_versionSelected = true;
 		Load(version);
+		PartHPStatus = 2;
 		InitializeSettings();
 	}
 
