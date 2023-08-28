@@ -114,6 +114,11 @@ public class LightningHook : BasePart
 		Shoot();
 	}
 
+	public override void EnsureRigidbody()
+	{
+		base.EnsureRigidbody();
+		base.rigidbody.collisionDetectionMode = CollisionDetectionMode.Discrete;
+	}
 	protected void Shoot()
 	{
 		if (!m_enabled && !(Time.time - m_shootTime < 2f*INSettings.GetFloat(INFeature.GunProjectileForcedCoolingTime)))

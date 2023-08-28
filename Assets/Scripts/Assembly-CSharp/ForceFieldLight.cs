@@ -116,8 +116,10 @@ public class ForceFieldLight : PointLight
 		foreach (Collider _collider in array)
 		{
 			BasePart component = _collider.GetComponent<BasePart>();
+			Rigidbody _rigidbody = _collider.GetComponent<Rigidbody>();
 			bool basePartCheck = (bool)component && !component.Equals(this) && !component.Equals(base.enclosedInto);
-			if (basePartCheck)
+			bool rigidBodyCheck = _rigidbody && !_rigidbody.Equals(this.rigidbody) && !_rigidbody.Equals(enclosedInto.rigidbody);
+			if (basePartCheck || rigidBodyCheck)
 			{
 				GameObject findParentWithRigidBody = FindParentWithRigidBody(_collider.gameObject);
 				if (findParentWithRigidBody != null)

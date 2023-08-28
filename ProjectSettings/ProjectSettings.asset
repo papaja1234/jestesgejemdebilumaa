@@ -134,7 +134,7 @@ PlayerSettings:
     16:10: 0
     16:9: 1
     Others: 0
-  bundleVersion: snapshot.il2cpp.x86.64
+  bundleVersion: snapshot.Gamma.il2cpp
   preloadedAssets: []
   metroInputSource: 0
   wsaTransparentSwapchain: 0

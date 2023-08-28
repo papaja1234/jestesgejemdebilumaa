@@ -146,4 +146,10 @@ public class ExplodingGrapplingHook : BasePart
 			});
 		}
 	}
+
+	public override void EnsureRigidbody()
+	{
+		base.EnsureRigidbody();
+		base.rigidbody.collisionDetectionMode = CollisionDetectionMode.Discrete;
+	}
 }

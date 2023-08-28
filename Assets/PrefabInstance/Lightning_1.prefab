@@ -128,14 +128,14 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1155311346533028}
   serializedVersion: 2
-  m_Mass: 1.2
+  m_Mass: 0.3
   m_Drag: 0.1
   m_AngularDrag: 0.1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 2
+  m_Interpolate: 1
   m_Constraints: 120
-  m_CollisionDetection: 1
+  m_CollisionDetection: 2
 --- !u!135 &135086320307592510
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -161,9 +161,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1006a6d4bac39f4294458e3577e2fc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_explosionImpulse: 18
-  m_explosionRadius: 6
-  m_force: 47
+  m_explosionImpulse: 20
+  m_explosionRadius: 8
+  m_force: 30
   m_ttl: 0.02
   m_smokeCloud: {fileID: 1746325529588758, guid: 7661e48309a90894ba7e4f9c02eb55a8, type: 3}
   m_remainingIterations: 0
