@@ -8,20 +8,23 @@ Thanks to Miuna for all the prior work from the mod called BPLE, we really hope 
 ## Known Issues:
 + Part will bug when connected to π/3 triangle (most likely physics issue, meshcollider maybe?)
 + Triangles prevents rotation
++ Script Engine fails to load assembly on android
 
 ## Changes:
 ###### Work in Progress, too, 
 #### Quality Of Life
 + Mute music button (still weird icon)
 + Remove (almost) zoom limits
++ C# Runtime Compilation Engine and it's User Interface
 + More Types of ExplodingGrapplingHookProjectile, More expandability 
 #### Changes that doesn't effect gameplay
 + Change version selector background
++ Change Title Image
 #### Existing part changes
 + Higher Jet Engine thrust limits (6000)
-+ FULLY COMPLETED Part HP system
-+ Explosions, Collusions now deals damage to parts
-+ Part is destroyed and removed when hp<0
++ FULLY COMPLETED Part HP system, with selectable modes (mode 0 is off)
++ Explosions, Collsions now deals damage to parts
++ Part is destroyed and removed when hp<0 in mode 1, turn into debris in mode 2
 #### New Parts
 + Alien Wooden Frame, much flexible with engine power
 + Alien Santa Spring (3*mass, high connect strength)
@@ -31,7 +34,7 @@ Thanks to Miuna for all the prior work from the mod called BPLE, we really hope 
 + Oscillator (Produces periodic signals when activated)
 + Healing Light (Heals all parts within 5-meter-radius at a rate of *300*hp/s) (60 before)
 + Lightning Cannon(comes with lightning bullet)
-+ Force Field Light **-RESURRECTION-** (repels objects within 5 meters radius with a force inverse proportional to [distance^2+0.2f])
++ Force Field Light **-RESURRECTION-** (repels/sucks objects within 5 meters radius with a force inverse proportional to [distance^2+0.2f])
 + (Still WIP/BUG, prefab named "MovableLight") Machine piston **-RESURRECTION-**, well, Pistons!
 + Triangle Frames
 + Metal Slab Frame
