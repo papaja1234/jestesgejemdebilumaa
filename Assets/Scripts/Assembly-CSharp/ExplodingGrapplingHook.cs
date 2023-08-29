@@ -118,6 +118,7 @@ public class ExplodingGrapplingHook : BasePart
 
 	protected void Shoot()
 	{
+		EnsureRigidbody();
 		float rapidCooldownTime = 0.0f;
 		rapidCooldownTime = m_rapidCooldownTime;
 		if (!m_enabled && !(Time.time - m_shootTime < rapidCooldownTime))

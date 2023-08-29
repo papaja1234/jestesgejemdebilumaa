@@ -206,9 +206,7 @@ public class CircuitSimulator
 				}
 				if (num4 != num3)
 				{
-					float[] array = augmentedMatrix[num3];
-					augmentedMatrix[num3] = augmentedMatrix[num4];
-					augmentedMatrix[num4] = array;
+					(augmentedMatrix[num3], augmentedMatrix[num4]) = (augmentedMatrix[num4], augmentedMatrix[num3]);
 				}
 				float num7 = augmentedMatrix[num3][i];
 				for (int k = num3 + 1; k < equationCount; k++)

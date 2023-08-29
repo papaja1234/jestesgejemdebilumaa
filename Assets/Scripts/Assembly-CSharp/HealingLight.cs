@@ -8,7 +8,7 @@ public class HealingLight : PointLight
     public float m_HealingAmount;
     public new void LateUpdate()
     {
-        if(this.HasGeneratorRef || !base.activated)return;
+        if(this.HasGeneratorRef || !base.activated || GameTime.IsPaused() || m_hp<=0)return;
         Collider[] colliders = Physics.OverlapSphere(base.transform.position, m_HealingRadius);
         foreach (Collider _collider in colliders)
         {

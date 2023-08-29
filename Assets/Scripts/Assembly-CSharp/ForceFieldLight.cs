@@ -108,17 +108,43 @@ public class ForceFieldLight : PointLight
 	public void FixedUpdate()
 	{
 		UpdateSprite();
-		if (base.HasGeneratorRef || !activated || GameTime.IsPaused())
+		if (base.HasGeneratorRef || !activated || GameTime.IsPaused() || m_hp<=0)
 		{
 			return;
 		}
+
+		if (enclosedInto == null)
+		{
+			Collider[] array1 = Physics.OverlapSphere(base.transform.position, m_ForceRange);
+			foreach (Collider _collider in array1)
+			{
+				BasePart component = _collider.GetComponent<BasePart>();
+				Rigidbody _rigidbody = _collider.GetComponent<Rigidbody>();
+				bool basePartCheck = (bool)component && !component.Equals(this) && component.m_hp>0;
+				bool rigidBodyCheck = 
+					(bool)_rigidbody && (!_rigidbody.Equals(this.rigidbody));
+				if (basePartCheck || rigidBodyCheck)
+				{
+					GameObject findParentWithRigidBody = FindParentWithRigidBody(_collider.gameObject);
+					if (findParentWithRigidBody != null)
+					{
+						int num = CountChildColliders(findParentWithRigidBody, 0);
+						Vector3 force = AddExplosionForce(findParentWithRigidBody, m_ForceCoefficient / ((float)num * Vector3.SqrMagnitude(findParentWithRigidBody.transform.position - base.transform.position) + 0.2f));
+						base.rigidbody.AddForce(-force, ForceMode.Impulse);
+					}
+				}
+			}
+			return;
+		}
+		// I HEREBY SACRIFICE MY SPACE COMPLEXITY TO GET BETTER RESTS
 		Collider[] array = Physics.OverlapSphere(base.transform.position, m_ForceRange);
 		foreach (Collider _collider in array)
 		{
 			BasePart component = _collider.GetComponent<BasePart>();
 			Rigidbody _rigidbody = _collider.GetComponent<Rigidbody>();
-			bool basePartCheck = (bool)component && !component.Equals(this) && !component.Equals(base.enclosedInto);
-			bool rigidBodyCheck = _rigidbody && !_rigidbody.Equals(this.rigidbody) && !_rigidbody.Equals(enclosedInto.rigidbody);
+			bool basePartCheck = (bool)component && !component.Equals(this) && !component.Equals(base.enclosedInto) && component.m_hp>0;
+			bool rigidBodyCheck = 
+			(bool)_rigidbody && (!_rigidbody.Equals(this.rigidbody) && !_rigidbody.Equals(enclosedInto.rigidbody));
 			if (basePartCheck || rigidBodyCheck)
 			{
 				GameObject findParentWithRigidBody = FindParentWithRigidBody(_collider.gameObject);

@@ -24,8 +24,7 @@ public class MovableLight : BasePart
 		childCollider = lightHandle.GetComponent<BoxCollider>();
 		childRigidbody = lightHandle.GetComponent<Rigidbody>();
 		childRigidbody.interpolation = RigidbodyInterpolation.Interpolate;
-		childRigidbody.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
-		lightHandle.layer = 8;
+		childRigidbody.collisionDetectionMode = CollisionDetectionMode.Continuous;
 		Physics.IgnoreCollision(base.collider, childCollider);
 		if ((bool)base.enclosedInto)
 		{

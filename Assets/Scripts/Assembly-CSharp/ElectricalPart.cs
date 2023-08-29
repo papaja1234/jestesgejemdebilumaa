@@ -96,6 +96,48 @@ public class ElectricalPart : BasePart
 		}
 	}
 
+	public override void LowHpDestruction(float passDamage)
+	{
+		void ColorToGray(bool gray)
+		{
+			Shader shader = INUnity.LoadShader(gray ? "PreAlpha_Unlit_ColorTransparent_Geometry_Gray" : "PreAlpha_Unlit_ColorTransparent_Geometry");
+			MeshRenderer[] componentsInChildren = this.gameObject.GetComponentsInChildren<MeshRenderer>();
+			foreach (MeshRenderer t in componentsInChildren)
+			{
+				t.material.shader = shader;
+			}
+		}
+		switch (INSettings.PartHPStatus)
+		{
+			case 0:
+				return;
+			case 1:
+				ColorToGray(true);
+				SetInvalid(true);
+				collider.enabled = false;
+				gameObject.SetActive(false);
+				return;
+		}
+		m_minDamage = -1f;
+		Joint[] joints = this.gameObject.GetComponents<Joint>();
+		foreach (Joint V in joints)
+		{
+			if(V)Destroy(V);
+		}
+		Collider[] colliders = Physics.OverlapSphere(transform.position, passDamage * 0.04f + 0.5f);
+		foreach (Collider _collider in colliders)
+		{
+
+			BasePart basePart = _collider.GetComponent<BasePart>();
+			if (basePart)
+			{
+				Physics.IgnoreCollision(_collider, collider);
+			}
+		} 
+		ColorToGray(true);
+		SetInvalid(true);
+	}
+
 	protected virtual BitDirection GetConnectionDirection()
 	{
 		return BitDirection.None;

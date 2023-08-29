@@ -24,7 +24,7 @@ public static class INSettings
 	}
 
 	public static int PartHPStatus = 2;
-
+	public static bool HidePropertyPanel = false;
 	public static string SetPartHPMode(int mode)
 	{
 		PartHPStatus = mode;

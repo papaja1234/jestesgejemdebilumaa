@@ -43,8 +43,10 @@ public class PropertyPanelBuilding : PropertyPanel
 
 	public override void Update()
 	{
+		
 		LevelManager.GameState gameState = WPFMonoBehaviour.levelManager.gameState;
 		RectTransform component = m_textMesh.GetComponent<RectTransform>();
+		if (!INSettings.HidePropertyPanel) {m_textMesh.text = string.Empty;return;}
 		switch (gameState)
 		{
 		case LevelManager.GameState.Building:

@@ -28,6 +28,9 @@ public class INAppInterface : MonoBehaviour
 
 	[SerializeField]
 	private UnityEngine.UI.Button m_menuButton;
+	
+	[SerializeField]
+	private UnityEngine.UI.Button m_hidePropertyPanelButton;
 
 	[SerializeField]
 	private List<GameObject> m_elements;
@@ -61,6 +64,7 @@ public class INAppInterface : MonoBehaviour
 		m_enterButton.onClick.AddListener(OnEnterButtonClick);
 		m_backButton.onClick.AddListener(OnBackButtonClick);
 		m_menuButton.onClick.AddListener(OnMenuButtonClick);
+		m_hidePropertyPanelButton.onClick.AddListener(HidePropertyPanel);
 		string text = INLocalization.Instance.GetText("AppInterface_AppName");
 		string text2 = INLocalization.Instance.GetText("AppInterface_Name");
 		SetTitle(text + " " + text2);
@@ -76,6 +80,11 @@ public class INAppInterface : MonoBehaviour
 			obj2.anchoredPosition = Vector2.zero;
 			obj2.sizeDelta = Vector2.zero;
 		}
+	}
+
+	private void HidePropertyPanel()
+	{
+		INSettings.HidePropertyPanel = !INSettings.HidePropertyPanel;
 	}
 
 	public GameObject FindElement(string name)
@@ -120,6 +129,7 @@ public class INAppInterface : MonoBehaviour
 		}
 		m_enabled = isEnabled;
 		m_enterButton.gameObject.SetActive(!isEnabled);
+		m_hidePropertyPanelButton.gameObject.SetActive(!isEnabled);
 		m_panel.gameObject.SetActive(isEnabled);
 		Singleton<GuiManager>.Instance.IsEnabled = !m_enabled;
 		Singleton<GuiManager>.Instance.gameObject.SetActive(!m_enabled);

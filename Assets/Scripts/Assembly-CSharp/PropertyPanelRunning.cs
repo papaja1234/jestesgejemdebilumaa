@@ -48,6 +48,7 @@ public class PropertyPanelRunning : PropertyPanel
 		int count = instance.JointMap.Count;
 		int num3 = (INSettings.GetBool(INFeature.FrameJoint) ? FrameJointManager.Instance.JointCount : 0);
 		Rigidbody[] components = INContraption.Instance.GetComponents<Rigidbody>();
+		if (!INSettings.HidePropertyPanel) {m_textMesh.text = string.Empty;return;}
 		foreach (Rigidbody obj in components)
 		{
 			float mass = obj.mass;

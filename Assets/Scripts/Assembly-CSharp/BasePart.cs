@@ -377,7 +377,7 @@ public class BasePart : WPFMonoBehaviour
         }
     }
 
-	public void LowHpDestruction(float passDamage)
+	public virtual void LowHpDestruction(float passDamage)
 	{
 		switch (INSettings.PartHPStatus)
 		{
@@ -407,7 +407,7 @@ public class BasePart : WPFMonoBehaviour
 				//this thing makes stackoverflow --> basePart.Hurt(passDamage/(4f+64f*Vector3.SqrMagnitude(_collider.transform.position-transform.position)));//hidden recursion, use big denominator to avoid stackoverflow
 			}
 		}
-
+		
 		gameObject.isStatic = true;
 		contraption.RemovePart(this);
 		
@@ -1325,6 +1325,11 @@ public class BasePart : WPFMonoBehaviour
 			{
 				base.transform.GetChild(i).gameObject.layer = LayerMask.NameToLayer("Contraption");
 			}
+		}
+
+		if (enclosedPart is ExplodingGrapplingHook)
+		{
+			base.rigidbody.collisionDetectionMode = CollisionDetectionMode.Discrete;
 		}
 	}
 

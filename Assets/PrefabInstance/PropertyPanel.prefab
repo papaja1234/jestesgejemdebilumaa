@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 223663797505268500}
   - component: {fileID: 114682520323331355}
   - component: {fileID: 114500528347443741}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: PropertyPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -113,7 +113,7 @@ GameObject:
   - component: {fileID: 222128561896876300}
   - component: {fileID: 114226941143408758}
   - component: {fileID: 114756101560390625}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}

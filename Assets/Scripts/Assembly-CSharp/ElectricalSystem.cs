@@ -57,7 +57,7 @@ public class ElectricalSystem : PartManager
 
 	private void GetElectricalParts(List<BasePart> parts, List<ElectricalPart> electricalParts)
 	{
-		CheckList(electricalParts, "electricalParts");
+		CheckEmptyList(electricalParts, "electricalParts");
 		foreach (BasePart part in parts)
 		{
 			if (part is ElectricalPart item)
@@ -69,7 +69,7 @@ public class ElectricalSystem : PartManager
 
 	private void GetElectricalElements(List<ElectricalPart> electricalParts, List<ElectricalElement> elements)
 	{
-		CheckList(elements, "elements");
+		CheckEmptyList(elements, "elements");
 		foreach (ElectricalPart electricalPart in electricalParts)
 		{
 			if (electricalPart.ElectricalElements == null)
@@ -104,9 +104,17 @@ public class ElectricalSystem : PartManager
 		}
 	}
 
+	public void ResetLists()
+	{
+		m_electricalParts = new List<ElectricalPart>();
+		m_electricalElements = new List<ElectricalElement>();
+		m_interfaces = new List<InterfacePart>();
+	}
+
 	public override void FixedUpdate()
 	{
 		List<BasePart> parts = Contraption.Instance.Parts;
+		//ResetLists();
 		GetElectricalParts(parts, m_electricalParts);
 		GetElectricalElements(m_electricalParts, m_electricalElements);
 		if (m_electricalParts.Count == 0)
@@ -312,7 +320,7 @@ public class ElectricalSystem : PartManager
 		}
 	}
 
-	private void CheckList<T>(List<T> list, string name)
+	private void CheckEmptyList<T>(List<T> list, string name)
 	{
 		if (list == null)
 		{
