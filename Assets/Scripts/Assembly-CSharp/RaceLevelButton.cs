@@ -130,8 +130,7 @@ public class RaceLevelButton : MonoBehaviour
 		base.transform.Find("Finger").gameObject.GetComponent<Renderer>().enabled = true;
 		GameObject gameObject = UnityEngine.Object.Instantiate(gameData.m_roadHogsUnlockDialog);
 		gameObject.transform.position = new Vector3(0f, 0f, -15f);
-		GameObject obj = UnityEngine.Object.Instantiate(gameData.m_genericButtonPrefab);
-		obj.transform.parent = base.transform;
+		GameObject obj = UnityEngine.Object.Instantiate(gameData.m_genericButtonPrefab, base.transform, true);
 		obj.transform.localPosition = Vector3.zero + new Vector3(0f, 0f, -1f);
 		obj.transform.localRotation = Quaternion.identity;
 		obj.GetComponent<BoxCollider>().size = base.gameObject.GetComponent<BoxCollider>().size;

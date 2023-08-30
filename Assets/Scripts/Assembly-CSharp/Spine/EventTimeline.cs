@@ -4,44 +4,26 @@ namespace Spine
 	{
 		internal float[] frames;
 
-		private Event[] events;
-
 		public float[] Frames
 		{
-			get
-			{
-				return frames;
-			}
-			set
-			{
-				frames = value;
-			}
+			get => frames;
+			set => frames = value;
 		}
 
-		public Event[] Events
-		{
-			get
-			{
-				return events;
-			}
-			set
-			{
-				events = value;
-			}
-		}
+		public Event[] Events { get; set; }
 
 		public int FrameCount => frames.Length;
 
 		public EventTimeline(int frameCount)
 		{
 			frames = new float[frameCount];
-			events = new Event[frameCount];
+			Events = new Event[frameCount];
 		}
 
 		public void SetFrame(int frameIndex, Event e)
 		{
 			frames[frameIndex] = e.Time;
-			events[frameIndex] = e;
+			Events[frameIndex] = e;
 		}
 
 		public void Apply(Skeleton skeleton, float lastTime, float time, ExposedList<Event> firedEvents, float alpha)
@@ -81,7 +63,7 @@ namespace Spine
 			}
 			for (; i < num && time >= array[i]; i++)
 			{
-				firedEvents.Add(events[i]);
+				firedEvents.Add(Events[i]);
 			}
 		}
 	}

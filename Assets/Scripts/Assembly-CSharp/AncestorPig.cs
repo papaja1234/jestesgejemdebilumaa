@@ -279,9 +279,8 @@ public class AncestorPig : WPFMonoBehaviour
 			{
 				childPos = base.transform.Find("ChildPos").gameObject;
 			}
-			childObject = Object.Instantiate(childPrefab);
+			childObject = Object.Instantiate(childPrefab, childPos.transform, true);
 			childObject.name = childPrefab.name;
-			childObject.transform.parent = childPos.transform;
 			childObject.transform.localScale = Vector3.one;
 			childObject.transform.localRotation = Quaternion.identity;
 			if ((bool)childObject.GetComponent<Rigidbody>())

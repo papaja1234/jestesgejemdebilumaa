@@ -3,15 +3,13 @@ using UnityEngine;
 
 public class FrameJointManager : PartManager
 {
-	private int m_jointCount;
-
 	private bool m_needsUpdate;
 
 	private List<BasePart> m_cacheParts;
 
 	public static FrameJointManager Instance { get; private set; }
 
-	public int JointCount => m_jointCount;
+	public int JointCount { get; private set; }
 
 	protected override void Initialize()
 	{
@@ -145,7 +143,7 @@ public class FrameJointManager : PartManager
 						FixedJoint fixedJoint2 = item2.gameObject.AddComponent<FixedJoint>();
 						fixedJoint2.connectedBody = item.rigidbody;
 						fixedJoint2.breakForce = breakForce;
-						m_jointCount += 2;
+						JointCount += 2;
 					}
 				}
 			}

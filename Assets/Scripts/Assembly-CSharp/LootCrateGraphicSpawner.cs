@@ -189,8 +189,7 @@ public class LootCrateGraphicSpawner : WPFMonoBehaviour
 
 	private static GameObject CreateObject(GameObject prefab, Transform parent, Vector3 localPosition, Vector3 localScale, Quaternion localRotation)
 	{
-		GameObject obj = Object.Instantiate(prefab);
-		obj.transform.parent = parent;
+		GameObject obj = Object.Instantiate(prefab, parent, true);
 		obj.transform.localPosition = localPosition;
 		obj.transform.localRotation = localRotation;
 		obj.transform.localScale = localScale;

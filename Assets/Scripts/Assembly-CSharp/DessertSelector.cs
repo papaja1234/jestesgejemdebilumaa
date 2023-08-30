@@ -160,9 +160,8 @@ public class DessertSelector : MonoBehaviour, WidgetListener
 			availableDessertsCount += num;
 			if (num > 0)
 			{
-				GameObject gameObject = UnityEngine.Object.Instantiate(m_dessertButtonPrefab);
-				GameObject gameObject2 = UnityEngine.Object.Instantiate(dessert.GetComponent<Dessert>().prefabIcon);
-				gameObject2.transform.parent = gameObject.transform;
+				GameObject gameObject = UnityEngine.Object.Instantiate(m_dessertButtonPrefab, m_scrollList.transform, true);
+				GameObject gameObject2 = UnityEngine.Object.Instantiate(dessert.GetComponent<Dessert>().prefabIcon, gameObject.transform, true);
 				gameObject2.transform.localScale = new Vector3(1.75f, 1.75f, 1f);
 				gameObject2.transform.localPosition = new Vector3(0f, 0f, -0.1f);
 				gameObject2.GetComponent<MeshRenderer>().sortingOrder = 1;
@@ -173,7 +172,6 @@ public class DessertSelector : MonoBehaviour, WidgetListener
 				Transform obj = gameObject.transform.Find("PartCount");
 				obj.GetComponent<TextMesh>().text = num.ToString();
 				obj.GetComponent<MeshRenderer>().sortingOrder = 3;
-				gameObject.transform.parent = m_scrollList.transform;
 				m_scrollList.AddButton(gameObject.GetComponent<Widget>());
 			}
 		}

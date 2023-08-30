@@ -9,52 +9,44 @@ public class Bundle : MonoBehaviour
 {
 	public class BundleObject
 	{
-		private string bundleId;
-
 		private string bundleFileExtension;
 
-		private string bundleLocation;
+		public string BundleFileName => BundleId + "." + bundleFileExtension;
 
-		private bool loadAtStart;
+		public string BundleId { get; }
 
-		private AssetBundle assetBundle;
+		public string BundleLocation { get; private set; }
 
-		public string BundleFileName => bundleId + "." + bundleFileExtension;
+		public bool LoadAtStart { get; }
 
-		public string BundleId => bundleId;
+		public bool IsAssetBundleInMemory => LoadedAssetBundle != null;
 
-		public string BundleLocation => bundleLocation;
-
-		public bool LoadAtStart => loadAtStart;
-
-		public bool IsAssetBundleInMemory => assetBundle != null;
-
-		public AssetBundle LoadedAssetBundle => assetBundle;
+		public AssetBundle LoadedAssetBundle { get; private set; }
 
 		public BundleObject(string newBundleId, string newBundleFileExtension, bool newLoadAtStart, string newBundleLocation = "")
 		{
-			bundleLocation = newBundleLocation;
-			bundleId = newBundleId;
+			BundleLocation = newBundleLocation;
+			BundleId = newBundleId;
 			bundleFileExtension = newBundleFileExtension;
-			loadAtStart = newLoadAtStart;
+			LoadAtStart = newLoadAtStart;
 		}
 
 		public void SetBundleLocation(string newBundleLocation)
 		{
-			bundleLocation = newBundleLocation;
+			BundleLocation = newBundleLocation;
 		}
 
 		public void SetLoadedBundle(AssetBundle newAssetBundle)
 		{
-			assetBundle = newAssetBundle;
+			LoadedAssetBundle = newAssetBundle;
 		}
 
 		public void UnloadBundle(bool unloadAllObjects)
 		{
-			if (!(assetBundle == null))
+			if (!(LoadedAssetBundle == null))
 			{
-				assetBundle.Unload(unloadAllObjects);
-				assetBundle = null;
+				LoadedAssetBundle.Unload(unloadAllObjects);
+				LoadedAssetBundle = null;
 			}
 		}
 	}

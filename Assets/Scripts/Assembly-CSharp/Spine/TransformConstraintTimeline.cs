@@ -28,26 +28,14 @@ namespace Spine
 
 		public int TransformConstraintIndex
 		{
-			get
-			{
-				return transformConstraintIndex;
-			}
-			set
-			{
-				transformConstraintIndex = value;
-			}
+			get => transformConstraintIndex;
+			set => transformConstraintIndex = value;
 		}
 
 		public float[] Frames
 		{
-			get
-			{
-				return frames;
-			}
-			set
-			{
-				frames = value;
-			}
+			get => frames;
+			set => frames = value;
 		}
 
 		public TransformConstraintTimeline(int frameCount)

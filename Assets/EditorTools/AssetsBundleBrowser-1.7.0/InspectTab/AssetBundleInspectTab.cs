@@ -15,9 +15,8 @@ namespace AssetBundleBrowser
 
         [SerializeField]
         private InspectTabData m_Data;
-        
 
-        private Dictionary<string, List<string> > m_BundleList;
+
         private InspectBundleTree m_BundleTreeView;
         [SerializeField]
         private TreeViewState m_BundleTreeState;
@@ -53,7 +52,7 @@ namespace AssetBundleBrowser
 
         internal AssetBundleInspectTab()
         {
-            m_BundleList = new Dictionary<string, List<string>>();
+            BundleList = new Dictionary<string, List<string>>();
             m_SingleInspector = new SingleBundleInspector();
             m_loadedAssetBundles = new Dictionary<string, AssetBundleRecord>();
         }
@@ -80,8 +79,8 @@ namespace AssetBundleBrowser
             }
 
 
-            if (m_BundleList == null)
-                m_BundleList = new Dictionary<string, List<string>>();
+            if (BundleList == null)
+                BundleList = new Dictionary<string, List<string>>();
 
             if (m_BundleTreeState == null)
                 m_BundleTreeState = new TreeViewState();
@@ -143,7 +142,7 @@ namespace AssetBundleBrowser
             GUILayout.EndHorizontal();
             EditorGUILayout.Space();
 
-            if (m_BundleList.Count > 0)
+            if (BundleList.Count > 0)
             {
                 int halfWidth = (int)(m_Position.width / 2.0f);
                 m_BundleTreeView.OnGUI(new Rect(m_Position.x, m_Position.y + 30, halfWidth, m_Position.height - 30));
@@ -159,7 +158,7 @@ namespace AssetBundleBrowser
         internal void RemoveBundleFolder(string pathToRemove)
         {
             List<string> paths = null;
-            if(m_BundleList.TryGetValue(pathToRemove, out paths))
+            if(BundleList.TryGetValue(pathToRemove, out paths))
             {
                 foreach(var p in paths)
                 {
@@ -232,10 +231,10 @@ namespace AssetBundleBrowser
                 return;
 
             //find assets
-            if (m_BundleList == null)
-                m_BundleList = new Dictionary<string, List<string>>();
+            if (BundleList == null)
+                BundleList = new Dictionary<string, List<string>>();
 
-            m_BundleList.Clear();
+            BundleList.Clear();
             var pathsToRemove = new List<string>();
             foreach(var filePath in m_Data.BundlePaths)
             {
@@ -278,12 +277,12 @@ namespace AssetBundleBrowser
         private void AddBundleToList(string parent, string bundlePath)
         {
             List<string> bundles = null;
-            m_BundleList.TryGetValue(parent, out bundles);
+            BundleList.TryGetValue(parent, out bundles);
 
             if(bundles == null)
             {
                 bundles = new List<string>();
-                m_BundleList.Add(parent, bundles);
+                BundleList.Add(parent, bundles);
             }
             bundles.Add(bundlePath);
         }
@@ -309,8 +308,7 @@ namespace AssetBundleBrowser
             }
         }
 
-        internal Dictionary<string, List<string>> BundleList
-        { get { return m_BundleList; } }
+        internal Dictionary<string, List<string>> BundleList { get; private set; }
 
 
         internal void SetBundleItem(IList<InspectTreeItem> selected)
@@ -348,8 +346,8 @@ namespace AssetBundleBrowser
             [SerializeField]
             private List<BundleFolderData> m_BundleFolders = new List<BundleFolderData>();
 
-            internal IList<string> BundlePaths { get { return m_BundlePaths.AsReadOnly(); } }
-            internal IList<BundleFolderData> BundleFolders { get { return m_BundleFolders.AsReadOnly(); } }
+            internal IList<string> BundlePaths => m_BundlePaths.AsReadOnly();
+            internal IList<BundleFolderData> BundleFolders => m_BundleFolders.AsReadOnly();
 
             internal void AddPath(string newPath)
             {

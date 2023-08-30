@@ -6,11 +6,9 @@ namespace CakeRace
 	{
 		private static int s_cakeCount;
 
-		private int m_cakeIndex;
-
 		private float m_maxDistance;
 
-		public int CakeIndex => m_cakeIndex;
+		public int CakeIndex { get; private set; }
 
 		public bool CollectedByOtherPlayer { get; private set; }
 
@@ -18,12 +16,12 @@ namespace CakeRace
 
 		protected override string GetNameKey()
 		{
-			return $"Cake{m_cakeIndex}";
+			return $"Cake{CakeIndex}";
 		}
 
 		private void Awake()
 		{
-			m_cakeIndex = s_cakeCount++;
+			CakeIndex = s_cakeCount++;
 			CollectedByOtherPlayer = false;
 		}
 

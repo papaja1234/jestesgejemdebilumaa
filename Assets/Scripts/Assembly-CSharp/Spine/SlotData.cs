@@ -30,74 +30,38 @@ namespace Spine
 
 		public float R
 		{
-			get
-			{
-				return r;
-			}
-			set
-			{
-				r = value;
-			}
+			get => r;
+			set => r = value;
 		}
 
 		public float G
 		{
-			get
-			{
-				return g;
-			}
-			set
-			{
-				g = value;
-			}
+			get => g;
+			set => g = value;
 		}
 
 		public float B
 		{
-			get
-			{
-				return b;
-			}
-			set
-			{
-				b = value;
-			}
+			get => b;
+			set => b = value;
 		}
 
 		public float A
 		{
-			get
-			{
-				return a;
-			}
-			set
-			{
-				a = value;
-			}
+			get => a;
+			set => a = value;
 		}
 
 		public string AttachmentName
 		{
-			get
-			{
-				return attachmentName;
-			}
-			set
-			{
-				attachmentName = value;
-			}
+			get => attachmentName;
+			set => attachmentName = value;
 		}
 
 		public BlendMode BlendMode
 		{
-			get
-			{
-				return blendMode;
-			}
-			set
-			{
-				blendMode = value;
-			}
+			get => blendMode;
+			set => blendMode = value;
 		}
 
 		public SlotData(int index, string name, BoneData boneData)

@@ -10,14 +10,12 @@ public class GameConfigurationManager : Singleton<GameConfigurationManager>
 
 	private SecureJsonManager secureJson;
 
-	private bool hasData;
-
-	public bool HasData => hasData;
+	public bool HasData { get; private set; }
 
 	private void Awake()
 	{
 		SetAsPersistant();
-		hasData = false;
+		HasData = false;
 		secureJson = new SecureJsonManager("gameconfiguration");
 		secureJson.Initialize(OnDataLoaded);
 	}
@@ -41,7 +39,7 @@ public class GameConfigurationManager : Singleton<GameConfigurationManager>
 			{
 			}
 		}
-		hasData = true;
+		HasData = true;
 		if (OnHasData != null)
 		{
 			OnHasData();

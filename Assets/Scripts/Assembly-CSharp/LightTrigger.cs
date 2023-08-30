@@ -2,15 +2,13 @@ using UnityEngine;
 
 public class LightTrigger : MonoBehaviour
 {
-	private PointLightSource pls;
-
 	private Transform cachedTransform;
 
-	public PointLightSource LightSource => pls;
+	public PointLightSource LightSource { get; private set; }
 
 	public void Init(PointLightSource pls)
 	{
-		this.pls = pls;
+		this.LightSource = pls;
 	}
 
 	private void Start()
@@ -25,7 +23,7 @@ public class LightTrigger : MonoBehaviour
 
 	private void OnTriggerEnter(Collider c)
 	{
-		if (!(pls == null) && pls.lightType == PointLightMask.LightType.PointLight && pls.canLitObjects && pls.isEnabled)
+		if (!(LightSource == null) && LightSource.lightType == PointLightMask.LightType.PointLight && LightSource.canLitObjects && LightSource.isEnabled)
 		{
 			c.SendMessageUpwards("Lit", SendMessageOptions.DontRequireReceiver);
 		}
@@ -33,21 +31,21 @@ public class LightTrigger : MonoBehaviour
 
 	private void OnTriggerStay(Collider c)
 	{
-		if (pls == null)
+		if (LightSource == null)
 		{
 			return;
 		}
-		if (pls.lightType == PointLightMask.LightType.PointLight && pls.canLitObjects && pls.isEnabled)
+		if (LightSource.lightType == PointLightMask.LightType.PointLight && LightSource.canLitObjects && LightSource.isEnabled)
 		{
 			c.SendMessage("Lit", SendMessageOptions.DontRequireReceiver);
 		}
-		else if (pls.lightType == PointLightMask.LightType.BeamLight && pls.canLitObjects && pls.isEnabled)
+		else if (LightSource.lightType == PointLightMask.LightType.BeamLight && LightSource.canLitObjects && LightSource.isEnabled)
 		{
-			float beamAngle = pls.beamAngle;
+			float beamAngle = LightSource.beamAngle;
 			Vector3 vector = Vector3.up * c.transform.position.y + Vector3.right * c.transform.position.x;
 			Vector3 vector2 = Vector3.up * base.transform.position.y + Vector3.right * base.transform.position.x;
-			float num = Vector3.Angle(vector - vector2, pls.transform.up);
-			if (Vector3.Distance(vector, vector2) <= pls.baseLightSize + pls.borderWidth || num < beamAngle * 0.5f)
+			float num = Vector3.Angle(vector - vector2, LightSource.transform.up);
+			if (Vector3.Distance(vector, vector2) <= LightSource.baseLightSize + LightSource.borderWidth || num < beamAngle * 0.5f)
 			{
 				c.SendMessageUpwards("Lit", SendMessageOptions.DontRequireReceiver);
 			}
@@ -56,9 +54,9 @@ public class LightTrigger : MonoBehaviour
 
 	public void Lit()
 	{
-		if (pls != null && !pls.isEnabled && pls.canBeLit)
+		if (LightSource != null && !LightSource.isEnabled && LightSource.canBeLit)
 		{
-			pls.isEnabled = true;
+			LightSource.isEnabled = true;
 		}
 	}
 }

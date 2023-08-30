@@ -2,17 +2,15 @@ using System;
 
 public class DisjointSet
 {
-	private int m_count;
-
 	private int[] m_parent;
 
 	private int[] m_size;
 
-	public int Count => m_count;
+	public int Count { get; }
 
 	public DisjointSet(int count)
 	{
-		m_count = count;
+		Count = count;
 		if (count == 0)
 		{
 			m_parent = Array.Empty<int>();
@@ -71,7 +69,7 @@ public class DisjointSet
 
 	public void Clear()
 	{
-		for (int i = 0; i < m_count; i++)
+		for (int i = 0; i < Count; i++)
 		{
 			MakeSet(i);
 		}

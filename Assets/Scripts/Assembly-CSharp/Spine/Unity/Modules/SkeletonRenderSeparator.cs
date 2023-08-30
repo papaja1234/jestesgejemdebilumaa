@@ -27,10 +27,7 @@ namespace Spine.Unity.Modules
 
 		public SkeletonRenderer SkeletonRenderer
 		{
-			get
-			{
-				return skeletonRenderer;
-			}
+			get => skeletonRenderer;
 			set
 			{
 				if (skeletonRenderer != null)

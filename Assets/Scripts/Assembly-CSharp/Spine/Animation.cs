@@ -14,26 +14,14 @@ namespace Spine
 
 		public ExposedList<Timeline> Timelines
 		{
-			get
-			{
-				return timelines;
-			}
-			set
-			{
-				timelines = value;
-			}
+			get => timelines;
+			set => timelines = value;
 		}
 
 		public float Duration
 		{
-			get
-			{
-				return duration;
-			}
-			set
-			{
-				duration = value;
-			}
+			get => duration;
+			set => duration = value;
 		}
 
 		public Animation(string name, ExposedList<Timeline> timelines, float duration)

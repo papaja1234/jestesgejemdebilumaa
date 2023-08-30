@@ -48,14 +48,8 @@ namespace Spine
 
 		public float DefaultMix
 		{
-			get
-			{
-				return defaultMix;
-			}
-			set
-			{
-				defaultMix = value;
-			}
+			get => defaultMix;
+			set => defaultMix = value;
 		}
 
 		public AnimationStateData(SkeletonData skeletonData)

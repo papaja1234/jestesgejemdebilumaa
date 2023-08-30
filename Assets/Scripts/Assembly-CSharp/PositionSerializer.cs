@@ -21,8 +21,7 @@ public class PositionSerializer : ExportAction
 		}
 		for (int i = 0; i < prefab.transform.childCount; i++)
 		{
-			GameObject gameObject = Object.Instantiate(prefab.transform.GetChild(i).gameObject);
-			gameObject.transform.parent = base.transform;
+			GameObject gameObject = Object.Instantiate(prefab.transform.GetChild(i).gameObject, base.transform, true);
 			if (childLocalPositions.Count >= prefab.transform.childCount)
 			{
 				gameObject.transform.localPosition = childLocalPositions[i];

@@ -31,8 +31,6 @@ public class AchievementData : Singleton<AchievementData>
 
 	private bool m_limitsInitialized;
 
-	private string m_fileName;
-
 	private bool m_useEncryption;
 
 	private CryptoUtility m_crypto;
@@ -42,21 +40,9 @@ public class AchievementData : Singleton<AchievementData>
 	[SerializeField]
 	private List<AchievementDescriptor> m_achievementList = new List<AchievementDescriptor>();
 
-	private Dictionary<string, AchievementDescriptor> m_achievementLimits = new Dictionary<string, AchievementDescriptor>();
+	public string FileName { get; set; }
 
-	public string FileName
-	{
-		get
-		{
-			return m_fileName;
-		}
-		set
-		{
-			m_fileName = value;
-		}
-	}
-
-	public Dictionary<string, AchievementDescriptor> AchievementsLimits => m_achievementLimits;
+	public Dictionary<string, AchievementDescriptor> AchievementsLimits { get; } = new Dictionary<string, AchievementDescriptor>();
 
 	public Dictionary<string, double> AchievementsProgress
 	{
@@ -106,14 +92,14 @@ public class AchievementData : Singleton<AchievementData>
 		byte[] array = memoryStream.ToArray();
 		if (!m_useEncryption)
 		{
-			FileStream fileStream = new FileStream(m_fileName, FileMode.Create);
+			FileStream fileStream = new FileStream(FileName, FileMode.Create);
 			fileStream.Write(array, 0, array.Length);
 			fileStream.Close();
 			return;
 		}
 		byte[] array2 = m_crypto.Encrypt(array);
 		byte[] array3 = CryptoUtility.ComputeHash(array2);
-		FileStream fileStream2 = new FileStream(m_fileName, FileMode.Create);
+		FileStream fileStream2 = new FileStream(FileName, FileMode.Create);
 		fileStream2.Write(array3, 0, array3.Length);
 		fileStream2.Write(array2, 0, array2.Length);
 		fileStream2.Close();
@@ -121,13 +107,13 @@ public class AchievementData : Singleton<AchievementData>
 
 	public bool Load()
 	{
-		if (!File.Exists(m_fileName))
+		if (!File.Exists(FileName))
 		{
 			return false;
 		}
 		try
 		{
-			FileStream fileStream = new FileStream(m_fileName, FileMode.Open);
+			FileStream fileStream = new FileStream(FileName, FileMode.Open);
 			byte[] array = new byte[fileStream.Length];
 			fileStream.Read(array, 0, array.Length);
 			fileStream.Close();
@@ -220,7 +206,7 @@ public class AchievementData : Singleton<AchievementData>
 	{
 		foreach (AchievementDescriptor achievement in m_achievementList)
 		{
-			m_achievementLimits.Add(achievement.id, achievement);
+			AchievementsLimits.Add(achievement.id, achievement);
 		}
 		m_limitsInitialized = true;
 	}
@@ -231,7 +217,7 @@ public class AchievementData : Singleton<AchievementData>
 		{
 			InitializeAchievementLimits();
 		}
-		if (m_achievementLimits.TryGetValue(id, out var value))
+		if (AchievementsLimits.TryGetValue(id, out var value))
 		{
 			return (int)value.limit;
 		}
@@ -241,7 +227,7 @@ public class AchievementData : Singleton<AchievementData>
 	private void Awake()
 	{
 		SetAsPersistant();
-		m_fileName = Application.persistentDataPath + "/Achievements.xml";
+		FileName = Application.persistentDataPath + "/Achievements.xml";
 		m_useEncryption = true;
 		m_crypto = new CryptoUtility("fHHg5#%3RRfnJi78&%lP?65");
 		InitializeAchievementLimits();
@@ -250,7 +236,7 @@ public class AchievementData : Singleton<AchievementData>
 			return;
 		}
 		AchievementDataHolder value = default(AchievementDataHolder);
-		foreach (KeyValuePair<string, AchievementDescriptor> achievementLimit in m_achievementLimits)
+		foreach (KeyValuePair<string, AchievementDescriptor> achievementLimit in AchievementsLimits)
 		{
 			value.progress = 0.0;
 			value.completed = false;

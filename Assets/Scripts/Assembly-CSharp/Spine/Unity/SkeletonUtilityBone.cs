@@ -50,9 +50,7 @@ namespace Spine.Unity
 
 		protected Transform skeletonTransform;
 
-		private bool disableInheritScaleWarning;
-
-		public bool DisableInheritScaleWarning => disableInheritScaleWarning;
+		public bool DisableInheritScaleWarning { get; private set; }
 
 		public void Reset()
 		{
@@ -134,7 +132,7 @@ namespace Spine.Unity
 				if (scale)
 				{
 					cachedTransform.localScale = new Vector3(bone.scaleX, bone.scaleY, bone.WorldSignX);
-					disableInheritScaleWarning = !bone.data.inheritScale;
+					DisableInheritScaleWarning = !bone.data.inheritScale;
 				}
 			}
 			else
@@ -185,7 +183,7 @@ namespace Spine.Unity
 						bone.scaleX = Mathf.Lerp(bone.scaleX, cachedTransform.localScale.x, overrideAlpha);
 						bone.scaleY = Mathf.Lerp(bone.scaleY, cachedTransform.localScale.y, overrideAlpha);
 					}
-					disableInheritScaleWarning = !bone.data.inheritScale;
+					DisableInheritScaleWarning = !bone.data.inheritScale;
 				}
 				transformLerpComplete = true;
 			}

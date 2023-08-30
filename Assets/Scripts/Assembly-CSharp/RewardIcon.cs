@@ -15,9 +15,7 @@ public class RewardIcon : MonoBehaviour
 	[SerializeField]
 	public GameObject claimNowSprite;
 
-	private State m_buttonState;
-
-	public State ButtonState => m_buttonState;
+	public State ButtonState { get; private set; }
 
 	public void Awake()
 	{
@@ -26,14 +24,14 @@ public class RewardIcon : MonoBehaviour
 
 	public RewardIcon SetButtonState(State state)
 	{
-		m_buttonState = state;
+		ButtonState = state;
 		RefreshButtonImage();
 		return this;
 	}
 
 	private void RefreshButtonImage()
 	{
-		switch (m_buttonState)
+		switch (ButtonState)
 		{
 		case State.Claimed:
 			disabledSprite.SetActive(value: true);

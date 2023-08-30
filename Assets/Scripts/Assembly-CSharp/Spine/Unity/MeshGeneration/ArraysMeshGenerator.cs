@@ -44,26 +44,14 @@ namespace Spine.Unity.MeshGeneration
 
 		public bool AddNormals
 		{
-			get
-			{
-				return addNormals;
-			}
-			set
-			{
-				addNormals = value;
-			}
+			get => addNormals;
+			set => addNormals = value;
 		}
 
 		public bool AddTangents
 		{
-			get
-			{
-				return addTangents;
-			}
-			set
-			{
-				addTangents = value;
-			}
+			get => addTangents;
+			set => addTangents = value;
 		}
 
 		public void TryAddNormalsTo(Mesh mesh, int targetVertexCount)

@@ -131,8 +131,7 @@ public class LootCrateSlot : WPFMonoBehaviour
 		crateHolder.transform.localPosition = Vector3.up * ((!flag) ? 0.1f : 0f);
 		if (crateType != LootCrateType.None && crateHolder.childCount == 0 && state != 0)
 		{
-			GameObject obj = UnityEngine.Object.Instantiate(LootCrateSlots.GetCratePrefab(crateType));
-			obj.transform.parent = crateHolder;
+			GameObject obj = UnityEngine.Object.Instantiate(LootCrateSlots.GetCratePrefab(crateType), crateHolder, true);
 			obj.transform.localPosition = Vector3.zero;
 			obj.transform.localScale = Vector3.one;
 			obj.transform.localRotation = Quaternion.identity;

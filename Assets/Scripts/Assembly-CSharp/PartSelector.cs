@@ -190,8 +190,7 @@ public class PartSelector : WPFMonoBehaviour, WidgetListener
 			partDesc.part.customPartIndex = data.customPartIndex;
 			if (partDesc.currentPartIcon != null && gameObject != null)
 			{
-				GameObject gameObject2 = UnityEngine.Object.Instantiate(gameObject);
-				gameObject2.transform.parent = partDesc.currentPartIcon.parent;
+				GameObject gameObject2 = UnityEngine.Object.Instantiate(gameObject, partDesc.currentPartIcon.parent, true);
 				gameObject2.transform.localScale = new Vector3(1.75f, 1.75f, 1f);
 				gameObject2.transform.localPosition = new Vector3(0f, 0f, -0.5f);
 				ConstructionUI.SetSortingOrder(gameObject2, 1, string.Empty);
@@ -287,8 +286,7 @@ public class PartSelector : WPFMonoBehaviour, WidgetListener
 					}
 				}
 			}
-			GameObject gameObject2 = UnityEngine.Object.Instantiate((!flag) ? m_partUnavailableButtonPrefab : m_partButtonPrefab);
-			gameObject2.transform.parent = m_scrollList.transform;
+			GameObject gameObject2 = UnityEngine.Object.Instantiate((!flag) ? m_partUnavailableButtonPrefab : m_partButtonPrefab, m_scrollList.transform, true);
 			ConstructionUI.SetSortingOrder(gameObject2, 1, string.Empty);
 			if (flag)
 			{
@@ -315,8 +313,7 @@ public class PartSelector : WPFMonoBehaviour, WidgetListener
 					AddUnlockStarTierPopup(gameObject2.GetComponent<UnavailablePartButton>(), m_unlockPartTierDialog, num2, num3, totalCost, () => GameProgress.SnoutCoinCount() >= totalCost);
 				}
 			}
-			GameObject gameObject3 = UnityEngine.Object.Instantiate(gameObject);
-			gameObject3.transform.parent = gameObject2.transform;
+			GameObject gameObject3 = UnityEngine.Object.Instantiate(gameObject, gameObject2.transform, true);
 			gameObject3.transform.localScale = new Vector3(1.75f, 1.75f, 1f);
 			gameObject3.transform.localPosition = new Vector3(0f, 0f, -0.5f);
 			ConstructionUI.SetSortingOrder(gameObject3, 1, string.Empty);
@@ -326,8 +323,7 @@ public class PartSelector : WPFMonoBehaviour, WidgetListener
 				gameObject2.GetComponent<DraggableButton>().Icon = gameObject3;
 				if (flag2)
 				{
-					GameObject obj3 = UnityEngine.Object.Instantiate(m_partUnlockAnimatedLock);
-					obj3.transform.parent = gameObject2.transform;
+					GameObject obj3 = UnityEngine.Object.Instantiate(m_partUnlockAnimatedLock, gameObject2.transform, true);
 					obj3.transform.localPosition = new Vector3(0f, 0.6f, -1f);
 				}
 			}

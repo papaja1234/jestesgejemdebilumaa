@@ -12,23 +12,21 @@ public class PartGeneratorManager : PartManager
 
 		private ComponentData[] m_components;
 
-		private RuntimeContraption m_runtimeContraption;
+		public bool IsEmpty => RuntimeContraption.Parts.Count == 0;
 
-		public bool IsEmpty => m_runtimeContraption.Parts.Count == 0;
-
-		public RuntimeContraption RuntimeContraption => m_runtimeContraption;
+		public RuntimeContraption RuntimeContraption { get; }
 
 		public PartGenerationSystem()
 		{
 			m_components = Array.Empty<ComponentData>();
-			m_runtimeContraption = new RuntimeContraption();
+			RuntimeContraption = new RuntimeContraption();
 			m_disjointSet = new DisjointSetFull(0);
 		}
 
 		public void InitializePart(BasePart template, GrapplingHook generator, int x, int y)
 		{
 			int enclosedPartIndex = -1;
-			RuntimeContraption runtimeContraption = m_runtimeContraption;
+			RuntimeContraption runtimeContraption = RuntimeContraption;
 			int key = generator.m_coordX + x + (generator.m_coordY + y << 16);
 			int num = runtimeContraption.FindPartIndexAt(generator.m_coordX + x, generator.m_coordY + y);
 			BasePart basePart;
@@ -91,7 +89,7 @@ public class PartGeneratorManager : PartManager
 
 		public void UpdateParts()
 		{
-			RuntimeContraption runtimeContraption = m_runtimeContraption;
+			RuntimeContraption runtimeContraption = RuntimeContraption;
 			List<PartData> parts = runtimeContraption.Parts;
 			int count = parts.Count;
 			if (m_resize)
@@ -140,7 +138,7 @@ public class PartGeneratorManager : PartManager
 			}
 			Contraption instance = Contraption.Instance;
 			bool flag = false;
-			foreach (PartData part4 in m_runtimeContraption.Parts)
+			foreach (PartData part4 in RuntimeContraption.Parts)
 			{
 				ComponentData componentData = m_components[part4.ComponentIndex];
 				if (componentData.Time + componentData.GenerateTime - Time.time < 0f)
@@ -153,9 +151,9 @@ public class PartGeneratorManager : PartManager
 			{
 				Instance.GenerationCount++;
 			}
-			foreach (KeyValuePair<int, int> item in m_runtimeContraption.PartIndexMap)
+			foreach (KeyValuePair<int, int> item in RuntimeContraption.PartIndexMap)
 			{
-				PartData partData2 = m_runtimeContraption.Parts[item.Value];
+				PartData partData2 = RuntimeContraption.Parts[item.Value];
 				BasePart part = partData2.Part;
 				ComponentData componentData2 = m_components[partData2.ComponentIndex];
 				if (componentData2.Time + componentData2.GenerateTime - Time.time < 0f)
@@ -163,7 +161,7 @@ public class PartGeneratorManager : PartManager
 					instance.SetPartMap(part.CoordX, part.CoordY, part.GenerationIndex, part);
 				}
 			}
-			foreach (PartData part5 in m_runtimeContraption.Parts)
+			foreach (PartData part5 in RuntimeContraption.Parts)
 			{
 				ComponentData componentData3 = m_components[part5.ComponentIndex];
 				float num4 = componentData3.Time + componentData3.GenerateTime - Time.time;
@@ -292,7 +290,7 @@ public class PartGeneratorManager : PartManager
 
 		private IEnumerable<PartData> GetGeneratedParts()
 		{
-			foreach (PartData part in m_runtimeContraption.Parts)
+			foreach (PartData part in RuntimeContraption.Parts)
 			{
 				ComponentData componentData = m_components[part.ComponentIndex];
 				if (Time.time > componentData.Time + componentData.GenerateTime)
@@ -305,7 +303,7 @@ public class PartGeneratorManager : PartManager
 		private void Connect(int start, int end)
 		{
 			Contraption instance = Contraption.Instance;
-			RuntimeContraption runtimeContraption = m_runtimeContraption;
+			RuntimeContraption runtimeContraption = RuntimeContraption;
 			for (int i = start; i <= end; i++)
 			{
 				PartData partData = runtimeContraption.Parts[i];
@@ -455,7 +453,7 @@ public class PartGeneratorManager : PartManager
 		private void CreateJoints()
 		{
 			Contraption instance = Contraption.Instance;
-			RuntimeContraption runtimeContraption = m_runtimeContraption;
+			RuntimeContraption runtimeContraption = RuntimeContraption;
 			foreach (PartData generatedPart in GetGeneratedParts())
 			{
 				BasePart part = generatedPart.Part;
@@ -710,20 +708,16 @@ public class PartGeneratorManager : PartManager
 
 	private class RuntimeContraption
 	{
-		private List<PartData> m_parts;
-
-		private Dictionary<int, int> m_partIndexMap;
-
 		private Dictionary<int, BasePart> m_partMap;
 
-		public List<PartData> Parts => m_parts;
+		public List<PartData> Parts { get; }
 
-		public Dictionary<int, int> PartIndexMap => m_partIndexMap;
+		public Dictionary<int, int> PartIndexMap { get; }
 
 		public RuntimeContraption()
 		{
-			m_parts = new List<PartData>();
-			m_partIndexMap = new Dictionary<int, int>();
+			Parts = new List<PartData>();
+			PartIndexMap = new Dictionary<int, int>();
 		}
 
 		public BasePart GetPart(int partIndex)
@@ -732,15 +726,15 @@ public class PartGeneratorManager : PartManager
 			{
 				return null;
 			}
-			return m_parts[partIndex].Part;
+			return Parts[partIndex].Part;
 		}
 
 		public BasePart FindPartAt(int x, int y)
 		{
 			int key = x + (y << 16);
-			if (m_partIndexMap.TryGetValue(key, out var value))
+			if (PartIndexMap.TryGetValue(key, out var value))
 			{
-				return m_parts[value].Part;
+				return Parts[value].Part;
 			}
 			return null;
 		}
@@ -748,7 +742,7 @@ public class PartGeneratorManager : PartManager
 		public int FindPartIndexAt(int x, int y)
 		{
 			int key = x + (y << 16);
-			if (m_partIndexMap.TryGetValue(key, out var value))
+			if (PartIndexMap.TryGetValue(key, out var value))
 			{
 				return value;
 			}

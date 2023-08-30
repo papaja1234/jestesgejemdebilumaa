@@ -150,8 +150,7 @@ public class InGameFlightMenu : WPFMonoBehaviour
 
 	private GadgetButton CreateButton(GameObject original, BasePart.PartType partType, BasePart.Direction direction)
 	{
-		GameObject obj = Object.Instantiate(original);
-		obj.transform.parent = original.transform.parent;
+		GameObject obj = Object.Instantiate(original, original.transform.parent, true);
 		obj.transform.localScale = original.transform.localScale;
 		GadgetButton component = obj.GetComponent<GadgetButton>();
 		component.m_partType = partType;

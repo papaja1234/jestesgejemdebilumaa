@@ -4,13 +4,11 @@ public class Heap<T>
 {
 	private List<T> m_nodes;
 
-	private IComparer<T> m_comparer;
-
 	public bool IsEmpty => m_nodes.Count == 0;
 
 	public int Count => m_nodes.Count;
 
-	public IComparer<T> Comparer => m_comparer;
+	public IComparer<T> Comparer { get; }
 
 	public Heap()
 		: this((IComparer<T>)null)
@@ -19,7 +17,7 @@ public class Heap<T>
 
 	public Heap(IComparer<T> comparer)
 	{
-		m_comparer = comparer ?? Comparer<T>.Default;
+		Comparer = comparer ?? Comparer<T>.Default;
 		m_nodes = new List<T>();
 	}
 
@@ -30,7 +28,7 @@ public class Heap<T>
 
 	public Heap(IEnumerable<T> nodes, IComparer<T> comparer)
 	{
-		m_comparer = comparer ?? Comparer<T>.Default;
+		Comparer = comparer ?? Comparer<T>.Default;
 		m_nodes = new List<T>(nodes);
 		Heapify();
 	}
@@ -97,7 +95,7 @@ public class Heap<T>
 		{
 			int num = index - 1 >> 1;
 			T val2 = m_nodes[num];
-			if (m_comparer.Compare(val, val2) < 0)
+			if (Comparer.Compare(val, val2) < 0)
 			{
 				m_nodes[num] = val;
 				m_nodes[index] = val2;
@@ -115,12 +113,12 @@ public class Heap<T>
 		while ((index << 1) + 1 < count)
 		{
 			int num = (index << 1) + 1;
-			if (num + 1 < count && m_comparer.Compare(m_nodes[num + 1], m_nodes[num]) < 0)
+			if (num + 1 < count && Comparer.Compare(m_nodes[num + 1], m_nodes[num]) < 0)
 			{
 				num++;
 			}
 			T val2 = m_nodes[num];
-			if (m_comparer.Compare(val, val2) > 0)
+			if (Comparer.Compare(val, val2) > 0)
 			{
 				m_nodes[num] = val;
 				m_nodes[index] = val2;

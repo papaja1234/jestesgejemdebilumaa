@@ -13,13 +13,11 @@ public class INInitializer : MonoBehaviour
 	[SerializeField]
 	private ResourceData m_resourceData;
 
-	private bool m_initialized;
-
 	private bool m_useAlphaAnimation;
 
 	private float m_time;
 
-	public bool Initialized => m_initialized;
+	public bool Initialized { get; private set; }
 
 	private void Awake()
 	{
@@ -45,7 +43,7 @@ public class INInitializer : MonoBehaviour
 		{
 			yield return null;
 		}
-		m_initialized = true;
+		Initialized = true;
 		yield return LoadMainMenu();
 	}
 

@@ -13,8 +13,6 @@ public class CakeRaceMode : GameMode
 
 	private int retries;
 
-	private int gainedXP;
-
 	private bool openTutorial;
 
 	private bool openMechanicInfo;
@@ -65,7 +63,7 @@ public class CakeRaceMode : GameMode
 
 	private float ExplodeMultiplier { get; set; }
 
-	public int GainedXP => gainedXP;
+	public int GainedXP { get; private set; }
 
 	private string TutorialPromotionCount => string.Format("{0}_{1}", "Tutorial_Promotion_Count", base.gameManager.CurrentSceneName);
 
@@ -77,14 +75,8 @@ public class CakeRaceMode : GameMode
 
 	public static CakeRaceInfo CurrentCakeRaceInfo
 	{
-		get
-		{
-			return cakeRaceInfo.Value;
-		}
-		set
-		{
-			cakeRaceInfo = value;
-		}
+		get => cakeRaceInfo.Value;
+		set => cakeRaceInfo = value;
 	}
 
 	public static LootCrateType CurrentRewardCrate { get; private set; }
@@ -104,7 +96,7 @@ public class CakeRaceMode : GameMode
 		{
 			currentRaceTrackIndex = CakeRaceMode.cakeRaceInfo.Value.TrackIndex;
 		}
-		gainedXP = 0;
+		GainedXP = 0;
 		IsRaceOn = false;
 		InitScoreVariables();
 		CreateCakes();
@@ -619,7 +611,7 @@ public class CakeRaceMode : GameMode
 				OpponentScore = CakeRaceReplay.TotalScore(OpponentReplay);
 			}
 			PlayerProgressBar.Instance.DelayUpdate();
-			gainedXP = Singleton<PlayerProgress>.Instance.AddExperience((!LocalPlayerIsWinner) ? PlayerProgress.ExperienceType.LoseCakeRace : PlayerProgress.ExperienceType.WinCakeRace);
+			GainedXP = Singleton<PlayerProgress>.Instance.AddExperience((!LocalPlayerIsWinner) ? PlayerProgress.ExperienceType.LoseCakeRace : PlayerProgress.ExperienceType.WinCakeRace);
 			int @int = GameProgress.GetInt("cake_race_total_wins");
 			if (!IsPreviewMode && LocalPlayerIsWinner)
 			{

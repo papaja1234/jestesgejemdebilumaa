@@ -58,7 +58,7 @@ namespace AssetBundleBrowser.AssetBundleModel
                 }
                 return s_DataSource;
             }
-            set { s_DataSource = value; }
+            set => s_DataSource = value;
         }
 
         /// <summary>

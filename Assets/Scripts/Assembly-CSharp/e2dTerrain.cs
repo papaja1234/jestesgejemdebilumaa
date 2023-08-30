@@ -29,16 +29,6 @@ public class e2dTerrain : MonoBehaviour
 
 	public bool AllowRebuildMaterial = true;
 
-	private e2dTerrainFillMesh mFillMesh;
-
-	private e2dTerrainCurveMesh mCurveMesh;
-
-	private e2dTerrainColliderMesh mColliderMesh;
-
-	private e2dTerrainBoundary mBoundary;
-
-	private bool mCurveIntercrossing;
-
 	[NonSerialized]
 	public UnityEngine.Object EditorReference;
 
@@ -54,24 +44,24 @@ public class e2dTerrain : MonoBehaviour
 		}
 	}
 
-	public e2dTerrainBoundary Boundary => mBoundary;
+	public e2dTerrainBoundary Boundary { get; private set; }
 
-	public e2dTerrainCurveMesh CurveMesh => mCurveMesh;
+	public e2dTerrainCurveMesh CurveMesh { get; private set; }
 
-	public e2dTerrainFillMesh FillMesh => mFillMesh;
+	public e2dTerrainFillMesh FillMesh { get; private set; }
 
-	public e2dTerrainColliderMesh ColliderMesh => mColliderMesh;
+	public e2dTerrainColliderMesh ColliderMesh { get; private set; }
 
-	public bool CurveIntercrossing => mCurveIntercrossing;
+	public bool CurveIntercrossing { get; private set; }
 
 	private void OnEnable()
 	{
 		EditorReference = null;
-		mBoundary = new e2dTerrainBoundary(this);
-		mFillMesh = new e2dTerrainFillMesh(this);
-		mCurveMesh = new e2dTerrainCurveMesh(this);
-		mColliderMesh = new e2dTerrainColliderMesh(this);
-		if (!mFillMesh.IsMeshValid())
+		Boundary = new e2dTerrainBoundary(this);
+		FillMesh = new e2dTerrainFillMesh(this);
+		CurveMesh = new e2dTerrainCurveMesh(this);
+		ColliderMesh = new e2dTerrainColliderMesh(this);
+		if (!FillMesh.IsMeshValid())
 		{
 			FixCurve();
 			FixBoundary();
@@ -86,16 +76,16 @@ public class e2dTerrain : MonoBehaviour
 
 	private void OnDisable()
 	{
-		mCurveMesh.DestroyTemporaryAssets();
+		CurveMesh.DestroyTemporaryAssets();
 	}
 
 	public void Reset()
 	{
 		TerrainCurve.Clear();
 		TerrainBoundary = new Rect(0f, 0f, 0f, 0f);
-		mFillMesh.DestroyMesh();
-		mCurveMesh.DestroyMesh();
-		mColliderMesh.DestroyMesh();
+		FillMesh.DestroyMesh();
+		CurveMesh.DestroyMesh();
+		ColliderMesh.DestroyMesh();
 	}
 
 	public int GetMaxNodesCount()
@@ -115,7 +105,7 @@ public class e2dTerrain : MonoBehaviour
 			e2dCurveNode2.texture = TerrainCurve[beforeWhichIndex].texture;
 		}
 		TerrainCurve.Insert(beforeWhichIndex, e2dCurveNode2);
-		mCurveMesh.UpdateControlTextures();
+		CurveMesh.UpdateControlTextures();
 	}
 
 	public void RemovePointOnCurve(int index, bool moveTheRest)
@@ -133,7 +123,7 @@ public class e2dTerrain : MonoBehaviour
 				TerrainCurve[i].position = TerrainCurve[i].position - vector;
 			}
 		}
-		mCurveMesh.UpdateControlTextures();
+		CurveMesh.UpdateControlTextures();
 	}
 
 	public void AddCurvePoints(Vector2[] points, int firstToReplace, int lastToReplace)
@@ -147,7 +137,7 @@ public class e2dTerrain : MonoBehaviour
 			{
 				TerrainCurve.Insert(num++, new e2dCurveNode(position));
 			}
-			mCurveMesh.UpdateControlTextures();
+			CurveMesh.UpdateControlTextures();
 		}
 	}
 
@@ -192,7 +182,7 @@ public class e2dTerrain : MonoBehaviour
 		{
 			return;
 		}
-		mCurveIntercrossing = false;
+		CurveIntercrossing = false;
 		int num = TerrainCurve.Count;
 		if (CurveClosed)
 		{
@@ -202,7 +192,7 @@ public class e2dTerrain : MonoBehaviour
 		{
 			if (IntersectsCurve(0, j - 2, TerrainCurve[j - 1].position, TerrainCurve[j].position))
 			{
-				mCurveIntercrossing = true;
+				CurveIntercrossing = true;
 			}
 		}
 	}
@@ -226,22 +216,22 @@ public class e2dTerrain : MonoBehaviour
 
 	public void RebuildAllMeshes()
 	{
-		mFillMesh.RebuildMesh();
-		mCurveMesh.RebuildMesh();
+		FillMesh.RebuildMesh();
+		CurveMesh.RebuildMesh();
 		if (NoCollider)
 		{
-			mColliderMesh.ResetMesh();
+			ColliderMesh.ResetMesh();
 		}
 		else
 		{
-			mColliderMesh.RebuildMesh();
+			ColliderMesh.RebuildMesh();
 		}
 	}
 
 	public void RebuildAllMaterials()
 	{
-		mFillMesh.RebuildMaterial();
-		mCurveMesh.UpdateControlTextures(forceRecreate: true);
-		mCurveMesh.RebuildMaterial();
+		FillMesh.RebuildMaterial();
+		CurveMesh.UpdateControlTextures(forceRecreate: true);
+		CurveMesh.RebuildMaterial();
 	}
 }

@@ -32,25 +32,13 @@ namespace PlayFab.Json
 
 			public TValue this[TKey key]
 			{
-				get
-				{
-					return Get(key);
-				}
-				set
-				{
-					throw new NotImplementedException();
-				}
+				get => Get(key);
+				set => throw new NotImplementedException();
 			}
 
 			public int Count => _dictionary.Count;
 
-			public bool IsReadOnly
-			{
-				get
-				{
-					throw new NotImplementedException();
-				}
-			}
+			public bool IsReadOnly => throw new NotImplementedException();
 
 			public ThreadSafeDictionary(ThreadSafeDictionaryValueFactory<TKey, TValue> valueFactory)
 			{

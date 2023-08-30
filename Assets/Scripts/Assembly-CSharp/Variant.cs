@@ -2,21 +2,19 @@ using System;
 
 public class Variant : IEquatable<Variant>
 {
-	private bool m_isValue;
-
 	private ValueVariant m_value;
 
 	private RefVariant m_reference;
 
-	public bool IsValue => m_isValue;
+	public bool IsValue { get; }
 
-	public bool IsRef => !m_isValue;
+	public bool IsRef => !IsValue;
 
 	public ref readonly ValueVariant Value
 	{
 		get
 		{
-			if (m_isValue)
+			if (IsValue)
 			{
 				return ref m_value;
 			}
@@ -28,7 +26,7 @@ public class Variant : IEquatable<Variant>
 	{
 		get
 		{
-			if (!m_isValue)
+			if (!IsValue)
 			{
 				return m_reference;
 			}
@@ -38,19 +36,19 @@ public class Variant : IEquatable<Variant>
 
 	public Variant(in ValueVariant value)
 	{
-		m_isValue = true;
+		IsValue = true;
 		m_value = value;
 	}
 
 	public Variant(RefVariant reference)
 	{
-		m_isValue = false;
+		IsValue = false;
 		m_reference = reference;
 	}
 
 	public object ToObject()
 	{
-		if (m_isValue)
+		if (IsValue)
 		{
 			return m_value.ToObject();
 		}
@@ -59,7 +57,7 @@ public class Variant : IEquatable<Variant>
 
 	public override string ToString()
 	{
-		if (m_isValue)
+		if (IsValue)
 		{
 			return m_value.ToString();
 		}
@@ -73,11 +71,11 @@ public class Variant : IEquatable<Variant>
 
 	public static bool operator ==(Variant left, Variant right)
 	{
-		if (left.m_isValue && right.m_isValue)
+		if (left.IsValue && right.IsValue)
 		{
 			return left.m_value == right.m_value;
 		}
-		if (!left.m_isValue && !right.m_isValue)
+		if (!left.IsValue && !right.IsValue)
 		{
 			return left.m_reference == right.m_reference;
 		}

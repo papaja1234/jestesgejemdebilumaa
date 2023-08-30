@@ -1,14 +1,12 @@
 public class SPDTSwitch : ElectricalElement
 {
-	private bool m_closed;
-
 	public const int PoleType = 0;
 
 	public const int Throw1Type = 1;
 
 	public const int Throw2Type = 2;
 
-	public bool IsClosed => m_closed;
+	public bool IsClosed { get; private set; }
 
 	public Electrode Pole => GetElectrodeByType(0);
 
@@ -18,19 +16,19 @@ public class SPDTSwitch : ElectricalElement
 
 	public SPDTSwitch()
 	{
-		m_closed = false;
+		IsClosed = false;
 	}
 
 	public override void Initialize()
 	{
-		SetClosedInternal(m_closed);
+		SetClosedInternal(IsClosed);
 	}
 
 	public void SetClosed(bool closed)
 	{
-		if (m_closed != closed)
+		if (IsClosed != closed)
 		{
-			m_closed = closed;
+			IsClosed = closed;
 			SetClosedInternal(closed);
 		}
 	}

@@ -28,38 +28,20 @@ namespace Spine.Unity
 
 		public event UpdateBonesDelegate UpdateLocal
 		{
-			add
-			{
-				_UpdateLocal += value;
-			}
-			remove
-			{
-				_UpdateLocal -= value;
-			}
+			add => _UpdateLocal += value;
+			remove => _UpdateLocal -= value;
 		}
 
 		public event UpdateBonesDelegate UpdateWorld
 		{
-			add
-			{
-				_UpdateWorld += value;
-			}
-			remove
-			{
-				_UpdateWorld -= value;
-			}
+			add => _UpdateWorld += value;
+			remove => _UpdateWorld -= value;
 		}
 
 		public event UpdateBonesDelegate UpdateComplete
 		{
-			add
-			{
-				_UpdateComplete += value;
-			}
-			remove
-			{
-				_UpdateComplete -= value;
-			}
+			add => _UpdateComplete += value;
+			remove => _UpdateComplete -= value;
 		}
 
 		protected event UpdateBonesDelegate _UpdateLocal;

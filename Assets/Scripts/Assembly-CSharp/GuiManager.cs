@@ -52,8 +52,6 @@ public class GuiManager : Singleton<GuiManager>
 
 	private int guiLayerMask = 1;
 
-	private bool m_enabled = true;
-
 	private List<int> m_touchIds;
 
 	private List<FocusData> m_focusData;
@@ -92,27 +90,11 @@ public class GuiManager : Singleton<GuiManager>
 
 	public AudioSource DefaultButtonAudio
 	{
-		get
-		{
-			return m_defaultButtonAudio;
-		}
-		set
-		{
-			m_defaultButtonAudio = value;
-		}
+		get => m_defaultButtonAudio;
+		set => m_defaultButtonAudio = value;
 	}
 
-	public bool IsEnabled
-	{
-		get
-		{
-			return m_enabled;
-		}
-		set
-		{
-			m_enabled = value;
-		}
-	}
+	public bool IsEnabled { get; set; } = true;
 
 	public static Pointer GetPointer()
 	{
@@ -309,7 +291,7 @@ public class GuiManager : Singleton<GuiManager>
 
 	private void Update()
 	{
-		if (!m_enabled)
+		if (!IsEnabled)
 		{
 			return;
 		}

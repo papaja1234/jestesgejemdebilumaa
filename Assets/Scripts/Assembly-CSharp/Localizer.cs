@@ -20,23 +20,17 @@ public class Localizer : Singleton<Localizer>
 
 	private Dictionary<string, LocaleParameters> englishTranslations;
 
-	private Font languageSpecificFont;
-
-	private Font englishFont;
-
 	private new static Localizer instance;
 
 	private const string defaultFontName = "default";
 
 	private bool localizationDataInitalized;
 
-	private string currentLocale = string.Empty;
+	public Font LanguageFont { get; private set; }
 
-	public Font LanguageFont => languageSpecificFont;
+	public Font EnglishFont { get; private set; }
 
-	public Font EnglishFont => englishFont;
-
-	public string CurrentLocale => currentLocale;
+	public string CurrentLocale { get; private set; } = string.Empty;
 
 	public static XDocument LoadLocalizationFile()
 	{
@@ -46,8 +40,8 @@ public class Localizer : Singleton<Localizer>
 	private void Awake()
 	{
 		SetAsPersistant();
-		currentLocale = DetectLocale();
-		PopulateTranslations(currentLocale);
+		CurrentLocale = DetectLocale();
+		PopulateTranslations(CurrentLocale);
 		localizationDataInitalized = true;
 	}
 
@@ -144,8 +138,8 @@ public class Localizer : Singleton<Localizer>
 	{
 		if (fontName != "default")
 		{
-			languageSpecificFont = (Font)Resources.Load("Localization/Fonts/" + fontName, typeof(Font));
-			return languageSpecificFont;
+			LanguageFont = (Font)Resources.Load("Localization/Fonts/" + fontName, typeof(Font));
+			return LanguageFont;
 		}
 		return true;
 	}
@@ -175,7 +169,7 @@ public class Localizer : Singleton<Localizer>
 				LoadFont(xElement2.Value);
 			}
 		}
-		if (englishFont == null)
+		if (EnglishFont == null)
 		{
 			XElement xElement3 = null;
 			foreach (XElement item2 in xDocument.Element("texts").Elements("languages").Descendants())
@@ -191,7 +185,7 @@ public class Localizer : Singleton<Localizer>
 				XElement xElement4 = xElement3.Element("font");
 				if (xElement4 != null)
 				{
-					englishFont = (Font)Resources.Load("Localization/Fonts/" + xElement4.Value, typeof(Font));
+					EnglishFont = (Font)Resources.Load("Localization/Fonts/" + xElement4.Value, typeof(Font));
 				}
 			}
 		}
@@ -234,7 +228,7 @@ public class Localizer : Singleton<Localizer>
 
 	private void OnApplicationPause(bool paused)
 	{
-		if (!paused && DetectLocale() != currentLocale)
+		if (!paused && DetectLocale() != CurrentLocale)
 		{
 			RefreshLocalization();
 		}
@@ -243,9 +237,9 @@ public class Localizer : Singleton<Localizer>
 	private void RefreshLocalization()
 	{
 		activeTranslations.Clear();
-		languageSpecificFont = null;
-		currentLocale = DetectLocale();
-		PopulateTranslations(currentLocale);
-		EventManager.Send(new LocalizationReloaded(currentLocale));
+		LanguageFont = null;
+		CurrentLocale = DetectLocale();
+		PopulateTranslations(CurrentLocale);
+		EventManager.Send(new LocalizationReloaded(CurrentLocale));
 	}
 }

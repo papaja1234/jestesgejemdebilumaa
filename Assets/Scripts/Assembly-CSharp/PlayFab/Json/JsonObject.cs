@@ -22,14 +22,8 @@ namespace PlayFab.Json
 
 		public object this[string key]
 		{
-			get
-			{
-				return _members[key];
-			}
-			set
-			{
-				_members[key] = value;
-			}
+			get => _members[key];
+			set => _members[key] = value;
 		}
 
 		public int Count => _members.Count;

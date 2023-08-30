@@ -13,26 +13,18 @@ namespace MentalTools
 		[SerializeField]
 		private Bezier bezierCurve;
 
-		[NonSerialized]
-		private Transform tf;
-
 		public Bezier Curve
 		{
-			get
-			{
-				return bezierCurve;
-			}
-			set
-			{
-				bezierCurve = value;
-			}
+			get => bezierCurve;
+			set => bezierCurve = value;
 		}
 
-		public Transform CachedTf => tf;
+		[field: NonSerialized]
+		public Transform CachedTf { get; private set; }
 
 		private void Awake()
 		{
-			tf = base.transform;
+			CachedTf = base.transform;
 		}
 
 		private void OnDataLoaded()

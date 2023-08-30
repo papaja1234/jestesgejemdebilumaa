@@ -70,13 +70,11 @@ public class KingsFavoriteDialog : TextDialog
 			Close();
 		}
 		BasePart currentFavorite = Singleton<CakeRaceKingsFavorite>.Instance.CurrentFavorite;
-		favoritePart = Object.Instantiate(partTierBackgrounds[(int)currentFavorite.m_partTier]);
-		favoritePart.transform.parent = partRoot;
+		favoritePart = Object.Instantiate(partTierBackgrounds[(int)currentFavorite.m_partTier], partRoot, true);
 		favoritePart.transform.localScale = Vector3.one * 0.7f;
 		favoritePart.transform.localPosition = Vector3.zero;
-		GameObject obj = Object.Instantiate(currentFavorite.m_constructionIconSprite.gameObject);
+		GameObject obj = Object.Instantiate(currentFavorite.m_constructionIconSprite.gameObject, favoritePart.transform, true);
 		obj.transform.localScale = Vector3.one;
-		obj.transform.parent = favoritePart.transform;
 		obj.transform.localPosition = Vector3.back * 0.1f;
 		obj.transform.localRotation = Quaternion.identity;
 		LayerHelper.SetLayer(favoritePart, base.gameObject.layer, children: true);

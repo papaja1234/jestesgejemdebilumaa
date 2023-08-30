@@ -65,8 +65,6 @@ namespace Spine.Unity.MeshGeneration
 			}
 		}
 
-		private readonly List<Slot> separators = new List<Slot>();
-
 		private readonly DoubleBuffered<SmartMesh> doubleBufferedSmartMesh = new DoubleBuffered<SmartMesh>();
 
 		private readonly SubmeshedMeshInstruction currentInstructions = new SubmeshedMeshInstruction();
@@ -75,7 +73,7 @@ namespace Spine.Unity.MeshGeneration
 
 		private Material[] sharedMaterials = new Material[0];
 
-		public List<Slot> Separators => separators;
+		public List<Slot> Separators { get; } = new List<Slot>();
 
 		public float ZSpacing { get; set; }
 
@@ -94,7 +92,7 @@ namespace Spine.Unity.MeshGeneration
 			ExposedList<Slot> drawOrder = skeleton.drawOrder;
 			Slot[] items = drawOrder.Items;
 			int count = drawOrder.Count;
-			int count2 = separators.Count;
+			int count2 = Separators.Count;
 			ExposedList<SubmeshInstruction> submeshInstructions = currentInstructions.submeshInstructions;
 			submeshInstructions.Clear(clearArray: false);
 			currentInstructions.attachmentList.Clear(clearArray: false);
@@ -122,7 +120,7 @@ namespace Spine.Unity.MeshGeneration
 					num5 = meshAttachment.triangles.Length;
 				}
 				Material material2 = (Material)((AtlasRegion)rendererObject).page.rendererObject;
-				bool flag = count2 > 0 && separators.Contains(slot);
+				bool flag = count2 > 0 && Separators.Contains(slot);
 				if ((num > 0 && material.GetInstanceID() != material2.GetInstanceID()) || flag)
 				{
 					submeshInstructions.Add(new SubmeshInstruction

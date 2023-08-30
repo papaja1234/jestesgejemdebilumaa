@@ -28,10 +28,7 @@ public class LootWheelPopup : TextDialog
 
 	public bool SpinButtonEnabled
 	{
-		get
-		{
-			return enabledSpinButton.activeSelf;
-		}
+		get => enabledSpinButton.activeSelf;
 		set
 		{
 			enabledSpinButton.SetActive(value);
@@ -54,10 +51,7 @@ public class LootWheelPopup : TextDialog
 
 	public bool DoneButtonEnabled
 	{
-		get
-		{
-			return enabledDoneButton.activeSelf;
-		}
+		get => enabledDoneButton.activeSelf;
 		set
 		{
 			enabledDoneButton.SetActive(value);

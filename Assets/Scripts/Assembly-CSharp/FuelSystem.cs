@@ -30,25 +30,13 @@ public class FuelSystem : PartManager
 		public float RealSupplyFuelAmount;
 	}
 
-	private bool m_needsUpdate;
-
 	private int m_fuelComponentCount;
 
 	private List<FuelPartData> m_fuelParts;
 
 	private FuelComponentData[] m_fuelComponents;
 
-	public bool NeedsUpdate
-	{
-		get
-		{
-			return m_needsUpdate;
-		}
-		set
-		{
-			m_needsUpdate = value;
-		}
-	}
+	public bool NeedsUpdate { get; set; }
 
 	public static FuelSystem Instance { get; private set; }
 
@@ -68,7 +56,7 @@ public class FuelSystem : PartManager
 	private void OnConnectedComponentsChanged()
 	{
 		UpdateFuelParts();
-		m_needsUpdate = false;
+		NeedsUpdate = false;
 	}
 
 	public void UpdateFuelParts()
@@ -139,10 +127,10 @@ public class FuelSystem : PartManager
 
 	public override void FixedUpdate()
 	{
-		if (m_needsUpdate)
+		if (NeedsUpdate)
 		{
 			UpdateFuelParts();
-			m_needsUpdate = false;
+			NeedsUpdate = false;
 		}
 		if (m_fuelComponentCount == 0)
 		{

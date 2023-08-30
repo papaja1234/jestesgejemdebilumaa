@@ -376,8 +376,7 @@ public class EpisodeSelector : MonoBehaviour
 		float num = (0f - (float)m_pageCount) / 2f * 1.2f;
 		for (int i = 0; i < m_pageCount; i++)
 		{
-			GameObject obj = Object.Instantiate(m_pageDot);
-			obj.transform.parent = gameObject.transform;
+			GameObject obj = Object.Instantiate(m_pageDot, gameObject.transform, true);
 			obj.transform.localPosition = new Vector3(num + (float)i * 1.2f, 0f, -95f);
 			obj.name = "Dot" + i + 1;
 			PageDot component = obj.GetComponent<PageDot>();

@@ -13,10 +13,7 @@ namespace Ionic.Zlib
 
 		public virtual FlushType FlushMode
 		{
-			get
-			{
-				return _baseStream._flushMode;
-			}
+			get => _baseStream._flushMode;
 			set
 			{
 				if (_disposed)
@@ -29,10 +26,7 @@ namespace Ionic.Zlib
 
 		public int BufferSize
 		{
-			get
-			{
-				return _baseStream._bufferSize;
-			}
+			get => _baseStream._bufferSize;
 			set
 			{
 				if (_disposed)
@@ -53,10 +47,7 @@ namespace Ionic.Zlib
 
 		public CompressionStrategy Strategy
 		{
-			get
-			{
-				return _baseStream.Strategy;
-			}
+			get => _baseStream.Strategy;
 			set
 			{
 				if (_disposed)
@@ -97,13 +88,7 @@ namespace Ionic.Zlib
 			}
 		}
 
-		public override long Length
-		{
-			get
-			{
-				throw new NotImplementedException();
-			}
-		}
+		public override long Length => throw new NotImplementedException();
 
 		public override long Position
 		{
@@ -119,10 +104,7 @@ namespace Ionic.Zlib
 				}
 				return 0L;
 			}
-			set
-			{
-				throw new NotImplementedException();
-			}
+			set => throw new NotImplementedException();
 		}
 
 		public DeflateStream(Stream stream, CompressionMode mode)

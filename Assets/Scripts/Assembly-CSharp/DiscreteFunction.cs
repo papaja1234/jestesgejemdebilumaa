@@ -2,35 +2,27 @@ using System;
 
 public struct DiscreteFunction
 {
-	private float m_min;
+	public float Min { get; }
 
-	private float m_max;
+	public float Max { get; }
 
-	private float m_delta;
+	public float Delta { get; }
 
-	private float[] m_values;
-
-	public float Min => m_min;
-
-	public float Max => m_max;
-
-	public float Delta => m_delta;
-
-	public float[] RawArray => m_values;
+	public float[] RawArray { get; }
 
 	public DiscreteFunction(float min, float max, float delta)
 	{
-		m_min = min;
-		m_max = max;
-		m_delta = delta;
-		m_values = new float[(int)Math.Round((max - min) / delta) + 1];
+		Min = min;
+		Max = max;
+		Delta = delta;
+		RawArray = new float[(int)Math.Round((max - min) / delta) + 1];
 	}
 
 	public bool IsInDomain(float x)
 	{
-		if (m_min <= x)
+		if (Min <= x)
 		{
-			return x <= m_max;
+			return x <= Max;
 		}
 		return false;
 	}
@@ -41,34 +33,34 @@ public struct DiscreteFunction
 		{
 			throw new ArgumentOutOfRangeException("x");
 		}
-		int num = (int)Math.Round((x - m_min) / m_delta);
-		return m_values[num];
+		int num = (int)Math.Round((x - Min) / Delta);
+		return RawArray[num];
 	}
 
 	public void Set(float value)
 	{
-		for (int i = 0; i < m_values.Length; i++)
+		for (int i = 0; i < RawArray.Length; i++)
 		{
-			m_values[i] = value;
+			RawArray[i] = value;
 		}
 	}
 
 	public void Set(Func<float, float> f)
 	{
-		for (int i = 0; i < m_values.Length; i++)
+		for (int i = 0; i < RawArray.Length; i++)
 		{
-			float arg = m_min + m_delta * (float)i;
-			m_values[i] = f(arg);
+			float arg = Min + Delta * (float)i;
+			RawArray[i] = f(arg);
 		}
 	}
 
 	public void Set(Func<float, float, float> f)
 	{
-		for (int i = 0; i < m_values.Length; i++)
+		for (int i = 0; i < RawArray.Length; i++)
 		{
-			float arg = m_min + m_delta * (float)i;
-			float arg2 = m_values[i];
-			m_values[i] = f(arg, arg2);
+			float arg = Min + Delta * (float)i;
+			float arg2 = RawArray[i];
+			RawArray[i] = f(arg, arg2);
 		}
 	}
 }

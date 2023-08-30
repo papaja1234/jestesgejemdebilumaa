@@ -48,8 +48,6 @@ public class DailyChallengeLoader : WPFMonoBehaviour
 
 	private bool loading;
 
-	private bool hasImage;
-
 	private bool initialized;
 
 	private string currentKey;
@@ -62,7 +60,7 @@ public class DailyChallengeLoader : WPFMonoBehaviour
 
 	private static Dictionary<int, Material> dailyMaterials = new Dictionary<int, Material>();
 
-	public bool ImageReady => hasImage;
+	public bool ImageReady { get; private set; }
 
 	private void Awake()
 	{
@@ -76,7 +74,7 @@ public class DailyChallengeLoader : WPFMonoBehaviour
 	{
 		if (!loading)
 		{
-			if (!hasImage || state == State.Error || state == State.None)
+			if (!ImageReady || state == State.Error || state == State.None)
 			{
 				SetDisabled();
 				Singleton<NetworkManager>.Instance.CheckAccess(OnNetworkCheck);
@@ -162,7 +160,7 @@ public class DailyChallengeLoader : WPFMonoBehaviour
 		switch (state)
 		{
 		case State.Loading:
-			hasImage = false;
+			ImageReady = false;
 			disabled.SetActive(value: false);
 			errorImage.SetActive(value: false);
 			dailyImage.SetActive(value: false);
@@ -182,7 +180,7 @@ public class DailyChallengeLoader : WPFMonoBehaviour
 			loadingImage.SetActive(value: false);
 			collected.SetActive(value: false);
 			disabled.SetActive(value: true);
-			hasImage = false;
+			ImageReady = false;
 			if (crateIcon != null)
 			{
 				crateIcon.SetActive(value: false);
@@ -197,7 +195,7 @@ public class DailyChallengeLoader : WPFMonoBehaviour
 			collected.SetActive(flag);
 			dailyMaterials[challengeIndex].SetFloat("_Grayness", (!flag) ? 0f : 1f);
 			UpdateLootCrateImage(flag);
-			hasImage = true;
+			ImageReady = true;
 			if (OnImageReady != null)
 			{
 				OnImageReady();
@@ -215,7 +213,7 @@ public class DailyChallengeLoader : WPFMonoBehaviour
 			loadingImage.SetActive(value: false);
 			collected.SetActive(value: false);
 			errorImage.SetActive(value: false);
-			hasImage = false;
+			ImageReady = false;
 			if (crateIcon != null)
 			{
 				crateIcon.SetActive(value: false);
@@ -234,9 +232,8 @@ public class DailyChallengeLoader : WPFMonoBehaviour
 		if (!collected)
 		{
 			GameObject gameObject = WPFMonoBehaviour.gameData.m_lootCrates[(int)Singleton<DailyChallenge>.Instance.TodaysLootCrate(challengeIndex)];
-			crateIcon = UnityEngine.Object.Instantiate(gameObject.transform.Find("Icon").gameObject);
+			crateIcon = UnityEngine.Object.Instantiate(gameObject.transform.Find("Icon").gameObject, lootCratePos, true);
 			crateIcon.gameObject.layer = lootCratePos.gameObject.layer;
-			crateIcon.transform.parent = lootCratePos;
 			crateIcon.transform.localPosition = Vector3.zero;
 			for (int i = 0; i < crateIcon.transform.childCount; i++)
 			{

@@ -108,8 +108,7 @@ public class LootCrateButton : Widget
 		{
 			for (int j = 0; j < backfaceRoots.Length; j++)
 			{
-				GameObject obj = UnityEngine.Object.Instantiate(backfacePrefab);
-				obj.transform.parent = backfaceRoots[j];
+				GameObject obj = UnityEngine.Object.Instantiate(backfacePrefab, backfaceRoots[j], true);
 				obj.transform.localPosition = Vector3.zero;
 				obj.transform.localScale = backfacePrefab.transform.localScale;
 			}
@@ -260,8 +259,7 @@ public class LootCrateButton : Widget
 		{
 			return null;
 		}
-		GameObject gameObject = UnityEngine.Object.Instantiate(lootRewardPrefabs[lootRewardPrefabIndex]);
-		gameObject.transform.parent = iconRoots[index];
+		GameObject gameObject = UnityEngine.Object.Instantiate(lootRewardPrefabs[lootRewardPrefabIndex], iconRoots[index], true);
 		gameObject.transform.localPosition = Vector3.zero;
 		gameObject.transform.localScale = lootRewardPrefabs[lootRewardPrefabIndex].transform.localScale;
 		LootRewardElement component = gameObject.GetComponent<LootRewardElement>();

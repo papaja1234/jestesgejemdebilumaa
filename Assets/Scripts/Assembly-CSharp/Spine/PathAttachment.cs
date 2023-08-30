@@ -10,38 +10,20 @@ namespace Spine
 
 		public float[] Lengths
 		{
-			get
-			{
-				return lengths;
-			}
-			set
-			{
-				lengths = value;
-			}
+			get => lengths;
+			set => lengths = value;
 		}
 
 		public bool Closed
 		{
-			get
-			{
-				return closed;
-			}
-			set
-			{
-				closed = value;
-			}
+			get => closed;
+			set => closed = value;
 		}
 
 		public bool ConstantSpeed
 		{
-			get
-			{
-				return constantSpeed;
-			}
-			set
-			{
-				constantSpeed = value;
-			}
+			get => constantSpeed;
+			set => constantSpeed = value;
 		}
 
 		public PathAttachment(string name)

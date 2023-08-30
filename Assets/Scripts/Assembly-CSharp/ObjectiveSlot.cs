@@ -35,8 +35,7 @@ public class ObjectiveSlot : MonoBehaviour
 	{
 		foreach (Challenge.IconPlacement icon in challenge.Icons)
 		{
-			GameObject obj = UnityEngine.Object.Instantiate(icon.icon);
-			obj.transform.parent = base.transform;
+			GameObject obj = UnityEngine.Object.Instantiate(icon.icon, base.transform, true);
 			obj.transform.localPosition = icon.position;
 			Material sharedMaterial = obj.GetComponent<Renderer>().sharedMaterial;
 			obj.GetComponent<Renderer>().sharedMaterial = AtlasMaterials.Instance.GetCachedMaterialInstance(sharedMaterial, AtlasMaterials.MaterialType.PartZ);
@@ -57,8 +56,7 @@ public class ObjectiveSlot : MonoBehaviour
 
 	public void SetChallenge(GoalChallenge challenge)
 	{
-		GameObject obj = UnityEngine.Object.Instantiate(challenge.Icon.icon);
-		obj.transform.parent = base.transform;
+		GameObject obj = UnityEngine.Object.Instantiate(challenge.Icon.icon, base.transform, true);
 		obj.transform.localPosition = challenge.Icon.position;
 		obj.transform.localScale = new Vector3(challenge.Icon.scale, challenge.Icon.scale, 1f);
 		Material sharedMaterial = obj.GetComponent<Renderer>().sharedMaterial;

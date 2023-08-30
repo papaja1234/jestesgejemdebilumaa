@@ -5,9 +5,6 @@ using System.Runtime.InteropServices;
 [StructLayout(LayoutKind.Explicit, Size = 8)]
 public readonly struct ValueVariant : IEquatable<ValueVariant>
 {
-	[FieldOffset(0)]
-	private readonly TypeCode m_type;
-
 	[FieldOffset(4)]
 	private readonly bool m_booleanValue;
 
@@ -23,47 +20,48 @@ public readonly struct ValueVariant : IEquatable<ValueVariant>
 	[FieldOffset(4)]
 	private readonly float m_singleValue;
 
-	public TypeCode Type => m_type;
+	[field: FieldOffset(0)]
+	public TypeCode Type { get; }
 
 	public ValueVariant(bool value)
 	{
 		this = default(ValueVariant);
-		m_type = TypeCode.Boolean;
+		Type = TypeCode.Boolean;
 		m_booleanValue = value;
 	}
 
 	public ValueVariant(byte value)
 	{
 		this = default(ValueVariant);
-		m_type = TypeCode.Byte;
+		Type = TypeCode.Byte;
 		m_byteValue = value;
 	}
 
 	public ValueVariant(short value)
 	{
 		this = default(ValueVariant);
-		m_type = TypeCode.Int16;
+		Type = TypeCode.Int16;
 		m_int16Value = value;
 	}
 
 	public ValueVariant(int value)
 	{
 		this = default(ValueVariant);
-		m_type = TypeCode.Int32;
+		Type = TypeCode.Int32;
 		m_int32Value = value;
 	}
 
 	public ValueVariant(float value)
 	{
 		this = default(ValueVariant);
-		m_type = TypeCode.Single;
+		Type = TypeCode.Single;
 		m_singleValue = value;
 	}
 
 	public ValueVariant(TypeCode type, IConvertible value)
 	{
 		this = default(ValueVariant);
-		m_type = type;
+		Type = type;
 		IFormatProvider invariantCulture = CultureInfo.InvariantCulture;
 		switch (type)
 		{
@@ -114,7 +112,7 @@ public readonly struct ValueVariant : IEquatable<ValueVariant>
 
 	public object ToObject()
 	{
-		TypeCode type = m_type;
+		TypeCode type = Type;
 		return type switch
 		{
 			TypeCode.Boolean => m_booleanValue, 
@@ -133,7 +131,7 @@ public readonly struct ValueVariant : IEquatable<ValueVariant>
 
 	public string ToString(IFormatProvider provider)
 	{
-		TypeCode type = m_type;
+		TypeCode type = Type;
 		return type switch
 		{
 			TypeCode.Boolean => m_booleanValue.ToString(provider), 
@@ -230,11 +228,11 @@ public readonly struct ValueVariant : IEquatable<ValueVariant>
 
 	public static bool operator ==(ValueVariant left, ValueVariant right)
 	{
-		if (left.m_type != right.m_type)
+		if (left.Type != right.Type)
 		{
 			return false;
 		}
-		TypeCode type = left.m_type;
+		TypeCode type = left.Type;
 		return type switch
 		{
 			TypeCode.Boolean => left.m_booleanValue == right.m_booleanValue, 
@@ -283,7 +281,7 @@ public readonly struct ValueVariant : IEquatable<ValueVariant>
 
 	private void CheckType(TypeCode type)
 	{
-		if (m_type != type)
+		if (Type != type)
 		{
 			throw new InvalidOperationException();
 		}

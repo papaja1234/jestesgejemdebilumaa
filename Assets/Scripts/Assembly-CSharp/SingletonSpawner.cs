@@ -18,19 +18,7 @@ public class SingletonSpawner : MonoBehaviour
 	[SerializeField]
 	private List<GameObject> m_commonSingletons;
 
-	private static bool spawnDone;
-
-	public static bool SpawnDone
-	{
-		get
-		{
-			return spawnDone;
-		}
-		set
-		{
-			spawnDone = value;
-		}
-	}
+	public static bool SpawnDone { get; set; }
 
 	private void Awake()
 	{
@@ -39,7 +27,7 @@ public class SingletonSpawner : MonoBehaviour
 
 	private void Initialize()
 	{
-		if (spawnDone)
+		if (SpawnDone)
 		{
 			return;
 		}
@@ -54,7 +42,7 @@ public class SingletonSpawner : MonoBehaviour
 			}
 		}
 		SpawnPlatformSingletons();
-		spawnDone = true;
+		SpawnDone = true;
 	}
 
 	private void SpawnPlatformSingletons()

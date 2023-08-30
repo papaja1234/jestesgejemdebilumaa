@@ -55,8 +55,7 @@ public class EpisodeButton : WPFMonoBehaviour
 		}
 		if ((bool)m_contentLock)
 		{
-			GameObject obj = Object.Instantiate(m_contentLock);
-			obj.transform.parent = base.gameObject.transform;
+			GameObject obj = Object.Instantiate(m_contentLock, base.gameObject.transform, true);
 			obj.transform.localPosition = new Vector3(0f, -0.5f, 0f);
 			obj.GetComponent<ContentLock>().Activate();
 		}
@@ -67,8 +66,7 @@ public class EpisodeButton : WPFMonoBehaviour
 			{
 				Object.DestroyImmediate(component);
 			}
-			GameObject obj2 = Object.Instantiate(m_contentNotAvailable);
-			obj2.transform.parent = base.gameObject.transform;
+			GameObject obj2 = Object.Instantiate(m_contentNotAvailable, base.gameObject.transform, true);
 			obj2.transform.localPosition = new Vector3(0f, -0.5f, 0f);
 			if (m_hideOnContentNotAvailable != null)
 			{
@@ -86,8 +84,7 @@ public class EpisodeButton : WPFMonoBehaviour
 			Transform transform = base.transform.Find("NewTag");
 			if ((bool)transform)
 			{
-				m_newContent = Object.Instantiate(m_newContent);
-				m_newContent.transform.parent = transform;
+				m_newContent = Object.Instantiate(m_newContent, transform, true);
 				m_newContent.transform.localPosition = Vector3.zero;
 			}
 			else

@@ -38,64 +38,34 @@ namespace Spine
 
 		public float Position
 		{
-			get
-			{
-				return position;
-			}
-			set
-			{
-				position = value;
-			}
+			get => position;
+			set => position = value;
 		}
 
 		public float Spacing
 		{
-			get
-			{
-				return spacing;
-			}
-			set
-			{
-				spacing = value;
-			}
+			get => spacing;
+			set => spacing = value;
 		}
 
 		public float RotateMix
 		{
-			get
-			{
-				return rotateMix;
-			}
-			set
-			{
-				rotateMix = value;
-			}
+			get => rotateMix;
+			set => rotateMix = value;
 		}
 
 		public float TranslateMix
 		{
-			get
-			{
-				return translateMix;
-			}
-			set
-			{
-				translateMix = value;
-			}
+			get => translateMix;
+			set => translateMix = value;
 		}
 
 		public ExposedList<Bone> Bones => bones;
 
 		public Slot Target
 		{
-			get
-			{
-				return target;
-			}
-			set
-			{
-				target = value;
-			}
+			get => target;
+			set => target = value;
 		}
 
 		public PathConstraintData Data => data;

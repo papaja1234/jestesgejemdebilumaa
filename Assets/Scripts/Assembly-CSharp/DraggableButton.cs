@@ -48,66 +48,37 @@ public class DraggableButton : Widget
 
 	private GameObject dragIcon;
 
-	private bool dragging;
-
 	private GameObject selectedVisual;
 
-	public bool isDragging => dragging;
+	public bool isDragging { get; private set; }
 
 	public GameObject Icon
 	{
-		get
-		{
-			return icon;
-		}
-		set
-		{
-			icon = value;
-		}
+		get => icon;
+		set => icon = value;
 	}
 
 	public object DragObject
 	{
-		get
-		{
-			return dragObject;
-		}
-		set
-		{
-			dragObject = value;
-		}
+		get => dragObject;
+		set => dragObject = value;
 	}
 
 	public GameObject DragIconPrefab
 	{
-		get
-		{
-			return dragIconPrefab;
-		}
-		set
-		{
-			dragIconPrefab = value;
-		}
+		get => dragIconPrefab;
+		set => dragIconPrefab = value;
 	}
 
 	public float DragIconScale
 	{
-		get
-		{
-			return dragIconScale;
-		}
-		set
-		{
-			dragIconScale = value;
-		}
+		get => dragIconScale;
+		set => dragIconScale = value;
 	}
 
 	public GameObject MessageTargetObject
 	{
-		get
-		{
-			return messageTargetObject;
-		}
+		get => messageTargetObject;
 		set
 		{
 			messageTargetObject = value;
@@ -117,10 +88,7 @@ public class DraggableButton : Widget
 
 	public string TargetComponent
 	{
-		get
-		{
-			return targetComponent;
-		}
+		get => targetComponent;
 		set
 		{
 			targetComponent = value;
@@ -130,10 +98,7 @@ public class DraggableButton : Widget
 
 	public string MethodToInvoke
 	{
-		get
-		{
-			return methodToInvoke;
-		}
+		get => methodToInvoke;
 		set
 		{
 			methodToInvoke = value;
@@ -143,10 +108,7 @@ public class DraggableButton : Widget
 
 	public string MessageParameter
 	{
-		get
-		{
-			return messageParameter;
-		}
+		get => messageParameter;
 		set
 		{
 			messageParameter = value;
@@ -161,9 +123,9 @@ public class DraggableButton : Widget
 
 	public void CancelDrag()
 	{
-		if (dragging)
+		if (isDragging)
 		{
-			dragging = false;
+			isDragging = false;
 			if (dragIcon != null)
 			{
 				dragIcon.SetActive(value: false);
@@ -201,8 +163,7 @@ public class DraggableButton : Widget
 	{
 		if ((bool)dragIconPrefab)
 		{
-			dragIcon = Object.Instantiate(dragIconPrefab);
-			dragIcon.transform.parent = base.transform;
+			dragIcon = Object.Instantiate(dragIconPrefab, base.transform, true);
 			dragIcon.transform.localScale = new Vector3(dragIconScale, dragIconScale, 1f);
 			dragIcon.transform.localPosition = Vector3.zero;
 			dragIcon.SetActive(value: false);
@@ -258,7 +219,7 @@ public class DraggableButton : Widget
 		if (input.type == InputEvent.EventType.Press)
 		{
 			down = true;
-			dragging = true;
+			isDragging = true;
 			if ((bool)dragIcon)
 			{
 				dragIcon.SetActive(value: true);
@@ -292,7 +253,7 @@ public class DraggableButton : Widget
 
 	private void Update()
 	{
-		if (dragging)
+		if (isDragging)
 		{
 			GuiManager.Pointer pointer = GuiManager.GetPointer();
 			Vector3 vector = Singleton<GuiManager>.Instance.FindCamera().ScreenToWorldPoint(pointer.position);
@@ -309,7 +270,7 @@ public class DraggableButton : Widget
 					dragIcon.SetActive(value: false);
 					dragIcon.transform.localPosition = Vector3.zero;
 				}
-				dragging = false;
+				isDragging = false;
 				if (m_listener != null)
 				{
 					m_listener.Drop(this, position, dragObject);

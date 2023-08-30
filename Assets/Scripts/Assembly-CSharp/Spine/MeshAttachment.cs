@@ -36,98 +36,50 @@ namespace Spine
 
 		public int HullLength
 		{
-			get
-			{
-				return hulllength;
-			}
-			set
-			{
-				hulllength = value;
-			}
+			get => hulllength;
+			set => hulllength = value;
 		}
 
 		public float[] RegionUVs
 		{
-			get
-			{
-				return regionUVs;
-			}
-			set
-			{
-				regionUVs = value;
-			}
+			get => regionUVs;
+			set => regionUVs = value;
 		}
 
 		public float[] UVs
 		{
-			get
-			{
-				return uvs;
-			}
-			set
-			{
-				uvs = value;
-			}
+			get => uvs;
+			set => uvs = value;
 		}
 
 		public int[] Triangles
 		{
-			get
-			{
-				return triangles;
-			}
-			set
-			{
-				triangles = value;
-			}
+			get => triangles;
+			set => triangles = value;
 		}
 
 		public float R
 		{
-			get
-			{
-				return r;
-			}
-			set
-			{
-				r = value;
-			}
+			get => r;
+			set => r = value;
 		}
 
 		public float G
 		{
-			get
-			{
-				return g;
-			}
-			set
-			{
-				g = value;
-			}
+			get => g;
+			set => g = value;
 		}
 
 		public float B
 		{
-			get
-			{
-				return b;
-			}
-			set
-			{
-				b = value;
-			}
+			get => b;
+			set => b = value;
 		}
 
 		public float A
 		{
-			get
-			{
-				return a;
-			}
-			set
-			{
-				a = value;
-			}
+			get => a;
+			set => a = value;
 		}
 
 		public string Path { get; set; }
@@ -146,94 +98,49 @@ namespace Spine
 
 		public float RegionOffsetX
 		{
-			get
-			{
-				return regionOffsetX;
-			}
-			set
-			{
-				regionOffsetX = value;
-			}
+			get => regionOffsetX;
+			set => regionOffsetX = value;
 		}
 
 		public float RegionOffsetY
 		{
-			get
-			{
-				return regionOffsetY;
-			}
-			set
-			{
-				regionOffsetY = value;
-			}
+			get => regionOffsetY;
+			set => regionOffsetY = value;
 		}
 
 		public float RegionWidth
 		{
-			get
-			{
-				return regionWidth;
-			}
-			set
-			{
-				regionWidth = value;
-			}
+			get => regionWidth;
+			set => regionWidth = value;
 		}
 
 		public float RegionHeight
 		{
-			get
-			{
-				return regionHeight;
-			}
-			set
-			{
-				regionHeight = value;
-			}
+			get => regionHeight;
+			set => regionHeight = value;
 		}
 
 		public float RegionOriginalWidth
 		{
-			get
-			{
-				return regionOriginalWidth;
-			}
-			set
-			{
-				regionOriginalWidth = value;
-			}
+			get => regionOriginalWidth;
+			set => regionOriginalWidth = value;
 		}
 
 		public float RegionOriginalHeight
 		{
-			get
-			{
-				return regionOriginalHeight;
-			}
-			set
-			{
-				regionOriginalHeight = value;
-			}
+			get => regionOriginalHeight;
+			set => regionOriginalHeight = value;
 		}
 
 		public bool InheritDeform
 		{
-			get
-			{
-				return inheritDeform;
-			}
-			set
-			{
-				inheritDeform = value;
-			}
+			get => inheritDeform;
+			set => inheritDeform = value;
 		}
 
 		public MeshAttachment ParentMesh
 		{
-			get
-			{
-				return parentMesh;
-			}
+			get => parentMesh;
 			set
 			{
 				parentMesh = value;

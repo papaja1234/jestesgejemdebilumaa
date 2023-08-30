@@ -66,10 +66,7 @@ public class PointLightSource : MonoBehaviour
 
 	public bool isEnabled
 	{
-		get
-		{
-			return _isEnabled;
-		}
+		get => _isEnabled;
 		set
 		{
 			_isEnabled = value;

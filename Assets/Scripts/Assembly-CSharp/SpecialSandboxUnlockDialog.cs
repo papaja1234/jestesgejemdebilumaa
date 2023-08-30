@@ -14,14 +14,6 @@ public class SpecialSandboxUnlockDialog : TextDialog
 	[SerializeField]
 	private LocalizeSprite[] skullEpisodeIcon;
 
-	private UnlockType unlockType;
-
-	private int collected;
-
-	private int required;
-
-	private int cost;
-
 	[SerializeField]
 	private Sprite sandboxLogo;
 
@@ -34,53 +26,13 @@ public class SpecialSandboxUnlockDialog : TextDialog
 	[SerializeField]
 	private TextMesh[] collectedTexts;
 
-	public UnlockType Type
-	{
-		get
-		{
-			return unlockType;
-		}
-		set
-		{
-			unlockType = value;
-		}
-	}
+	public UnlockType Type { get; set; }
 
-	public int Collected
-	{
-		get
-		{
-			return collected;
-		}
-		set
-		{
-			collected = value;
-		}
-	}
+	public int Collected { get; set; }
 
-	public int Required
-	{
-		get
-		{
-			return required;
-		}
-		set
-		{
-			required = value;
-		}
-	}
+	public int Required { get; set; }
 
-	public int Cost
-	{
-		get
-		{
-			return cost;
-		}
-		set
-		{
-			cost = value;
-		}
-	}
+	public int Cost { get; set; }
 
 	protected override void Awake()
 	{
@@ -123,7 +75,7 @@ public class SpecialSandboxUnlockDialog : TextDialog
 		if (Singleton<RuntimeSpriteDatabase>.Instance != null)
 		{
 			RuntimeSpriteDatabase instance = Singleton<RuntimeSpriteDatabase>.Instance;
-			switch (unlockType)
+			switch (Type)
 			{
 			case UnlockType.Statue:
 				sandboxLogo.SelectSprite(instance.Find(LocalizeSprite.GetLocalizedSprite(statueEpisodeIcon, Singleton<Localizer>.Instance.CurrentLocale)), forceResetMesh: true);
@@ -138,8 +90,8 @@ public class SpecialSandboxUnlockDialog : TextDialog
 	public void RebuildTexts()
 	{
 		string arg = string.Empty;
-		string text = $"[snout] {cost}";
-		switch (unlockType)
+		string text = $"[snout] {Cost}";
+		switch (Type)
 		{
 		case UnlockType.Statue:
 			arg = "[statue]";
@@ -148,7 +100,7 @@ public class SpecialSandboxUnlockDialog : TextDialog
 			arg = "[skull]";
 			break;
 		}
-		string text2 = $"{arg} {collected}/{required}";
+		string text2 = $"{arg} {Collected}/{Required}";
 		for (int i = 0; i < collectedTexts.Length; i++)
 		{
 			collectedTexts[i].text = text2;

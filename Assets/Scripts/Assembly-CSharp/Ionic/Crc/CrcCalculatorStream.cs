@@ -13,23 +13,11 @@ namespace Ionic.Crc
 
 		private long _lengthLimit = -99L;
 
-		private bool _leaveOpen;
-
 		public long TotalBytesSlurped => _Crc32.TotalBytesRead;
 
 		public int Crc => _Crc32.Crc32Result;
 
-		public bool LeaveOpen
-		{
-			get
-			{
-				return _leaveOpen;
-			}
-			set
-			{
-				_leaveOpen = value;
-			}
-		}
+		public bool LeaveOpen { get; set; }
 
 		public override bool CanRead => _innerStream.CanRead;
 
@@ -51,14 +39,8 @@ namespace Ionic.Crc
 
 		public override long Position
 		{
-			get
-			{
-				return _Crc32.TotalBytesRead;
-			}
-			set
-			{
-				throw new NotSupportedException();
-			}
+			get => _Crc32.TotalBytesRead;
+			set => throw new NotSupportedException();
 		}
 
 		public CrcCalculatorStream(Stream stream)
@@ -103,7 +85,7 @@ namespace Ionic.Crc
 			_innerStream = stream;
 			_Crc32 = crc32 ?? new CRC32();
 			_lengthLimit = length;
-			_leaveOpen = leaveOpen;
+			LeaveOpen = leaveOpen;
 		}
 
 		public override int Read(byte[] buffer, int offset, int count)
@@ -161,7 +143,7 @@ namespace Ionic.Crc
 		public override void Close()
 		{
 			base.Close();
-			if (!_leaveOpen)
+			if (!LeaveOpen)
 			{
 				_innerStream.Close();
 			}

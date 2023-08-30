@@ -30,19 +30,15 @@ public class Reward : MonoBehaviour
 	[SerializeField]
 	private GameObject rewardBGLit;
 
-	private TextMesh countTxt;
-
-	private RewardIcon rewardIcon;
-
 	private Dictionary<PrizeType, GameObject> rewardPrefabs;
 
-	public RewardIcon RewardIcon => rewardIcon;
+	public RewardIcon RewardIcon { get; private set; }
 
-	public TextMesh RewardCount => countTxt;
+	public TextMesh RewardCount { get; private set; }
 
 	private void Awake()
 	{
-		countTxt = rewardCount.GetComponent<TextMesh>();
+		RewardCount = rewardCount.GetComponent<TextMesh>();
 		UpdateBackground();
 	}
 
@@ -54,13 +50,13 @@ public class Reward : MonoBehaviour
 
 	public void SetRewards(List<DailyReward> rewards)
 	{
-		if (rewardIcon != null)
+		if (RewardIcon != null)
 		{
-			Object.Destroy(rewardIcon.gameObject);
+			Object.Destroy(RewardIcon.gameObject);
 		}
 		if (rewards.Count > 1)
 		{
-			rewardIcon = ((GameObject)Object.Instantiate(Resources.Load("UI/Amazon/RewardBundle"))).GetComponent<RewardIcon>();
+			RewardIcon = ((GameObject)Object.Instantiate(Resources.Load("UI/Amazon/RewardBundle"))).GetComponent<RewardIcon>();
 			SetRewardCount(0);
 		}
 		else
@@ -69,12 +65,12 @@ public class Reward : MonoBehaviour
 			{
 				return;
 			}
-			rewardIcon = Object.Instantiate(GetRewardPrefab(rewards[0].prize)).GetComponent<RewardIcon>();
+			RewardIcon = Object.Instantiate(GetRewardPrefab(rewards[0].prize)).GetComponent<RewardIcon>();
 			SetRewardCount(rewards[0].prizeCount);
 		}
-		rewardIcon.transform.parent = base.transform;
-		rewardIcon.transform.localPosition = rewardPosition.localPosition;
-		rewardIcon.SetButtonState(RewardIcon.State.NotAvailable);
+		RewardIcon.transform.parent = base.transform;
+		RewardIcon.transform.localPosition = rewardPosition.localPosition;
+		RewardIcon.SetButtonState(RewardIcon.State.NotAvailable);
 	}
 
 	public GameObject GetRewardPrefab(PrizeType prizeType)
@@ -112,11 +108,11 @@ public class Reward : MonoBehaviour
 
 	public void SetState(RewardIcon.State newState)
 	{
-		if (!(rewardIcon == null))
+		if (!(RewardIcon == null))
 		{
-			rewardIcon.SetButtonState(newState);
+			RewardIcon.SetButtonState(newState);
 			claimedIcon.SetActive(newState == RewardIcon.State.Claimed);
-			countTxt.gameObject.SetActive(newState != RewardIcon.State.Claimed);
+			RewardCount.gameObject.SetActive(newState != RewardIcon.State.Claimed);
 			UpdateBackground(newState == RewardIcon.State.ClaimNow);
 		}
 	}
@@ -127,17 +123,17 @@ public class Reward : MonoBehaviour
 
 	public void SetRewardCount(int count, string prefix = "x")
 	{
-		if (!(countTxt == null))
+		if (!(RewardCount == null))
 		{
 			if (count > 0)
 			{
-				countTxt.GetComponent<Renderer>().enabled = true;
-				countTxt.text = $"{prefix}{count}";
+				RewardCount.GetComponent<Renderer>().enabled = true;
+				RewardCount.text = $"{prefix}{count}";
 			}
 			else
 			{
-				countTxt.text = string.Empty;
-				countTxt.GetComponent<Renderer>().enabled = false;
+				RewardCount.text = string.Empty;
+				RewardCount.GetComponent<Renderer>().enabled = false;
 			}
 		}
 	}

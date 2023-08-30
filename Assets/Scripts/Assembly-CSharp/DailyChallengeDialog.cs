@@ -20,8 +20,6 @@ public class DailyChallengeDialog : WPFMonoBehaviour
 
 	private string timeLeftlocalizationKey;
 
-	private static bool s_dialogOpen;
-
 	private RefreshLocalizer localizer;
 
 	private Dialog.OnClose OnClose;
@@ -46,7 +44,7 @@ public class DailyChallengeDialog : WPFMonoBehaviour
 		}
 	}
 
-	public static bool DialogOpen => s_dialogOpen;
+	public static bool DialogOpen { get; private set; }
 
 	private void Awake()
 	{
@@ -64,7 +62,7 @@ public class DailyChallengeDialog : WPFMonoBehaviour
 		KeyListener.keyReleased += HandleKeyRelease;
 		EventManager.Send(new UIEvent(UIEvent.Type.OpenedDailyChallengeDialog));
 		StartCoroutine(UpdateTimeLeft());
-		s_dialogOpen = true;
+		DialogOpen = true;
 	}
 
 	private void OnDisable()
@@ -79,7 +77,7 @@ public class DailyChallengeDialog : WPFMonoBehaviour
 		}
 		EventManager.Send(new UIEvent(UIEvent.Type.ClosedDailyChallengeDialog));
 		KeyListener.keyReleased -= HandleKeyRelease;
-		s_dialogOpen = false;
+		DialogOpen = false;
 	}
 
 	private void HandleKeyRelease(KeyCode key)

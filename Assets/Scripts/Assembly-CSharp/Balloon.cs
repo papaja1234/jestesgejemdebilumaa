@@ -106,12 +106,11 @@ public class Balloon : BasePart
 		base.contraption.ChangeOneShotPartAmount(BasePart.BaseType(m_partType), EffectDirection(), 1);
 		if (m_numberOfBalloons > 1)
 		{
-			GameObject obj = UnityEngine.Object.Instantiate(base.gameObject);
+			GameObject obj = UnityEngine.Object.Instantiate(base.gameObject, base.contraption.transform, true);
 			obj.transform.position = base.transform.position;
 			Balloon component = obj.GetComponent<Balloon>();
 			component.m_numberOfBalloons = m_numberOfBalloons - 1;
 			base.contraption.AddRuntimePart(component);
-			obj.transform.parent = base.contraption.transform;
 		}
 		if (!base.gameObject.GetComponent<SphereCollider>())
 		{

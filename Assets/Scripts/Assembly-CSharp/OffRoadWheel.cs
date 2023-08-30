@@ -32,8 +32,6 @@ public class OffRoadWheel : BasePart
 
 	private Collider m_supportCollider;
 
-	private bool m_hasContact = true;
-
 	private float m_thrust;
 
 	private float m_thrustTimer;
@@ -48,7 +46,7 @@ public class OffRoadWheel : BasePart
 
 	public float m_springStiffness = 150f;
 
-	public bool HasContact => m_hasContact;
+	public bool HasContact { get; private set; } = true;
 
 	public override bool CanBeEnabled()
 	{
@@ -316,7 +314,7 @@ public class OffRoadWheel : BasePart
 			float num = SpeedInDirection(vector);
 			m_lastForceDirection = vector;
 			m_spinSpeed = 0f;
-			m_hasContact = true;
+			HasContact = true;
 			colliderRigidbody = hitInfo.collider.gameObject.GetComponent<Rigidbody>();
 			if (m_enabled && m_maximumSpeed > 0f && num < m_maximumSpeed && num > 0f - m_maximumSpeed)
 			{
@@ -337,7 +335,7 @@ public class OffRoadWheel : BasePart
 		}
 		if (flag)
 		{
-			m_hasContact = false;
+			HasContact = false;
 			colliderRigidbody = null;
 			if (m_enabled)
 			{

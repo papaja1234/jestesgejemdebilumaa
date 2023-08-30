@@ -1,114 +1,18 @@
 internal struct RewardDataHolder
 {
-	private int mTimerMode;
+	public int TimerMode { get; set; }
 
-	private int mLevel;
+	public int Level { get; set; }
 
-	private int mPendingRewardLevel;
+	public int PendingRewardLevel { get; set; }
 
-	private int mRewardTime;
+	public int RewardTime { get; set; }
 
-	private int mResetTime;
+	public int ResetTime { get; set; }
 
-	private int mServerTime;
+	public int ServerTime { get; set; }
 
-	private int mServerTimeUpdated;
+	public int ServerTimeUpdated { get; set; }
 
-	private int mRandomSeed;
-
-	public int TimerMode
-	{
-		get
-		{
-			return mTimerMode;
-		}
-		set
-		{
-			mTimerMode = value;
-		}
-	}
-
-	public int Level
-	{
-		get
-		{
-			return mLevel;
-		}
-		set
-		{
-			mLevel = value;
-		}
-	}
-
-	public int PendingRewardLevel
-	{
-		get
-		{
-			return mPendingRewardLevel;
-		}
-		set
-		{
-			mPendingRewardLevel = value;
-		}
-	}
-
-	public int RewardTime
-	{
-		get
-		{
-			return mRewardTime;
-		}
-		set
-		{
-			mRewardTime = value;
-		}
-	}
-
-	public int ResetTime
-	{
-		get
-		{
-			return mResetTime;
-		}
-		set
-		{
-			mResetTime = value;
-		}
-	}
-
-	public int ServerTime
-	{
-		get
-		{
-			return mServerTime;
-		}
-		set
-		{
-			mServerTime = value;
-		}
-	}
-
-	public int ServerTimeUpdated
-	{
-		get
-		{
-			return mServerTimeUpdated;
-		}
-		set
-		{
-			mServerTimeUpdated = value;
-		}
-	}
-
-	public int RandomSeed
-	{
-		get
-		{
-			return mRandomSeed;
-		}
-		set
-		{
-			mRandomSeed = value;
-		}
-	}
+	public int RandomSeed { get; set; }
 }

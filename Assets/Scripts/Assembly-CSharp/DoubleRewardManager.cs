@@ -26,29 +26,21 @@ public class DoubleRewardManager : Singleton<DoubleRewardManager>
 
 	private int rewardTime;
 
-	private int rewardCoins;
-
 	private float lastCheckTime;
 
 	private float doubleRewardEndTime;
 
-	private bool hasAd;
+	public bool HasAd { get; private set; }
 
-	private bool loadingAd;
+	public bool LoadingAd { get; private set; }
 
-	private Status status;
-
-	public bool HasAd => hasAd;
-
-	public bool LoadingAd => loadingAd;
-
-	public Status CurrentStatus => status;
+	public Status CurrentStatus { get; private set; }
 
 	public float DoubleRewardTimeRemaining => doubleRewardEndTime - Time.realtimeSinceStartup;
 
 	public bool HasDoubleReward => DoubleRewardTimeRemaining > 0f;
 
-	public int RewardCoins => rewardCoins;
+	public int RewardCoins { get; private set; }
 
 	public string FormattedRewardTime
 	{
@@ -91,12 +83,12 @@ public class DoubleRewardManager : Singleton<DoubleRewardManager>
 	private void Awake()
 	{
 		SetAsPersistant();
-		status = Status.Uninitialized;
+		CurrentStatus = Status.Uninitialized;
 		lastCheckTime = -1f;
 		if (Singleton<GameConfigurationManager>.Instance.HasData)
 		{
 			rewardTime = Singleton<GameConfigurationManager>.Instance.GetValue<int>("double_reward_duration", "seconds");
-			rewardCoins = Singleton<GameConfigurationManager>.Instance.GetValue<int>("double_reward_coin_reward", "coin_reward");
+			RewardCoins = Singleton<GameConfigurationManager>.Instance.GetValue<int>("double_reward_coin_reward", "coin_reward");
 			Initialize();
 			return;
 		}
@@ -104,7 +96,7 @@ public class DoubleRewardManager : Singleton<DoubleRewardManager>
 		gameConfigurationManager.OnHasData = (Action)Delegate.Combine(gameConfigurationManager.OnHasData, (Action)delegate
 		{
 			rewardTime = Singleton<GameConfigurationManager>.Instance.GetValue<int>("double_reward_duration", "seconds");
-			rewardCoins = Singleton<GameConfigurationManager>.Instance.GetValue<int>("double_reward_coin_reward", "coin_reward");
+			RewardCoins = Singleton<GameConfigurationManager>.Instance.GetValue<int>("double_reward_coin_reward", "coin_reward");
 			Initialize();
 		});
 	}
@@ -138,8 +130,8 @@ public class DoubleRewardManager : Singleton<DoubleRewardManager>
 
 	private void OnAdReady()
 	{
-		hasAd = true;
-		loadingAd = false;
+		HasAd = true;
+		LoadingAd = false;
 		if (OnAdLoaded != null)
 		{
 			OnAdLoaded(obj: true);
@@ -149,8 +141,8 @@ public class DoubleRewardManager : Singleton<DoubleRewardManager>
 
 	private void OnAdFailure()
 	{
-		hasAd = false;
-		loadingAd = false;
+		HasAd = false;
+		LoadingAd = false;
 		if (OnAdFailed != null)
 		{
 			OnAdFailed();
@@ -160,7 +152,7 @@ public class DoubleRewardManager : Singleton<DoubleRewardManager>
 
 	private void OnAdFinished()
 	{
-		hasAd = false;
+		HasAd = false;
 		if (OnAdWatched != null)
 		{
 			OnAdWatched();
@@ -170,8 +162,8 @@ public class DoubleRewardManager : Singleton<DoubleRewardManager>
 
 	private void OnAdLoading()
 	{
-		hasAd = false;
-		loadingAd = true;
+		HasAd = false;
+		LoadingAd = true;
 	}
 
 	private void OnAdCancel()
@@ -208,9 +200,9 @@ public class DoubleRewardManager : Singleton<DoubleRewardManager>
 		{
 			doubleRewardEndTime = -1f;
 		}
-		if (status == Status.Uninitialized)
+		if (CurrentStatus == Status.Uninitialized)
 		{
-			status = Status.Initialized;
+			CurrentStatus = Status.Initialized;
 			if (OnInitialize != null)
 			{
 				OnInitialize();
@@ -238,7 +230,7 @@ public class DoubleRewardManager : Singleton<DoubleRewardManager>
 
 	public void RefreshAd()
 	{
-		if (!loadingAd)
+		if (!LoadingAd)
 		{
 			adReward.Load();
 		}
@@ -246,7 +238,7 @@ public class DoubleRewardManager : Singleton<DoubleRewardManager>
 
 	public void PlayAd()
 	{
-		if (hasAd)
+		if (HasAd)
 		{
 			adReward.Play();
 		}

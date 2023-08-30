@@ -21,13 +21,11 @@ public class CrateCompassIndicator : WPFMonoBehaviour
 
 	private float m_viewHalfHeight;
 
-	private bool m_done;
-
 	private LineRenderer m_meter;
 
 	private float m_normalizedDistance;
 
-	public bool Done => m_done;
+	public bool Done { get; private set; }
 
 	private void Awake()
 	{
@@ -77,7 +75,7 @@ public class CrateCompassIndicator : WPFMonoBehaviour
 
 	private void TurnOff()
 	{
-		m_done = true;
+		Done = true;
 		base.gameObject.SetActive(value: false);
 	}
 

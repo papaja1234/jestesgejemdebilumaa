@@ -74,8 +74,7 @@ public class Bridge : ExportAction
 		int num2 = 0;
 		while (steps.Count < Mathf.FloorToInt(f) && num2 <= 100)
 		{
-			GameObject gameObject = UnityEngine.Object.Instantiate(stepPrefab);
-			gameObject.transform.parent = stepParent;
+			GameObject gameObject = UnityEngine.Object.Instantiate(stepPrefab, stepParent, true);
 			gameObject.name = $"Step{steps.Count:000}";
 			steps.Add(gameObject.transform);
 			num2++;
@@ -111,9 +110,8 @@ public class Bridge : ExportAction
 		stepRopes.Clear();
 		for (int l = 0; l < steps.Count + 1; l++)
 		{
-			GameObject gameObject2 = UnityEngine.Object.Instantiate(stepRopePrefab);
+			GameObject gameObject2 = UnityEngine.Object.Instantiate(stepRopePrefab, transform, true);
 			gameObject2.name = $"StepRope{l:000}";
-			gameObject2.transform.parent = transform;
 			if (l < steps.Count)
 			{
 				gameObject2.transform.position = steps[l].position;

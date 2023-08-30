@@ -7,18 +7,16 @@ public class VirtualCatalogManager : Singleton<VirtualCatalogManager>
 {
 	private Dictionary<string, VirtualProductInfo> virtualCatalogDictionary;
 
-	private bool hasCatalog;
-
 	private SecureJsonManager secureJson;
 
-	public bool HasCatalog => hasCatalog;
+	public bool HasCatalog { get; private set; }
 
 	public static event Action onVirtualProductListParsed;
 
 	private void Awake()
 	{
 		SetAsPersistant();
-		hasCatalog = false;
+		HasCatalog = false;
 		secureJson = new SecureJsonManager("virtualcatalog");
 		secureJson.Initialize(OnDataLoaded);
 	}
@@ -42,7 +40,7 @@ public class VirtualCatalogManager : Singleton<VirtualCatalogManager>
 				}
 			}
 		}
-		hasCatalog = true;
+		HasCatalog = true;
 		if (VirtualCatalogManager.onVirtualProductListParsed != null)
 		{
 			VirtualCatalogManager.onVirtualProductListParsed();

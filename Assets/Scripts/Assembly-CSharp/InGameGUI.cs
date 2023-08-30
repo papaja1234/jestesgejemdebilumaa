@@ -34,41 +34,25 @@ public class InGameGUI : MonoBehaviour
 
 	private GameObject cakeRaceCompleteMenuGo;
 
-	private InGameBuildMenu buildMenu;
-
-	private InGameFlightMenu flightMenu;
-
-	private PreviewMenu previewMenu;
-
-	private PausePage pauseMenu;
-
-	private LevelComplete levelCompleteMenu;
-
-	private TutorialBook tutorialBook;
-
-	private InGameMechanicGift mechanicGiftScreen;
-
 	private CakeRaceComplete cakeRaceCompleteMenu;
-
-	private CakeRaceHUD cakeRaceHud;
 
 	private GameObject currentMenu;
 
-	public InGameBuildMenu BuildMenu => buildMenu;
+	public InGameBuildMenu BuildMenu { get; private set; }
 
-	public InGameFlightMenu FlightMenu => flightMenu;
+	public InGameFlightMenu FlightMenu { get; private set; }
 
-	public PreviewMenu PreviewMenu => previewMenu;
+	public PreviewMenu PreviewMenu { get; private set; }
 
-	public PausePage PauseMenu => pauseMenu;
+	public PausePage PauseMenu { get; private set; }
 
-	public LevelComplete LevelCompleteMenu => levelCompleteMenu;
+	public LevelComplete LevelCompleteMenu { get; private set; }
 
-	public TutorialBook TutorialBook => tutorialBook;
+	public TutorialBook TutorialBook { get; private set; }
 
-	public InGameMechanicGift MechanicGiftScreen => mechanicGiftScreen;
+	public InGameMechanicGift MechanicGiftScreen { get; private set; }
 
-	public CakeRaceHUD CakeRaceHUD => cakeRaceHud;
+	public CakeRaceHUD CakeRaceHUD { get; private set; }
 
 	private void Awake()
 	{
@@ -80,23 +64,22 @@ public class InGameGUI : MonoBehaviour
 		tutorialBookMenuGo = InstantiateMenu(tutorialBookMenuPrefab);
 		mechanicGiftScreenGo = InstantiateMenu(mechanicGiftScreenPrefab);
 		cakeRaceCompleteMenuGo = InstantiateMenu(cakeRaceCompleteMenuPrefab);
-		buildMenu = buildMenuGo.GetComponent<InGameBuildMenu>();
-		flightMenu = flightMenuGo.GetComponent<InGameFlightMenu>();
-		previewMenu = previewMenuGo.GetComponent<PreviewMenu>();
-		pauseMenu = pauseMenuGo.GetComponent<PausePage>();
-		levelCompleteMenu = levelCompleteMenuGo.GetComponent<LevelComplete>();
-		tutorialBook = tutorialBookMenuGo.GetComponent<TutorialBook>();
-		mechanicGiftScreen = mechanicGiftScreenGo.GetComponent<InGameMechanicGift>();
+		BuildMenu = buildMenuGo.GetComponent<InGameBuildMenu>();
+		FlightMenu = flightMenuGo.GetComponent<InGameFlightMenu>();
+		PreviewMenu = previewMenuGo.GetComponent<PreviewMenu>();
+		PauseMenu = pauseMenuGo.GetComponent<PausePage>();
+		LevelCompleteMenu = levelCompleteMenuGo.GetComponent<LevelComplete>();
+		TutorialBook = tutorialBookMenuGo.GetComponent<TutorialBook>();
+		MechanicGiftScreen = mechanicGiftScreenGo.GetComponent<InGameMechanicGift>();
 		cakeRaceCompleteMenu = cakeRaceCompleteMenuGo.GetComponent<CakeRaceComplete>();
-		cakeRaceHud = flightMenuGo.GetComponentInChildren<CakeRaceHUD>();
+		CakeRaceHUD = flightMenuGo.GetComponentInChildren<CakeRaceHUD>();
 	}
 
 	private GameObject InstantiateMenu(GameObject prefab)
 	{
-		GameObject obj = Object.Instantiate(prefab);
+		GameObject obj = Object.Instantiate(prefab, base.transform, true);
 		obj.name = prefab.name;
 		obj.transform.position = base.transform.position;
-		obj.transform.parent = base.transform;
 		obj.SetActive(value: false);
 		return obj;
 	}

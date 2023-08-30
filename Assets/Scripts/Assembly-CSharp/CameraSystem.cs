@@ -11,9 +11,8 @@ public class CameraSystem : MonoBehaviour
 		position.z += -100f;
 		foreach (GameObject cameraPrefab in m_cameraPrefabs)
 		{
-			GameObject obj = Object.Instantiate(cameraPrefab);
+			GameObject obj = Object.Instantiate(cameraPrefab, base.transform, true);
 			obj.name = cameraPrefab.name;
-			obj.transform.parent = base.transform;
 			obj.transform.position = position;
 		}
 	}

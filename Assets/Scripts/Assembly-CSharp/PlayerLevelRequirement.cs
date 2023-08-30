@@ -25,9 +25,7 @@ public class PlayerLevelRequirement : MonoBehaviour
 
 	private const string CONFIG_LEVEL_REQUIREMENT_KEY = "level_requirements";
 
-	private bool isLocked = true;
-
-	public bool IsLocked => isLocked;
+	public bool IsLocked { get; private set; } = true;
 
 	public int RequiredLevel => levelRequirement;
 
@@ -69,7 +67,7 @@ public class PlayerLevelRequirement : MonoBehaviour
 
 	private void Lock(bool doLock)
 	{
-		isLocked = doLock;
+		IsLocked = doLock;
 		if ((bool)lockedContainer)
 		{
 			lockedContainer.SetActive(doLock);

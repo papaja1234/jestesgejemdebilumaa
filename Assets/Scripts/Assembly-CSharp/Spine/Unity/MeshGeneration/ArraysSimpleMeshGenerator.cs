@@ -14,14 +14,8 @@ namespace Spine.Unity.MeshGeneration
 
 		public float Scale
 		{
-			get
-			{
-				return scale;
-			}
-			set
-			{
-				scale = value;
-			}
+			get => scale;
+			set => scale = value;
 		}
 
 		public float ZSpacing { get; set; }

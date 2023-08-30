@@ -31,8 +31,6 @@ public class MotorWheel : BasePart
 
 	private Collider m_supportCollider;
 
-	private bool m_hasContact = true;
-
 	private float m_thrust;
 
 	private float m_thrustTimer;
@@ -55,7 +53,7 @@ public class MotorWheel : BasePart
 
 	private float loopingIceSurfaceSoundTime;
 
-	public bool HasContact => m_hasContact;
+	public bool HasContact { get; private set; } = true;
 
 	public override bool CanBeEnabled()
 	{
@@ -287,7 +285,7 @@ public class MotorWheel : BasePart
 			float num2 = SpeedInDirection(base.transform.right);
 			Vector3 vector = (m_lastForceDirection = Vector3.Cross(hitInfo.normal, Vector3.forward));
 			m_spinSpeed = 0f;
-			m_hasContact = true;
+			HasContact = true;
 			colliderRigidbody = hitInfo.collider.gameObject.GetComponent<Rigidbody>();
 			if (m_enabled && m_maximumSpeed > 0f && num2 < m_maximumSpeed && num2 > 0f - m_maximumSpeed)
 			{
@@ -311,7 +309,7 @@ public class MotorWheel : BasePart
 			m_grounded = true;
 			return;
 		}
-		m_hasContact = false;
+		HasContact = false;
 		colliderRigidbody = null;
 		if (m_enabled)
 		{

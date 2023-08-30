@@ -11,8 +11,6 @@ public abstract class OneTimeCollectable : WPFMonoBehaviour
 
 	public bool collected;
 
-	private Vector3 startPosition = Vector3.zero;
-
 	private bool startPositionInited;
 
 	protected bool disabled;
@@ -29,7 +27,7 @@ public abstract class OneTimeCollectable : WPFMonoBehaviour
 
 	public bool Disabled => disabled;
 
-	public Vector3 StartPosition => startPosition;
+	public Vector3 StartPosition { get; private set; } = Vector3.zero;
 
 	public string NameKey
 	{
@@ -45,7 +43,7 @@ public abstract class OneTimeCollectable : WPFMonoBehaviour
 
 	protected virtual void Start()
 	{
-		startPosition = base.transform.position;
+		StartPosition = base.transform.position;
 		startPositionInited = true;
 		isDynamic = GetComponent<LevelRigidbody>() != null;
 		isBox = this is PartBox || this is StarBox;
@@ -72,7 +70,7 @@ public abstract class OneTimeCollectable : WPFMonoBehaviour
 	{
 		if (startPositionInited && !collected)
 		{
-			base.transform.position = startPosition;
+			base.transform.position = StartPosition;
 		}
 	}
 

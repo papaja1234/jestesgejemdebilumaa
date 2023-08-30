@@ -48,17 +48,15 @@ public static class LootCrateRewards
 
 	public struct SlotRewards
 	{
-		private Reward type;
-
 		private int value;
 
-		public Reward Type => type;
+		public Reward Type { get; }
 
 		public BasePart.PartTier PartTier
 		{
 			get
 			{
-				if (type == Reward.Part)
+				if (Type == Reward.Part)
 				{
 					return (BasePart.PartTier)value;
 				}
@@ -70,7 +68,7 @@ public static class LootCrateRewards
 		{
 			get
 			{
-				if (type == Reward.Powerup)
+				if (Type == Reward.Powerup)
 				{
 					return (Powerup)value;
 				}
@@ -82,7 +80,7 @@ public static class LootCrateRewards
 		{
 			get
 			{
-				if (type == Reward.Dessert)
+				if (Type == Reward.Dessert)
 				{
 					return value;
 				}
@@ -94,7 +92,7 @@ public static class LootCrateRewards
 		{
 			get
 			{
-				if (type == Reward.Scrap)
+				if (Type == Reward.Scrap)
 				{
 					return value;
 				}
@@ -106,7 +104,7 @@ public static class LootCrateRewards
 		{
 			get
 			{
-				if (type == Reward.Coin)
+				if (Type == Reward.Coin)
 				{
 					return value;
 				}
@@ -118,7 +116,7 @@ public static class LootCrateRewards
 		{
 			get
 			{
-				if (type == Reward.Dessert)
+				if (Type == Reward.Dessert)
 				{
 					return value == 0;
 				}
@@ -128,7 +126,7 @@ public static class LootCrateRewards
 
 		public SlotRewards(Reward type, int value)
 		{
-			this.type = type;
+			this.Type = type;
 			this.value = value;
 		}
 
@@ -136,9 +134,9 @@ public static class LootCrateRewards
 		{
 			StringBuilder stringBuilder = new StringBuilder();
 			stringBuilder.Append("Reward type: ");
-			stringBuilder.Append(type);
+			stringBuilder.Append(Type);
 			stringBuilder.Append("\n");
-			switch (type)
+			switch (Type)
 			{
 			case Reward.Part:
 				stringBuilder.Append("Part tier: ");
@@ -455,13 +453,11 @@ public static class LootCrateRewards
 		}
 	}
 
-	private static bool initialized;
-
 	private static Dictionary<LootCrateType, List<Slot>> slots;
 
 	private static SecureJsonManager secureJson;
 
-	public static bool Initialized => initialized;
+	public static bool Initialized { get; private set; }
 
 	private static Dictionary<LootCrateType, List<Slot>> Slots
 	{
@@ -479,10 +475,7 @@ public static class LootCrateRewards
 			}
 			return slots;
 		}
-		set
-		{
-			slots = value;
-		}
+		set => slots = value;
 	}
 
 	static LootCrateRewards()
@@ -507,7 +500,7 @@ public static class LootCrateRewards
 				}
 			}
 		}
-		initialized = true;
+		Initialized = true;
 	}
 
 	public static SlotRewards[] GetRandomRewards(LootCrateType type)
@@ -527,7 +520,7 @@ public static class LootCrateRewards
 	public static List<Tuple<Reward, BasePart.PartTier>> MinimumRewards(LootCrateType type)
 	{
 		List<Tuple<Reward, BasePart.PartTier>> list = new List<Tuple<Reward, BasePart.PartTier>>();
-		if (!initialized)
+		if (!Initialized)
 		{
 			return list;
 		}

@@ -7,11 +7,9 @@ public static class AlienCustomizationManager
 
 	private const string ALIEN_PRICE_CONFIG_NAME = "none";
 
-	private static bool s_initialized;
-
 	private static List<BasePart> s_unlockOrder;
 
-	public static bool Initialized => s_initialized;
+	public static bool Initialized { get; private set; }
 
 	public static bool HasCraftableItems => UnlockablesLeft() > 0;
 
@@ -29,7 +27,7 @@ public static class AlienCustomizationManager
 
 	private static void Initialize()
 	{
-		if (s_initialized)
+		if (Initialized)
 		{
 			return;
 		}
@@ -57,13 +55,13 @@ public static class AlienCustomizationManager
 				}
 			}
 		}
-		s_initialized = true;
+		Initialized = true;
 	}
 
 	public static bool GetNextUnlockable(out BasePart part)
 	{
 		part = null;
-		if (!s_initialized)
+		if (!Initialized)
 		{
 			return false;
 		}
@@ -81,7 +79,7 @@ public static class AlienCustomizationManager
 	public static int UnlockablesLeft()
 	{
 		int num = 0;
-		if (!s_initialized)
+		if (!Initialized)
 		{
 			return 0;
 		}

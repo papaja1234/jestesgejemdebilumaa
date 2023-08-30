@@ -8,14 +8,12 @@ public class Loader : Singleton<Loader>
 
 	private Vector3 originalPosition = Vector3.zero;
 
-	private string m_lastLoadedLevel = string.Empty;
-
-	public string LastLoadedString => m_lastLoadedLevel;
+	public string LastLoadedString { get; private set; } = string.Empty;
 
 	public void LoadLevel(string levelName, GameManager.GameState nextState, bool showLoadingScreen, bool enableGUIAfterLoad = true)
 	{
 		isLoadingLevel = true;
-		m_lastLoadedLevel = levelName;
+		LastLoadedString = levelName;
 		if (showLoadingScreen)
 		{
 			Show();

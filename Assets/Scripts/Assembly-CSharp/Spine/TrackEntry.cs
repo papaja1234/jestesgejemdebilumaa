@@ -30,86 +30,44 @@ namespace Spine
 
 		public float Delay
 		{
-			get
-			{
-				return delay;
-			}
-			set
-			{
-				delay = value;
-			}
+			get => delay;
+			set => delay = value;
 		}
 
 		public float Time
 		{
-			get
-			{
-				return time;
-			}
-			set
-			{
-				time = value;
-			}
+			get => time;
+			set => time = value;
 		}
 
 		public float LastTime
 		{
-			get
-			{
-				return lastTime;
-			}
-			set
-			{
-				lastTime = value;
-			}
+			get => lastTime;
+			set => lastTime = value;
 		}
 
 		public float EndTime
 		{
-			get
-			{
-				return endTime;
-			}
-			set
-			{
-				endTime = value;
-			}
+			get => endTime;
+			set => endTime = value;
 		}
 
 		public float TimeScale
 		{
-			get
-			{
-				return timeScale;
-			}
-			set
-			{
-				timeScale = value;
-			}
+			get => timeScale;
+			set => timeScale = value;
 		}
 
 		public float Mix
 		{
-			get
-			{
-				return mix;
-			}
-			set
-			{
-				mix = value;
-			}
+			get => mix;
+			set => mix = value;
 		}
 
 		public bool Loop
 		{
-			get
-			{
-				return loop;
-			}
-			set
-			{
-				loop = value;
-			}
+			get => loop;
+			set => loop = value;
 		}
 
 		public event AnimationState.StartEndDelegate Start;

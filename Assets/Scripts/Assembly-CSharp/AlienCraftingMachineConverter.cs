@@ -47,23 +47,15 @@ public class AlienCraftingMachineConverter : WPFMonoBehaviour
 
 	private Renderer[] m_curtainRenderers;
 
-	private bool m_showingRoutine;
-
 	private bool m_isAlienMachine;
 
 	public bool RoutineShown
 	{
-		get
-		{
-			return GameProgress.GetBool("AlienCraftingMachineShown");
-		}
-		set
-		{
-			GameProgress.SetBool("AlienCraftingMachineShown", value);
-		}
+		get => GameProgress.GetBool("AlienCraftingMachineShown");
+		set => GameProgress.SetBool("AlienCraftingMachineShown", value);
 	}
 
-	public bool ShowingRoutine => m_showingRoutine;
+	public bool ShowingRoutine { get; private set; }
 
 	public bool IsAlienMachine
 	{
@@ -134,7 +126,7 @@ public class AlienCraftingMachineConverter : WPFMonoBehaviour
 
 	private IEnumerator Show()
 	{
-		m_showingRoutine = true;
+		ShowingRoutine = true;
 		if (OnBeginUpgrade != null)
 		{
 			OnBeginUpgrade();
@@ -186,7 +178,7 @@ public class AlienCraftingMachineConverter : WPFMonoBehaviour
 		m_curtainAnimation.state.End -= OnOutroEnd;
 		m_isAlienMachine = true;
 		RoutineShown = true;
-		m_showingRoutine = false;
+		ShowingRoutine = false;
 		if (OnEndUpgrade != null)
 		{
 			OnEndUpgrade();

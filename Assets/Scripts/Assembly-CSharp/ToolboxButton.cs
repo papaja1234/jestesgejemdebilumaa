@@ -9,8 +9,6 @@ public class ToolboxButton : SliderButton
 
 	public GameObject m_scrollLeftButton;
 
-	private bool isButtonOut;
-
 	private bool lastIsPlaying;
 
 	private const string AnimName = "ToolBoxButtonSlide";
@@ -21,14 +19,14 @@ public class ToolboxButton : SliderButton
 
 	private bool m_openList;
 
-	public bool ToolboxOpen => isButtonOut;
+	public bool ToolboxOpen { get; private set; }
 
 	private void OnEnable()
 	{
-		InitAnimationStates(isButtonOut, GetComponent<Animation>()["ToolBoxButtonSlide"], m_button.GetComponent<Animation>()["ToolBoxButton"]);
+		InitAnimationStates(ToolboxOpen, GetComponent<Animation>()["ToolBoxButtonSlide"], m_button.GetComponent<Animation>()["ToolBoxButton"]);
 		m_button.transform.Find("Gear").transform.rotation = Quaternion.identity;
-		EnableRendererRecursively(base.gameObject, isButtonOut);
-		ActivateToggleList(!isButtonOut);
+		EnableRendererRecursively(base.gameObject, ToolboxOpen);
+		ActivateToggleList(!ToolboxOpen);
 		m_powerupTutorialShown = GameProgress.GetBool("PowerupTutorialShown");
 	}
 
@@ -43,7 +41,7 @@ public class ToolboxButton : SliderButton
 			child.localRotation = Quaternion.identity;
 			child.localScale = Vector3.one * 0.2f;
 		}
-		isButtonOut = false;
+		ToolboxOpen = false;
 	}
 
 	public void OnPressed()
@@ -51,12 +49,12 @@ public class ToolboxButton : SliderButton
 		if (!GetComponent<Animation>().isPlaying)
 		{
 			EnableRendererRecursively(base.gameObject, enable: true);
-			bool reverse = isButtonOut;
+			bool reverse = ToolboxOpen;
 			InitAnimationStates(reverse, GetComponent<Animation>()["ToolBoxButtonSlide"], m_button.GetComponent<Animation>()["ToolBoxButton"]);
 			GetComponent<Animation>().Play();
 			m_button.GetComponent<Animation>().Play();
-			isButtonOut = !isButtonOut;
-			if (isButtonOut)
+			ToolboxOpen = !ToolboxOpen;
+			if (ToolboxOpen)
 			{
 				ActivateToggleList(state: false);
 			}
@@ -71,7 +69,7 @@ public class ToolboxButton : SliderButton
 
 	private void Update()
 	{
-		if (!GetComponent<Animation>().isPlaying && lastIsPlaying && !isButtonOut)
+		if (!GetComponent<Animation>().isPlaying && lastIsPlaying && !ToolboxOpen)
 		{
 			ActivateToggleList(state: true);
 		}

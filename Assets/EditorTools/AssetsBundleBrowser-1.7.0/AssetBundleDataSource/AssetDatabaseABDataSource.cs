@@ -18,17 +18,9 @@ namespace AssetBundleBrowser.AssetBundleDataSource
             return retList;
         }
 
-        public string Name {
-            get {
-                return "Default";
-            }
-        }
+        public string Name => "Default";
 
-        public string ProviderName {
-            get {
-                return "Built-in";
-            }
-        }
+        public string ProviderName => "Built-in";
 
         public string[] GetAssetPathsFromAssetBundle (string assetBundleName) {
             return AssetDatabase.GetAssetPathsFromAssetBundle(assetBundleName);
@@ -66,16 +58,11 @@ namespace AssetBundleBrowser.AssetBundleDataSource
             AssetDatabase.RemoveUnusedAssetBundleNames ();
         }
 
-        public bool CanSpecifyBuildTarget { 
-            get { return true; } 
-        }
-        public bool CanSpecifyBuildOutputDirectory { 
-            get { return true; } 
-        }
+        public bool CanSpecifyBuildTarget => true;
 
-        public bool CanSpecifyBuildOptions { 
-            get { return true; } 
-        }
+        public bool CanSpecifyBuildOutputDirectory => true;
+
+        public bool CanSpecifyBuildOptions => true;
 
         public bool BuildAssetBundles (ABBuildInfo info) {
             if(info == null)

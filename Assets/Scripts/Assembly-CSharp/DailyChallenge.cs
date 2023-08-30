@@ -306,10 +306,6 @@ public class DailyChallenge : Singleton<DailyChallenge>
 
 	private const string CONFIG_ID = "daily_challenge";
 
-	private bool initialized;
-
-	private ChallengeInfo[] dailyChallenges;
-
 	private DailyChallengeProgram dailyChallengeProgram;
 
 	private ChallengeConfigs challengeConfigs;
@@ -322,7 +318,7 @@ public class DailyChallenge : Singleton<DailyChallenge>
 	{
 		get
 		{
-			if (initialized)
+			if (Initialized)
 			{
 				return new TimeSpan(0, 0, 0, Mathf.RoundToInt(Singleton<TimeManager>.Instance.TimeLeft("daily_challenge_timer")));
 			}
@@ -334,19 +330,19 @@ public class DailyChallenge : Singleton<DailyChallenge>
 	{
 		get
 		{
-			if (dailyChallenges == null)
+			if (Challenges == null)
 			{
 				return 0;
 			}
-			return dailyChallenges.Length;
+			return Challenges.Length;
 		}
 	}
 
-	public ChallengeInfo[] Challenges => dailyChallenges;
+	public ChallengeInfo[] Challenges { get; private set; }
 
-	public bool HasChallenge => dailyChallenges != null;
+	public bool HasChallenge => Challenges != null;
 
-	public bool Initialized => initialized;
+	public bool Initialized { get; private set; }
 
 	public int Left
 	{
@@ -357,9 +353,9 @@ public class DailyChallenge : Singleton<DailyChallenge>
 				return 0;
 			}
 			int num = 0;
-			for (int i = 0; i < dailyChallenges.Length; i++)
+			for (int i = 0; i < Challenges.Length; i++)
 			{
-				if (!dailyChallenges[i].collected)
+				if (!Challenges[i].collected)
 				{
 					num++;
 				}
@@ -370,14 +366,8 @@ public class DailyChallenge : Singleton<DailyChallenge>
 
 	private bool FirstChallengeCollected
 	{
-		get
-		{
-			return GameProgress.GetBool("FirstChallengeCollected");
-		}
-		set
-		{
-			GameProgress.SetBool("FirstChallengeCollected", value);
-		}
+		get => GameProgress.GetBool("FirstChallengeCollected");
+		set => GameProgress.SetBool("FirstChallengeCollected", value);
 	}
 
 	private void Awake()
@@ -403,12 +393,12 @@ public class DailyChallenge : Singleton<DailyChallenge>
 			return;
 		}
 		int index = 0;
-		if (!IsDailyChallenge(data.episodeIndex, data.levelIndex, out index) || dailyChallenges[index].collected)
+		if (!IsDailyChallenge(data.episodeIndex, data.levelIndex, out index) || Challenges[index].collected)
 		{
 			return;
 		}
-		DailyLevel daily = Singleton<GameManager>.instance.gameData.m_dailyChallengeData.GetDaily(dailyChallenges[index].DailyKey);
-		if (daily != null && daily.GetPosition(dailyChallenges[index].positionIndex, out var position))
+		DailyLevel daily = Singleton<GameManager>.instance.gameData.m_dailyChallengeData.GetDaily(Challenges[index].DailyKey);
+		if (daily != null && daily.GetPosition(Challenges[index].positionIndex, out var position))
 		{
 			GameObject gameObject = WPFMonoBehaviour.gameData.m_lootCrates[(int)TodaysLootCrate(index)];
 			LootCrate component = UnityEngine.Object.Instantiate(gameObject, position, Quaternion.identity).GetComponent<LootCrate>();
@@ -417,17 +407,17 @@ public class DailyChallenge : Singleton<DailyChallenge>
 				OnDailyRewardCollected(index);
 			});
 			component.RewardExperience = (Func<int>)Delegate.Combine(component.RewardExperience, new Func<int>(RewardExperience));
-			component.SetAnalyticData(index, dailyChallenges[index].adRevealed);
-			dailyChallenges[index].revealed = true;
+			component.SetAnalyticData(index, Challenges[index].adRevealed);
+			Challenges[index].revealed = true;
 			Debug.LogWarning("Instantiated " + gameObject.name + " at position " + position.ToString());
 		}
 	}
 
 	private void OnPlayerChanged(PlayerChangedEvent data)
 	{
-		if (initialized)
+		if (Initialized)
 		{
-			initialized = false;
+			Initialized = false;
 			StartCoroutine(WaitFor(CanInitialize, Initialize));
 		}
 	}
@@ -443,7 +433,7 @@ public class DailyChallenge : Singleton<DailyChallenge>
 
 	private void Initialize()
 	{
-		if (!initialized)
+		if (!Initialized)
 		{
 			Hashtable values = Singleton<GameConfigurationManager>.Instance.GetValues("daily_challenge");
 			if (values != null)
@@ -453,13 +443,13 @@ public class DailyChallenge : Singleton<DailyChallenge>
 			if (Singleton<TimeManager>.Instance.HasTimer("daily_challenge_timer"))
 			{
 				Singleton<TimeManager>.Instance.Subscribe("daily_challenge_timer", OnDailyRewardEnded);
-				dailyChallenges = LoadDailyChallenges();
+				Challenges = LoadDailyChallenges();
 			}
 			else
 			{
 				CreateNewChallenges();
 			}
-			initialized = true;
+			Initialized = true;
 			if (OnInitialize != null)
 			{
 				OnInitialize();
@@ -501,14 +491,14 @@ public class DailyChallenge : Singleton<DailyChallenge>
 
 	private void OnDailyRewardCollected(int index)
 	{
-		if (dailyChallenges != null && index >= 0 && index < dailyChallenges.Length)
+		if (Challenges != null && index >= 0 && index < Challenges.Length)
 		{
 			if (!FirstChallengeCollected && index == 0)
 			{
 				FirstChallengeCollected = true;
 			}
-			dailyChallenges[index].collected = true;
-			SaveDailyChallenge(dailyChallenges[index], index);
+			Challenges[index].collected = true;
+			SaveDailyChallenge(Challenges[index], index);
 		}
 	}
 
@@ -516,9 +506,9 @@ public class DailyChallenge : Singleton<DailyChallenge>
 	{
 		ResourceBar.Instance.ShowItem(ResourceBar.Item.PlayerProgress, showItem: true);
 		int num = 0;
-		for (int i = 0; i < dailyChallenges.Length; i++)
+		for (int i = 0; i < Challenges.Length; i++)
 		{
-			if (dailyChallenges[i].collected)
+			if (Challenges[i].collected)
 			{
 				num++;
 			}
@@ -538,16 +528,16 @@ public class DailyChallenge : Singleton<DailyChallenge>
 
 	private void CreateNewChallenges()
 	{
-		dailyChallenges = new ChallengeInfo[3];
+		Challenges = new ChallengeInfo[3];
 		for (int i = 0; i < 3; i++)
 		{
-			dailyChallenges[i] = ChallengeInfo.Empty;
+			Challenges[i] = ChallengeInfo.Empty;
 		}
 		for (int j = 0; j < 3; j++)
 		{
-			dailyChallenges[j] = CreateNewChallenge(TodaysLootCrate(j));
+			Challenges[j] = CreateNewChallenge(TodaysLootCrate(j));
 		}
-		SaveDailyChallenges(dailyChallenges);
+		SaveDailyChallenges(Challenges);
 		CreateNewTimer();
 	}
 
@@ -669,14 +659,14 @@ public class DailyChallenge : Singleton<DailyChallenge>
 
 	public bool DailyChallengeCollected(int index)
 	{
-		return dailyChallenges[index].collected;
+		return Challenges[index].collected;
 	}
 
 	public bool AllLocationsRevealed()
 	{
-		for (int i = 0; i < dailyChallenges.Length; i++)
+		for (int i = 0; i < Challenges.Length; i++)
 		{
-			if (!dailyChallenges[i].revealed)
+			if (!Challenges[i].revealed)
 			{
 				return false;
 			}
@@ -686,12 +676,12 @@ public class DailyChallenge : Singleton<DailyChallenge>
 
 	public bool IsLocationRevealed(int index)
 	{
-		return dailyChallenges[index].revealed;
+		return Challenges[index].revealed;
 	}
 
 	public void SetLocationsRevealed()
 	{
-		for (int i = 0; i < dailyChallenges.Length; i++)
+		for (int i = 0; i < Challenges.Length; i++)
 		{
 			SetLocationRevealed(i);
 		}
@@ -699,25 +689,25 @@ public class DailyChallenge : Singleton<DailyChallenge>
 
 	public void SetLocationRevealed(int index)
 	{
-		dailyChallenges[index].revealed = true;
-		SaveDailyChallenge(dailyChallenges[index], index);
+		Challenges[index].revealed = true;
+		SaveDailyChallenge(Challenges[index], index);
 	}
 
 	public void SetLocationAdRevealed(int index)
 	{
-		dailyChallenges[index].adRevealed = true;
-		SaveDailyChallenge(dailyChallenges[index], index);
+		Challenges[index].adRevealed = true;
+		SaveDailyChallenge(Challenges[index], index);
 	}
 
 	public bool IsDailyChallenge(ChallengeInfo info)
 	{
-		if (dailyChallenges == null)
+		if (Challenges == null)
 		{
 			return false;
 		}
-		for (int i = 0; i < dailyChallenges.Length; i++)
+		for (int i = 0; i < Challenges.Length; i++)
 		{
-			if (dailyChallenges[i].Equals(info))
+			if (Challenges[i].Equals(info))
 			{
 				return true;
 			}
@@ -727,13 +717,13 @@ public class DailyChallenge : Singleton<DailyChallenge>
 
 	public bool IsDailyChallenge(int epIndex, int lvlIndex, int posIndex)
 	{
-		if (dailyChallenges == null)
+		if (Challenges == null)
 		{
 			return false;
 		}
-		for (int i = 0; i < dailyChallenges.Length; i++)
+		for (int i = 0; i < Challenges.Length; i++)
 		{
-			if (dailyChallenges[i].episodeIndex == epIndex && dailyChallenges[i].levelIndex == lvlIndex && dailyChallenges[i].positionIndex == posIndex)
+			if (Challenges[i].episodeIndex == epIndex && Challenges[i].levelIndex == lvlIndex && Challenges[i].positionIndex == posIndex)
 			{
 				return true;
 			}
@@ -744,13 +734,13 @@ public class DailyChallenge : Singleton<DailyChallenge>
 	public bool IsDailyChallenge(string levelName, out int index)
 	{
 		index = -1;
-		if (dailyChallenges == null)
+		if (Challenges == null)
 		{
 			return false;
 		}
-		for (int i = 0; i < dailyChallenges.Length; i++)
+		for (int i = 0; i < Challenges.Length; i++)
 		{
-			if (dailyChallenges[i].levelName == levelName)
+			if (Challenges[i].levelName == levelName)
 			{
 				index = i;
 				return true;
@@ -762,13 +752,13 @@ public class DailyChallenge : Singleton<DailyChallenge>
 	public bool IsDailyChallenge(int episodeIndex, int levelIndex, out int index)
 	{
 		index = -1;
-		if (dailyChallenges == null)
+		if (Challenges == null)
 		{
 			return false;
 		}
-		for (int i = 0; i < dailyChallenges.Length; i++)
+		for (int i = 0; i < Challenges.Length; i++)
 		{
-			if (dailyChallenges[i].episodeIndex == episodeIndex && dailyChallenges[i].levelIndex == levelIndex)
+			if (Challenges[i].episodeIndex == episodeIndex && Challenges[i].levelIndex == levelIndex)
 			{
 				index = i;
 				return true;

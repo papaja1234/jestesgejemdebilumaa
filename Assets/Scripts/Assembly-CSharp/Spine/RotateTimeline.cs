@@ -16,26 +16,14 @@ namespace Spine
 
 		public int BoneIndex
 		{
-			get
-			{
-				return boneIndex;
-			}
-			set
-			{
-				boneIndex = value;
-			}
+			get => boneIndex;
+			set => boneIndex = value;
 		}
 
 		public float[] Frames
 		{
-			get
-			{
-				return frames;
-			}
-			set
-			{
-				frames = value;
-			}
+			get => frames;
+			set => frames = value;
 		}
 
 		public RotateTimeline(int frameCount)

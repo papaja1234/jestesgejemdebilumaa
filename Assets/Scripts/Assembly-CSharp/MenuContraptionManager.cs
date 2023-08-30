@@ -202,8 +202,7 @@ public class MenuContraptionManager : MonoBehaviour
 
 	private void CreateContraption()
 	{
-		GameObject gameObject = Object.Instantiate(m_menuContraptionControllerPrefab.gameObject);
-		gameObject.transform.parent = base.transform;
+		GameObject gameObject = Object.Instantiate(m_menuContraptionControllerPrefab.gameObject, base.transform, true);
 		gameObject.transform.localPosition = Vector3.zero;
 		m_contraptionController = gameObject.GetComponent<MenuContraptionController>();
 		m_cameraTarget = (m_contraption = gameObject.GetComponent<MenuContraptionController>().CreateContraption(m_contraptionAssets[m_contraptionIndex])).FindPig().gameObject;

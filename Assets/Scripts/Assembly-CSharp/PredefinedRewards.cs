@@ -9,36 +9,22 @@ public class PredefinedRewards : Singleton<PredefinedRewards>
 
 	private List<BasePart.PartType> rewards;
 
-	private bool initialized;
-
 	private int rewardsAmount;
 
-	public bool Initialized => initialized;
+	public bool Initialized { get; private set; }
 
 	public bool AllRewardsGiven => RewardsGiven >= rewardsAmount;
 
 	private bool FirstRewardGiven
 	{
-		get
-		{
-			return GameProgress.GetBool("Pre_FirstRewardGiven");
-		}
-		set
-		{
-			GameProgress.SetBool("Pre_FirstRewardGiven", value);
-		}
+		get => GameProgress.GetBool("Pre_FirstRewardGiven");
+		set => GameProgress.SetBool("Pre_FirstRewardGiven", value);
 	}
 
 	private int RewardsGiven
 	{
-		get
-		{
-			return GameProgress.GetInt("Pre_RewardsGiven");
-		}
-		set
-		{
-			GameProgress.SetInt("Pre_RewardsGiven", value);
-		}
+		get => GameProgress.GetInt("Pre_RewardsGiven");
+		set => GameProgress.SetInt("Pre_RewardsGiven", value);
 	}
 
 	private void Awake()
@@ -81,7 +67,7 @@ public class PredefinedRewards : Singleton<PredefinedRewards>
 				}
 			}
 		}
-		initialized = true;
+		Initialized = true;
 	}
 
 	private bool TryParse(Type type, string value, out object target)

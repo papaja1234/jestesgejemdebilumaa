@@ -10,24 +10,16 @@ public class LootWheelSpinner
 
 	private AnimationCurve m_needleMovement;
 
-	private bool m_spinning;
-
 	private float m_currentSpinVelocity;
 
 	private LootWheel.WheelSlot[] m_slots;
 
-	public bool IsSpinning => m_spinning;
+	public bool IsSpinning { get; private set; }
 
 	private float WheelRotation
 	{
-		get
-		{
-			return m_wheel.rotation.eulerAngles.z;
-		}
-		set
-		{
-			m_wheel.rotation = Quaternion.Euler(new Vector3(0f, 0f, value));
-		}
+		get => m_wheel.rotation.eulerAngles.z;
+		set => m_wheel.rotation = Quaternion.Euler(new Vector3(0f, 0f, value));
 	}
 
 	public LootWheelSpinner(Rigidbody wheel, Transform needle, LootWheel.WheelSlot[] slots)
@@ -35,7 +27,7 @@ public class LootWheelSpinner
 		m_wheel = wheel;
 		m_needle = needle;
 		m_slots = slots;
-		m_spinning = false;
+		IsSpinning = false;
 		m_needleMovement = new AnimationCurve();
 		m_needleMovement.AddKey(new Keyframe(0f, 0f));
 		m_needleMovement.AddKey(new Keyframe(1f, 1f));
@@ -56,7 +48,7 @@ public class LootWheelSpinner
 	{
 		m_wheel.interpolation = RigidbodyInterpolation.Interpolate;
 		deceleration = Mathf.Max(deceleration, 0.05f);
-		m_spinning = true;
+		IsSpinning = true;
 		float num = angularVelocity / 2f * (angularVelocity / deceleration + 1f);
 		float decelerationAngle;
 		if (num > targetRotation)
@@ -74,7 +66,7 @@ public class LootWheelSpinner
 		yield return CoroutineRunner.Instance.StartCoroutine(SpinTo(decelerationAngle, angularVelocity, deceleration));
 		yield return CoroutineRunner.Instance.StartCoroutine(Decelerate(angularVelocity, deceleration));
 		m_wheel.interpolation = RigidbodyInterpolation.None;
-		m_spinning = false;
+		IsSpinning = false;
 		OnSpinEnd?.Invoke();
 	}
 
@@ -128,7 +120,7 @@ public class LootWheelSpinner
 	{
 		float current = 0f;
 		AudioSource[] spinClicks = WPFMonoBehaviour.gameData.commonAudioCollection.lootWheelTickSounds;
-		while (m_spinning)
+		while (IsSpinning)
 		{
 			current += m_currentSpinVelocity * Time.deltaTime;
 			if (current > rate)
@@ -151,7 +143,7 @@ public class LootWheelSpinner
 		float rate = 5f;
 		bool rising = false;
 		float previousRotation = eulerAngles.z;
-		while (m_spinning)
+		while (IsSpinning)
 		{
 			eulerAngles = m_wheel.rotation.eulerAngles;
 			float z = eulerAngles.z;

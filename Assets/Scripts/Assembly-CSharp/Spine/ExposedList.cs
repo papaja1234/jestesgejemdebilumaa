@@ -18,9 +18,7 @@ namespace Spine
 
 			private int ver;
 
-			private T current;
-
-			public T Current => current;
+			public T Current { get; private set; }
 
 			object IEnumerator.Current
 			{
@@ -31,7 +29,7 @@ namespace Spine
 					{
 						throw new InvalidOperationException();
 					}
-					return current;
+					return Current;
 				}
 			}
 
@@ -68,7 +66,7 @@ namespace Spine
 				}
 				if (next < l.Count)
 				{
-					current = l.Items[next++];
+					Current = l.Items[next++];
 					return true;
 				}
 				next = -1;
@@ -94,10 +92,7 @@ namespace Spine
 
 		public int Capacity
 		{
-			get
-			{
-				return Items.Length;
-			}
+			get => Items.Length;
 			set
 			{
 				if (value < Count)

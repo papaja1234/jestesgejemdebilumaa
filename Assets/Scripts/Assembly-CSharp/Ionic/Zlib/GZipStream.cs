@@ -20,18 +20,13 @@ namespace Ionic.Zlib
 
 		private string _Comment;
 
-		private int _Crc32;
-
 		internal static readonly DateTime _unixEpoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 
 		internal static readonly Encoding iso8859dash1 = Encoding.GetEncoding("iso-8859-1");
 
 		public string Comment
 		{
-			get
-			{
-				return _Comment;
-			}
+			get => _Comment;
 			set
 			{
 				if (_disposed)
@@ -44,10 +39,7 @@ namespace Ionic.Zlib
 
 		public string FileName
 		{
-			get
-			{
-				return _FileName;
-			}
+			get => _FileName;
 			set
 			{
 				if (_disposed)
@@ -73,14 +65,11 @@ namespace Ionic.Zlib
 			}
 		}
 
-		public int Crc32 => _Crc32;
+		public int Crc32 { get; private set; }
 
 		public virtual FlushType FlushMode
 		{
-			get
-			{
-				return _baseStream._flushMode;
-			}
+			get => _baseStream._flushMode;
 			set
 			{
 				if (_disposed)
@@ -93,10 +82,7 @@ namespace Ionic.Zlib
 
 		public int BufferSize
 		{
-			get
-			{
-				return _baseStream._bufferSize;
-			}
+			get => _baseStream._bufferSize;
 			set
 			{
 				if (_disposed)
@@ -145,13 +131,7 @@ namespace Ionic.Zlib
 			}
 		}
 
-		public override long Length
-		{
-			get
-			{
-				throw new NotImplementedException();
-			}
-		}
+		public override long Length => throw new NotImplementedException();
 
 		public override long Position
 		{
@@ -167,10 +147,7 @@ namespace Ionic.Zlib
 				}
 				return 0L;
 			}
-			set
-			{
-				throw new NotImplementedException();
-			}
+			set => throw new NotImplementedException();
 		}
 
 		public GZipStream(Stream stream, CompressionMode mode)
@@ -202,7 +179,7 @@ namespace Ionic.Zlib
 					if (disposing && _baseStream != null)
 					{
 						_baseStream.Close();
-						_Crc32 = _baseStream.Crc32;
+						Crc32 = _baseStream.Crc32;
 					}
 					_disposed = true;
 				}

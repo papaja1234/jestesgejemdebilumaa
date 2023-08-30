@@ -7,25 +7,17 @@ namespace CakeRace
 {
 	public class CakeRaceReplay
 	{
-		private string uniqueIdentifier;
-
-		private string playerName;
-
-		private int playerLevel;
-
-		private bool kingsFavoriteUsed;
-
 		private bool isValid;
 
 		private Dictionary<int, int> collectTimes;
 
-		public string UniqueIdentifier => uniqueIdentifier;
+		public string UniqueIdentifier { get; }
 
-		public string PlayerName => playerName;
+		public string PlayerName { get; private set; }
 
-		public int PlayerLevel => playerLevel;
+		public int PlayerLevel { get; private set; }
 
-		public bool HasKingsFavoritePart => kingsFavoriteUsed;
+		public bool HasKingsFavoritePart { get; private set; }
 
 		public bool IsValid { get; private set; }
 
@@ -47,10 +39,10 @@ namespace CakeRace
 
 		public CakeRaceReplay(string uniqueIdentifier, string playerName, int playerLevel, bool kingsFavoriteUsed, Dictionary<int, int> collectTimes)
 		{
-			this.uniqueIdentifier = uniqueIdentifier;
-			this.playerName = playerName;
-			this.playerLevel = playerLevel;
-			this.kingsFavoriteUsed = kingsFavoriteUsed;
+			this.UniqueIdentifier = uniqueIdentifier;
+			this.PlayerName = playerName;
+			this.PlayerLevel = playerLevel;
+			this.HasKingsFavoritePart = kingsFavoriteUsed;
 			this.collectTimes = collectTimes;
 			IsValid = true;
 		}
@@ -64,7 +56,7 @@ namespace CakeRace
 				{
 					if (hashtable.Contains("uniqueIdentifier"))
 					{
-						uniqueIdentifier = (string)hashtable["uniqueIdentifier"];
+						UniqueIdentifier = (string)hashtable["uniqueIdentifier"];
 					}
 					else
 					{
@@ -72,7 +64,7 @@ namespace CakeRace
 					}
 					if (hashtable.Contains("playerName"))
 					{
-						playerName = (string)hashtable["playerName"];
+						PlayerName = (string)hashtable["playerName"];
 					}
 					else
 					{
@@ -82,7 +74,7 @@ namespace CakeRace
 					{
 						if (int.TryParse((string)hashtable["playerLevel"], out var result))
 						{
-							playerLevel = result;
+							PlayerLevel = result;
 						}
 					}
 					else
@@ -91,7 +83,7 @@ namespace CakeRace
 					}
 					if (hashtable.Contains("kingsFavorite") && int.TryParse((string)hashtable["kingsFavorite"], out var result2))
 					{
-						kingsFavoriteUsed = result2 != 0;
+						HasKingsFavoritePart = result2 != 0;
 					}
 					collectTimes = new Dictionary<int, int>();
 					if (hashtable.Contains("collectTimes") && hashtable["collectTimes"] is Hashtable)
@@ -123,15 +115,15 @@ namespace CakeRace
 
 		public void SetPlayerLevel(int level)
 		{
-			playerLevel = level;
+			PlayerLevel = level;
 		}
 
 		public string GetPlayerName()
 		{
 			string result = "guest";
-			if (!string.IsNullOrEmpty(playerName))
+			if (!string.IsNullOrEmpty(PlayerName))
 			{
-				result = ((!playerName.Contains("|")) ? playerName : PlayerName.Split(new char[1] { '|' })[0]);
+				result = ((!PlayerName.Contains("|")) ? PlayerName : PlayerName.Split(new char[1] { '|' })[0]);
 			}
 			return result;
 		}
@@ -161,7 +153,7 @@ namespace CakeRace
 
 		public void SetPlayerName(string playerName)
 		{
-			this.playerName = playerName;
+			this.PlayerName = playerName;
 		}
 
 		public void SetCollectedCake(int cakeIndex, int collectTime)
@@ -182,7 +174,7 @@ namespace CakeRace
 
 		public void SetKingsFavoritePartUsed(bool newState = true)
 		{
-			kingsFavoriteUsed = newState;
+			HasKingsFavoritePart = newState;
 		}
 
 		public static int TotalScore(CakeRaceReplay replay)
@@ -212,10 +204,10 @@ namespace CakeRace
 			int num = 0;
 			StringBuilder stringBuilder = new StringBuilder();
 			stringBuilder.Append("{");
-			stringBuilder.Append("\"uniqueIdentifier\":\"" + uniqueIdentifier + "\",");
-			stringBuilder.Append("\"playerName\":\"" + playerName + "\",");
-			stringBuilder.Append("\"playerLevel\":\"" + playerLevel + "\",");
-			stringBuilder.Append("\"kingsFavorite\":\"" + ((!kingsFavoriteUsed) ? "0" : "1") + "\",");
+			stringBuilder.Append("\"uniqueIdentifier\":\"" + UniqueIdentifier + "\",");
+			stringBuilder.Append("\"playerName\":\"" + PlayerName + "\",");
+			stringBuilder.Append("\"playerLevel\":\"" + PlayerLevel + "\",");
+			stringBuilder.Append("\"kingsFavorite\":\"" + ((!HasKingsFavoritePart) ? "0" : "1") + "\",");
 			stringBuilder.Append("\"collectTimes\":{");
 			foreach (KeyValuePair<int, int> collectTime in collectTimes)
 			{
@@ -236,10 +228,10 @@ namespace CakeRace
 			int num2 = 0;
 			StringBuilder stringBuilder = new StringBuilder();
 			stringBuilder.AppendLine("{");
-			stringBuilder.AppendLine("    \"uniqueIdentifier\":\"" + uniqueIdentifier + "\",");
-			stringBuilder.AppendLine("    \"playerName\":\"" + playerName + "\",");
-			stringBuilder.AppendLine("    \"playerLevel\":\"" + playerLevel + "\",");
-			stringBuilder.AppendLine("    \"kingsFavorite\":\"" + ((!kingsFavoriteUsed) ? "0" : "1") + "\",");
+			stringBuilder.AppendLine("    \"uniqueIdentifier\":\"" + UniqueIdentifier + "\",");
+			stringBuilder.AppendLine("    \"playerName\":\"" + PlayerName + "\",");
+			stringBuilder.AppendLine("    \"playerLevel\":\"" + PlayerLevel + "\",");
+			stringBuilder.AppendLine("    \"kingsFavorite\":\"" + ((!HasKingsFavoritePart) ? "0" : "1") + "\",");
 			stringBuilder.AppendLine("    \"collectTimes\": {");
 			foreach (KeyValuePair<int, int> collectTime in collectTimes)
 			{

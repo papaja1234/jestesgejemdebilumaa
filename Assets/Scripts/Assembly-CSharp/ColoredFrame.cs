@@ -29,14 +29,8 @@ public class ColoredFrame : Frame
 
 	public Color Color
 	{
-		get
-		{
-			return m_color;
-		}
-		set
-		{
-			m_color = value;
-		}
+		get => m_color;
+		set => m_color = value;
 	}
 
 	public Color TransparentColor => m_transparentColor;

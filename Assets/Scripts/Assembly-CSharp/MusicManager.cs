@@ -35,8 +35,6 @@ public class MusicManager : MonoBehaviour
 
 	private List<MusicChange> m_requestedMusic = new List<MusicChange>();
 
-	private GameObject m_music;
-
 	private GameObject m_musicPrefab;
 
 	private int m_musicPrefabInstanceID;
@@ -51,13 +49,11 @@ public class MusicManager : MonoBehaviour
 
 	private static bool isNativeMusicPlaying;
 
-	public GameObject Music => m_music;
+	public GameObject Music { get; private set; }
 
 	public static event OnMusicMuted onMusicMuted;
-	
-	private bool m_musicMuted = true;
-	
-	public bool MusicMuted => m_musicMuted;
+
+	public bool MusicMuted { get; private set; } = true;
 
 	private void Awake()
 	{
@@ -65,7 +61,7 @@ public class MusicManager : MonoBehaviour
 		EventManager.Connect<LoadLevelEvent>(ReceiveLoadingLevelEvent);
 		EventManager.Connect<GameStateChanged>(ReceiveGameStateChanged);
 		m_globalMusicVolume = UserSettings.GetFloat("MusicVolume", 1f);
-		NativeMusicStateChanged(m_musicMuted);
+		NativeMusicStateChanged(MusicMuted);
 	}
 
 	private void StartMusic(AudioSource music, float delay, float fadeInTime, MusicStartOption option = MusicStartOption.StartFromBeginning)
@@ -85,12 +81,12 @@ public class MusicManager : MonoBehaviour
 				break;
 			}
 		}
-		if (m_fadingOutMusic && (bool)m_music)
+		if (m_fadingOutMusic && (bool)Music)
 		{
-			float volume = m_music.GetComponent<AudioSource>().volume;
+			float volume = Music.GetComponent<AudioSource>().volume;
 			volume -= Time.deltaTime * m_fadeOutSpeed;
 			volume = Mathf.Clamp(volume, 0f, 1f);
-			m_music.GetComponent<AudioSource>().volume = volume;
+			Music.GetComponent<AudioSource>().volume = volume;
 			if (volume == 0f)
 			{
 				m_fadingOutMusic = false;
@@ -102,49 +98,49 @@ public class MusicManager : MonoBehaviour
 	private void StartMusic(MusicChange data)
 	{
 		m_fadingOutMusic = false;
-		if (m_music != null && m_musicPrefab != data.music.gameObject)
+		if (Music != null && m_musicPrefab != data.music.gameObject)
 		{
 			StopMusic();
 		}
-		if (m_music == null)
+		if (Music == null)
 		{
-			m_music = Singleton<AudioManager>.Instance.SpawnMusic(data.music);
+			Music = Singleton<AudioManager>.Instance.SpawnMusic(data.music);
 			m_musicPrefab = data.music.gameObject;
 			m_musicPrefabInstanceID = m_musicPrefab.GetInstanceID();
 			if (data.option == MusicStartOption.StartFromPreviousPosition && m_musicPositions.TryGetValue(m_musicPrefabInstanceID, out var value))
 			{
-				m_music.GetComponent<AudioSource>().time = value;
+				Music.GetComponent<AudioSource>().time = value;
 			}
-			m_music.GetComponent<AudioSource>().volume = m_musicPrefab.GetComponent<AudioSource>().volume * m_globalMusicVolume;
-			m_music.GetComponent<AudioSource>().Play();
+			Music.GetComponent<AudioSource>().volume = m_musicPrefab.GetComponent<AudioSource>().volume * m_globalMusicVolume;
+			Music.GetComponent<AudioSource>().Play();
 		}
 		else
 		{
-			m_music.GetComponent<AudioSource>().volume = m_musicPrefab.GetComponent<AudioSource>().volume * m_globalMusicVolume;
-			if (!m_music.GetComponent<AudioSource>().isPlaying)
+			Music.GetComponent<AudioSource>().volume = m_musicPrefab.GetComponent<AudioSource>().volume * m_globalMusicVolume;
+			if (!Music.GetComponent<AudioSource>().isPlaying)
 			{
-				m_music.GetComponent<AudioSource>().Play();
+				Music.GetComponent<AudioSource>().Play();
 			}
 		}
 	}
 
 	private void FadeOutMusic(float time)
 	{
-		if ((bool)m_music)
+		if ((bool)Music)
 		{
 			m_fadingOutMusic = true;
-			m_fadeOutSpeed = m_music.GetComponent<AudioSource>().volume / time;
+			m_fadeOutSpeed = Music.GetComponent<AudioSource>().volume / time;
 		}
 	}
 
 	private void StopMusic()
 	{
-		if (m_music != null)
+		if (Music != null)
 		{
-			m_musicPositions[m_musicPrefabInstanceID] = m_music.GetComponent<AudioSource>().time;
+			m_musicPositions[m_musicPrefabInstanceID] = Music.GetComponent<AudioSource>().time;
 			m_musicPositions.Remove(m_musicPrefabInstanceID);
-			Singleton<AudioManager>.Instance.RemoveMusic(m_music);
-			m_music = null;
+			Singleton<AudioManager>.Instance.RemoveMusic(Music);
+			Music = null;
 			m_musicPrefab = null;
 			m_musicPrefabInstanceID = 0;
 			m_fadingOutMusic = false;
@@ -266,9 +262,9 @@ public class MusicManager : MonoBehaviour
 		{
 			m_globalMusicVolume = 1f;
 		}
-		if ((bool)m_music && (bool)m_musicPrefab)
+		if ((bool)Music && (bool)m_musicPrefab)
 		{
-			m_music.GetComponent<AudioSource>().volume = m_musicPrefab.GetComponent<AudioSource>().volume * m_globalMusicVolume;
+			Music.GetComponent<AudioSource>().volume = m_musicPrefab.GetComponent<AudioSource>().volume * m_globalMusicVolume;
 		}
 	}
 
@@ -301,7 +297,7 @@ public class MusicManager : MonoBehaviour
 	
 	public void ToggleMute()
 	{
-		m_musicMuted = !m_musicMuted;
-		NativeMusicStateChanged(m_musicMuted);
+		MusicMuted = !MusicMuted;
+		NativeMusicStateChanged(MusicMuted);
 	}
 }

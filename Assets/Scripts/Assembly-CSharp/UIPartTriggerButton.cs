@@ -17,13 +17,9 @@ public class UIPartTriggerButton : UIPartButton
 		Enabled = 3
 	}
 
-	private UIButton m_button;
-
 	private Image m_texture;
 
 	private TriggerButtonState m_state;
-
-	private bool m_consistent;
 
 	private Color m_color;
 
@@ -33,16 +29,16 @@ public class UIPartTriggerButton : UIPartButton
 
 	public bool Enabled => m_state == TriggerButtonState.Enabled;
 
-	public bool Consistent => m_consistent;
+	public bool Consistent { get; private set; }
 
-	public UIButton Button => m_button;
+	public UIButton Button { get; private set; }
 
 	protected override void Awake()
 	{
 		base.Awake();
-		m_button = base.transform.Find("Button").GetComponent<UIButton>();
-		m_button.PointerDown += OnPointerDown;
-		m_texture = m_button.GetComponent<Image>();
+		Button = base.transform.Find("Button").GetComponent<UIButton>();
+		Button.PointerDown += OnPointerDown;
+		m_texture = Button.GetComponent<Image>();
 		m_color = m_disabledColor;
 	}
 
@@ -53,7 +49,7 @@ public class UIPartTriggerButton : UIPartButton
 
 	public void SetConsistent(bool consistent)
 	{
-		m_consistent = consistent;
+		Consistent = consistent;
 	}
 
 	public override void Initialize()
@@ -83,7 +79,7 @@ public class UIPartTriggerButton : UIPartButton
 		foreach (BasePart part2 in m_parts)
 		{
 			/*m_consistent is ture for parts with continuous effects*/
-			if (!m_consistent || (!isPartEnabled /*XOR*/^ part2.IsEnabled()))
+			if (!Consistent || (!isPartEnabled /*XOR*/^ part2.IsEnabled()))
 			{
 				part2.OnButtonTriggered(this);
 			}
@@ -122,12 +118,12 @@ public class UIPartTriggerButton : UIPartButton
 			m_state = TriggerButtonState.Enabled;
 			m_color = m_enabledColor;
 		}
-		else if (m_button.IsPointerDown && m_button.IsPointerInside)
+		else if (Button.IsPointerDown && Button.IsPointerInside)
 		{
 			m_state = TriggerButtonState.Pressed;
 			m_color = m_pressedColor;
 		}
-		else if (m_button.IsPointerInside)
+		else if (Button.IsPointerInside)
 		{
 			m_state = TriggerButtonState.Highlighted;
 			m_color = m_highlightedColor;

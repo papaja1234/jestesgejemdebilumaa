@@ -105,8 +105,6 @@ public class TextDialog : WPFMonoBehaviour
 
 	private TextMesh[] disabledConfirmButtonTxt;
 
-	private Func<bool> showConfirmEnabled;
-
 	private List<Renderer> activeRenderers;
 
 	private List<Collider> activeColliders;
@@ -119,17 +117,7 @@ public class TextDialog : WPFMonoBehaviour
 
 	protected static bool s_dialogOpen;
 
-	public Func<bool> ShowConfirmEnabled
-	{
-		get
-		{
-			return showConfirmEnabled;
-		}
-		set
-		{
-			showConfirmEnabled = value;
-		}
-	}
+	public Func<bool> ShowConfirmEnabled { get; set; }
 
 	public string ConfirmButtonText
 	{
@@ -279,9 +267,9 @@ public class TextDialog : WPFMonoBehaviour
 
 	protected void EnableConfirmButton()
 	{
-		if (showConfirmEnabled != null)
+		if (ShowConfirmEnabled != null)
 		{
-			EnableConfirmButton(showConfirmEnabled());
+			EnableConfirmButton(ShowConfirmEnabled());
 		}
 	}
 

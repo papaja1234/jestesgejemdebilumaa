@@ -12,19 +12,7 @@ namespace Spine.Unity
 
 		private bool m_WasFired;
 
-		private bool m_unsubscribeAfterFiring;
-
-		public bool WillUnsubscribeAfterFiring
-		{
-			get
-			{
-				return m_unsubscribeAfterFiring;
-			}
-			set
-			{
-				m_unsubscribeAfterFiring = value;
-			}
-		}
+		public bool WillUnsubscribeAfterFiring { get; set; }
 
 		object IEnumerator.Current => null;
 
@@ -63,7 +51,7 @@ namespace Spine.Unity
 			m_AnimationState = state;
 			m_TargetEvent = eventDataReference;
 			state.Event += HandleAnimationStateEvent;
-			m_unsubscribeAfterFiring = unsubscribe;
+			WillUnsubscribeAfterFiring = unsubscribe;
 		}
 
 		private void SubscribeByName(AnimationState state, string eventName, bool unsubscribe)
@@ -81,7 +69,7 @@ namespace Spine.Unity
 			m_AnimationState = state;
 			m_EventName = eventName;
 			state.Event += HandleAnimationStateEventByName;
-			m_unsubscribeAfterFiring = unsubscribe;
+			WillUnsubscribeAfterFiring = unsubscribe;
 		}
 
 		private void HandleAnimationStateEventByName(AnimationState state, int trackIndex, Event e)
@@ -89,7 +77,7 @@ namespace Spine.Unity
 			if (state == m_AnimationState)
 			{
 				m_WasFired |= e.Data.Name == m_EventName;
-				if (m_WasFired && m_unsubscribeAfterFiring)
+				if (m_WasFired && WillUnsubscribeAfterFiring)
 				{
 					state.Event -= HandleAnimationStateEventByName;
 				}
@@ -101,7 +89,7 @@ namespace Spine.Unity
 			if (state == m_AnimationState)
 			{
 				m_WasFired |= e.Data == m_TargetEvent;
-				if (m_WasFired && m_unsubscribeAfterFiring)
+				if (m_WasFired && WillUnsubscribeAfterFiring)
 				{
 					state.Event -= HandleAnimationStateEvent;
 				}

@@ -14,14 +14,8 @@ public class BundleDataObject
 
 	public string AssetName
 	{
-		get
-		{
-			return assetName;
-		}
-		set
-		{
-			assetName = value;
-		}
+		get => assetName;
+		set => assetName = value;
 	}
 
 	public BundleDataObject()

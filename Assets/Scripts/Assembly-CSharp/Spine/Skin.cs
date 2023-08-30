@@ -42,11 +42,9 @@ namespace Spine
 
 		internal string name;
 
-		private Dictionary<AttachmentKeyTuple, Attachment> attachments = new Dictionary<AttachmentKeyTuple, Attachment>(AttachmentKeyTupleComparer.Instance);
-
 		public string Name => name;
 
-		public Dictionary<AttachmentKeyTuple, Attachment> Attachments => attachments;
+		public Dictionary<AttachmentKeyTuple, Attachment> Attachments { get; } = new Dictionary<AttachmentKeyTuple, Attachment>(AttachmentKeyTupleComparer.Instance);
 
 		public Skin(string name)
 		{
@@ -63,12 +61,12 @@ namespace Spine
 			{
 				throw new ArgumentNullException("attachment", "attachment cannot be null.");
 			}
-			attachments[new AttachmentKeyTuple(slotIndex, name)] = attachment;
+			Attachments[new AttachmentKeyTuple(slotIndex, name)] = attachment;
 		}
 
 		public Attachment GetAttachment(int slotIndex, string name)
 		{
-			attachments.TryGetValue(new AttachmentKeyTuple(slotIndex, name), out var value);
+			Attachments.TryGetValue(new AttachmentKeyTuple(slotIndex, name), out var value);
 			return value;
 		}
 
@@ -78,7 +76,7 @@ namespace Spine
 			{
 				throw new ArgumentNullException("names", "names cannot be null.");
 			}
-			foreach (AttachmentKeyTuple key in attachments.Keys)
+			foreach (AttachmentKeyTuple key in Attachments.Keys)
 			{
 				if (key.slotIndex == slotIndex)
 				{
@@ -93,7 +91,7 @@ namespace Spine
 			{
 				throw new ArgumentNullException("attachments", "attachments cannot be null.");
 			}
-			foreach (KeyValuePair<AttachmentKeyTuple, Attachment> attachment in this.attachments)
+			foreach (KeyValuePair<AttachmentKeyTuple, Attachment> attachment in this.Attachments)
 			{
 				if (attachment.Key.slotIndex == slotIndex)
 				{
@@ -109,7 +107,7 @@ namespace Spine
 
 		internal void AttachAll(Skeleton skeleton, Skin oldSkin)
 		{
-			foreach (KeyValuePair<AttachmentKeyTuple, Attachment> attachment2 in oldSkin.attachments)
+			foreach (KeyValuePair<AttachmentKeyTuple, Attachment> attachment2 in oldSkin.Attachments)
 			{
 				int slotIndex = attachment2.Key.slotIndex;
 				Slot slot = skeleton.slots.Items[slotIndex];

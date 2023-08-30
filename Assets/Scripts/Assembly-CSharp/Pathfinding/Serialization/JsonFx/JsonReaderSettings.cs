@@ -7,15 +7,13 @@ namespace Pathfinding.Serialization.JsonFx
 	{
 		internal readonly TypeCoercionUtility Coercion = new TypeCoercionUtility();
 
-		private bool allowUnquotedObjectKeys;
-
 		private string typeHintName;
 
 		protected List<JsonConverter> converters = new List<JsonConverter>();
 
 		public bool HandleCyclicReferences { get; }
 
-		public bool AllowUnquotedObjectKeys => allowUnquotedObjectKeys;
+		public bool AllowUnquotedObjectKeys { get; }
 
 		internal bool IsTypeHintName(string name)
 		{

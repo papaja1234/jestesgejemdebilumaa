@@ -88,14 +88,8 @@ public class MainMenu : MonoBehaviour
 
 	private bool CakeRaceIntroShown
 	{
-		get
-		{
-			return GameProgress.GetBool("CakeRaceIntroShown");
-		}
-		set
-		{
-			GameProgress.SetBool("CakeRaceIntroShown", value);
-		}
+		get => GameProgress.GetBool("CakeRaceIntroShown");
+		set => GameProgress.SetBool("CakeRaceIntroShown", value);
 	}
 
 	private void Awake()

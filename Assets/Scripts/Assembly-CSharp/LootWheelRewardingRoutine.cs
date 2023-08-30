@@ -114,13 +114,12 @@ public class LootWheelRewardingRoutine : WPFMonoBehaviour
 
 	private ParticleSystem CreateParticles(GameObject prefab, Vector3 screenPosition, Transform parent)
 	{
-		GameObject obj = UnityEngine.Object.Instantiate(prefab);
+		GameObject obj = UnityEngine.Object.Instantiate(prefab, parent, true);
 		LayerHelper.SetSortingLayer(obj, "Popup", children: true);
 		LayerHelper.SetLayer(obj, base.gameObject.layer, children: true);
 		LayerHelper.SetOrderInLayer(obj, 1, children: true);
 		Vector3 position = WPFMonoBehaviour.hudCamera.ViewportToWorldPoint(screenPosition);
 		obj.transform.position = position;
-		obj.transform.parent = parent;
 		Vector3 localPosition = obj.transform.localPosition;
 		localPosition.z = 0f;
 		obj.transform.localPosition = localPosition;

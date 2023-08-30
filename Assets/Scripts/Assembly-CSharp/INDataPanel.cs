@@ -108,10 +108,9 @@ public class INDataPanel : MonoBehaviour
 
 	private DataGroup GenerateDataGroup(int index, string groupName)
 	{
-		GameObject obj = UnityEngine.Object.Instantiate(m_dataGroupPrefab);
+		GameObject obj = UnityEngine.Object.Instantiate(m_dataGroupPrefab, m_content.transform, false);
 		obj.SetActive(value: true);
 		obj.name = "DataGroup_" + index;
-		obj.transform.SetParent(m_content.transform, worldPositionStays: false);
 		DataGroup dataGroup = new DataGroup(obj);
 		dataGroup.GroupNameLocale.ID = groupName;
 		dataGroup.GroupNameLocale.UpdateText();
@@ -121,10 +120,9 @@ public class INDataPanel : MonoBehaviour
 
 	private DataElement GenerateDataElement(DataGroup dataGroup, int index, string name, Func<string> function)
 	{
-		GameObject obj = UnityEngine.Object.Instantiate(m_dataElementPrefab);
+		GameObject obj = UnityEngine.Object.Instantiate(m_dataElementPrefab, dataGroup.GameObject.transform, false);
 		obj.SetActive(value: true);
 		obj.name = "DataElement_" + index;
-		obj.transform.SetParent(dataGroup.GameObject.transform, worldPositionStays: false);
 		DataElement dataElement = new DataElement(obj, function);
 		dataElement.NameLocale.ID = name;
 		dataElement.NameLocale.UpdateText();

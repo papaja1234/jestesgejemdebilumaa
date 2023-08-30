@@ -16,23 +16,11 @@ public class FixedPumpkinManager : PartManager
 		}
 	}
 
-	private bool m_needsUpdate;
-
 	private Dictionary<BasePart, RigidbodyData[]> m_data;
 
 	public static FixedPumpkinManager Instance { get; private set; }
 
-	public bool NeedsUpdate
-	{
-		get
-		{
-			return m_needsUpdate;
-		}
-		set
-		{
-			m_needsUpdate = value;
-		}
-	}
+	public bool NeedsUpdate { get; set; }
 
 	protected override void Initialize()
 	{
@@ -50,10 +38,10 @@ public class FixedPumpkinManager : PartManager
 
 	public override void FixedUpdate()
 	{
-		if (m_needsUpdate)
+		if (NeedsUpdate)
 		{
 			UpdatePumpkins();
-			m_needsUpdate = false;
+			NeedsUpdate = false;
 		}
 	}
 

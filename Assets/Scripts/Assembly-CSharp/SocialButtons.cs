@@ -6,8 +6,7 @@ public class SocialButtons : SliderButton
 
 	private void LoadButtonToSocialMedia(string name, string methodToInvoke)
 	{
-		GameObject obj = Object.Instantiate((GameObject)Resources.Load("SocialButtons/" + name));
-		obj.transform.parent = base.gameObject.transform;
+		GameObject obj = Object.Instantiate((GameObject)Resources.Load("SocialButtons/" + name), base.gameObject.transform, true);
 		obj.name = name;
 		obj.transform.localPosition = new Vector3(0f, 0f, 3f);
 		obj.GetComponent<Button>().MethodToCall.SetMethod(GameObject.Find("MainMenuLogic").GetComponent<MainMenu>(), methodToInvoke);

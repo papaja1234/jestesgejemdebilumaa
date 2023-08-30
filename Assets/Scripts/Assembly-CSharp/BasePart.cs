@@ -337,11 +337,7 @@ public class BasePart : WPFMonoBehaviour
 
 	public JointConnectionDirection m_customJointConnectionDirection = JointConnectionDirection.None;
 
-	private Contraption m_contraption;
-
 	private bool m_broken;
-
-	private int m_connectedComponent = -1;
 
 	public BasePart m_enclosedPart;
 
@@ -352,8 +348,6 @@ public class BasePart : WPFMonoBehaviour
 	protected bool m_valid;
 
 	protected SpriteManager m_spriteManager;
-
-	private Vector3 m_windVelocity;
 
 	public Vector3 lateSpeed;
 	
@@ -435,36 +429,13 @@ public class BasePart : WPFMonoBehaviour
 
 	public AudioManager.AudioMaterial AudioMaterial => audioMaterial;
 
-	public Contraption contraption
-	{
-		get
-		{
-			return m_contraption;
-		}
-		set
-		{
-			m_contraption = value;
-		}
-	}
+	public Contraption contraption { get; set; }
 
-	public int ConnectedComponent
-	{
-		get
-		{
-			return m_connectedComponent;
-		}
-		set
-		{
-			m_connectedComponent = value;
-		}
-	}
+	public int ConnectedComponent { get; set; } = -1;
 
 	public BasePart enclosedPart
 	{
-		get
-		{
-			return m_enclosedPart;
-		}
+		get => m_enclosedPart;
 		set
 		{
 			m_enclosedPart = value;
@@ -477,130 +448,63 @@ public class BasePart : WPFMonoBehaviour
 
 	public BasePart enclosedInto
 	{
-		get
-		{
-			return m_enclosedInto;
-		}
-		set
-		{
-			m_enclosedInto = value;
-		}
+		get => m_enclosedInto;
+		set => m_enclosedInto = value;
 	}
 
-	public Vector3 WindVelocity
-	{
-		get
-		{
-			return m_windVelocity;
-		}
-		set
-		{
-			m_windVelocity = value;
-		}
-	}
+	public Vector3 WindVelocity { get; set; }
 
 	public bool valid
 	{
-		get
-		{
-			return m_valid;
-		}
-		set
-		{
-			m_valid = value;
-		}
+		get => m_valid;
+		set => m_valid = value;
 	}
 
 	public PartType Type
 	{
-		get
-		{
-			return m_partType;
-		}
-		set
-		{
-			m_partType = value;
-		}
+		get => m_partType;
+		set => m_partType = value;
 	}
 
 	public PartTier Tier
 	{
-		get
-		{
-			return m_partTier;
-		}
-		set
-		{
-			m_partTier = value;
-		}
+		get => m_partTier;
+		set => m_partTier = value;
 	}
 
 	public int Index
 	{
-		get
-		{
-			return customPartIndex;
-		}
-		set
-		{
-			customPartIndex = value;
-		}
+		get => customPartIndex;
+		set => customPartIndex = value;
 	}
 
 	public int CoordX
 	{
-		get
-		{
-			return m_coordX;
-		}
-		set
-		{
-			m_coordX = value;
-		}
+		get => m_coordX;
+		set => m_coordX = value;
 	}
 
 	public int CoordY
 	{
-		get
-		{
-			return m_coordY;
-		}
-		set
-		{
-			m_coordY = value;
-		}
+		get => m_coordY;
+		set => m_coordY = value;
 	}
 
 	public GridRotation Rotation
 	{
-		get
-		{
-			return m_gridRotation;
-		}
-		set
-		{
-			m_gridRotation = value;
-		}
+		get => m_gridRotation;
+		set => m_gridRotation = value;
 	}
 
 	public bool Flipped
 	{
-		get
-		{
-			return m_flipped;
-		}
-		set
-		{
-			m_flipped = value;
-		}
+		get => m_flipped;
+		set => m_flipped = value;
 	}
 
 	public PartTypeInfo TypeInfo
 	{
-		get
-		{
-			return new PartTypeInfo(m_partType, customPartIndex);
-		}
+		get => new PartTypeInfo(m_partType, customPartIndex);
 		set
 		{
 			PartTypeInfo partTypeInfo = value;
@@ -1107,7 +1011,7 @@ public class BasePart : WPFMonoBehaviour
 		if (layer == m_groundLayer || layer == m_iceGroundLayer)
 		{
 			m_lastTimeTouchedGround = Time.time;
-			m_contraption.SetGroundTouchTime(this);
+			contraption.SetGroundTouchTime(this);
 		}
 	}
 
@@ -1220,8 +1124,7 @@ public class BasePart : WPFMonoBehaviour
 			{
 				if (tags[i] == "Alien_part")
 				{
-					GameObject obj = UnityEngine.Object.Instantiate(WPFMonoBehaviour.gameData.m_alienPartParticles);
-					obj.transform.parent = base.transform;
+					GameObject obj = UnityEngine.Object.Instantiate(WPFMonoBehaviour.gameData.m_alienPartParticles, base.transform, true);
 					obj.transform.localPosition = Vector3.back * 0.1f;
 					obj.transform.localRotation = Quaternion.identity;
 					obj.GetComponent<ParticleSystem>().startDelay = UnityEngine.Random.Range(0f, 2f);
@@ -1230,8 +1133,7 @@ public class BasePart : WPFMonoBehaviour
 		}
 		if (WPFMonoBehaviour.levelManager != null && WPFMonoBehaviour.levelManager.CurrentGameMode is CakeRaceMode && Singleton<CakeRaceKingsFavorite>.Instance.CurrentFavorite.m_partType == m_partType && Singleton<CakeRaceKingsFavorite>.Instance.CurrentFavorite.m_partTier == m_partTier)
 		{
-			GameObject obj2 = UnityEngine.Object.Instantiate(WPFMonoBehaviour.gameData.m_heartParticles);
-			obj2.transform.parent = base.transform;
+			GameObject obj2 = UnityEngine.Object.Instantiate(WPFMonoBehaviour.gameData.m_heartParticles, base.transform, true);
 			obj2.transform.localPosition = Vector3.back;
 			obj2.transform.localRotation = Quaternion.identity;
 		}
@@ -1265,6 +1167,11 @@ public class BasePart : WPFMonoBehaviour
 	public virtual bool CanEncloseParts()
 	{
 		return false;
+	}
+
+	public virtual void MoveOnGrid(BasePart part, int dx, int dy)
+	{
+		part.contraption.SetPartPos(part.m_coordX+dx,part.m_coordY+dy,part);
 	}
 
 	public virtual bool CanBeEnclosed()
@@ -1513,7 +1420,7 @@ public class BasePart : WPFMonoBehaviour
 
 	public virtual IEnumerable<UIPartTriggerButtonInfo> GetTriggerButtonInfo()
 	{
-		yield return new UIPartTriggerButtonInfo(UIPartButtonType.Trigger, 0, m_partType, (int)EffectDirection(), m_connectedComponent, HasOnOffToggle());
+		yield return new UIPartTriggerButtonInfo(UIPartButtonType.Trigger, 0, m_partType, (int)EffectDirection(), ConnectedComponent, HasOnOffToggle());
 	}
 
 	public virtual IEnumerable<UIPartSliderButtonInfo> GetSliderButtonInfo()

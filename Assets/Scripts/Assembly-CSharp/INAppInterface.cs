@@ -70,9 +70,8 @@ public class INAppInterface : MonoBehaviour
 		SetTitle(text + " " + text2);
 		foreach (GameObject element in m_elements)
 		{
-			GameObject obj = UnityEngine.Object.Instantiate(element);
+			GameObject obj = UnityEngine.Object.Instantiate(element, m_main.transform, false);
 			obj.name = element.name;
-			obj.transform.SetParent(m_main.transform, worldPositionStays: false);
 			obj.SetActive(value: false);
 			RectTransform obj2 = (RectTransform)obj.transform;
 			obj2.anchorMin = new Vector2(0f, 0f);

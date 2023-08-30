@@ -84,12 +84,6 @@ public class CompactEpisodeSelector : MonoBehaviour
 
 	public static string IsEpisodeToggledKey = "IsEpisodeRotatorToggled";
 
-	private static CompactEpisodeSelector instance;
-
-	private bool m_isRotated;
-
-	private bool m_isRotating;
-
 	private float m_currentRotation = -1f;
 
 	private bool isInitialized;
@@ -102,19 +96,19 @@ public class CompactEpisodeSelector : MonoBehaviour
 
 	private float xMax = 60f;
 
-	public bool IsRotated => m_isRotated;
+	public bool IsRotated { get; private set; }
 
-	public bool IsRotating => m_isRotating;
+	public bool IsRotating { get; private set; }
 
 	public List<GameObject> Episodes => m_episodes;
 
-	public static CompactEpisodeSelector Instance => instance;
+	public static CompactEpisodeSelector Instance { get; private set; }
 
 	private List<GameObject> CurrentEpisodes
 	{
 		get
 		{
-			if (m_isRotated)
+			if (IsRotated)
 			{
 				return m_episodesToggled;
 			}
@@ -126,7 +120,7 @@ public class CompactEpisodeSelector : MonoBehaviour
 	{
 		get
 		{
-			if (m_isRotated)
+			if (IsRotated)
 			{
 				return m_episodesToggled.Count;
 			}
@@ -169,7 +163,7 @@ public class CompactEpisodeSelector : MonoBehaviour
 	{
 		m_leftLimit = 0f;
 		m_rightLimit = 0f;
-		instance = this;
+		Instance = this;
 		Singleton<GameManager>.Instance.CreateMenuBackground();
 		m_hudCamera = GameObject.FindGameObjectWithTag("HUDCamera").GetComponent<Camera>();
 		m_scrollPivot = base.transform.Find("ScrollPivot").gameObject;
@@ -235,7 +229,7 @@ public class CompactEpisodeSelector : MonoBehaviour
 				AnimationState animationState = m_buttonToggleAnimation["Sandbox_Toggle"];
 				animationState.enabled = true;
 				animationState.speed = 0f;
-				animationState.normalizedTime = ((!m_isRotated) ? 0.5f : 1f);
+				animationState.normalizedTime = ((!IsRotated) ? 0.5f : 1f);
 				m_buttonToggleAnimation.Play();
 				m_buttonToggleAnimation.Sample();
 				m_buttonToggleAnimation.Stop();
@@ -295,7 +289,7 @@ public class CompactEpisodeSelector : MonoBehaviour
 					{
 						SetCenterEpisode(CurrentEpisodes[EpisodeCount - 2]);
 					}
-					if (m_isRotated)
+					if (IsRotated)
 					{
 						for (int i = 0; i < m_episodesToggled.Count; i++)
 						{
@@ -357,7 +351,7 @@ public class CompactEpisodeSelector : MonoBehaviour
 	{
 		if (m_preButtons != null && m_preButtons.Count > 0 && target == m_preButtons[0])
 		{
-			m_centerEpisode = ((!m_isRotated) ? m_preButtons[0] : m_episodesToggled[0]);
+			m_centerEpisode = ((!IsRotated) ? m_preButtons[0] : m_episodesToggled[0]);
 		}
 		else
 		{
@@ -606,12 +600,12 @@ public class CompactEpisodeSelector : MonoBehaviour
 
 	public void PrepareRotation()
 	{
-		_ = m_isRotating;
+		_ = IsRotating;
 	}
 
 	public void ReleaseRotation(bool toggleRotation)
 	{
-		if (!m_isRotating)
+		if (!IsRotating)
 		{
 			StartCoroutine(RotateSequence(toggleRotation));
 		}
@@ -624,24 +618,24 @@ public class CompactEpisodeSelector : MonoBehaviour
 			return;
 		}
 		m_currentRotation = rotation;
-		bool isRotated = m_isRotated;
-		m_isRotated = m_currentRotation >= 0f;
-		if (isRotated != m_isRotated)
+		bool isRotated = IsRotated;
+		IsRotated = m_currentRotation >= 0f;
+		if (isRotated != IsRotated)
 		{
-			OnRotated(m_isRotated);
-			UserSettings.SetBool(IsEpisodeToggledKey, m_isRotated);
+			OnRotated(IsRotated);
+			UserSettings.SetBool(IsEpisodeToggledKey, IsRotated);
 		}
-		float t = ((!m_isRotated) ? (m_currentRotation + 1f) : (1f - m_currentRotation));
-		Vector3 vector = ((!m_isRotated) ? Vector3.zero : (Vector3.up * 90f));
-		Vector3 vector2 = ((!m_isRotated) ? (Vector3.up * 90f) : Vector3.zero);
+		float t = ((!IsRotated) ? (m_currentRotation + 1f) : (1f - m_currentRotation));
+		Vector3 vector = ((!IsRotated) ? Vector3.zero : (Vector3.up * 90f));
+		Vector3 vector2 = ((!IsRotated) ? (Vector3.up * 90f) : Vector3.zero);
 		for (int i = 0; i < m_episodes.Count; i++)
 		{
 			m_episodes[i].transform.localEulerAngles = Vector3.Lerp(vector, vector2, t);
-			if (m_episodes[i].activeInHierarchy && m_isRotated)
+			if (m_episodes[i].activeInHierarchy && IsRotated)
 			{
 				m_episodes[i].SetActive(value: false);
 			}
-			else if (!m_episodes[i].activeInHierarchy && !m_isRotated)
+			else if (!m_episodes[i].activeInHierarchy && !IsRotated)
 			{
 				m_episodes[i].SetActive(value: true);
 			}
@@ -649,11 +643,11 @@ public class CompactEpisodeSelector : MonoBehaviour
 		for (int j = 0; j < m_episodesToggled.Count; j++)
 		{
 			m_episodesToggled[j].transform.localEulerAngles = Vector3.Lerp(vector2, vector, t);
-			if (!m_episodesToggled[j].activeInHierarchy && m_isRotated)
+			if (!m_episodesToggled[j].activeInHierarchy && IsRotated)
 			{
 				m_episodesToggled[j].SetActive(value: true);
 			}
-			else if (m_episodesToggled[j].activeInHierarchy && !m_isRotated)
+			else if (m_episodesToggled[j].activeInHierarchy && !IsRotated)
 			{
 				m_episodesToggled[j].SetActive(value: false);
 			}
@@ -662,19 +656,19 @@ public class CompactEpisodeSelector : MonoBehaviour
 
 	private IEnumerator RotateSequence(bool toggleRotation)
 	{
-		if (m_isRotating)
+		if (IsRotating)
 		{
 			yield break;
 		}
-		m_isRotating = true;
-		float targetRotation = ((!m_isRotated) ? (-1f) : 1f);
+		IsRotating = true;
+		float targetRotation = ((!IsRotated) ? (-1f) : 1f);
 		float newRotation = m_currentRotation;
 		if (toggleRotation)
 		{
 			targetRotation *= -1f;
 		}
-		float fromState = ((!m_isRotated) ? 0.5f : 0f);
-		float toState = ((!m_isRotated) ? 1f : 0.5f);
+		float fromState = ((!IsRotated) ? 0.5f : 0f);
+		float toState = ((!IsRotated) ? 1f : 0.5f);
 		AnimationState toggleState = null;
 		if (m_buttonToggleAnimation != null)
 		{
@@ -709,7 +703,7 @@ public class CompactEpisodeSelector : MonoBehaviour
 			m_buttonToggleAnimation.Stop();
 		}
 		SetRotation(targetRotation);
-		m_isRotating = false;
+		IsRotating = false;
 	}
 
 	private void OnRotated(bool rotated)

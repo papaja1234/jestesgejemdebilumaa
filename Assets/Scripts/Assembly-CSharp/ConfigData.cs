@@ -4,23 +4,11 @@ using System.Collections.Generic;
 
 public class ConfigData
 {
-	private string configId;
-
 	private List<string> keys;
 
 	private List<string> values;
 
-	public string ConfigID
-	{
-		get
-		{
-			return configId;
-		}
-		set
-		{
-			configId = value;
-		}
-	}
+	public string ConfigID { get; set; }
 
 	public int Count => keys.Count;
 
@@ -51,14 +39,14 @@ public class ConfigData
 
 	public ConfigData(string configId)
 	{
-		this.configId = configId;
+		this.ConfigID = configId;
 		keys = new List<string>();
 		values = new List<string>();
 	}
 
 	public ConfigData(string configId, Hashtable data)
 	{
-		this.configId = configId;
+		this.ConfigID = configId;
 		keys = new List<string>();
 		values = new List<string>();
 		foreach (DictionaryEntry datum in data)

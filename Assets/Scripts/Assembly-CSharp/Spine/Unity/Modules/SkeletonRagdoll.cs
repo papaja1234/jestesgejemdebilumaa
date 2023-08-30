@@ -63,23 +63,19 @@ namespace Spine.Unity.Modules
 
 		private Transform ragdollRoot;
 
-		private Vector3 rootOffset;
-
-		private bool isActive;
-
 		public Rigidbody RootRigidbody { get; private set; }
 
 		public Bone StartingBone { get; private set; }
 
-		public Vector3 RootOffset => rootOffset;
+		public Vector3 RootOffset { get; private set; }
 
-		public bool IsActive => isActive;
+		public bool IsActive { get; private set; }
 
 		public Rigidbody[] RigidbodyArray
 		{
 			get
 			{
-				if (!isActive)
+				if (!IsActive)
 				{
 					return new Rigidbody[0];
 				}
@@ -94,7 +90,7 @@ namespace Spine.Unity.Modules
 			}
 		}
 
-		public Vector3 EstimatedSkeletonPosition => RootRigidbody.position - rootOffset;
+		public Vector3 EstimatedSkeletonPosition => RootRigidbody.position - RootOffset;
 
 		private IEnumerator Start()
 		{
@@ -115,7 +111,7 @@ namespace Spine.Unity.Modules
 
 		public void Apply()
 		{
-			isActive = true;
+			IsActive = true;
 			mix = 1f;
 			StartingBone = skeleton.FindBone(startingBoneName);
 			RecursivelyCreateBoneProxies(StartingBone);
@@ -144,7 +140,7 @@ namespace Spine.Unity.Modules
 						ragdollRoot.localRotation = Quaternion.Euler(0f, 0f, GetPropagatedRotation(key.Parent));
 					}
 					transform = ragdollRoot;
-					rootOffset = value.position - base.transform.position;
+					RootOffset = value.position - base.transform.position;
 				}
 				else
 				{
@@ -254,7 +250,7 @@ namespace Spine.Unity.Modules
 
 		public void SetSkeletonPosition(Vector3 worldPosition)
 		{
-			if (!isActive)
+			if (!IsActive)
 			{
 				return;
 			}
@@ -270,7 +266,7 @@ namespace Spine.Unity.Modules
 
 		public void Remove()
 		{
-			isActive = false;
+			IsActive = false;
 			foreach (Transform value in boneTable.Values)
 			{
 				Object.Destroy(value.gameObject);

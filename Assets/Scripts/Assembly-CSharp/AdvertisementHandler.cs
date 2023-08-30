@@ -51,18 +51,6 @@ public class AdvertisementHandler
 
 	private static RenderableHandler rewardNativeRenderable;
 
-	private static RenderableHandler mainMenuPromoRenderable;
-
-	private static RenderableHandler crossPromoMainRenderable;
-
-	private static RenderableHandler crossPromoEpisodeRenderable;
-
-	private static string dailyChallengeRevealPlacement = "RewardVideo.DailyChallengeReveal";
-
-	private static string levelRewardVideoPlacement = "RewardVideo.LevelUnlock";
-
-	private static string snoutCoinRewardVideoPlacement = "RewardVideo.SnoutReward";
-
 	private static string timeRewardVideoPlacement = "RewardVideo";
 
 	private static string rewardNativePlacement = "RewardNative";
@@ -71,35 +59,29 @@ public class AdvertisementHandler
 
 	private static string interstitialPlacement = "LevelStartInterstitial";
 
-	private static string doubleRewardPlacement = "RewardVideo.DoubleReward";
-
-	private static string extraCoinsRewardPlacement = "RewardVideo.ExtraCoins";
-
 	private static string pauseMenuPromoPlacement = "NewsFeed.pause";
-
-	private static string freeLootCratePlacement = "RewardVideo.FreeLootCrate";
 
 	private static string crossPromoMainPlacement = "InGameNative.MainMenu";
 
 	private static string crossPromoEpisodePlacement = "InGameNative.EpisodeMenu";
 
-	public static string LevelRewardVideoPlacement => levelRewardVideoPlacement;
+	public static string LevelRewardVideoPlacement { get; } = "RewardVideo.LevelUnlock";
 
-	public static string SnoutCoinRewardVideoPlacement => snoutCoinRewardVideoPlacement;
+	public static string SnoutCoinRewardVideoPlacement { get; } = "RewardVideo.SnoutReward";
 
-	public static string DoubleRewardPlacement => doubleRewardPlacement;
+	public static string DoubleRewardPlacement { get; } = "RewardVideo.DoubleReward";
 
-	public static string ExtraCoinsRewardPlacement => extraCoinsRewardPlacement;
+	public static string ExtraCoinsRewardPlacement { get; } = "RewardVideo.ExtraCoins";
 
-	public static string DailyChallengeRevealPlacement => dailyChallengeRevealPlacement;
+	public static string DailyChallengeRevealPlacement { get; } = "RewardVideo.DailyChallengeReveal";
 
-	public static string FreeLootCratePlacement => freeLootCratePlacement;
+	public static string FreeLootCratePlacement { get; } = "RewardVideo.FreeLootCrate";
 
-	public static RenderableHandler MainMenuPromoRenderable => mainMenuPromoRenderable;
+	public static RenderableHandler MainMenuPromoRenderable { get; }
 
-	public static RenderableHandler CrossPromoMainRenderable => crossPromoMainRenderable;
+	public static RenderableHandler CrossPromoMainRenderable { get; }
 
-	public static RenderableHandler CrossPromoEpisodeRenderable => crossPromoEpisodeRenderable;
+	public static RenderableHandler CrossPromoEpisodeRenderable { get; }
 
 	public static Texture2D GetRewardNativeTexture()
 	{
@@ -112,27 +94,27 @@ public class AdvertisementHandler
 
 	public static Texture2D GetMainMenuPopupTexture()
 	{
-		if (mainMenuPromoRenderable != null)
+		if (MainMenuPromoRenderable != null)
 		{
-			return mainMenuPromoRenderable.m_texture;
+			return MainMenuPromoRenderable.m_texture;
 		}
 		return null;
 	}
 
 	public static Texture2D GetCrossPromoMainTexture()
 	{
-		if (crossPromoMainRenderable != null)
+		if (CrossPromoMainRenderable != null)
 		{
-			return crossPromoMainRenderable.m_texture;
+			return CrossPromoMainRenderable.m_texture;
 		}
 		return null;
 	}
 
 	public static Texture2D GetCrossPromoEpisodeTexture()
 	{
-		if (crossPromoEpisodeRenderable != null)
+		if (CrossPromoEpisodeRenderable != null)
 		{
-			return crossPromoEpisodeRenderable.m_texture;
+			return CrossPromoEpisodeRenderable.m_texture;
 		}
 		return null;
 	}

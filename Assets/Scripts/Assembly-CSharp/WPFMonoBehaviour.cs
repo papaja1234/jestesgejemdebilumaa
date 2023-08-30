@@ -36,10 +36,7 @@ public class WPFMonoBehaviour : MonoBehaviour
 			}
 			return cachedAnimation;
 		}
-		set
-		{
-			cachedAnimation = value;
-		}
+		set => cachedAnimation = value;
 	}
 
 	public Collider collider
@@ -52,10 +49,7 @@ public class WPFMonoBehaviour : MonoBehaviour
 			}
 			return cachedCollider;
 		}
-		set
-		{
-			cachedCollider = value;
-		}
+		set => cachedCollider = value;
 	}
 
 	public Renderer renderer
@@ -68,10 +62,7 @@ public class WPFMonoBehaviour : MonoBehaviour
 			}
 			return cachedRenderer;
 		}
-		set
-		{
-			cachedRenderer = value;
-		}
+		set => cachedRenderer = value;
 	}
 
 	public Rigidbody rigidbody
@@ -84,10 +75,7 @@ public class WPFMonoBehaviour : MonoBehaviour
 			}
 			return cachedRigidbody;
 		}
-		set
-		{
-			cachedRigidbody = value;
-		}
+		set => cachedRigidbody = value;
 	}
 
 	public static IngameCamera ingameCamera

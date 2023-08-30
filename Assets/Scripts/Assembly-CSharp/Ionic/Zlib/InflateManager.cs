@@ -36,25 +36,13 @@ namespace Ionic.Zlib
 
 		internal int marker;
 
-		private bool _handleRfc1950HeaderBytes = true;
-
 		internal int wbits;
 
 		internal InflateBlocks blocks;
 
 		private static readonly byte[] mark = new byte[4] { 0, 0, 255, 255 };
 
-		internal bool HandleRfc1950HeaderBytes
-		{
-			get
-			{
-				return _handleRfc1950HeaderBytes;
-			}
-			set
-			{
-				_handleRfc1950HeaderBytes = value;
-			}
-		}
+		internal bool HandleRfc1950HeaderBytes { get; set; } = true;
 
 		public InflateManager()
 		{
@@ -62,7 +50,7 @@ namespace Ionic.Zlib
 
 		public InflateManager(bool expectRfc1950HeaderBytes)
 		{
-			_handleRfc1950HeaderBytes = expectRfc1950HeaderBytes;
+			HandleRfc1950HeaderBytes = expectRfc1950HeaderBytes;
 		}
 
 		internal int Reset()

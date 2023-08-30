@@ -84,8 +84,6 @@ public class ExtendedScrollList : Widget, WidgetListener
 
 	private bool updatePlacement;
 
-	private int usedRows = 1;
-
 	private float buttonScale = 1f;
 
 	private float screenWidth = -1f;
@@ -94,7 +92,7 @@ public class ExtendedScrollList : Widget, WidgetListener
 
 	private bool isRightEnabled;
 
-	public int UsedRows => usedRows;
+	public int UsedRows { get; private set; } = 1;
 
 	public void SetButtonScale(float buttonScale)
 	{
@@ -521,9 +519,9 @@ public class ExtendedScrollList : Widget, WidgetListener
 	private void PlaceScrollButtons()
 	{
 		Vector3 localPosition = scrollButtonOffset.transform.localPosition;
-		if (usedRows > 1)
+		if (UsedRows > 1)
 		{
-			localPosition.y = 0.5f * (float)(usedRows - 1) * offset.y;
+			localPosition.y = 0.5f * (float)(UsedRows - 1) * offset.y;
 		}
 		else
 		{
@@ -548,12 +546,12 @@ public class ExtendedScrollList : Widget, WidgetListener
 			int num = (int)scrollAreaWidth / (int)offset.x - 3;
 			if (horizontalCount > num)
 			{
-				usedRows = maxRows;
-				horizontalCount = horizontalCount / usedRows + ((horizontalCount % usedRows != 0) ? 1 : 0);
+				UsedRows = maxRows;
+				horizontalCount = horizontalCount / UsedRows + ((horizontalCount % UsedRows != 0) ? 1 : 0);
 			}
 			else
 			{
-				usedRows = 1;
+				UsedRows = 1;
 			}
 			PlaceScrollButtons();
 		}
@@ -562,7 +560,7 @@ public class ExtendedScrollList : Widget, WidgetListener
 		Vector3 position = base.transform.position;
 		position.x -= 0.5f * ((float)(horizontalCount - 1) * offset.x) + scrollOffset;
 		position.y -= 0.5f * buttonPrefab.GetComponent<Sprite>().Size.y;
-		position.y += (float)(usedRows - 1) * offset.y;
+		position.y += (float)(UsedRows - 1) * offset.y;
 		Vector3 vector = position;
 		int num4 = count;
 		if (action == Action.Place)
@@ -587,7 +585,7 @@ public class ExtendedScrollList : Widget, WidgetListener
 				vector.x = position.x;
 				vector.y -= offset.y;
 				num3++;
-				if (num3 >= usedRows)
+				if (num3 >= UsedRows)
 				{
 					vector = new Vector3(100000f, 0f, 0f);
 				}

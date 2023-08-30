@@ -141,13 +141,9 @@ public class EntityLightManager : PartManager
 		}
 	}
 
-	private static EntityLightManager s_instance;
-
 	public float[] m_electricities;
 
 	public float[] m_capacities;
-
-	private bool m_consumePower;
 
 	private int[] m_lightCounts;
 
@@ -170,20 +166,20 @@ public class EntityLightManager : PartManager
 
 	private List<ImpulseData>[] m_lightImpulses;
 
-	public static EntityLightManager Instance => s_instance;
+	public static EntityLightManager Instance { get; private set; }
 
-	public bool ConsumePower => m_consumePower;
+	public bool ConsumePower { get; private set; }
 
 	protected override void Initialize()
 	{
 		base.Initialize();
 		m_status = StatusCode.Running;
-		s_instance = this;
+		Instance = this;
 	}
 
 	public override void Start()
 	{
-		m_consumePower = !Contraption.Instance.HasTurboCharge;
+		ConsumePower = !Contraption.Instance.HasTurboCharge;
 		m_rigidbodyCount = 0;
 		m_rigidbodyData = Array.Empty<RigidbodyData>();
 		m_lights = new List<EntityLight>();
@@ -287,7 +283,7 @@ public class EntityLightManager : PartManager
 				num4 -= item3.Electricity;
 			}
 			float val = Math.Min(num4, m_electricities[l]);
-			float num5 = ((num4 > 0f && m_consumePower) ? (Math.Max(val, 0f) / num4) : 1f);
+			float num5 = ((num4 > 0f && ConsumePower) ? (Math.Max(val, 0f) / num4) : 1f);
 			foreach (ImpulseData item4 in list2)
 			{
 				EntityLight light = item4.Light;
@@ -300,13 +296,13 @@ public class EntityLightManager : PartManager
 					{
 						if (item5.Index == light.Index)
 						{
-							item5.m_electricity += (m_consumePower ? (num6 / light.m_coefficient) : 0f);
+							item5.m_electricity += (ConsumePower ? (num6 / light.m_coefficient) : 0f);
 						}
 					}
 				}
 				else
 				{
-					light.m_electricity += (m_consumePower ? num6 : 0f);
+					light.m_electricity += (ConsumePower ? num6 : 0f);
 				}
 				Vector3 position = rigidbody.position + (Vector3)(item4.DeltaPosition * num7);
 				Vector3 force = item4.DeltaVelocity * num7;
@@ -1258,7 +1254,7 @@ public class EntityLightManager : PartManager
 		{
 			num9 = Math.Clamp(0.4f * num / MathF.Sqrt(electricity), 0f, 0.7f);
 		}
-		if (m_consumePower && list != null && work < 0f)
+		if (ConsumePower && list != null && work < 0f)
 		{
 			float num10 = work * num9 / num;
 			foreach ((int, float) tuple in list)

@@ -15,15 +15,13 @@ public class BirdCompassIndicator : WPFMonoBehaviour
 
 	private float m_viewHalfHeight;
 
-	private bool m_done;
-
 	private LineRenderer m_meter;
 
 	private SpriteAnimation m_compassAnimation;
 
 	private SpriteAnimation m_animation;
 
-	public bool Done => m_done;
+	public bool Done { get; private set; }
 
 	public void AttachToBird(Bird bird)
 	{
@@ -91,7 +89,7 @@ public class BirdCompassIndicator : WPFMonoBehaviour
 
 	private void TurnOff()
 	{
-		m_done = true;
+		Done = true;
 		base.gameObject.SetActive(value: false);
 	}
 

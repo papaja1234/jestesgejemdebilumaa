@@ -119,8 +119,7 @@ public class LeaderboardDialog : TextDialog
 			for (int i = 0; i < TotalEntryCount(); i++)
 			{
 				string text = $"{i:0000}";
-				GameObject gameObject = Object.Instantiate((i < 50) ? entryPrefab : singleEntryPrefab);
-				gameObject.transform.parent = ((i < 50) ? top50Grid.transform : singleRanksGrid.transform);
+				GameObject gameObject = Object.Instantiate((i < 50) ? entryPrefab : singleEntryPrefab, ((i < 50) ? top50Grid.transform : singleRanksGrid.transform), true);
 				gameObject.transform.SetAsLastSibling();
 				gameObject.name = text;
 				LeaderboardEntry component = gameObject.transform.GetComponent<LeaderboardEntry>();
@@ -147,8 +146,7 @@ public class LeaderboardDialog : TextDialog
 			for (int j = 0; j < 7; j++)
 			{
 				string text2 = $"{j:0000}";
-				GameObject obj = Object.Instantiate(cakeRaceReplayEntryPrefab);
-				obj.transform.parent = replayGrid.transform;
+				GameObject obj = Object.Instantiate(cakeRaceReplayEntryPrefab, replayGrid.transform, true);
 				obj.transform.SetAsLastSibling();
 				obj.name = text2;
 				CakeRaceReplayEntry component3 = obj.transform.GetComponent<CakeRaceReplayEntry>();

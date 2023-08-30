@@ -197,10 +197,7 @@ namespace AssetBundleBrowser
             m_AssetList.searchString = m_BundleTree.searchString;
         }
 
-        public bool hasSearch
-        {
-            get { return m_BundleTree.hasSearch;  }
-        }
+        public bool hasSearch => m_BundleTree.hasSearch;
 
         private void HandleHorizontalResize()
         {

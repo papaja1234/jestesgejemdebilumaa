@@ -2,8 +2,6 @@ using UnityEngine;
 
 public class PropertyPanelRunning : PropertyPanel
 {
-	private static PropertyPanelRunning s_instance;
-
 	private string m_text;
 
 	private Rigidbody m_targetPart;
@@ -12,11 +10,11 @@ public class PropertyPanelRunning : PropertyPanel
 
 	private Camera m_camera;
 
-	public static PropertyPanelRunning Instance => s_instance;
+	public static PropertyPanelRunning Instance { get; private set; }
 
 	public static PropertyPanelRunning Create()
 	{
-		PropertyPanelRunning propertyPanelRunning = (s_instance = new PropertyPanelRunning());
+		PropertyPanelRunning propertyPanelRunning = (Instance = new PropertyPanelRunning());
 		propertyPanelRunning.Initialize();
 		return propertyPanelRunning;
 	}

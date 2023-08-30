@@ -9,8 +9,6 @@ public class RewardSystem : Singleton<RewardSystem>
 
 	public RewardDialog rewardDialog;
 
-	private static bool mFreezeResetTime;
-
 	private const string RANDOM_REWARD_SEED_KEY = "AmazonRandomRewardSeed";
 
 	private const string PENDING_REWARD_LEVEL_KEY = "AmazonPendingRewardLevel";
@@ -53,17 +51,7 @@ public class RewardSystem : Singleton<RewardSystem>
 
 	public static int PendingRewardLevel => CurrentRewardStatus.PendingRewardLevel;
 
-	public static bool FreezeResetTime
-	{
-		get
-		{
-			return mFreezeResetTime;
-		}
-		set
-		{
-			mFreezeResetTime = value;
-		}
-	}
+	public static bool FreezeResetTime { get; set; }
 
 	private void Awake()
 	{
@@ -442,7 +430,7 @@ public class RewardSystem : Singleton<RewardSystem>
 	public void ClaimReward()
 	{
 		int currentTime = CurrentTime();
-		if (!mFreezeResetTime && ResetTimePassed(currentTime, CurrentRewardStatus.ResetTime))
+		if (!FreezeResetTime && ResetTimePassed(currentTime, CurrentRewardStatus.ResetTime))
 		{
 			mServerTime.RefreshServerTime();
 			return;
@@ -465,7 +453,7 @@ public class RewardSystem : Singleton<RewardSystem>
 
 	private bool ResetTimePassed(int currentTime, int resetTime)
 	{
-		if (!mFreezeResetTime && resetTime > 0)
+		if (!FreezeResetTime && resetTime > 0)
 		{
 			return currentTime > resetTime;
 		}

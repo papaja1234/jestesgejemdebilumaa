@@ -10,8 +10,6 @@ public class SchematicButton : SliderButton
 
 	public GameObject button;
 
-	private bool isButtonOut;
-
 	private bool lastIsPlaying;
 
 	private bool coroutineRunning;
@@ -56,7 +54,7 @@ public class SchematicButton : SliderButton
 		}
 	}
 
-	public bool ToolboxOpen => isButtonOut;
+	public bool ToolboxOpen { get; private set; }
 
 	protected override void Start()
 	{
@@ -94,7 +92,7 @@ public class SchematicButton : SliderButton
 	private void OnEnable()
 	{
 		button.transform.Find("Gear").transform.rotation = Quaternion.identity;
-		isButtonOut = (lastIsPlaying = (coroutineRunning = false));
+		ToolboxOpen = (lastIsPlaying = (coroutineRunning = false));
 		EnableRendererRecursively(base.gameObject, enable: false);
 		ActivateToggleList(state: true);
 		if (toggleList != null && origPositions != null)
@@ -162,12 +160,12 @@ public class SchematicButton : SliderButton
 		{
 			selectedSlotSprites[i].GetComponent<Renderer>().enabled = @int == i;
 		}
-		bool flag = isButtonOut;
+		bool flag = ToolboxOpen;
 		InitAnimationStates(flag, GetComponent<Animation>()["SchematicsButtonSlide"], button.GetComponent<Animation>()["ToolBoxButton"]);
 		button.GetComponent<Animation>().Play();
 		GetComponent<Animation>().Play();
-		isButtonOut = !isButtonOut;
-		_ = isButtonOut;
+		ToolboxOpen = !ToolboxOpen;
+		_ = ToolboxOpen;
 		for (int j = 0; j < toggleList.Count; j++)
 		{
 			if (flag)
@@ -183,7 +181,7 @@ public class SchematicButton : SliderButton
 
 	private void Update()
 	{
-		if (!GetComponent<Animation>().isPlaying && lastIsPlaying && !isButtonOut)
+		if (!GetComponent<Animation>().isPlaying && lastIsPlaying && !ToolboxOpen)
 		{
 			ActivateToggleList(state: true);
 		}

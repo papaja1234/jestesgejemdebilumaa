@@ -20,26 +20,14 @@ namespace Spine
 
 		public int PathConstraintIndex
 		{
-			get
-			{
-				return pathConstraintIndex;
-			}
-			set
-			{
-				pathConstraintIndex = value;
-			}
+			get => pathConstraintIndex;
+			set => pathConstraintIndex = value;
 		}
 
 		public float[] Frames
 		{
-			get
-			{
-				return frames;
-			}
-			set
-			{
-				frames = value;
-			}
+			get => frames;
+			set => frames = value;
 		}
 
 		public PathConstraintMixTimeline(int frameCount)

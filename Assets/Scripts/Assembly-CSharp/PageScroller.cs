@@ -14,22 +14,17 @@ public class PageScroller : MonoBehaviour
 
 	private Camera m_hudCamera;
 
-	private int m_page;
-
 	private int m_pageCount = 1;
 
 	public int PageCount
 	{
-		get
-		{
-			return m_pageCount;
-		}
+		get => m_pageCount;
 		set
 		{
 			if (value > 0)
 			{
 				m_pageCount = value;
-				if (m_page >= m_pageCount)
+				if (CurrentPage >= m_pageCount)
 				{
 					ScrollToPage(m_pageCount - 1);
 				}
@@ -39,7 +34,7 @@ public class PageScroller : MonoBehaviour
 		}
 	}
 
-	public int CurrentPage => m_page;
+	public int CurrentPage { get; private set; }
 
 	public event PageChanged OnPageChanged;
 
@@ -55,26 +50,26 @@ public class PageScroller : MonoBehaviour
 
 	public void ScrollToPage(int newPage)
 	{
-		if (newPage >= 0 && newPage < m_pageCount && newPage != m_page)
+		if (newPage >= 0 && newPage < m_pageCount && newPage != CurrentPage)
 		{
 			if (this.OnPageChanged != null)
 			{
-				this.OnPageChanged(m_page, newPage);
+				this.OnPageChanged(CurrentPage, newPage);
 			}
-			m_page = newPage;
+			CurrentPage = newPage;
 		}
 	}
 
 	public void SetPage(int newPage)
 	{
-		if (newPage >= 0 && newPage < m_pageCount && newPage != m_page)
+		if (newPage >= 0 && newPage < m_pageCount && newPage != CurrentPage)
 		{
 			if (this.OnPageChanged != null)
 			{
-				this.OnPageChanged(m_page, newPage);
+				this.OnPageChanged(CurrentPage, newPage);
 			}
-			m_page = newPage;
-			m_scrollPivot.localPosition = GetTargetPosition(m_page);
+			CurrentPage = newPage;
+			m_scrollPivot.localPosition = GetTargetPosition(CurrentPage);
 		}
 	}
 
@@ -112,18 +107,18 @@ public class PageScroller : MonoBehaviour
 			float num2 = m_lastInputPos.x - m_pointerDownPos.x;
 			if (Mathf.Abs(num2) > (float)(Screen.width / 16))
 			{
-				int page = m_page;
-				m_page += ((!(num2 >= 0f)) ? 1 : (-1));
-				m_page = Mathf.Clamp(m_page, 0, m_pageCount - 1);
-				if (page != m_page)
+				int page = CurrentPage;
+				CurrentPage += ((!(num2 >= 0f)) ? 1 : (-1));
+				CurrentPage = Mathf.Clamp(CurrentPage, 0, m_pageCount - 1);
+				if (page != CurrentPage)
 				{
-					this.OnPageChanged(page, m_page);
+					this.OnPageChanged(page, CurrentPage);
 				}
 			}
 		}
 		if (!pointer.down && !pointer.dragging)
 		{
-			Vector3 targetPosition = GetTargetPosition(m_page);
+			Vector3 targetPosition = GetTargetPosition(CurrentPage);
 			if (Vector3.SqrMagnitude(targetPosition - m_scrollPivot.localPosition) > 1E-05f)
 			{
 				m_scrollPivot.localPosition += (targetPosition - m_scrollPivot.localPosition) * Time.unscaledDeltaTime * 4f;

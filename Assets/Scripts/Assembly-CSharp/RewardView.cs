@@ -100,19 +100,17 @@ public class RewardView : WPFMonoBehaviour
 		m_particleNode = base.transform.Find("Open").transform.Find("PartOffset").transform.Find("StarBurstEffect").gameObject;
 		for (int i = 0; i < 3; i++)
 		{
-			GameObject obj = Object.Instantiate(m_partIconBackground);
-			obj.transform.parent = m_animationNode.transform;
+			GameObject obj = Object.Instantiate(m_partIconBackground, m_animationNode.transform, true);
 			int index = (obj.GetComponent<Renderer>().sharedMaterial.name.StartsWith("IngameAtlas2") ? 1 : 0);
 			Material material = AtlasMaterials.Instance.PartQueueZMaterials[index];
 			obj.GetComponent<Renderer>().material = material;
 			obj.transform.localPosition = new Vector3(0f, 0f, 0.1f);
 			obj.transform.localScale = 3f * Vector3.one;
 		}
-		GameObject obj2 = Object.Instantiate(m_gameData.GetPart(type).GetComponent<BasePart>().m_constructionIconSprite.gameObject);
+		GameObject obj2 = Object.Instantiate(m_gameData.GetPart(type).GetComponent<BasePart>().m_constructionIconSprite.gameObject, m_animationNode.transform, true);
 		int index2 = (obj2.GetComponent<Renderer>().sharedMaterial.name.StartsWith("IngameAtlas2") ? 1 : 0);
 		Material material2 = AtlasMaterials.Instance.PartQueueZMaterials[index2];
 		obj2.GetComponent<Renderer>().material = material2;
-		obj2.transform.parent = m_animationNode.transform;
 		obj2.transform.localPosition = Vector3.zero;
 		obj2.transform.localScale = 2.75f * Vector3.one;
 		m_animationTimerStarted = true;

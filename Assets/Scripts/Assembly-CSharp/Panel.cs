@@ -28,10 +28,7 @@ public class Panel : MonoBehaviour, SpriteMeshGenerator
 
 	public int width
 	{
-		get
-		{
-			return m_width;
-		}
+		get => m_width;
 		set
 		{
 			if (value > 0 && value != m_width)

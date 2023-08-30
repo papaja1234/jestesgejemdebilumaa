@@ -98,14 +98,8 @@ public class SpriteAnimation : MonoBehaviour
 
 	public List<Animation> Animations
 	{
-		get
-		{
-			return m_animations;
-		}
-		set
-		{
-			m_animations = value;
-		}
+		get => m_animations;
+		set => m_animations = value;
 	}
 
 	private void OnEnable()

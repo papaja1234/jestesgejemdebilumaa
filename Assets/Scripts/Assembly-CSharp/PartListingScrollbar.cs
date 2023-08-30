@@ -98,8 +98,7 @@ public class PartListingScrollbar : MonoBehaviour
 		{
 			newButtons = new Dictionary<int, Tuple<GameObject, float>>();
 		}
-		GameObject gameObject = UnityEngine.Object.Instantiate(newBtnPrefab);
-		gameObject.transform.parent = base.transform;
+		GameObject gameObject = UnityEngine.Object.Instantiate(newBtnPrefab, base.transform, true);
 		gameObject.transform.localPosition = new Vector3((relativePosition - 0.5f) * moveArea, 0f, -0.5f);
 		gameObject.GetComponent<Button>().MethodToCall.SetMethod(this, "OnNewPartButtonPressed", gameObject.GetInstanceID());
 		newButtons.Add(gameObject.GetInstanceID(), new Tuple<GameObject, float>(gameObject, relativePosition));

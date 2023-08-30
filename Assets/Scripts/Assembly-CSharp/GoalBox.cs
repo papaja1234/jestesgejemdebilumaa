@@ -23,10 +23,7 @@ public class GoalBox : Goal
 
 	public GameObject GoalAchivement
 	{
-		set
-		{
-			m_goalAchievement = value;
-		}
+		set => m_goalAchievement = value;
 	}
 
 	public bool Collected => collected;

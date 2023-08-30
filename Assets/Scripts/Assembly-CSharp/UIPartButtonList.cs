@@ -156,10 +156,6 @@ public class UIPartButtonList : MonoBehaviour
 
 	private ButtonComparer m_comparer;
 
-	private UIPartButton m_selectedButton;
-
-	private List<UIPartButton> m_currentButtons;
-
 	private List<UIPartTriggerButton> m_triggerButtonPool;
 
 	private List<UIPartSliderButton> m_sliderButtonPool;
@@ -174,9 +170,9 @@ public class UIPartButtonList : MonoBehaviour
 
 	public bool NeedsUpdate { get; set; }
 
-	public UIPartButton SelectedButton => m_selectedButton;
+	public UIPartButton SelectedButton { get; private set; }
 
-	public List<UIPartButton> Buttons => m_currentButtons;
+	public List<UIPartButton> Buttons { get; private set; }
 
 	public GameObject TriggerButtonPrefab => m_triggerButtonPrefab;
 
@@ -195,7 +191,7 @@ public class UIPartButtonList : MonoBehaviour
 	{
 		Instance = this;//oh no self reference im gonna die xd
 		m_comparer = new ButtonComparer();
-		m_currentButtons = new List<UIPartButton>();
+		Buttons = new List<UIPartButton>();
 		m_triggerButtonPool = new List<UIPartTriggerButton>();
 		m_sliderButtonPool = new List<UIPartSliderButton>();
 		m_componentHeap = new Heap<(int, int)>();
@@ -454,10 +450,10 @@ public class UIPartButtonList : MonoBehaviour
 			return;
 		}
 		int num3 = num2 * 26 + num;
-		if (num3 < m_currentButtons.Count)
+		if (num3 < Buttons.Count)
 		{
-			m_selectedButton = m_currentButtons[num3];
-			if (m_selectedButton is UIPartTriggerButton uIPartTriggerButton)
+			SelectedButton = Buttons[num3];
+			if (SelectedButton is UIPartTriggerButton uIPartTriggerButton)
 			{
 				uIPartTriggerButton.OnTriggered();
 			}
@@ -504,8 +500,8 @@ public class UIPartButtonList : MonoBehaviour
 			array[m_componentHeap.Pop().Item2] = i;
 		}
 		m_buttonInfoMap.Clear();
-		bool[] array2 = new bool[m_currentButtons.Count];
-		List<UIPartButton> list = new List<UIPartButton>(m_currentButtons.Count);
+		bool[] array2 = new bool[Buttons.Count];
+		List<UIPartButton> list = new List<UIPartButton>(Buttons.Count);
 		foreach (BasePart part in Contraption.Instance.Parts)
 		{
 			if (!part.IsTriggerable())
@@ -531,9 +527,9 @@ public class UIPartButtonList : MonoBehaviour
 				}
 			}
 		}
-		for (int j = 0; j < m_currentButtons.Count; j++)
+		for (int j = 0; j < Buttons.Count; j++)
 		{
-			UIPartButton uIPartButton = m_currentButtons[j];
+			UIPartButton uIPartButton = Buttons[j];
 			if (!array2[j])
 			{
 				FreeButton(uIPartButton);
@@ -595,7 +591,7 @@ public class UIPartButtonList : MonoBehaviour
 				SetButtonSprite(value4, uIPartSliderButton);
 			}
 		}
-		m_currentButtons = list;
+		Buttons = list;
 		
 	}
 
@@ -615,25 +611,25 @@ public class UIPartButtonList : MonoBehaviour
 
 	public void RenderButtons()
 	{
-		if (m_currentButtons.Count == 0)
+		if (Buttons.Count == 0)
 		{
 			return;
 		}
-		foreach (UIPartButton currentButton in m_currentButtons)
+		foreach (UIPartButton currentButton in Buttons)
 		{
 			currentButton.Initialize();
 		}
-		m_currentButtons.Sort(m_comparer);
+		Buttons.Sort(m_comparer);
 		bool displayButtonIndex = Settings.DisplayButtonIndex;
-		for (int i = 0; i < m_currentButtons.Count; i++)
+		for (int i = 0; i < Buttons.Count; i++)
 		{
 			char c = (char)(65 + i % 26);//get alphabetical order button index for keyboard control
 			char c2 = (char)(48 + i / 26);
 			string text = (displayButtonIndex ? ((i < 26) ? c.ToString() : (c.ToString() + c2)) : string.Empty);
-			m_currentButtons[i].DisplayIndexText(text);
+			Buttons[i].DisplayIndexText(text);
 		}
 		int num = 0;
-		foreach (UIPartButton currentButton2 in m_currentButtons)
+		foreach (UIPartButton currentButton2 in Buttons)
 		{
 			num += 1 + currentButton2.SubButtonCount;
 		}
@@ -654,7 +650,7 @@ public class UIPartButtonList : MonoBehaviour
 		RectTransform rectTransform = (RectTransform)m_scrollView.transform;
 		content.sizeDelta = new Vector2(content.sizeDelta.x, (float)j * num4 + num7);
 		rectTransform.sizeDelta = new Vector2(rectTransform.sizeDelta.x, Math.Min((float)j * num4 + num7, 360f * Settings.ScrollViewHeightScale));
-		foreach (UIPartButton currentButton3 in m_currentButtons)
+		foreach (UIPartButton currentButton3 in Buttons)
 		{
 			float num8 = (float)(-(num3 - 1)) / 2f + (float)(num6 % num3);
 			float num9 = (float)(-(j - 1)) / 2f + (float)(num6 / num3);
@@ -685,9 +681,9 @@ public class UIPartButtonList : MonoBehaviour
 	private void SaveButtonStates()
 	{
 		m_buttonStateMap.Clear();
-		for (int i = 0; i < m_currentButtons.Count; i++)
+		for (int i = 0; i < Buttons.Count; i++)
 		{
-			UIPartButton uIPartButton = m_currentButtons[i];
+			UIPartButton uIPartButton = Buttons[i];
 			foreach (BasePart part in uIPartButton.Parts)
 			{
 				m_buttonStateMap.Add((part, uIPartButton.Info.ButtonIndex), new ButtonState(i, uIPartButton));
@@ -697,14 +693,14 @@ public class UIPartButtonList : MonoBehaviour
 
 	private void FreeButtons()
 	{
-		foreach (UIPartButton currentButton in m_currentButtons)
+		foreach (UIPartButton currentButton in Buttons)
 		{
 			if (currentButton != null)
 			{
 				FreeButton(currentButton);
 			}
 		}
-		m_currentButtons.Clear();
+		Buttons.Clear();
 	}
 
 	private T AllocateButton<T>() where T : UIPartButton

@@ -38,8 +38,7 @@ public class WorkshopButton : Button
 	{
 		if (!tagAdded)
 		{
-			GameObject obj = UnityEngine.Object.Instantiate(newTag);
-			obj.transform.parent = base.transform;
+			GameObject obj = UnityEngine.Object.Instantiate(newTag, base.transform, true);
 			obj.transform.localPosition = new Vector3(1.1f, 1.1f, -1f);
 			tagAdded = true;
 		}

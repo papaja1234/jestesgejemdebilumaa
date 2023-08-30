@@ -53,8 +53,6 @@ public class EntityLight : MonoBehaviour
 
 	private bool m_colored;
 
-	private int m_sides;
-
 	private bool m_ignoreCollision;
 
 	public float m_electricity;
@@ -64,10 +62,6 @@ public class EntityLight : MonoBehaviour
 	private Color m_color;
 
 	private INPhysicMaterial m_physicMaterial;
-
-	private BasePart m_part;
-
-	private Transform m_transform;
 
 	private MeshRenderer m_meshRenderer;
 
@@ -81,14 +75,11 @@ public class EntityLight : MonoBehaviour
 
 	public ref LightData Data => ref m_data;
 
-	public int Sides => m_sides;
+	public int Sides { get; private set; }
 
 	public bool Enabled
 	{
-		get
-		{
-			return m_enabled;
-		}
+		get => m_enabled;
 		set
 		{
 			m_enabled = value;
@@ -170,38 +161,38 @@ public class EntityLight : MonoBehaviour
 
 	public int Index { get; set; }
 
-	public GameObject Light => m_transform.gameObject;
+	public GameObject Light => Transform.gameObject;
 
-	public Transform Transform => m_transform;
+	public Transform Transform { get; private set; }
 
-	public BasePart Part => m_part;
+	public BasePart Part { get; private set; }
 
-	public int ComponentIndex => m_part.ConnectedComponent;
+	public int ComponentIndex => Part.ConnectedComponent;
 
 	private void Awake()
 	{
-		m_part = GetComponent<BasePart>();
-		m_transform = base.transform.Find("INLight");
-		if (m_transform == null)
+		Part = GetComponent<BasePart>();
+		Transform = base.transform.Find("INLight");
+		if (Transform == null)
 		{
 			GameObject gameObject = new GameObject("INLight");
-			m_transform = gameObject.transform;
-			m_transform.parent = base.transform;
+			Transform = gameObject.transform;
+			Transform.parent = base.transform;
 			gameObject.AddComponent<MeshRenderer>();
 			gameObject.AddComponent<MeshFilter>();
 		}
-		m_transform.localPosition = new Vector3(0f, 0.5f, -0.5f);
-		m_transform.localRotation = new Quaternion(0f, 0f, 0.70710677f, 0.70710677f);
-		m_meshRenderer = m_transform.GetComponent<MeshRenderer>();
+		Transform.localPosition = new Vector3(0f, 0.5f, -0.5f);
+		Transform.localRotation = new Quaternion(0f, 0f, 0.70710677f, 0.70710677f);
+		m_meshRenderer = Transform.GetComponent<MeshRenderer>();
 		m_meshRenderer.sharedMaterial = new Material(INUnity.CustomTransparentShader);
 		m_meshRenderer.material.color = Color.clear;
-		m_meshFilter = m_transform.GetComponent<MeshFilter>();
+		m_meshFilter = Transform.GetComponent<MeshFilter>();
 	}
 
 	private void Start()
 	{
 		m_manager = EntityLightManager.Instance;
-		m_transform.gameObject.layer = LayerMask.NameToLayer("Ground");
+		Transform.gameObject.layer = LayerMask.NameToLayer("Ground");
 		if ((int)m_type == 0 || (int)m_type == 1)
 		{
 			m_meshFilter.sharedMesh = MeshExtensions.CreateRectMesh(m_length, m_halfWidth);
@@ -216,7 +207,7 @@ public class EntityLight : MonoBehaviour
 			CreateCollider();
 			InitializeColor();
 			InitializePhysicMaterial();
-			BasePart enclosedInto = m_part.m_enclosedInto;
+			BasePart enclosedInto = Part.m_enclosedInto;
 			if (enclosedInto != null && enclosedInto.IsTransparentFrame())
 			{
 				m_ignoreCollision = true;
@@ -228,10 +219,10 @@ public class EntityLight : MonoBehaviour
 	{
 		if (IsLightPillar)
 		{
-			m_collider = m_transform.GetComponent<BoxCollider>();
+			m_collider = Transform.GetComponent<BoxCollider>();
 			if (m_collider == null)
 			{
-				m_collider = m_transform.gameObject.AddComponent<BoxCollider>();
+				m_collider = Transform.gameObject.AddComponent<BoxCollider>();
 			}
 			BoxCollider obj = m_collider as BoxCollider;
 			obj.size = new Vector3(m_length, m_halfWidth * 2f, 1f);
@@ -246,7 +237,7 @@ public class EntityLight : MonoBehaviour
 		PhysicMaterialCombine bounceMode = PhysicMaterialCombine.Average;
 		float friction = 0.7f;
 		PhysicMaterialCombine frictionMode = PhysicMaterialCombine.Average;
-		BasePart enclosedInto = m_part.m_enclosedInto;
+		BasePart enclosedInto = Part.m_enclosedInto;
 		if (enclosedInto != null && (enclosedInto.IsAlienMetalFrame() || enclosedInto.IsColoredrame()))
 		{
 			friction = 0f;
@@ -259,7 +250,7 @@ public class EntityLight : MonoBehaviour
 	{
 		Color color = default(Color);
 		bool flag = !Contraption.Instance.HasTurboCharge;
-		BasePart enclosedInto = m_part.m_enclosedInto;
+		BasePart enclosedInto = Part.m_enclosedInto;
 		if (INSettings.GetBool(INFeature.ColoredFrame) && enclosedInto != null && enclosedInto is ColoredFrame coloredFrame)
 		{
 			m_colored = true;
@@ -319,15 +310,15 @@ public class EntityLight : MonoBehaviour
 		{
 			return;
 		}
-		m_sides = 0;
-		if (Contraption.Instance.ConnectedToGearbox(m_part))
+		Sides = 0;
+		if (Contraption.Instance.ConnectedToGearbox(Part))
 		{
-			Gearbox gearbox = Contraption.Instance.GetGearbox(m_part);
+			Gearbox gearbox = Contraption.Instance.GetGearbox(Part);
 			if (gearbox.m_partTier != 0)
 			{
-				BasePart.GridRotation gridRotation = m_part.m_gridRotation;
+				BasePart.GridRotation gridRotation = Part.m_gridRotation;
 				bool flag = gearbox.IsEnabled() ^ (gridRotation == BasePart.GridRotation.Deg_0 || gridRotation == BasePart.GridRotation.Deg_45 || gridRotation == BasePart.GridRotation.Deg_90 || gridRotation == BasePart.GridRotation.Deg_135);
-				m_sides = (flag ? 1 : 2);
+				Sides = (flag ? 1 : 2);
 			}
 		}
 	}
@@ -342,7 +333,7 @@ public class EntityLight : MonoBehaviour
 	public void HandleCollision(ref EntityLightManager.CCDData data, ref EntityLightManager.TOIResult result)
 	{
 		BasePart component = data.Rigidbody.GetComponent<BasePart>();
-		if (!m_ignoreCollision || !(component != null) || component.ConnectedComponent != m_part.ConnectedComponent)
+		if (!m_ignoreCollision || !(component != null) || component.ConnectedComponent != Part.ConnectedComponent)
 		{
 			EntityLightType type = Type;
 			if ((int)type == 0 || (int)type == 1)
@@ -359,7 +350,7 @@ public class EntityLight : MonoBehaviour
 	private void HandlePillarCollision(ref EntityLightManager.CCDData data, ref EntityLightManager.TOIResult result)
 	{
 		BasePart component = data.Rigidbody.GetComponent<BasePart>();
-		if (!m_ignoreCollision || !(component != null) || component.ConnectedComponent != m_part.ConnectedComponent)
+		if (!m_ignoreCollision || !(component != null) || component.ConnectedComponent != Part.ConnectedComponent)
 		{
 			INBounds bounds = data.Bounds;
 			float timeOfImpact = result.TimeOfImpact;
@@ -414,7 +405,7 @@ public class EntityLight : MonoBehaviour
 	private void HandleShieldAndBoxCollision(ref EntityLightManager.CCDData data, ref EntityLightManager.TOIResult result)
 	{
 		BasePart component = data.Rigidbody.GetComponent<BasePart>();
-		if (!m_ignoreCollision || !(component != null) || component.ConnectedComponent != m_part.ConnectedComponent)
+		if (!m_ignoreCollision || !(component != null) || component.ConnectedComponent != Part.ConnectedComponent)
 		{
 			LightData data2 = m_data;
 			Vector2 vector = data.Position0 - data2.Position0;
@@ -484,7 +475,7 @@ public class EntityLight : MonoBehaviour
 				m_meshRenderer.material.color = Color.clear;
 				return;
 			}
-			if (m_part.m_enclosedInto != null)
+			if (Part.m_enclosedInto != null)
 			{
 				m_meshRenderer.material.color = new Color(1f, 1f, 1f, 0.1f);
 				return;
@@ -494,8 +485,8 @@ public class EntityLight : MonoBehaviour
 			int num2 = 0;
 			for (int i = 0; i < 4; i++)
 			{
-				BasePart part = instance.FindPartAt(m_part.m_coordX + num, m_part.m_coordY + num2);
-				if (instance.CanConnectTo(m_part, part, (BasePart.Direction)i))
+				BasePart part = instance.FindPartAt(Part.m_coordX + num, Part.m_coordY + num2);
+				if (instance.CanConnectTo(Part, part, (BasePart.Direction)i))
 				{
 					m_meshRenderer.material.color = new Color(1f, 1f, 1f, 0.1f);
 					return;
@@ -561,11 +552,11 @@ public class EntityLight : MonoBehaviour
 			return true;
 		}
 		EntityLight component = rigidbody.GetComponent<EntityLight>();
-		if (component == null || !component.IsLightPillar || !Contraption.Instance.ConnectedToGearbox(component.m_part))
+		if (component == null || !component.IsLightPillar || !Contraption.Instance.ConnectedToGearbox(component.Part))
 		{
 			return true;
 		}
-		Gearbox gearbox = Contraption.Instance.GetGearbox(component.m_part);
+		Gearbox gearbox = Contraption.Instance.GetGearbox(component.Part);
 		if (gearbox.m_partTier == BasePart.PartTier.Regular)
 		{
 			return true;
@@ -574,7 +565,7 @@ public class EntityLight : MonoBehaviour
 		Vector2 position = component.m_data.Position1;
 		Vector3 point = raycastHit.point;
 		bool num = direction.x * (point.y - position.y) - direction.y * (point.x - position.x) > 0f;
-		BasePart.GridRotation gridRotation = component.m_part.m_gridRotation;
+		BasePart.GridRotation gridRotation = component.Part.m_gridRotation;
 		return num ^ gearbox.IsEnabled() ^ (gridRotation == BasePart.GridRotation.Deg_0 || gridRotation == BasePart.GridRotation.Deg_45 || gridRotation == BasePart.GridRotation.Deg_90 || gridRotation == BasePart.GridRotation.Deg_135);
 	}
 }

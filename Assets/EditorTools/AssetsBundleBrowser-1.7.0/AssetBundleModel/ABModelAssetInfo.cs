@@ -8,15 +8,12 @@ namespace AssetBundleBrowser.AssetBundleModel
 {
     internal sealed class AssetTreeItem : TreeViewItem
     {
-        private AssetInfo m_asset;
-        internal AssetInfo asset
-        {
-            get { return m_asset; }
-        }
+        internal AssetInfo asset { get; }
+
         internal AssetTreeItem() : base(-1, -1) { }
         internal AssetTreeItem(AssetInfo a) : base(a != null ? a.fullAssetName.GetHashCode() : Random.Range(int.MinValue, int.MaxValue), 0, a != null ? a.displayName : "failed")
         {
-            m_asset = a;
+            asset = a;
             if (a != null)
                 icon = AssetDatabase.GetCachedIcon(a.fullAssetName) as Texture2D;
         }
@@ -26,13 +23,13 @@ namespace AssetBundleBrowser.AssetBundleModel
         {
             get
             {
-                if (m_color.a == 0.0f && m_asset != null)
+                if (m_color.a == 0.0f && asset != null)
                 {
-                    m_color = m_asset.GetColor();
+                    m_color = asset.GetColor();
                 }
                 return m_color;
             }
-            set { m_color = value; }
+            set => m_color = value;
         }
         internal Texture2D MessageIcon()
         {
@@ -40,8 +37,8 @@ namespace AssetBundleBrowser.AssetBundleModel
         }
         internal MessageType HighestMessageLevel()
         {
-            return m_asset != null ?
-                m_asset.HighestMessageLevel() : MessageType.Error;
+            return asset != null ?
+                asset.HighestMessageLevel() : MessageType.Error;
         }
 
         internal bool ContainsChild(AssetInfo asset)
@@ -76,7 +73,6 @@ namespace AssetBundleBrowser.AssetBundleModel
 
         private HashSet<string> m_Parents;
         private string m_AssetName;
-        private string m_DisplayName;
         private string m_BundleName;
         private MessageSystem.MessageState m_AssetMessages = new MessageSystem.MessageState();
 
@@ -91,11 +87,11 @@ namespace AssetBundleBrowser.AssetBundleModel
 
         internal string fullAssetName
         {
-            get { return m_AssetName; }
+            get => m_AssetName;
             set
             {
                 m_AssetName = value;
-                m_DisplayName = System.IO.Path.GetFileNameWithoutExtension(m_AssetName);
+                displayName = System.IO.Path.GetFileNameWithoutExtension(m_AssetName);
 
                 //TODO - maybe there's a way to ask the AssetDatabase for this size info.
                 System.IO.FileInfo fileInfo = new System.IO.FileInfo(m_AssetName);
@@ -105,13 +101,10 @@ namespace AssetBundleBrowser.AssetBundleModel
                     fileSize = 0;
             }
         }
-        internal string displayName
-        {
-            get { return m_DisplayName; }
-        }
-        internal string bundleName
-        { get { return System.String.IsNullOrEmpty(m_BundleName) ? "auto" : m_BundleName; } }
-        
+        internal string displayName { get; private set; }
+
+        internal string bundleName => System.String.IsNullOrEmpty(m_BundleName) ? "auto" : m_BundleName;
+
         internal Color GetColor()
         {
             if (System.String.IsNullOrEmpty(m_BundleName))

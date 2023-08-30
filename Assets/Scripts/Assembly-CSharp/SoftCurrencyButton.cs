@@ -27,8 +27,6 @@ public class SoftCurrencyButton : MonoBehaviour, ICurrencyParticleEffectTarget
 
 	protected float nextUpdate;
 
-	private ScreenPlacement screenPlacement;
-
 	protected CurrencyParticleEffect currencyEffect;
 
 	private Transform shinyEffect;
@@ -47,7 +45,7 @@ public class SoftCurrencyButton : MonoBehaviour, ICurrencyParticleEffectTarget
 
 	public float ScreenPlacementFromBottom => screenPlacementFromBottom;
 
-	public ScreenPlacement Placement => screenPlacement;
+	public ScreenPlacement Placement { get; private set; }
 
 	public CurrencyParticleEffect CurrencyEffect => currencyEffect;
 
@@ -58,7 +56,7 @@ public class SoftCurrencyButton : MonoBehaviour, ICurrencyParticleEffectTarget
 	private void Awake()
 	{
 		currencyEffect = GetComponent<CurrencyParticleEffect>();
-		screenPlacement = GetComponent<ScreenPlacement>();
+		Placement = GetComponent<ScreenPlacement>();
 		if ((bool)currencyEffect)
 		{
 			currencyEffect.SetTarget(this);

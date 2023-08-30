@@ -4,44 +4,26 @@ namespace Spine
 	{
 		internal float[] frames;
 
-		private int[][] drawOrders;
-
 		public float[] Frames
 		{
-			get
-			{
-				return frames;
-			}
-			set
-			{
-				frames = value;
-			}
+			get => frames;
+			set => frames = value;
 		}
 
-		public int[][] DrawOrders
-		{
-			get
-			{
-				return drawOrders;
-			}
-			set
-			{
-				drawOrders = value;
-			}
-		}
+		public int[][] DrawOrders { get; set; }
 
 		public int FrameCount => frames.Length;
 
 		public DrawOrderTimeline(int frameCount)
 		{
 			frames = new float[frameCount];
-			drawOrders = new int[frameCount][];
+			DrawOrders = new int[frameCount][];
 		}
 
 		public void SetFrame(int frameIndex, float time, int[] drawOrder)
 		{
 			frames[frameIndex] = time;
-			drawOrders[frameIndex] = drawOrder;
+			DrawOrders[frameIndex] = drawOrder;
 		}
 
 		public void Apply(Skeleton skeleton, float lastTime, float time, ExposedList<Event> firedEvents, float alpha)
@@ -54,7 +36,7 @@ namespace Spine
 			int num = ((!(time >= array[^1])) ? (Animation.binarySearch(array, time) - 1) : (array.Length - 1));
 			ExposedList<Slot> drawOrder = skeleton.drawOrder;
 			ExposedList<Slot> slots = skeleton.slots;
-			int[] array2 = drawOrders[num];
+			int[] array2 = DrawOrders[num];
 			if (array2 == null)
 			{
 				drawOrder.Clear();

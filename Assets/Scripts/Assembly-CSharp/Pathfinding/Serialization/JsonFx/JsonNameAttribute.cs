@@ -6,9 +6,7 @@ namespace Pathfinding.Serialization.JsonFx
 	[AttributeUsage(AttributeTargets.All, AllowMultiple = false)]
 	public class JsonNameAttribute : Attribute
 	{
-		private string jsonName;
-
-		public string Name => jsonName;
+		public string Name { get; }
 
 		public static string GetJsonName(object value)
 		{

@@ -35,19 +35,13 @@ public class JetEngine : BasePropulsion
 
 	private class FlameController
 	{
-		private Transform m_flameTransform;
-
 		private MeshRenderer m_flameRenderer;
 
 		private bool m_enabled;
 
-		private float m_targetLength;
-
 		private float m_renderLength;
 
 		private float m_lengthChangeRate;
-
-		private float m_targetAngle;
 
 		private float m_renderAngle;
 
@@ -57,15 +51,15 @@ public class JetEngine : BasePropulsion
 
 		private Vector3 m_originalLocalPosition;
 
-		public Transform Flame => m_flameTransform;
+		public Transform Flame { get; }
 
-		public float TargetLength => m_targetLength;
+		public float TargetLength { get; private set; }
 
-		public float TargetAngle => m_targetAngle;
+		public float TargetAngle { get; private set; }
 
 		public FlameController(Transform flame)
 		{
-			m_flameTransform = flame;
+			Flame = flame;
 			m_flameRenderer = flame.GetComponent<MeshRenderer>();
 			m_flameRenderer.material.color = new Color(1f, 1f, 1f, 0.8f);
 			m_originalLength = 20f;
@@ -77,11 +71,11 @@ public class JetEngine : BasePropulsion
 			if (m_enabled != enabled)
 			{
 				m_enabled = enabled;
-				m_flameTransform.gameObject.SetActive(enabled);
+				Flame.gameObject.SetActive(enabled);
 				if (!enabled)
 				{
-					m_targetLength = 0f;
-					m_targetAngle = 0f;
+					TargetLength = 0f;
+					TargetAngle = 0f;
 				}
 			}
 		}
@@ -89,12 +83,12 @@ public class JetEngine : BasePropulsion
 		public void SetLength(float length)
 		{
 			float @float = INSettings.GetFloat(INFeature.JetEngineFlameLength);
-			m_targetLength = @float * length;
+			TargetLength = @float * length;
 		}
 
 		public void SetAngle(float angle)
 		{
-			m_targetAngle = 0f - angle;
+			TargetAngle = 0f - angle;
 		}
 
 		public void Update()
@@ -102,8 +96,8 @@ public class JetEngine : BasePropulsion
 			float num = s_random.NextSingle(-0.1f, 0.1f);
 			float num2 = s_random.NextSingle(-0.05f, 0.05f);
 			float fixedDeltaTime = Time.fixedDeltaTime;
-			m_renderLength += (m_lengthChangeRate += (-16f * m_lengthChangeRate + 32f * (m_targetLength - m_renderLength)) * fixedDeltaTime) * fixedDeltaTime;
-			m_renderAngle += (m_angleChangeRate += (-16f * m_angleChangeRate + 32f * (m_targetAngle - m_renderAngle)) * fixedDeltaTime) * fixedDeltaTime;
+			m_renderLength += (m_lengthChangeRate += (-16f * m_lengthChangeRate + 32f * (TargetLength - m_renderLength)) * fixedDeltaTime) * fixedDeltaTime;
+			m_renderAngle += (m_angleChangeRate += (-16f * m_angleChangeRate + 32f * (TargetAngle - m_renderAngle)) * fixedDeltaTime) * fixedDeltaTime;
 			float num3 = 1.25f * INSettings.GetFloat(INFeature.JetEngineFlameWidth);
 			float num4 = 0.85f;
 			float num5 = m_renderLength * (1f + num);
@@ -115,9 +109,9 @@ public class JetEngine : BasePropulsion
 			Vector3 vector2 = new Vector3((0f - num4) * m_originalLength * 0.5f, 0f);
 			Vector3 localScale = new Vector3(num6 * (1f + num), num3 * num7 * (1f + num2), 1f);
 			Vector3 localPosition = m_originalLocalPosition + vector - vector2;
-			m_flameTransform.localScale = localScale;
-			m_flameTransform.localPosition = localPosition;
-			m_flameTransform.localRotation = Quaternion.AngleAxis(m_renderAngle, Vector3.forward);
+			Flame.localScale = localScale;
+			Flame.localPosition = localPosition;
+			Flame.localRotation = Quaternion.AngleAxis(m_renderAngle, Vector3.forward);
 		}
 	}
 
@@ -132,8 +126,6 @@ public class JetEngine : BasePropulsion
 	private float m_angle;
 
 	private float m_suppliedFuelAmount;
-
-	private int m_fuelComponentIndex;
 
 	private FlameController m_flameController;
 
@@ -151,17 +143,7 @@ public class JetEngine : BasePropulsion
 		}
 	}
 
-	public int FuelComponentIndex
-	{
-		get
-		{
-			return m_fuelComponentIndex;
-		}
-		set
-		{
-			m_fuelComponentIndex = value;
-		}
-	}
+	public int FuelComponentIndex { get; set; }
 
 	static JetEngine()
 	{
@@ -190,7 +172,7 @@ public class JetEngine : BasePropulsion
 	{
 		if (!base.HasGeneratorRef)
 		{
-			return FuelSystem.Instance.GetFuelComponent(m_fuelComponentIndex).FuelBoxCount > 0;
+			return FuelSystem.Instance.GetFuelComponent(FuelComponentIndex).FuelBoxCount > 0;
 		}
 		return false;
 	}
@@ -217,18 +199,18 @@ public class JetEngine : BasePropulsion
 	public override IEnumerable<UIPartTriggerButtonInfo> GetTriggerButtonInfo()
 	{
 		yield return new UIPartTriggerButtonInfo(UIPartButtonType.Trigger, 0, base.Type, 0, base.ConnectedComponent, consistent: true);
-		yield return new UIPartTriggerButtonInfo(UIPartButtonType.Trigger, 1, base.Type, m_fuelComponentIndex, base.ConnectedComponent, consistent: true);
+		yield return new UIPartTriggerButtonInfo(UIPartButtonType.Trigger, 1, base.Type, FuelComponentIndex, base.ConnectedComponent, consistent: true);
 	}
 
 	public override IEnumerable<UIPartSliderButtonInfo> GetSliderButtonInfo()
 	{
 		if (customPartIndex == 0)
 		{
-			yield return new UIPartSliderButtonInfo(UIPartButtonType.Slider, 2, base.Type, m_fuelComponentIndex, base.ConnectedComponent, new UIPartSliderButton.Range(m_maxForce, 1500f, -2000f, 6000f, 100f, 0.02f));
+			yield return new UIPartSliderButtonInfo(UIPartButtonType.Slider, 2, base.Type, FuelComponentIndex, base.ConnectedComponent, new UIPartSliderButton.Range(m_maxForce, 1500f, -2000f, 6000f, 100f, 0.02f));
 			yield break;
 		}
-		yield return new UIPartSliderButtonInfo(UIPartButtonType.Slider, 2, base.Type, m_fuelComponentIndex, base.ConnectedComponent, new UIPartSliderButton.Range(m_maxForce, 1500f, 0f, 6000f, 100f, 0.02f));
-		yield return new UIPartSliderButtonInfo(UIPartButtonType.Slider, 3, base.Type, m_fuelComponentIndex, base.ConnectedComponent, new UIPartSliderButton.Range(m_angle, 0f, -45f, 45f, 2.5f, 0.02f));
+		yield return new UIPartSliderButtonInfo(UIPartButtonType.Slider, 2, base.Type, FuelComponentIndex, base.ConnectedComponent, new UIPartSliderButton.Range(m_maxForce, 1500f, 0f, 6000f, 100f, 0.02f));
+		yield return new UIPartSliderButtonInfo(UIPartButtonType.Slider, 3, base.Type, FuelComponentIndex, base.ConnectedComponent, new UIPartSliderButton.Range(m_angle, 0f, -45f, 45f, 2.5f, 0.02f));
 	}
 
 	private void FixedUpdate()

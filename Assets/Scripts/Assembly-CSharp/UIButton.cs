@@ -13,13 +13,9 @@ public class UIButton : UnityEngine.UI.Button, IDragHandler, IEventSystemHandler
 		Disabled = 4
 	}
 
-	private bool m_isPointerDown;
+	public bool IsPointerDown { get; private set; }
 
-	private bool m_isPointerInside;
-
-	public bool IsPointerDown => m_isPointerDown;
-
-	public bool IsPointerInside => m_isPointerInside;
+	public bool IsPointerInside { get; private set; }
 
 	public ButtonState CurrentState => ToButtonState(base.currentSelectionState);
 
@@ -40,14 +36,14 @@ public class UIButton : UnityEngine.UI.Button, IDragHandler, IEventSystemHandler
 	protected override void OnDisable()
 	{
 		base.OnDisable();
-		m_isPointerDown = false;
-		m_isPointerInside = false;
+		IsPointerDown = false;
+		IsPointerInside = false;
 	}
 
 	public void ResetPointer()
 	{
-		m_isPointerDown = false;
-		m_isPointerInside = false;
+		IsPointerDown = false;
+		IsPointerInside = false;
 		InstantClearState();
 	}
 
@@ -68,7 +64,7 @@ public class UIButton : UnityEngine.UI.Button, IDragHandler, IEventSystemHandler
 		base.OnPointerDown(eventData);
 		if (eventData.button == PointerEventData.InputButton.Left)
 		{
-			m_isPointerDown = true;
+			IsPointerDown = true;
 		}
 		this.PointerDown?.Invoke(eventData);
 	}
@@ -78,7 +74,7 @@ public class UIButton : UnityEngine.UI.Button, IDragHandler, IEventSystemHandler
 		base.OnPointerUp(eventData);
 		if (eventData.button == PointerEventData.InputButton.Left)
 		{
-			m_isPointerDown = false;
+			IsPointerDown = false;
 		}
 		this.PointerUp?.Invoke(eventData);
 	}
@@ -86,14 +82,14 @@ public class UIButton : UnityEngine.UI.Button, IDragHandler, IEventSystemHandler
 	public override void OnPointerEnter(PointerEventData eventData)
 	{
 		base.OnPointerEnter(eventData);
-		m_isPointerInside = true;
+		IsPointerInside = true;
 		this.PointerEnter?.Invoke(eventData);
 	}
 
 	public override void OnPointerExit(PointerEventData eventData)
 	{
 		base.OnPointerExit(eventData);
-		m_isPointerInside = false;
+		IsPointerInside = false;
 		this.PointerExit?.Invoke(eventData);
 	}
 

@@ -58,98 +58,50 @@ namespace Spine
 
 		public float X
 		{
-			get
-			{
-				return x;
-			}
-			set
-			{
-				x = value;
-			}
+			get => x;
+			set => x = value;
 		}
 
 		public float Y
 		{
-			get
-			{
-				return y;
-			}
-			set
-			{
-				y = value;
-			}
+			get => y;
+			set => y = value;
 		}
 
 		public float Rotation
 		{
-			get
-			{
-				return rotation;
-			}
-			set
-			{
-				rotation = value;
-			}
+			get => rotation;
+			set => rotation = value;
 		}
 
 		public float AppliedRotation
 		{
-			get
-			{
-				return appliedRotation;
-			}
-			set
-			{
-				appliedRotation = value;
-			}
+			get => appliedRotation;
+			set => appliedRotation = value;
 		}
 
 		public float ScaleX
 		{
-			get
-			{
-				return scaleX;
-			}
-			set
-			{
-				scaleX = value;
-			}
+			get => scaleX;
+			set => scaleX = value;
 		}
 
 		public float ScaleY
 		{
-			get
-			{
-				return scaleY;
-			}
-			set
-			{
-				scaleY = value;
-			}
+			get => scaleY;
+			set => scaleY = value;
 		}
 
 		public float ShearX
 		{
-			get
-			{
-				return shearX;
-			}
-			set
-			{
-				shearX = value;
-			}
+			get => shearX;
+			set => shearX = value;
 		}
 
 		public float ShearY
 		{
-			get
-			{
-				return shearY;
-			}
-			set
-			{
-				shearY = value;
-			}
+			get => shearY;
+			set => shearY = value;
 		}
 
 		public float A => a;

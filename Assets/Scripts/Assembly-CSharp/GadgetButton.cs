@@ -30,14 +30,9 @@ public class GadgetButton : Button
 
 	private Renderer[] renderers;
 
-	private VisibilityCondition visibilityCondition;
-
 	public bool Enabled
 	{
-		get
-		{
-			return m_enabled;
-		}
+		get => m_enabled;
 		set
 		{
 			colliders = GetComponentsInChildren<Collider>();
@@ -54,14 +49,11 @@ public class GadgetButton : Button
 		}
 	}
 
-	public VisibilityCondition VisibilityCondition => visibilityCondition;
+	public VisibilityCondition VisibilityCondition { get; private set; }
 
 	public float PlacementOrder
 	{
-		get
-		{
-			return m_placementOrder;
-		}
+		get => m_placementOrder;
 		set
 		{
 			m_placementOrder = value;
@@ -85,7 +77,7 @@ public class GadgetButton : Button
 		levelManager = WPFMonoBehaviour.levelManager;
 		colliders = GetComponentsInChildren<Collider>();
 		renderers = GetComponentsInChildren<Renderer>();
-		visibilityCondition = GetComponent<VisibilityCondition>();
+		VisibilityCondition = GetComponent<VisibilityCondition>();
 	}
 
 	protected override void OnActivate()

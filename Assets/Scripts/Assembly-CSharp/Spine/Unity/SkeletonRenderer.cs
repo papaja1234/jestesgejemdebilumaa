@@ -83,12 +83,6 @@ namespace Spine.Unity
 
 		public bool disableRenderingOnOverride = true;
 
-		[NonSerialized]
-		private readonly Dictionary<Material, Material> customMaterialOverride = new Dictionary<Material, Material>();
-
-		[NonSerialized]
-		private readonly Dictionary<Slot, Material> customSlotMaterials = new Dictionary<Slot, Material>();
-
 		private MeshRenderer meshRenderer;
 
 		private MeshFilter meshFilter;
@@ -125,9 +119,11 @@ namespace Spine.Unity
 
 		public SkeletonDataAsset SkeletonDataAsset => skeletonDataAsset;
 
-		public Dictionary<Material, Material> CustomMaterialOverride => customMaterialOverride;
+		[field: NonSerialized]
+		public Dictionary<Material, Material> CustomMaterialOverride { get; } = new Dictionary<Material, Material>();
 
-		public Dictionary<Slot, Material> CustomSlotMaterials => customSlotMaterials;
+		[field: NonSerialized]
+		public Dictionary<Slot, Material> CustomSlotMaterials { get; } = new Dictionary<Slot, Material>();
 
 		public Skeleton Skeleton
 		{
@@ -256,7 +252,7 @@ namespace Spine.Unity
 			Attachment[] items2 = instruction.attachments.Items;
 			ExposedList<SubmeshInstruction> submeshInstructions = instruction.submeshInstructions;
 			submeshInstructions.Clear(clearArray: false);
-			bool flag2 = customSlotMaterials.Count > 0;
+			bool flag2 = CustomSlotMaterials.Count > 0;
 			int num = 0;
 			int num2 = 0;
 			int num3 = 0;
@@ -289,7 +285,7 @@ namespace Spine.Unity
 				Material value;
 				if (flag2)
 				{
-					if (!customSlotMaterials.TryGetValue(slot, out value))
+					if (!CustomSlotMaterials.TryGetValue(slot, out value))
 					{
 						value = (Material)((AtlasRegion)rendererObject).page.rendererObject;
 					}
@@ -338,13 +334,13 @@ namespace Spine.Unity
 			}
 			instruction.vertexCount = num;
 			instruction.immutableTriangles = immutableTriangles;
-			if (customMaterialOverride.Count > 0)
+			if (CustomMaterialOverride.Count > 0)
 			{
 				SubmeshInstruction[] items3 = submeshInstructions.Items;
 				for (int j = 0; j < submeshInstructions.Count; j++)
 				{
 					Material material2 = items3[j].material;
-					if (customMaterialOverride.TryGetValue(material2, out var value2))
+					if (CustomMaterialOverride.TryGetValue(material2, out var value2))
 					{
 						items3[j].material = value2;
 					}

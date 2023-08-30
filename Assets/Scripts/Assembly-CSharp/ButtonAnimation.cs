@@ -20,26 +20,14 @@ public class ButtonAnimation : MonoBehaviour
 
 	public bool PlayWholeAnimation
 	{
-		get
-		{
-			return playWholeAnimation;
-		}
-		set
-		{
-			playWholeAnimation = value;
-		}
+		get => playWholeAnimation;
+		set => playWholeAnimation = value;
 	}
 
 	public string ActivateAnimationName
 	{
-		get
-		{
-			return activateAnimationName;
-		}
-		set
-		{
-			activateAnimationName = value;
-		}
+		get => activateAnimationName;
+		set => activateAnimationName = value;
 	}
 
 	private void OnEnable()

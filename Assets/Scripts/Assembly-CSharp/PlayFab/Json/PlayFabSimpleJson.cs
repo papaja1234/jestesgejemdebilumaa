@@ -57,10 +57,7 @@ namespace PlayFab.Json
 				}
 				return result;
 			}
-			set
-			{
-				_currentJsonSerializerStrategy = value;
-			}
+			set => _currentJsonSerializerStrategy = value;
 		}
 
 		[EditorBrowsable(EditorBrowsableState.Advanced)]

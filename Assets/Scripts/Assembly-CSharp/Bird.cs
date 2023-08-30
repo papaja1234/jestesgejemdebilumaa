@@ -77,8 +77,6 @@ public class Bird : WPFMonoBehaviour
 
 	private const float m_zPosition = -0.2f;
 
-	private float m_colliderRadius = 1f;
-
 	private float m_distanceToSlingShot;
 
 	private List<Collider> m_ignoredCollisions = new List<Collider>();
@@ -95,7 +93,7 @@ public class Bird : WPFMonoBehaviour
 
 	private bool m_isCollided;
 
-	public float ColliderRadius => m_colliderRadius;
+	public float ColliderRadius { get; private set; } = 1f;
 
 	public BirdType GetBirdType()
 	{
@@ -213,7 +211,7 @@ public class Bird : WPFMonoBehaviour
 		SphereCollider sphereCollider = base.collider as SphereCollider;
 		if ((bool)sphereCollider)
 		{
-			m_colliderRadius = sphereCollider.radius;
+			ColliderRadius = sphereCollider.radius;
 		}
 		m_alarm = base.transform.Find("Visualization/Alarm").gameObject;
 		SetAlarmOn(on: false);
@@ -226,7 +224,7 @@ public class Bird : WPFMonoBehaviour
 		m_animation = GetComponent<AnimationHandler>();
 		m_animation.Play("Normal");
 		m_splitDone = true;
-		m_colliderRadius = from.ColliderRadius;
+		ColliderRadius = from.ColliderRadius;
 	}
 
 	public void SetAlarmOn(bool on)
@@ -603,7 +601,7 @@ public class Bird : WPFMonoBehaviour
 		}
 		if ((bool)sphereCollider && m_state == State.Fly)
 		{
-			float radius = Mathf.Max(0.75f * num, m_colliderRadius);
+			float radius = Mathf.Max(0.75f * num, ColliderRadius);
 			sphereCollider.radius = radius;
 		}
 	}

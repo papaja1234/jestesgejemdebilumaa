@@ -8,33 +8,19 @@ using UnityEngine;
 
 public class SettingsData
 {
-	private string m_fileName;
-
 	private bool m_useEncryption;
 
 	private Dictionary<string, object> m_data = new Dictionary<string, object>();
 
-	private bool m_changedSinceSave;
-
 	private CryptoUtility m_crypto;
 
-	public string FileName
-	{
-		get
-		{
-			return m_fileName;
-		}
-		set
-		{
-			m_fileName = value;
-		}
-	}
+	public string FileName { get; set; }
 
-	public bool ChangedSinceLastSave => m_changedSinceSave;
+	public bool ChangedSinceLastSave { get; private set; }
 
 	public SettingsData(string fileName, bool useEncryption, string key)
 	{
-		m_fileName = fileName;
+		FileName = fileName;
 		m_useEncryption = useEncryption;
 		m_crypto = new CryptoUtility(key);
 	}
@@ -148,18 +134,18 @@ public class SettingsData
 		{
 			byte[] array = m_crypto.Encrypt(memoryStream.ToArray());
 			byte[] array2 = CryptoUtility.ComputeHash(array);
-			return TransactionalFileWrite(m_fileName, array2, array);
+			return TransactionalFileWrite(FileName, array2, array);
 		}
-		return TransactionalFileWrite(m_fileName, memoryStream.ToArray());
+		return TransactionalFileWrite(FileName, memoryStream.ToArray());
 	}
 
 	public void Load()
 	{
 		try
 		{
-			if (File.Exists(m_fileName))
+			if (File.Exists(FileName))
 			{
-				Load(m_fileName);
+				Load(FileName);
 				return;
 			}
 		}
@@ -168,9 +154,9 @@ public class SettingsData
 		}
 		try
 		{
-			if (File.Exists(m_fileName + ".bak"))
+			if (File.Exists(FileName + ".bak"))
 			{
-				Load(m_fileName + ".bak");
+				Load(FileName + ".bak");
 				return;
 			}
 		}
@@ -179,9 +165,9 @@ public class SettingsData
 		}
 		try
 		{
-			if (File.Exists(m_fileName + ".bak2"))
+			if (File.Exists(FileName + ".bak2"))
 			{
-				Load(m_fileName + ".bak2");
+				Load(FileName + ".bak2");
 			}
 		}
 		catch
@@ -193,9 +179,9 @@ public class SettingsData
 	{
 		try
 		{
-			if (File.Exists(m_fileName) && new FileInfo(m_fileName).Length > 0)
+			if (File.Exists(FileName) && new FileInfo(FileName).Length > 0)
 			{
-				File.Copy(m_fileName, m_fileName + ".bak2", overwrite: true);
+				File.Copy(FileName, FileName + ".bak2", overwrite: true);
 			}
 		}
 		catch
@@ -286,7 +272,7 @@ public class SettingsData
 	private void Change(Action ChangeData)
 	{
 		ChangeData();
-		m_changedSinceSave = true;
+		ChangedSinceLastSave = true;
 	}
 
 	private bool TransactionalFileWrite(string filename, params byte[][] args)
@@ -309,7 +295,7 @@ public class SettingsData
 			{
 				File.Move(text, filename);
 			}
-			m_changedSinceSave = false;
+			ChangedSinceLastSave = false;
 		}
 		catch
 		{

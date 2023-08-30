@@ -182,47 +182,11 @@ public sealed class LevelManager : WPFMonoBehaviour
 
 	private bool m_levelStartAdDidPause;
 
-	private bool m_requireConnectedContraption;
-
-	private GameState m_gameState;
-
-	private GameState m_stateBeforeTutorial;
-
-	private List<BasePart.PartType> m_partsInGoal = new List<BasePart.PartType>();
-
 	private int m_starCollected;
-
-	private float m_completionTime;
-
-	private bool m_completedLevel;
-
-	private ConstructionUI m_constructionUI;
-
-	private bool m_timeStarted;
 
 	private AudioManager audioManager;
 
-	private LightManager lightManager;
-
-	private int m_gridHeight;
-
-	private int m_gridWidth;
-
-	private int m_gridXmin;
-
-	private int m_gridXmax;
-
-	private Vector3 m_previewCenter;
-
 	private float m_lastTimePlayedCollisionSound;
-
-	private InGameGUI m_inGameGui;
-
-	private List<Challenge> m_challenges = new List<Challenge>();
-
-	private float m_timeLimit;
-
-	private List<float> m_timeLimits = new List<float>();
 
 	private bool m_useSecondStarParts;
 
@@ -233,12 +197,6 @@ public sealed class LevelManager : WPFMonoBehaviour
 	private int m_autoBuildIndex;
 
 	private int m_autoBuildPhase;
-
-	private float m_partShowTimer;
-
-	private int m_unlockedPartIndex = -1;
-
-	private List<ConstructionUI.PartDesc> m_unlockedParts;
 
 	private GameObject m_unlockedPartBackground;
 
@@ -256,10 +214,6 @@ public sealed class LevelManager : WPFMonoBehaviour
 
 	private bool m_openMechanicGift;
 
-	private bool m_useBlueprint;
-
-	private bool m_useSuperBlueprint;
-
 	private bool m_tutorialBookOpened;
 
 	private List<GameObject> m_dynamicObjects = new List<GameObject>();
@@ -268,19 +222,7 @@ public sealed class LevelManager : WPFMonoBehaviour
 
 	private List<GameObject> m_dynamicObjectClones = new List<GameObject>();
 
-	private Dictionary<string, string> m_UsedDessertPlaces = new Dictionary<string, string>();
-
-	private Vector3 m_levelStart;
-
-	private bool m_hasIceGround;
-
 	private GameObject m_ambientSource;
-
-	private bool fastBuilding;
-
-	private bool m_firstTime = true;
-
-	private GameMode m_gameMode;
 
 	public bool m_toolboxOpenUponShopActivation;
 
@@ -300,115 +242,45 @@ public sealed class LevelManager : WPFMonoBehaviour
 		}
 	}
 
-	public GameState gameState
-	{
-		get
-		{
-			return m_gameState;
-		}
-		private set
-		{
-			m_gameState = value;
-		}
-	}
+	public GameState gameState { get; private set; }
 
-	public bool RequireConnectedContraption => m_requireConnectedContraption;
+	public bool RequireConnectedContraption { get; }
 
-	public Contraption ContraptionProto => m_gameMode.ContraptionProto;
+	public Contraption ContraptionProto => CurrentGameMode.ContraptionProto;
 
-	public Contraption ContraptionRunning => m_gameMode.ContraptionRunning;
+	public Contraption ContraptionRunning => CurrentGameMode.ContraptionRunning;
 
-	public ConstructionUI ConstructionUI => m_constructionUI;
+	public ConstructionUI ConstructionUI { get; private set; }
 
-	public LightManager LightManager => lightManager;
+	public LightManager LightManager { get; private set; }
 
-	public bool TimeStarted
-	{
-		get
-		{
-			return m_timeStarted;
-		}
-		set
-		{
-			m_timeStarted = value;
-		}
-	}
+	public bool TimeStarted { get; set; }
 
 	public float TimeReward { get; set; }
 
 	public float OriginalTimeLimit { get; set; }
 
-	public float TimeLimit
-	{
-		get
-		{
-			return m_timeLimit;
-		}
-		set
-		{
-			m_timeLimit = value;
-		}
-	}
+	public float TimeLimit { get; set; }
 
-	public List<float> TimeLimits
-	{
-		get
-		{
-			return m_timeLimits;
-		}
-		set
-		{
-			m_timeLimits = value;
-		}
-	}
+	public List<float> TimeLimits { get; set; } = new List<float>();
 
-	public float CompletionTime
-	{
-		get
-		{
-			return m_completionTime;
-		}
-		set
-		{
-			m_completionTime = value;
-		}
-	}
+	public float CompletionTime { get; set; }
 
-	public bool HasCompleted
-	{
-		get
-		{
-			return m_completedLevel;
-		}
-		set
-		{
-			m_completedLevel = value;
-		}
-	}
+	public bool HasCompleted { get; set; }
 
-	public int GridHeight => m_gridHeight;
+	public int GridHeight { get; private set; }
 
-	public int GridWidth => m_gridWidth;
+	public int GridWidth { get; private set; }
 
-	public int GridXMin => m_gridXmin;
+	public int GridXMin { get; private set; }
 
-	public int GridXMax => m_gridXmax;
+	public int GridXMax { get; private set; }
 
-	public Vector3 PreviewCenter
-	{
-		get
-		{
-			return m_previewCenter;
-		}
-		set
-		{
-			m_previewCenter = value;
-		}
-	}
+	public Vector3 PreviewCenter { get; set; }
 
-	public Vector3 StartingPosition => m_levelStart;
+	public Vector3 StartingPosition { get; private set; }
 
-	public bool HasGroundIce => m_hasIceGround;
+	public bool HasGroundIce { get; }
 
 	public bool EggRequired
 	{
@@ -434,133 +306,43 @@ public sealed class LevelManager : WPFMonoBehaviour
 		}
 	}
 
-	public List<Challenge> Challenges
-	{
-		get
-		{
-			return m_challenges;
-		}
-		set
-		{
-			m_challenges = value;
-		}
-	}
+	public List<Challenge> Challenges { get; set; } = new List<Challenge>();
 
-	public InGameGUI InGameGUI => m_inGameGui;
+	public InGameGUI InGameGUI { get; private set; }
 
-	public Dictionary<string, string> UsedDessertPlaces => m_UsedDessertPlaces;
+	public Dictionary<string, string> UsedDessertPlaces { get; } = new Dictionary<string, string>();
 
-	public List<int> CurrentConstructionGridRows => m_gameMode.CurrentConstructionGridRows;
+	public List<int> CurrentConstructionGridRows => CurrentGameMode.CurrentConstructionGridRows;
 
-	public List<BasePart.PartType> PartsInGoal => m_partsInGoal;
+	public List<BasePart.PartType> PartsInGoal { get; } = new List<BasePart.PartType>();
 
-	public List<ConstructionUI.PartDesc> UnlockedParts
-	{
-		get
-		{
-			return m_unlockedParts;
-		}
-		set
-		{
-			m_unlockedParts = value;
-		}
-	}
+	public List<ConstructionUI.PartDesc> UnlockedParts { get; set; }
 
-	public float PartShowTimer
-	{
-		get
-		{
-			return m_partShowTimer;
-		}
-		set
-		{
-			m_partShowTimer = value;
-		}
-	}
+	public float PartShowTimer { get; set; }
 
-	public int UnlockedPartIndex
-	{
-		get
-		{
-			return m_unlockedPartIndex;
-		}
-		set
-		{
-			m_unlockedPartIndex = value;
-		}
-	}
+	public int UnlockedPartIndex { get; set; } = -1;
 
-	public bool FastBuilding
-	{
-		get
-		{
-			return fastBuilding;
-		}
-		set
-		{
-			fastBuilding = value;
-		}
-	}
+	public bool FastBuilding { get; set; }
 
-	public bool FirstTime
-	{
-		get
-		{
-			return m_firstTime;
-		}
-		set
-		{
-			m_firstTime = value;
-		}
-	}
+	public bool FirstTime { get; set; } = true;
 
-	public GameState StateBeforeTutorial
-	{
-		get
-		{
-			return m_stateBeforeTutorial;
-		}
-		set
-		{
-			m_stateBeforeTutorial = value;
-		}
-	}
+	public GameState StateBeforeTutorial { get; set; }
 
-	public bool UseBlueprint
-	{
-		get
-		{
-			return m_useBlueprint;
-		}
-		set
-		{
-			m_useBlueprint = value;
-		}
-	}
+	public bool UseBlueprint { get; set; }
 
-	public bool UseSuperBlueprint
-	{
-		get
-		{
-			return m_useSuperBlueprint;
-		}
-		set
-		{
-			m_useSuperBlueprint = value;
-		}
-	}
+	public bool UseSuperBlueprint { get; set; }
 
 	public int CurrentSuperBluePrint { get; set; }
 
 	public Vector3 PigStartPosition { get; set; }
 
-	public GameMode CurrentGameMode => m_gameMode;
+	public GameMode CurrentGameMode { get; private set; }
 
-	public Vector3 PreviewOffset => m_gameMode.PreviewOffset;
+	public Vector3 PreviewOffset => CurrentGameMode.PreviewOffset;
 
-	public Vector3 CameraOffset => m_gameMode.CameraOffset;
+	public Vector3 CameraOffset => CurrentGameMode.CameraOffset;
 
-	public Vector3 ConstructionOffset => m_gameMode.ConstructionOffset;
+	public Vector3 ConstructionOffset => CurrentGameMode.ConstructionOffset;
 
 	public CameraLimits CurrentCameraLimits
 	{
@@ -663,11 +445,11 @@ public sealed class LevelManager : WPFMonoBehaviour
 	{
 		get
 		{
-			if (m_gameMode == null)
+			if (CurrentGameMode == null)
 			{
 				return null;
 			}
-			return m_gameMode.Preview;
+			return CurrentGameMode.Preview;
 		}
 	}
 
@@ -675,7 +457,7 @@ public sealed class LevelManager : WPFMonoBehaviour
 
 	public BasePart BuildPart(int x, int y, int rotation, bool flipped, BasePart partPrefab)
 	{
-		BasePart basePart = m_constructionUI.SetPartAt(x, y, partPrefab, autoalign: false);
+		BasePart basePart = ConstructionUI.SetPartAt(x, y, partPrefab, autoalign: false);
 		if (flipped)
 		{
 			basePart.SetFlipped(flipped: true);
@@ -709,9 +491,9 @@ public sealed class LevelManager : WPFMonoBehaviour
 	private void OnDestroy()
 	{
 		SetGameState(GameState.Undefined);
-		if (m_gameMode != null)
+		if (CurrentGameMode != null)
 		{
-			m_gameMode.CleanUp();
+			CurrentGameMode.CleanUp();
 		}
 	}
 
@@ -776,26 +558,26 @@ public sealed class LevelManager : WPFMonoBehaviour
 		float @float = INSettings.GetFloat(INFeature.TerrainScale);
 		m_cameraLimits.topLeft *= @float;
 		m_cameraLimits.size *= @float;
-		m_gameMode = SetupGameMode();
+		CurrentGameMode = SetupGameMode();
 		if (!GameObject.Find("LevelStub"))
 		{
 			Singleton<GameManager>.Instance.InitializeTestLevelState();
 		}
-		m_gameMode.Initialize(this);
-		m_gameMode.OnDataLoadedStart();
+		CurrentGameMode.Initialize(this);
+		CurrentGameMode.OnDataLoadedStart();
 		UnityEngine.Object.Instantiate(m_gameData.effectManager);
 		if ((bool)m_inGameGuiPrefab)
 		{
 			GameObject gameObject = UnityEngine.Object.Instantiate(m_inGameGuiPrefab);
 			gameObject.name = m_inGameGuiPrefab.name;
-			m_inGameGui = gameObject.GetComponent<InGameGUI>();
+			InGameGUI = gameObject.GetComponent<InGameGUI>();
 			Vector3 position = WPFMonoBehaviour.hudCamera.transform.position;
-			m_inGameGui.transform.position = new Vector3(position.x, position.y, m_inGameGui.transform.position.z);
+			InGameGUI.transform.position = new Vector3(position.x, position.y, InGameGUI.transform.position.z);
 		}
-		m_gameMode.InitGameMode();
-		if (m_constructionUI != null)
+		CurrentGameMode.InitGameMode();
+		if (ConstructionUI != null)
 		{
-			m_constructionUI.SetMoveButtonStates();
+			ConstructionUI.SetMoveButtonStates();
 		}
 		DynamicObject[] array = UnityEngine.Object.FindObjectsOfType<DynamicObject>();
 		for (int i = 0; i < array.Length; i++)
@@ -868,10 +650,10 @@ public sealed class LevelManager : WPFMonoBehaviour
 		if (m_darkLevel)
 		{
 			GameObject gameObject5 = UnityEngine.Object.Instantiate(Resources.Load<GameObject>("Prefabs/Lights/LightManager"));
-			lightManager = gameObject5.GetComponent<LightManager>();
-			lightManager.Init(this);
+			LightManager = gameObject5.GetComponent<LightManager>();
+			LightManager.Init(this);
 		}
-		m_gameMode.OnDataLoadedDone();
+		CurrentGameMode.OnDataLoadedDone();
 		EventManager.Send(new GameLevelLoaded(Singleton<GameManager>.Instance.CurrentLevel, Singleton<GameManager>.Instance.CurrentEpisodeIndex));
 	}
 
@@ -922,7 +704,7 @@ public sealed class LevelManager : WPFMonoBehaviour
 
 	public void CameraPreviewDone()
 	{
-		if (m_sandbox && m_constructionUI.UnlockedParts.Count > 0 && !INSettings.GetBool(INFeature.PartCounter))
+		if (m_sandbox && ConstructionUI.UnlockedParts.Count > 0 && !INSettings.GetBool(INFeature.PartCounter))
 		{
 			SetGameState(GameState.ShowingUnlockedParts);
 		}
@@ -990,8 +772,8 @@ public sealed class LevelManager : WPFMonoBehaviour
 
 	public void PlaceBuildArea()
 	{
-		float x = m_gameMode.ContraptionProto.FindPig().transform.localPosition.x;
-		Vector3 position = m_gameMode.ContraptionRunning.FindPig().transform.position;
+		float x = CurrentGameMode.ContraptionProto.FindPig().transform.localPosition.x;
+		Vector3 position = CurrentGameMode.ContraptionRunning.FindPig().transform.position;
 		Vector3 vector = position;
 		int layerMask = 1 << LayerMask.NameToLayer("Ground");
 		if (Physics.Raycast(new Ray(position, new Vector3(0f, -1f, 0f)), out var hitInfo, 100f, layerMask))
@@ -1027,8 +809,8 @@ public sealed class LevelManager : WPFMonoBehaviour
 		}
 		vector.x += num2;
 		vector.z = 0f;
-		m_constructionUI.transform.position = vector;
-		m_gameMode.ContraptionProto.transform.position = vector;
+		ConstructionUI.transform.position = vector;
+		CurrentGameMode.ContraptionProto.transform.position = vector;
 	}
 
 	public void ShowPurchaseDialog(IapManager.InAppPurchaseItemType iapType)
@@ -1054,10 +836,10 @@ public sealed class LevelManager : WPFMonoBehaviour
 				spriteID = "33e4b4c2-4626-4e65-8b5e-a1e9b0df563d";
 				break;
 			}
-			m_inGameGui.Hide();
+			InGameGUI.Hide();
 			Singleton<IapManager>.Instance.GetShop().ConfirmSinglePurchase(iapType.ToString(), spriteID, string.Empty, 1, delegate
 			{
-				m_inGameGui.Show();
+				InGameGUI.Show();
 				ResourceBar.Instance.ShowItem(ResourceBar.Item.SnoutCoin, showItem: false);
 			});
 		}
@@ -1067,11 +849,11 @@ public sealed class LevelManager : WPFMonoBehaviour
 	{
 		if (Singleton<BuildCustomizationLoader>.Instance.IAPEnabled)
 		{
-			m_toolboxOpenUponShopActivation = m_inGameGui.BuildMenu.ToolboxButton.ToolboxOpen;
-			m_inGameGui.Hide();
+			m_toolboxOpenUponShopActivation = InGameGUI.BuildMenu.ToolboxButton.ToolboxOpen;
+			InGameGUI.Hide();
 			Singleton<IapManager>.Instance.OpenShopPage(delegate
 			{
-				m_inGameGui.Show();
+				InGameGUI.Show();
 			}, pageName);
 		}
 	}
@@ -1092,20 +874,20 @@ public sealed class LevelManager : WPFMonoBehaviour
 		m_mechanicDustTimer = 0f;
 		m_autoBuildIndex = 0;
 		m_autoBuildPhase = 0;
-		m_inGameGui.BuildMenu.PigMechanic.SetTime(0.6f);
-		m_inGameGui.BuildMenu.PigMechanic.Play();
+		InGameGUI.BuildMenu.PigMechanic.SetTime(0.6f);
+		InGameGUI.BuildMenu.PigMechanic.Play();
 	}
 
 	public void SetGameState(GameState newState)
 	{
 		GameState prevState = gameState;
-		gameState = m_gameMode.SetGameState(gameState, newState);
+		gameState = CurrentGameMode.SetGameState(gameState, newState);
 		EventManager.Send(new GameStateChanged(gameState, prevState));
 	}
 
 	public void HandleSnapshotFinished()
 	{
-		m_inGameGui.ShowCurrentMenu();
+		InGameGUI.ShowCurrentMenu();
 		SetGameState(GameState.Continue);
 		if (Singleton<SocialGameManager>.IsInstantiated())
 		{
@@ -1140,14 +922,14 @@ public sealed class LevelManager : WPFMonoBehaviour
 		GameProgress.AddDesserts(eventData.dessert.saveId, 1);
 		m_CollectedDessertsCount++;
 		string key = Singleton<GameManager>.Instance.CurrentSceneName + "_dessert_placement";
-		if (m_UsedDessertPlaces.Remove(eventData.dessert.place.name))
+		if (UsedDessertPlaces.Remove(eventData.dessert.place.name))
 		{
 			string value = string.Empty;
-			if (m_UsedDessertPlaces.Count > 0)
+			if (UsedDessertPlaces.Count > 0)
 			{
 				int num = 0;
-				string[] array = new string[m_UsedDessertPlaces.Count];
-				foreach (KeyValuePair<string, string> usedDessertPlace in m_UsedDessertPlaces)
+				string[] array = new string[UsedDessertPlaces.Count];
+				foreach (KeyValuePair<string, string> usedDessertPlace in UsedDessertPlaces)
 				{
 					array[num] = usedDessertPlace.Key + ":" + usedDessertPlace.Value;
 					num++;
@@ -1169,7 +951,7 @@ public sealed class LevelManager : WPFMonoBehaviour
 			return false;
 		}
 		string key = Singleton<GameManager>.Instance.CurrentSceneName + "_dessert_placement";
-		m_UsedDessertPlaces.Clear();
+		UsedDessertPlaces.Clear();
 		string @string = GameProgress.GetString(key, null);
 		if (string.IsNullOrEmpty(@string))
 		{
@@ -1187,20 +969,20 @@ public sealed class LevelManager : WPFMonoBehaviour
 			string[] placeDessert = array[i].Split(new char[1] { ':' }, 2);
 			if (placeDessert == null || placeDessert.Length < 2 || string.IsNullOrEmpty(placeDessert[0]) || string.IsNullOrEmpty(placeDessert[1]))
 			{
-				m_UsedDessertPlaces.Clear();
+				UsedDessertPlaces.Clear();
 				return false;
 			}
 			Transform transform = dessertPlacesRoot.transform.Find(placeDessert[0]);
 			GameObject gameObject = WPFMonoBehaviour.gameData.m_desserts.Find((GameObject dessert) => dessert != null && dessert.GetComponent<Dessert>().saveId == placeDessert[1]);
 			if (!(transform != null) || !(gameObject != null))
 			{
-				m_UsedDessertPlaces.Clear();
+				UsedDessertPlaces.Clear();
 				return false;
 			}
 			array2[num].dessert = gameObject;
 			array2[num].place = transform;
 			num++;
-			m_UsedDessertPlaces.Add(placeDessert[0], placeDessert[1]);
+			UsedDessertPlaces.Add(placeDessert[0], placeDessert[1]);
 		}
 		for (int j = 0; j < num; j++)
 		{
@@ -1215,36 +997,36 @@ public sealed class LevelManager : WPFMonoBehaviour
 
 	public void NotifyGoalReachedByPart(BasePart.PartType partType)
 	{
-		m_gameMode.NotifyGoalReachedByPart(partType);
+		CurrentGameMode.NotifyGoalReachedByPart(partType);
 	}
 
 	public bool PlayerHasRequiredObjects()
 	{
-		return m_gameMode.PlayerHasRequiredObjects();
+		return CurrentGameMode.PlayerHasRequiredObjects();
 	}
 
 	public void NotifyGoalReached()
 	{
-		m_gameMode.NotifyGoalReached();
+		CurrentGameMode.NotifyGoalReached();
 	}
 
 	public bool IsPartTransported(BasePart.PartType partType)
 	{
-		BasePart basePart = m_gameMode.ContraptionRunning.FindPart(partType);
+		BasePart basePart = CurrentGameMode.ContraptionRunning.FindPart(partType);
 		if (basePart == null)
 		{
 			return false;
 		}
-		if (m_gameMode.ContraptionRunning.IsConnectedToPig(basePart))
+		if (CurrentGameMode.ContraptionRunning.IsConnectedToPig(basePart))
 		{
 			return true;
 		}
 		if ((bool)basePart)
 		{
-			int connectedComponent = m_gameMode.ContraptionRunning.FindPig().ConnectedComponent;
-			for (int i = 0; i < m_gameMode.ContraptionRunning.Parts.Count; i++)
+			int connectedComponent = CurrentGameMode.ContraptionRunning.FindPig().ConnectedComponent;
+			for (int i = 0; i < CurrentGameMode.ContraptionRunning.Parts.Count; i++)
 			{
-				if (m_gameMode.ContraptionRunning.Parts[i] != null && m_gameMode.ContraptionRunning.Parts[i].ConnectedComponent == connectedComponent && Vector3.Distance(basePart.Position, m_gameMode.ContraptionRunning.Parts[i].Position) < 2.5f)
+				if (CurrentGameMode.ContraptionRunning.Parts[i] != null && CurrentGameMode.ContraptionRunning.Parts[i].ConnectedComponent == connectedComponent && Vector3.Distance(basePart.Position, CurrentGameMode.ContraptionRunning.Parts[i].Position) < 2.5f)
 				{
 					return true;
 				}
@@ -1260,18 +1042,18 @@ public sealed class LevelManager : WPFMonoBehaviour
 
 	public void CreateGrid(int newGridWidth, int newGridHeight, int newGridXMin, int newGridXMax, Vector3 position)
 	{
-		m_gridWidth = newGridWidth;
-		m_gridHeight = newGridHeight;
-		m_gridXmin = newGridXMin;
-		m_gridXmax = newGridXMax;
-		m_levelStart = position;
+		GridWidth = newGridWidth;
+		GridHeight = newGridHeight;
+		GridXMin = newGridXMin;
+		GridXMax = newGridXMax;
+		StartingPosition = position;
 		if ((bool)WPFMonoBehaviour.gameData.m_constructionUIPrefab)
 		{
 			Transform transform = UnityEngine.Object.Instantiate(WPFMonoBehaviour.gameData.m_constructionUIPrefab);
 			transform.gameObject.name = WPFMonoBehaviour.gameData.m_constructionUIPrefab.name;
 			if ((bool)transform)
 			{
-				m_constructionUI = transform.GetComponent<ConstructionUI>();
+				ConstructionUI = transform.GetComponent<ConstructionUI>();
 				transform.position = position;
 			}
 		}
@@ -1285,18 +1067,18 @@ public sealed class LevelManager : WPFMonoBehaviour
 		}
 		if (INSettings.GetInt(INFeature.GridSize) != 1)
 		{
-			if (x >= m_gridXmin && x <= m_gridXmax && y >= 0)
+			if (x >= GridXMin && x <= GridXMax && y >= 0)
 			{
-				return y < m_gridHeight;
+				return y < GridHeight;
 			}
 			return false;
 		}
-		if (x < m_gridXmin || x > m_gridXmax || y < 0 || y >= m_gridHeight)
+		if (x < GridXMin || x > GridXMax || y < 0 || y >= GridHeight)
 		{
 			return false;
 		}
-		int index = m_gridHeight - y - 1;
-		int num = x - m_gridXmin;
+		int index = GridHeight - y - 1;
+		int num = x - GridXMin;
 		return (CurrentConstructionGridRows[index] & (1 << num)) != 0;
 	}
 
@@ -1319,7 +1101,7 @@ public sealed class LevelManager : WPFMonoBehaviour
 	{
 		if (Application.isPlaying)
 		{
-			return m_gameMode.GetPartCount(type);
+			return CurrentGameMode.GetPartCount(type);
 		}
 		int num = 0;
 		foreach (PartCount partTypeCount in m_partTypeCounts)
@@ -1410,7 +1192,7 @@ public sealed class LevelManager : WPFMonoBehaviour
 		{
 			EventManager.Send(default(UserInputEvent));
 		}
-		m_gameMode.Update();
+		CurrentGameMode.Update();
 	}
 
 	private void UpdatePreview()
@@ -1430,13 +1212,13 @@ public sealed class LevelManager : WPFMonoBehaviour
 
 	private void UpdateRunning()
 	{
-		if (m_timeStarted)
+		if (TimeStarted)
 		{
 			TimeElapsed += Time.deltaTime;
 		}
 		else if (Vector3.Distance(ContraptionRunning.FindPig().transform.position, PigStartPosition) >= 1f)
 		{
-			m_timeStarted = true;
+			TimeStarted = true;
 		}
 	}
 
@@ -1448,28 +1230,27 @@ public sealed class LevelManager : WPFMonoBehaviour
 			m_unlockedPartBackground.transform.position = new Vector3(WPFMonoBehaviour.hudCamera.transform.position.x, WPFMonoBehaviour.hudCamera.transform.position.y, WPFMonoBehaviour.hudCamera.transform.position.z + 2f);
 			float num = WPFMonoBehaviour.hudCamera.orthographicSize * 0.15f;
 			m_unlockedPartBackground.transform.localScale = new Vector3(num, num, num);
-			GameObject obj = UnityEngine.Object.Instantiate(WPFMonoBehaviour.gameData.m_partAppearBackground);
-			obj.transform.parent = m_unlockedPartBackground.transform;
+			GameObject obj = UnityEngine.Object.Instantiate(WPFMonoBehaviour.gameData.m_partAppearBackground, m_unlockedPartBackground.transform, true);
 			obj.transform.localPosition = Vector3.zero;
 			obj.transform.localScale = Vector3.one;
 			obj.GetComponent<Animation>().Play("BringInPartBox");
 		}
-		m_partShowTimer += Time.deltaTime;
-		if (m_unlockedPartIndex == -1)
+		PartShowTimer += Time.deltaTime;
+		if (UnlockedPartIndex == -1)
 		{
-			if (m_partShowTimer > 0.6f)
+			if (PartShowTimer > 0.6f)
 			{
-				m_partShowTimer = 0f;
-				m_unlockedPartIndex = 0;
+				PartShowTimer = 0f;
+				UnlockedPartIndex = 0;
 			}
 		}
-		else if (m_partShowTimer < 1.25f && m_unlockedPartIndex < m_unlockedParts.Count)
+		else if (PartShowTimer < 1.25f && UnlockedPartIndex < UnlockedParts.Count)
 		{
-			ConstructionUI.PartDesc partDesc = m_unlockedParts[m_unlockedPartIndex];
+			ConstructionUI.PartDesc partDesc = UnlockedParts[UnlockedPartIndex];
 			if (!m_dragIcon)
 			{
 				m_dragIcon = new GameObject();
-				float num2 = Vector3.Distance(m_constructionUI.GridPositionToGuiPosition(0, 0), m_constructionUI.GridPositionToGuiPosition(1, 0));
+				float num2 = Vector3.Distance(ConstructionUI.GridPositionToGuiPosition(0, 0), ConstructionUI.GridPositionToGuiPosition(1, 0));
 				m_dragIcon.transform.localScale = new Vector3(num2, num2, num2);
 				m_dragIcon.transform.position = new Vector3(WPFMonoBehaviour.hudCamera.transform.position.x, WPFMonoBehaviour.hudCamera.transform.position.y, WPFMonoBehaviour.hudCamera.transform.position.z + 1f);
 				GameObject obj2 = UnityEngine.Object.Instantiate(partDesc.part.m_constructionIconSprite.gameObject, new Vector3(1000f, 0f, 0f), Quaternion.identity);
@@ -1480,10 +1261,10 @@ public sealed class LevelManager : WPFMonoBehaviour
 				obj2.GetComponent<Animation>().AddClip(WPFMonoBehaviour.gameData.m_partAppearAnimation, "PartAppear");
 				obj2.GetComponent<Animation>().Play("PartAppear");
 			}
-			if (m_partShowTimer > 0.75f)
+			if (PartShowTimer > 0.75f)
 			{
 				Vector3 item = new Vector3(WPFMonoBehaviour.hudCamera.transform.position.x, WPFMonoBehaviour.hudCamera.transform.position.y, WPFMonoBehaviour.hudCamera.transform.position.z + 1f);
-				GameObject gameObject = m_constructionUI.FindPartButton(partDesc.part.m_partType);
+				GameObject gameObject = ConstructionUI.FindPartButton(partDesc.part.m_partType);
 				if (!(gameObject == null))
 				{
 					Vector3 position = gameObject.transform.position;
@@ -1494,23 +1275,23 @@ public sealed class LevelManager : WPFMonoBehaviour
 					list.Add(item);
 					list.Add(new Vector3(0.4f * item.x + 0.6f * position.x, 0.2f * item.y + 0.8f * position.y, item.z));
 					list.Add(position);
-					float t = MathsUtil.EaseInOutQuad(m_partShowTimer - 0.75f, 0f, 1f, 0.5f);
+					float t = MathsUtil.EaseInOutQuad(PartShowTimer - 0.75f, 0f, 1f, 0.5f);
 					m_dragIcon.transform.position = Tutorial.PositionOnSpline(list, t);
 				}
 			}
 		}
 		else
 		{
-			if (m_unlockedPartIndex < m_unlockedParts.Count)
+			if (UnlockedPartIndex < UnlockedParts.Count)
 			{
-				ConstructionUI.PartDesc partDesc2 = m_unlockedParts[m_unlockedPartIndex];
-				m_constructionUI.AddUnlockedPart(partDesc2.part.m_partType, partDesc2.maxCount);
+				ConstructionUI.PartDesc partDesc2 = UnlockedParts[UnlockedPartIndex];
+				ConstructionUI.AddUnlockedPart(partDesc2.part.m_partType, partDesc2.maxCount);
 			}
-			m_partShowTimer = 0f;
-			m_unlockedPartIndex++;
+			PartShowTimer = 0f;
+			UnlockedPartIndex++;
 			UnityEngine.Object.Destroy(m_dragIcon);
 			m_dragIcon = null;
-			if (m_unlockedPartIndex >= m_unlockedParts.Count)
+			if (UnlockedPartIndex >= UnlockedParts.Count)
 			{
 				m_unlockedPartBackground.transform.GetChild(0).GetComponent<Animation>().Play("BringOutPartBox");
 				UnityEngine.Object.Destroy(m_unlockedPartBackground, 1f);
@@ -1525,14 +1306,14 @@ public sealed class LevelManager : WPFMonoBehaviour
 		m_autoBuildTimer += Time.deltaTime;
 		if (m_autoBuildPhase == 0)
 		{
-			Vector3 b = m_constructionUI.RelativeLevelPositionToHudPosition(new Vector3((float)WPFMonoBehaviour.levelManager.GridXMax + 0.5f, -0.5f, 0f));
+			Vector3 b = ConstructionUI.RelativeLevelPositionToHudPosition(new Vector3((float)WPFMonoBehaviour.levelManager.GridXMax + 0.5f, -0.5f, 0f));
 			Vector3 a = WPFMonoBehaviour.hudCamera.ScreenToWorldPoint(new Vector3(Screen.width, 0f, 0f));
 			a.x += 2.5f;
 			a.y = b.y;
 			a.z = b.z;
-			if (m_autoBuildTimer <= ((!fastBuilding) ? 0.7f : mechanicAnimationTimerOverride))
+			if (m_autoBuildTimer <= ((!FastBuilding) ? 0.7f : mechanicAnimationTimerOverride))
 			{
-				float t = MathsUtil.EaseInOutQuad(m_autoBuildTimer, 0f, 1f, (!fastBuilding) ? 0.7f : mechanicAnimationTimerOverride);
+				float t = MathsUtil.EaseInOutQuad(m_autoBuildTimer, 0f, 1f, (!FastBuilding) ? 0.7f : mechanicAnimationTimerOverride);
 				GameObject gameObject = GameObject.Find("PigMechanic");
 				gameObject.transform.position = Vector3.Slerp(a, b, t);
 				m_mechanicDustTimer += Time.deltaTime;
@@ -1544,7 +1325,7 @@ public sealed class LevelManager : WPFMonoBehaviour
 					WPFMonoBehaviour.effectManager.CreateParticles(WPFMonoBehaviour.gameData.m_dustParticles, position2);
 				}
 			}
-			else if (m_autoBuildTimer > ((!fastBuilding) ? 1f : mechanicAnimationTimerOverride))
+			else if (m_autoBuildTimer > ((!FastBuilding) ? 1f : mechanicAnimationTimerOverride))
 			{
 				m_autoBuildPhase = 1;
 			}
@@ -1553,7 +1334,7 @@ public sealed class LevelManager : WPFMonoBehaviour
 		{
 			if (m_autoBuildPart == null)
 			{
-				if (!(m_autoBuildTimer > ((!fastBuilding) ? 0.2f : animationTimerOverride)))
+				if (!(m_autoBuildTimer > ((!FastBuilding) ? 0.2f : animationTimerOverride)))
 				{
 					return;
 				}
@@ -1561,7 +1342,7 @@ public sealed class LevelManager : WPFMonoBehaviour
 				if (m_autoBuildIndex < m_autoBuildData.ContraptionDatasetList.Count)
 				{
 					ContraptionDataset.ContraptionDatasetUnit contraptionDatasetUnit = m_autoBuildData.ContraptionDatasetList[m_autoBuildIndex];
-					ConstructionUI.PartDesc partDesc = m_constructionUI.FindPartDesc((BasePart.PartType)contraptionDatasetUnit.partType);
+					ConstructionUI.PartDesc partDesc = ConstructionUI.FindPartDesc((BasePart.PartType)contraptionDatasetUnit.partType);
 					if (partDesc != null)
 					{
 						partDesc.useCount++;
@@ -1569,7 +1350,7 @@ public sealed class LevelManager : WPFMonoBehaviour
 					}
 					m_autoBuildPart = partDesc;
 					m_dragIcon = UnityEngine.Object.Instantiate(partDesc.part.m_constructionIconSprite.gameObject, new Vector3(1000f, 0f, 0f), Quaternion.identity);
-					float num = Vector3.Distance(m_constructionUI.GridPositionToGuiPosition(0, 0), m_constructionUI.GridPositionToGuiPosition(1, 0));
+					float num = Vector3.Distance(ConstructionUI.GridPositionToGuiPosition(0, 0), ConstructionUI.GridPositionToGuiPosition(1, 0));
 					m_dragIcon.transform.localScale = new Vector3(num, num, num);
 				}
 				else
@@ -1577,13 +1358,13 @@ public sealed class LevelManager : WPFMonoBehaviour
 					m_autoBuildPhase = 2;
 				}
 			}
-			else if (m_autoBuildTimer < ((!fastBuilding) ? 0.2f : animationTimerOverride))
+			else if (m_autoBuildTimer < ((!FastBuilding) ? 0.2f : animationTimerOverride))
 			{
 				ContraptionDataset.ContraptionDatasetUnit contraptionDatasetUnit2 = m_autoBuildData.ContraptionDatasetList[m_autoBuildIndex];
 				Vector3 position3 = GameObject.Find("PartSelector").GetComponent<PartSelector>().FindPartButton(m_autoBuildPart)
 					.transform.position;
 				position3.z = WPFMonoBehaviour.hudCamera.transform.position.z + 1f;
-				Vector3 item = m_constructionUI.RelativeLevelPositionToHudPosition(new Vector3(contraptionDatasetUnit2.x, contraptionDatasetUnit2.y, 0f));
+				Vector3 item = ConstructionUI.RelativeLevelPositionToHudPosition(new Vector3(contraptionDatasetUnit2.x, contraptionDatasetUnit2.y, 0f));
 				item.z = WPFMonoBehaviour.hudCamera.transform.position.z + 1f;
 				List<Vector3> list = new List<Vector3>();
 				list.Add(position3);
@@ -1592,14 +1373,14 @@ public sealed class LevelManager : WPFMonoBehaviour
 				float t2 = MathsUtil.EaseInOutQuad(m_autoBuildTimer, 0f, 1f, 0.2f);
 				m_dragIcon.transform.position = Tutorial.PositionOnSpline(list, t2);
 			}
-			else if (m_autoBuildTimer > ((!fastBuilding) ? 0.2f : animationTimerOverride))
+			else if (m_autoBuildTimer > ((!FastBuilding) ? 0.2f : animationTimerOverride))
 			{
 				UnityEngine.Object.Destroy(m_dragIcon);
 				ContraptionDataset.ContraptionDatasetUnit contraptionDatasetUnit3 = m_autoBuildData.ContraptionDatasetList[m_autoBuildIndex];
 				BasePart basePart = BuildPart(contraptionDatasetUnit3, m_autoBuildPart.part);
 				basePart.GetComponent<BasePart>().ChangeVisualConnections();
 				ContraptionProto.RefreshNeighbours(basePart.m_coordX, basePart.m_coordY);
-				Vector3 position4 = m_constructionUI.GridPositionToWorldPosition(contraptionDatasetUnit3.x, contraptionDatasetUnit3.y);
+				Vector3 position4 = ConstructionUI.GridPositionToWorldPosition(contraptionDatasetUnit3.x, contraptionDatasetUnit3.y);
 				position4.z += -1f;
 				WPFMonoBehaviour.effectManager.CreateParticles(WPFMonoBehaviour.gameData.m_constructionParticles, position4);
 				m_autoBuildIndex++;
@@ -1613,14 +1394,14 @@ public sealed class LevelManager : WPFMonoBehaviour
 			{
 				return;
 			}
-			Vector3 a2 = m_constructionUI.RelativeLevelPositionToHudPosition(new Vector3((float)WPFMonoBehaviour.levelManager.GridXMax + 0.5f, -0.5f, 0f));
+			Vector3 a2 = ConstructionUI.RelativeLevelPositionToHudPosition(new Vector3((float)WPFMonoBehaviour.levelManager.GridXMax + 0.5f, -0.5f, 0f));
 			Vector3 b2 = WPFMonoBehaviour.hudCamera.ScreenToWorldPoint(new Vector3(Screen.width, 0f, 0f));
 			b2.x += 2.5f;
 			b2.y = a2.y;
 			b2.z = a2.z;
-			if (m_autoBuildTimer <= ((!fastBuilding) ? 0.7f : mechanicAnimationTimerOverride))
+			if (m_autoBuildTimer <= ((!FastBuilding) ? 0.7f : mechanicAnimationTimerOverride))
 			{
-				float t3 = MathsUtil.EaseInOutQuad(m_autoBuildTimer, 0f, 1f, (!fastBuilding) ? 0.7f : mechanicAnimationTimerOverride);
+				float t3 = MathsUtil.EaseInOutQuad(m_autoBuildTimer, 0f, 1f, (!FastBuilding) ? 0.7f : mechanicAnimationTimerOverride);
 				GameObject gameObject2 = GameObject.Find("PigMechanic");
 				gameObject2.transform.position = Vector3.Slerp(a2, b2, t3);
 				m_mechanicDustTimer += Time.deltaTime;
@@ -1635,7 +1416,7 @@ public sealed class LevelManager : WPFMonoBehaviour
 			else
 			{
 				SetGameState(GameState.Building);
-				m_constructionUI.SetMoveButtonStates();
+				ConstructionUI.SetMoveButtonStates();
 				Singleton<GuiManager>.Instance.IsEnabled = true;
 			}
 		}
@@ -1687,25 +1468,25 @@ public sealed class LevelManager : WPFMonoBehaviour
 	public void AddToTimeLimit(float time)
 	{
 		TimeReward = time;
-		for (int i = 0; i < m_timeLimits.Count; i++)
+		for (int i = 0; i < TimeLimits.Count; i++)
 		{
-			m_timeLimits[i] += time;
-			m_timeLimit += time;
+			TimeLimits[i] += time;
+			TimeLimit += time;
 		}
-		for (int j = 0; j < m_challenges.Count; j++)
+		for (int j = 0; j < Challenges.Count; j++)
 		{
-			if (m_challenges[j].Type == Challenge.ChallengeType.Time)
+			if (Challenges[j].Type == Challenge.ChallengeType.Time)
 			{
-				(m_challenges[j] as TimeChallenge).m_targetTime += time;
+				(Challenges[j] as TimeChallenge).m_targetTime += time;
 			}
 		}
 	}
 
 	public bool IsTimeChallengesCompleted()
 	{
-		for (int i = 0; i < m_challenges.Count; i++)
+		for (int i = 0; i < Challenges.Count; i++)
 		{
-			if (m_challenges[i].Type == Challenge.ChallengeType.Time && GameProgress.IsChallengeCompleted(Singleton<GameManager>.Instance.CurrentSceneName, m_challenges[i].ChallengeNumber) && m_challenges[i].IsCompleted())
+			if (Challenges[i].Type == Challenge.ChallengeType.Time && GameProgress.IsChallengeCompleted(Singleton<GameManager>.Instance.CurrentSceneName, Challenges[i].ChallengeNumber) && Challenges[i].IsCompleted())
 			{
 				return true;
 			}

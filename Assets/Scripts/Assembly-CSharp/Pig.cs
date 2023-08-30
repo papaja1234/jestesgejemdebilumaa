@@ -74,10 +74,6 @@ public class Pig : BasePart
 
 	private float m_starsTimer;
 
-	private float m_rolledDistance;
-
-	private float m_traveledDistance;
-
 	private FaceRotation m_faceRotation;
 
 	private Vector2 m_lookDirection;
@@ -128,8 +124,6 @@ public class Pig : BasePart
 
 	private bool m_detached;
 
-	private bool m_checkCameraLimits = true;
-
 	private AudioChorusFilter m_chorusFilter;
 
 	private AudioDistortionFilter m_distortionFilter;
@@ -146,21 +140,11 @@ public class Pig : BasePart
 
 	private float m_previousMagnitude;
 
-	public bool CheckCameraLimits
-	{
-		get
-		{
-			return m_checkCameraLimits;
-		}
-		set
-		{
-			m_checkCameraLimits = value;
-		}
-	}
+	public bool CheckCameraLimits { get; set; } = true;
 
-	public float rolledDistance => m_rolledDistance;
+	public float rolledDistance { get; private set; }
 
-	public float traveledDistance => m_traveledDistance;
+	public float traveledDistance { get; private set; }
 
 	public override bool IsIntegralPart()
 	{
@@ -267,8 +251,8 @@ public class Pig : BasePart
 
 	private void Start()
 	{
-		m_traveledDistance = GameProgress.GetFloat("traveledDistance");
-		m_rolledDistance = GameProgress.GetFloat("rolledDistance");
+		traveledDistance = GameProgress.GetFloat("traveledDistance");
+		rolledDistance = GameProgress.GetFloat("rolledDistance");
 	}
 
 	private void Update()
@@ -300,11 +284,11 @@ public class Pig : BasePart
 		}
 		if (base.enclosedInto == null)
 		{
-			m_rolledDistance += base.rigidbody.velocity.magnitude * Time.deltaTime;
+			rolledDistance += base.rigidbody.velocity.magnitude * Time.deltaTime;
 		}
 		else
 		{
-			m_traveledDistance += base.rigidbody.velocity.magnitude * Time.deltaTime;
+			traveledDistance += base.rigidbody.velocity.magnitude * Time.deltaTime;
 		}
 		m_currentMagnitude = base.rigidbody.velocity.magnitude;
 		if (Mathf.Abs(m_currentMagnitude - m_previousMagnitude) > 5f && !m_isPlayingAnimation)
@@ -393,7 +377,7 @@ public class Pig : BasePart
 				m_replayPulseDone = true;
 			}
 		}
-		if (!INSettings.GetBool(INFeature.CancelPigBoundsDetection) && m_checkCameraLimits)
+		if (!INSettings.GetBool(INFeature.CancelPigBoundsDetection) && CheckCameraLimits)
 		{
 			LevelManager.CameraLimits currentCameraLimits = WPFMonoBehaviour.levelManager.CurrentCameraLimits;
 			if (position.y < currentCameraLimits.topLeft.y - currentCameraLimits.size.y || position.x > currentCameraLimits.topLeft.x + currentCameraLimits.size.x * 1.1f || position.x < currentCameraLimits.topLeft.x - currentCameraLimits.size.x * 0.1f)

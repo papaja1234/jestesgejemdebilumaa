@@ -129,8 +129,7 @@ public class PointLightContainer : MonoBehaviour
 		gameObject.transform.localScale = Vector3.one;
 		gameObject.transform.localRotation = Quaternion.identity;
 		PointLightMask component = gameObject.GetComponent<PointLightMask>();
-		component.border = Object.Instantiate(borderPrefab);
-		component.border.transform.parent = parent;
+		component.border = Object.Instantiate(borderPrefab, parent, true);
 		component.border.transform.localPosition = new Vector3(0f, 0f, 0.1f);
 		component.border.transform.localScale = Vector3.one;
 		component.border.transform.localRotation = Quaternion.identity;
@@ -146,15 +145,13 @@ public class PointLightContainer : MonoBehaviour
 			BeamLightMask obj = component as BeamLightMask;
 			obj.angle = _lightSource.beamAngle;
 			obj.cutHeight = _lightSource.beamCut;
-			GameObject obj2 = Object.Instantiate(pointLightPrefab);
+			GameObject obj2 = Object.Instantiate(pointLightPrefab, parent, true);
 			obj2.name = $"BeamLightBase{id:00}";
-			obj2.transform.parent = parent;
 			obj2.transform.localPosition = Vector3.zero;
 			obj2.transform.localScale = Vector3.one;
 			obj2.transform.localRotation = Quaternion.identity;
 			PointLightMask component2 = obj2.GetComponent<PointLightMask>();
-			component2.border = Object.Instantiate(borderPrefab);
-			component2.border.transform.parent = parent;
+			component2.border = Object.Instantiate(borderPrefab, parent, true);
 			component2.border.transform.localPosition = new Vector3(0f, 0f, 0.1f);
 			component2.border.transform.localScale = Vector3.one;
 			component2.border.transform.localRotation = Quaternion.identity;

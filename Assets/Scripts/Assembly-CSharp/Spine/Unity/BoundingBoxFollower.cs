@@ -14,14 +14,6 @@ namespace Spine.Unity
 
 		public bool isTrigger;
 
-		private Slot slot;
-
-		private BoundingBoxAttachment currentAttachment;
-
-		private string currentAttachmentName;
-
-		private PolygonCollider2D currentCollider;
-
 		private bool valid;
 
 		private bool hasReset;
@@ -30,13 +22,13 @@ namespace Spine.Unity
 
 		public readonly Dictionary<BoundingBoxAttachment, string> attachmentNameTable = new Dictionary<BoundingBoxAttachment, string>();
 
-		public Slot Slot => slot;
+		public Slot Slot { get; private set; }
 
-		public BoundingBoxAttachment CurrentAttachment => currentAttachment;
+		public BoundingBoxAttachment CurrentAttachment { get; private set; }
 
-		public string CurrentAttachmentName => currentAttachmentName;
+		public string CurrentAttachmentName { get; private set; }
 
-		public PolygonCollider2D CurrentCollider => currentCollider;
+		public PolygonCollider2D CurrentCollider { get; private set; }
 
 		public bool IsTrigger => isTrigger;
 
@@ -92,7 +84,7 @@ namespace Spine.Unity
 				obj2.OnRebuild = (SkeletonRenderer.SkeletonRendererDelegate)Delegate.Combine(obj2.OnRebuild, new SkeletonRenderer.SkeletonRendererDelegate(HandleRebuild));
 			}
 			Skeleton skeleton = skeletonRenderer.skeleton;
-			slot = skeleton.FindSlot(slotName);
+			Slot = skeleton.FindSlot(slotName);
 			int slotIndex = skeleton.FindSlotIndex(slotName);
 			if (!base.gameObject.activeInHierarchy)
 			{
@@ -138,30 +130,30 @@ namespace Spine.Unity
 
 		private void LateUpdate()
 		{
-			if (skeletonRenderer.valid && slot != null && slot.Attachment != currentAttachment)
+			if (skeletonRenderer.valid && Slot != null && Slot.Attachment != CurrentAttachment)
 			{
-				MatchAttachment(slot.Attachment);
+				MatchAttachment(Slot.Attachment);
 			}
 		}
 
 		private void MatchAttachment(Attachment attachment)
 		{
 			BoundingBoxAttachment boundingBoxAttachment = attachment as BoundingBoxAttachment;
-			if (currentCollider != null)
+			if (CurrentCollider != null)
 			{
-				currentCollider.enabled = false;
+				CurrentCollider.enabled = false;
 			}
 			if (boundingBoxAttachment == null)
 			{
-				currentCollider = null;
+				CurrentCollider = null;
 			}
 			else
 			{
-				currentCollider = colliderTable[boundingBoxAttachment];
-				currentCollider.enabled = true;
+				CurrentCollider = colliderTable[boundingBoxAttachment];
+				CurrentCollider.enabled = true;
 			}
-			currentAttachment = boundingBoxAttachment;
-			currentAttachmentName = ((currentAttachment != null) ? attachmentNameTable[boundingBoxAttachment] : null);
+			CurrentAttachment = boundingBoxAttachment;
+			CurrentAttachmentName = ((CurrentAttachment != null) ? attachmentNameTable[boundingBoxAttachment] : null);
 		}
 	}
 }

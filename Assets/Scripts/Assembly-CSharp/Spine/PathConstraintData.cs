@@ -30,110 +30,56 @@ namespace Spine
 
 		public SlotData Target
 		{
-			get
-			{
-				return target;
-			}
-			set
-			{
-				target = value;
-			}
+			get => target;
+			set => target = value;
 		}
 
 		public PositionMode PositionMode
 		{
-			get
-			{
-				return positionMode;
-			}
-			set
-			{
-				positionMode = value;
-			}
+			get => positionMode;
+			set => positionMode = value;
 		}
 
 		public SpacingMode SpacingMode
 		{
-			get
-			{
-				return spacingMode;
-			}
-			set
-			{
-				spacingMode = value;
-			}
+			get => spacingMode;
+			set => spacingMode = value;
 		}
 
 		public RotateMode RotateMode
 		{
-			get
-			{
-				return rotateMode;
-			}
-			set
-			{
-				rotateMode = value;
-			}
+			get => rotateMode;
+			set => rotateMode = value;
 		}
 
 		public float OffsetRotation
 		{
-			get
-			{
-				return offsetRotation;
-			}
-			set
-			{
-				offsetRotation = value;
-			}
+			get => offsetRotation;
+			set => offsetRotation = value;
 		}
 
 		public float Position
 		{
-			get
-			{
-				return position;
-			}
-			set
-			{
-				position = value;
-			}
+			get => position;
+			set => position = value;
 		}
 
 		public float Spacing
 		{
-			get
-			{
-				return spacing;
-			}
-			set
-			{
-				spacing = value;
-			}
+			get => spacing;
+			set => spacing = value;
 		}
 
 		public float RotateMix
 		{
-			get
-			{
-				return rotateMix;
-			}
-			set
-			{
-				rotateMix = value;
-			}
+			get => rotateMix;
+			set => rotateMix = value;
 		}
 
 		public float TranslateMix
 		{
-			get
-			{
-				return translateMix;
-			}
-			set
-			{
-				translateMix = value;
-			}
+			get => translateMix;
+			set => translateMix = value;
 		}
 
 		public string Name => name;

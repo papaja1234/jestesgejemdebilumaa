@@ -143,9 +143,8 @@ public class InGameBuildMenu : WPFMonoBehaviour
 		if (INSettings.GetBool(INFeature.SaveButton))
 		{
 			GameObject gameObject = INUnity.LoadGameObject("SaveButton");
-			GameObject obj = Object.Instantiate(gameObject);
+			GameObject obj = Object.Instantiate(gameObject, base.transform, true);
 			obj.name = gameObject.name;
-			obj.transform.parent = base.transform;
 			float num = (float)Screen.width / (float)Screen.height * 10f;
 			obj.transform.localPosition = new Vector3(num - 1.9869f, 4f, 0f);
 		}

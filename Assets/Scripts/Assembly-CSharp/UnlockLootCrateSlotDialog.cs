@@ -59,14 +59,8 @@ public class UnlockLootCrateSlotDialog : TextDialog
 
 	private bool BeginOpeningTutorialShown
 	{
-		get
-		{
-			return GameProgress.GetBool("BeginOpeninTutorialShown");
-		}
-		set
-		{
-			GameProgress.SetBool("BeginOpeninTutorialShown", value);
-		}
+		get => GameProgress.GetBool("BeginOpeninTutorialShown");
+		set => GameProgress.SetBool("BeginOpeninTutorialShown", value);
 	}
 
 	protected override void Awake()

@@ -179,26 +179,14 @@ public class WorkshopMenu : MonoBehaviour
 
 	public static bool FirstLootCrateCollected
 	{
-		get
-		{
-			return GameProgress.GetBool("CollectedFirstLootCrate");
-		}
-		set
-		{
-			GameProgress.SetBool("CollectedFirstLootCrate", value);
-		}
+		get => GameProgress.GetBool("CollectedFirstLootCrate");
+		set => GameProgress.SetBool("CollectedFirstLootCrate", value);
 	}
 
 	public static bool AnyLootCrateCollected
 	{
-		get
-		{
-			return GameProgress.GetBool("AnyLootCrateCollected");
-		}
-		set
-		{
-			GameProgress.SetBool("AnyLootCrateCollected", value);
-		}
+		get => GameProgress.GetBool("AnyLootCrateCollected");
+		set => GameProgress.SetBool("AnyLootCrateCollected", value);
 	}
 
 	private bool IsMachineLocked
@@ -858,8 +846,7 @@ public class WorkshopMenu : MonoBehaviour
 		{
 			UnityEngine.Object.Destroy(rewardGameObject);
 		}
-		rewardGameObject = UnityEngine.Object.Instantiate(lootRewardBackgrounds[(int)part.m_partTier]);
-		rewardGameObject.transform.parent = rewardSpawnRoot.transform;
+		rewardGameObject = UnityEngine.Object.Instantiate(lootRewardBackgrounds[(int)part.m_partTier], rewardSpawnRoot.transform, true);
 		rewardGameObject.transform.localPosition = Vector3.zero;
 		rewardGameObject.transform.localScale = Vector3.one * 2f;
 		rewardGameObject.transform.localRotation = Quaternion.identity;

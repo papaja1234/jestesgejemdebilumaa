@@ -98,10 +98,6 @@ public class UIPartSliderButton : UIPartButton
 		Reset = 2
 	}
 
-	private UIButton m_upButton;
-
-	private UIButton m_downButton;
-
 	private Image m_upButtonTexture;
 
 	private Image m_downButtonTexture;
@@ -132,9 +128,9 @@ public class UIPartSliderButton : UIPartButton
 
 	private Timer m_downTimer;
 
-	public UIButton UpButton => m_upButton;
+	public UIButton UpButton { get; private set; }
 
-	public UIButton DownButton => m_downButton;
+	public UIButton DownButton { get; private set; }
 
 	public float Value => m_range.Value;
 
@@ -170,12 +166,12 @@ public class UIPartSliderButton : UIPartButton
 	protected override void Awake()
 	{
 		base.Awake();
-		m_upButton = base.transform.Find("UpButton").GetComponent<UIButton>();
-		m_downButton = base.transform.Find("DownButton").GetComponent<UIButton>();
-		m_upButtonTexture = m_upButton.transform.Find("Image").GetComponent<Image>();
-		m_downButtonTexture = m_downButton.transform.Find("Image").GetComponent<Image>();
-		AddEvents(m_upButton);
-		AddEvents(m_downButton);
+		UpButton = base.transform.Find("UpButton").GetComponent<UIButton>();
+		DownButton = base.transform.Find("DownButton").GetComponent<UIButton>();
+		m_upButtonTexture = UpButton.transform.Find("Image").GetComponent<Image>();
+		m_downButtonTexture = DownButton.transform.Find("Image").GetComponent<Image>();
+		AddEvents(UpButton);
+		AddEvents(DownButton);
 		m_background = base.transform.Find("Background").GetComponent<Image>();
 		m_verticalFill = base.transform.Find("VerticalFill").GetComponent<Image>();
 		m_horizontalFill = base.transform.Find("HorizontalFill").GetComponent<Image>();
@@ -198,9 +194,8 @@ public class UIPartSliderButton : UIPartButton
 
 	private UIPartTriggerButton CreateSubButton(SubButtonType buttonType, string name, string spriteName)
 	{
-		GameObject obj = Object.Instantiate(UIPartButtonList.Instance.TriggerButtonPrefab);
+		GameObject obj = Object.Instantiate(UIPartButtonList.Instance.TriggerButtonPrefab, base.transform, false);
 		obj.name = name;
-		obj.transform.SetParent(base.transform, worldPositionStays: false);
 		obj.SetActive(value: true);
 		obj.SetActive(value: false);
 		UIPartTriggerButton component = obj.GetComponent<UIPartTriggerButton>();
@@ -379,8 +374,8 @@ public class UIPartSliderButton : UIPartButton
 
 	private void ResetPointers()
 	{
-		m_upButton.ResetPointer();
-		m_downButton.ResetPointer();
+		UpButton.ResetPointer();
+		DownButton.ResetPointer();
 		m_upTriggerButton.Button.ResetPointer();
 		m_downTriggerButton.Button.ResetPointer();
 		m_resetTriggerButton.Button.ResetPointer();
@@ -438,8 +433,8 @@ public class UIPartSliderButton : UIPartButton
 	{
 		bool flag = m_upTimer.Enabled;
 		bool flag2 = m_downTimer.Enabled;
-		UpdateTimer(ref m_upTimer, IsPressed(m_upButton) || IsPressed(m_upTriggerButton.Button), KeyCode.UpArrow, out var result);
-		UpdateTimer(ref m_downTimer, IsPressed(m_downButton) || IsPressed(m_downTriggerButton.Button), KeyCode.DownArrow, out var result2);
+		UpdateTimer(ref m_upTimer, IsPressed(UpButton) || IsPressed(m_upTriggerButton.Button), KeyCode.UpArrow, out var result);
+		UpdateTimer(ref m_downTimer, IsPressed(DownButton) || IsPressed(m_downTriggerButton.Button), KeyCode.DownArrow, out var result2);
 		if (result != 0)
 		{
 			Increase(result);

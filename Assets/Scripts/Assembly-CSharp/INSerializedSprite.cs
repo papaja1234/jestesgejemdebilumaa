@@ -7,14 +7,8 @@ public class INSerializedSprite : INSpriteBase
 
 	public string SpriteName
 	{
-		get
-		{
-			return m_name;
-		}
-		set
-		{
-			m_name = value;
-		}
+		get => m_name;
+		set => m_name = value;
 	}
 
 	private void Awake()

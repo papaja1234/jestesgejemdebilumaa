@@ -33,8 +33,6 @@ public class AdReward : IDisposable
 
 	private const float TIMEOUT_LENGTH = 10f;
 
-	private bool disposed;
-
 	private bool wasPaused;
 
 	private bool waitingFailure;
@@ -43,7 +41,7 @@ public class AdReward : IDisposable
 
 	private State state;
 
-	public bool Disposed => disposed;
+	public bool Disposed { get; private set; }
 
 	public AdReward(string placement)
 	{
@@ -58,7 +56,7 @@ public class AdReward : IDisposable
 
 	public void Dispose()
 	{
-		if (!disposed)
+		if (!Disposed)
 		{
 			OnFailed = null;
 			OnReady = null;
@@ -71,7 +69,7 @@ public class AdReward : IDisposable
 				Singleton<NetworkManager>.Instance.UnsubscribeFromResponse(HasInternet);
 				Singleton<NetworkManager>.Instance.UnsubscribeFromResponse(PlayRewardVideo);
 			}
-			disposed = true;
+			Disposed = true;
 			GC.SuppressFinalize(this);
 		}
 	}
@@ -221,7 +219,7 @@ public class AdReward : IDisposable
 		if (action != null)
 		{
 			yield return new WaitForRealSeconds(delay);
-			if (!disposed)
+			if (!Disposed)
 			{
 				action();
 			}
@@ -234,7 +232,7 @@ public class AdReward : IDisposable
 		while (counter <= 10f)
 		{
 			counter += Time.unscaledDeltaTime;
-			if (AdvertisementHandler.IsAdvertisementReady(placement) || state == State.Stalled || disposed)
+			if (AdvertisementHandler.IsAdvertisementReady(placement) || state == State.Stalled || Disposed)
 			{
 				break;
 			}
@@ -248,7 +246,7 @@ public class AdReward : IDisposable
 		while (counter <= 10f)
 		{
 			counter += Time.unscaledDeltaTime;
-			if (state == State.Stalled || disposed)
+			if (state == State.Stalled || Disposed)
 			{
 				yield break;
 			}

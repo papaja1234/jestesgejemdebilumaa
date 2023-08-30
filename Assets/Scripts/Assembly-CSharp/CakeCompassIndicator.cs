@@ -16,8 +16,6 @@ public class CakeCompassIndicator : MonoBehaviour
 
 	private float m_viewHalfHeight;
 
-	private bool m_done;
-
 	private LineRenderer m_meter;
 
 	private SpriteAnimation m_compassAnimation;
@@ -28,7 +26,7 @@ public class CakeCompassIndicator : MonoBehaviour
 
 	private float m_maxDistanceToCake = 50f;
 
-	public bool Done => m_done;
+	public bool Done { get; private set; }
 
 	public void AttachToCake(Cake cake)
 	{
@@ -84,7 +82,7 @@ public class CakeCompassIndicator : MonoBehaviour
 
 	private void TurnOff()
 	{
-		m_done = true;
+		Done = true;
 		base.gameObject.SetActive(value: false);
 	}
 

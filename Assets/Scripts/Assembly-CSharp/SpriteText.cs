@@ -38,10 +38,7 @@ public class SpriteText : MonoBehaviour
 
 	public string Text
 	{
-		get
-		{
-			return text;
-		}
+		get => text;
 		set
 		{
 			if (value != text)

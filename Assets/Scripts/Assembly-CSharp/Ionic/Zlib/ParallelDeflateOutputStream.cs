@@ -64,8 +64,6 @@ namespace Ionic.Zlib
 
 		private int _latestCompressed;
 
-		private int _Crc32;
-
 		private CRC32 _runningCrc;
 
 		private object _latestLock = new object();
@@ -73,8 +71,6 @@ namespace Ionic.Zlib
 		private Queue<int> _toWrite;
 
 		private Queue<int> _toFill;
-
-		private long _totalBytesProcessed;
 
 		private CompressionLevel _compressLevel;
 
@@ -90,10 +86,7 @@ namespace Ionic.Zlib
 
 		public int MaxBufferPairs
 		{
-			get
-			{
-				return _maxBufferPairs;
-			}
+			get => _maxBufferPairs;
 			set
 			{
 				if (value < 4)
@@ -106,10 +99,7 @@ namespace Ionic.Zlib
 
 		public int BufferSize
 		{
-			get
-			{
-				return _bufferSize;
-			}
+			get => _bufferSize;
 			set
 			{
 				if (value < 1024)
@@ -120,9 +110,9 @@ namespace Ionic.Zlib
 			}
 		}
 
-		public int Crc32 => _Crc32;
+		public int Crc32 { get; private set; }
 
-		public long BytesProcessed => _totalBytesProcessed;
+		public long BytesProcessed { get; private set; }
 
 		public override bool CanSeek => false;
 
@@ -130,24 +120,12 @@ namespace Ionic.Zlib
 
 		public override bool CanWrite => _outStream.CanWrite;
 
-		public override long Length
-		{
-			get
-			{
-				throw new NotSupportedException();
-			}
-		}
+		public override long Length => throw new NotSupportedException();
 
 		public override long Position
 		{
-			get
-			{
-				return _outStream.Position;
-			}
-			set
-			{
-				throw new NotSupportedException();
-			}
+			get => _outStream.Position;
+			set => throw new NotSupportedException();
 		}
 
 		public ParallelDeflateOutputStream(Stream stream)
@@ -294,7 +272,7 @@ namespace Ionic.Zlib
 				_outStream.Write(array, 0, array.Length - zlibCodec.AvailableBytesOut);
 			}
 			zlibCodec.EndDeflate();
-			_Crc32 = _runningCrc.Crc32Result;
+			Crc32 = _runningCrc.Crc32Result;
 		}
 
 		private void _Flush(bool lastInput)
@@ -384,7 +362,7 @@ namespace Ionic.Zlib
 				item.ordinal = -1;
 			}
 			_firstWriteDone = false;
-			_totalBytesProcessed = 0L;
+			BytesProcessed = 0L;
 			_runningCrc = new CRC32();
 			_isClosed = false;
 			_currentlyFilling = -1;
@@ -451,7 +429,7 @@ namespace Ionic.Zlib
 						num = -1;
 						_outStream.Write(workItem.compressed, 0, workItem.compressedBytesAvailable);
 						_runningCrc.Combine(workItem.crc, workItem.inputBytesAvailable);
-						_totalBytesProcessed += workItem.inputBytesAvailable;
+						BytesProcessed += workItem.inputBytesAvailable;
 						workItem.inputBytesAvailable = 0;
 						_lastWritten = workItem.ordinal;
 						_toFill.Enqueue(workItem.index);

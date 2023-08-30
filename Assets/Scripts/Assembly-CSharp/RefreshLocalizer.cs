@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class RefreshLocalizer : IDisposable
 {
-	private TextMesh target;
-
 	private string originalText = string.Empty;
 
 	private string localizedText = string.Empty;
@@ -15,25 +13,13 @@ public class RefreshLocalizer : IDisposable
 
 	private bool disposed;
 
-	private Func<string> update;
+	public Func<string> Update { get; set; }
 
-	public Func<string> Update
-	{
-		get
-		{
-			return update;
-		}
-		set
-		{
-			update = value;
-		}
-	}
-
-	public TextMesh Target => target;
+	public TextMesh Target { get; private set; }
 
 	public RefreshLocalizer(TextMesh target)
 	{
-		this.target = target;
+		this.Target = target;
 		originalText = target.text;
 		originalCharacterSize = target.characterSize;
 		originalLineSpacing = target.lineSpacing;
@@ -51,10 +37,10 @@ public class RefreshLocalizer : IDisposable
 		if (!disposed)
 		{
 			EventManager.Disconnect<LocalizationReloaded>(ReloadLocalization);
-			target = null;
+			Target = null;
 			originalText = null;
 			localizedText = null;
-			update = null;
+			Update = null;
 			GC.SuppressFinalize(this);
 		}
 	}
@@ -71,21 +57,21 @@ public class RefreshLocalizer : IDisposable
 		Font font = Singleton<Localizer>.Instance.GetFont(localeName);
 		if ((bool)font)
 		{
-			Color color = target.GetComponent<Renderer>().material.color;
-			target.font = font;
-			target.GetComponent<Renderer>().material = font.material;
-			target.GetComponent<Renderer>().material.color = color;
+			Color color = Target.GetComponent<Renderer>().material.color;
+			Target.font = font;
+			Target.GetComponent<Renderer>().material = font.material;
+			Target.GetComponent<Renderer>().material.color = color;
 		}
 		localizedText = localeParameters.translation;
-		target.characterSize = originalCharacterSize * localeParameters.characterSizeFactor;
-		target.lineSpacing = originalLineSpacing * localeParameters.lineSpacingFactor;
+		Target.characterSize = originalCharacterSize * localeParameters.characterSizeFactor;
+		Target.lineSpacing = originalLineSpacing * localeParameters.lineSpacingFactor;
 	}
 
 	public void Refresh()
 	{
-		if (update != null)
+		if (Update != null)
 		{
-			target.text = string.Format(localizedText, update());
+			Target.text = string.Format(localizedText, Update());
 		}
 	}
 }

@@ -2,11 +2,11 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!1 &1423984277812449
 GameObject:
-  serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
   m_Component:
   - component: {fileID: 4957296415102406}
   - component: {fileID: 114088138844780816}
@@ -42,17 +42,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b83b52f17941b013520887d427d32573, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   m_purchasableParts: []
-  m_gridPrefab: {fileID: 4340492443555823, guid: 552fae414c2173244a06e89d01b9167f, type: 2}
-  m_cellPrefab: {fileID: 4377744569714861, guid: addfeebfa77fc7a49aa3640e54a73d58, type: 2}
+  m_gridPrefab: {fileID: 4340492443555823, guid: 552fae414c2173244a06e89d01b9167f, type: 3}
+  m_cellPrefab: {fileID: 4377744569714861, guid: addfeebfa77fc7a49aa3640e54a73d58, type: 3}
   m_cellMaterial: {fileID: 0}
-  m_itemsPerRow: 16
+  m_itemsPerRow: 17
   m_offsetX: 0.1
   m_offsetY: 0.95
   m_spacingX: 0.18
-  m_scale: 0.12
+  m_scale: 0.11
   m_cellTextureValid: {fileID: 0}
   m_cellTextureInvalid: {fileID: 0}
   m_textureSelected: {fileID: 0}
+  selectionStart: {x: 0, y: 0, z: 0}
+  selectionEnd: {x: 0, y: 0, z: 0}

@@ -55,8 +55,6 @@ public class PlayFabManager : Singleton<PlayFabManager>
 	[SerializeField]
 	private string devTitleID = "7988";
 
-	private bool initialized;
-
 	private UserDataPermission sendCachePermission;
 
 	private Dictionary<string, string> sendCache;
@@ -75,7 +73,7 @@ public class PlayFabManager : Singleton<PlayFabManager>
 
 	public PlayFabUserHandling Users { get; private set; }
 
-	public bool Initialized => initialized;
+	public bool Initialized { get; private set; }
 
 	public bool IsSendingChunkCache { get; private set; }
 
@@ -85,7 +83,7 @@ public class PlayFabManager : Singleton<PlayFabManager>
 	{
 		SetAsPersistant();
 		sendCache = new Dictionary<string, string>();
-		initialized = false;
+		Initialized = false;
 		PlayFabSettings.TitleId = GetPlayFabTitleID();
 		Leaderboard = base.gameObject.AddComponent<PlayFabLeaderboard>();
 		MatchMaking = base.gameObject.AddComponent<PlayFabMatchMaking>();
@@ -189,7 +187,7 @@ public class PlayFabManager : Singleton<PlayFabManager>
 		}
 		stringBuilder.AppendLine("result.Request: " + result.Request.ToString());
 		SessionTicket = result.SessionTicket;
-		initialized = true;
+		Initialized = true;
 		if (OnLogin != null)
 		{
 			OnLogin(result.PlayFabId, arg);
@@ -226,7 +224,7 @@ public class PlayFabManager : Singleton<PlayFabManager>
 	public void Logout()
 	{
 		sendCache = new Dictionary<string, string>();
-		initialized = false;
+		Initialized = false;
 	}
 
 	public void GetTitleData(List<string> keys, Action<GetTitleDataResult> cb, Action<PlayFabError> errorCb)
@@ -239,7 +237,7 @@ public class PlayFabManager : Singleton<PlayFabManager>
 
 	private void SetDisplayName(string displayName)
 	{
-		if (initialized && (string.IsNullOrEmpty(HatchManager.CurrentPlayer.PlayFabDisplayName) || !HatchManager.CurrentPlayer.PlayFabDisplayName.Equals(displayName)))
+		if (Initialized && (string.IsNullOrEmpty(HatchManager.CurrentPlayer.PlayFabDisplayName) || !HatchManager.CurrentPlayer.PlayFabDisplayName.Equals(displayName)))
 		{
 			PlayFabClientAPI.UpdateUserTitleDisplayName(new UpdateUserTitleDisplayNameRequest
 			{
@@ -255,7 +253,7 @@ public class PlayFabManager : Singleton<PlayFabManager>
 
 	public void UpdateUserData(Dictionary<string, string> data, UserDataPermission permission)
 	{
-		if (initialized)
+		if (Initialized)
 		{
 			StartCoroutine(UpdateUserDataInChunks(data, permission));
 		}

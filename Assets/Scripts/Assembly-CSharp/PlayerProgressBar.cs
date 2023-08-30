@@ -11,8 +11,6 @@ public class PlayerProgressBar : MonoBehaviour, ICurrencyParticleEffectTarget
 		WaitingLevelInactive = 3
 	}
 
-	private static PlayerProgressBar instance;
-
 	private const string LEVEL_UP_LOCALIZATION_KEY = "LOOT_WHEEL_TITLE";
 
 	[SerializeField]
@@ -54,7 +52,7 @@ public class PlayerProgressBar : MonoBehaviour, ICurrencyParticleEffectTarget
 
 	private State currentState;
 
-	public static PlayerProgressBar Instance => instance;
+	public static PlayerProgressBar Instance { get; private set; }
 
 	public bool CanLevelUp
 	{
@@ -78,7 +76,7 @@ public class PlayerProgressBar : MonoBehaviour, ICurrencyParticleEffectTarget
 
 	private void Awake()
 	{
-		instance = this;
+		Instance = this;
 		currentState = State.None;
 		SetState(State.Regular);
 		resourceBarItem = GetComponent<ResourceBarItem>();

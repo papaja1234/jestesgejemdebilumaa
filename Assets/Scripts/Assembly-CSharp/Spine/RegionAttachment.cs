@@ -58,134 +58,68 @@ namespace Spine
 
 		public float X
 		{
-			get
-			{
-				return x;
-			}
-			set
-			{
-				x = value;
-			}
+			get => x;
+			set => x = value;
 		}
 
 		public float Y
 		{
-			get
-			{
-				return y;
-			}
-			set
-			{
-				y = value;
-			}
+			get => y;
+			set => y = value;
 		}
 
 		public float Rotation
 		{
-			get
-			{
-				return rotation;
-			}
-			set
-			{
-				rotation = value;
-			}
+			get => rotation;
+			set => rotation = value;
 		}
 
 		public float ScaleX
 		{
-			get
-			{
-				return scaleX;
-			}
-			set
-			{
-				scaleX = value;
-			}
+			get => scaleX;
+			set => scaleX = value;
 		}
 
 		public float ScaleY
 		{
-			get
-			{
-				return scaleY;
-			}
-			set
-			{
-				scaleY = value;
-			}
+			get => scaleY;
+			set => scaleY = value;
 		}
 
 		public float Width
 		{
-			get
-			{
-				return width;
-			}
-			set
-			{
-				width = value;
-			}
+			get => width;
+			set => width = value;
 		}
 
 		public float Height
 		{
-			get
-			{
-				return height;
-			}
-			set
-			{
-				height = value;
-			}
+			get => height;
+			set => height = value;
 		}
 
 		public float R
 		{
-			get
-			{
-				return r;
-			}
-			set
-			{
-				r = value;
-			}
+			get => r;
+			set => r = value;
 		}
 
 		public float G
 		{
-			get
-			{
-				return g;
-			}
-			set
-			{
-				g = value;
-			}
+			get => g;
+			set => g = value;
 		}
 
 		public float B
 		{
-			get
-			{
-				return b;
-			}
-			set
-			{
-				b = value;
-			}
+			get => b;
+			set => b = value;
 		}
 
 		public float A
 		{
-			get
-			{
-				return a;
-			}
-			set
-			{
-				a = value;
-			}
+			get => a;
+			set => a = value;
 		}
 
 		public string Path { get; set; }
@@ -194,74 +128,38 @@ namespace Spine
 
 		public float RegionOffsetX
 		{
-			get
-			{
-				return regionOffsetX;
-			}
-			set
-			{
-				regionOffsetX = value;
-			}
+			get => regionOffsetX;
+			set => regionOffsetX = value;
 		}
 
 		public float RegionOffsetY
 		{
-			get
-			{
-				return regionOffsetY;
-			}
-			set
-			{
-				regionOffsetY = value;
-			}
+			get => regionOffsetY;
+			set => regionOffsetY = value;
 		}
 
 		public float RegionWidth
 		{
-			get
-			{
-				return regionWidth;
-			}
-			set
-			{
-				regionWidth = value;
-			}
+			get => regionWidth;
+			set => regionWidth = value;
 		}
 
 		public float RegionHeight
 		{
-			get
-			{
-				return regionHeight;
-			}
-			set
-			{
-				regionHeight = value;
-			}
+			get => regionHeight;
+			set => regionHeight = value;
 		}
 
 		public float RegionOriginalWidth
 		{
-			get
-			{
-				return regionOriginalWidth;
-			}
-			set
-			{
-				regionOriginalWidth = value;
-			}
+			get => regionOriginalWidth;
+			set => regionOriginalWidth = value;
 		}
 
 		public float RegionOriginalHeight
 		{
-			get
-			{
-				return regionOriginalHeight;
-			}
-			set
-			{
-				regionOriginalHeight = value;
-			}
+			get => regionOriginalHeight;
+			set => regionOriginalHeight = value;
 		}
 
 		public float[] Offset => offset;

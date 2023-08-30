@@ -43,10 +43,7 @@ public class PlayParticlesOnCollision : WPFMonoBehaviour
 
 	public bool Enabled
 	{
-		get
-		{
-			return m_enabled;
-		}
+		get => m_enabled;
 		set
 		{
 			m_LastPlayTime = 0f;

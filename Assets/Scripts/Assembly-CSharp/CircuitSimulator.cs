@@ -268,8 +268,6 @@ public class CircuitSimulator
 
 	private struct Node
 	{
-		private static readonly Node s_empty = new Node(null, -1);
-
 		public ElectricalElement Element;
 
 		public int Index;
@@ -280,7 +278,7 @@ public class CircuitSimulator
 
 		public bool[] Visited;
 
-		public static Node Empty => s_empty;
+		public static Node Empty { get; } = new Node(null, -1);
 
 		public bool IsEmpty => Index == -1;
 
@@ -395,8 +393,6 @@ public class CircuitSimulator
 		Floating = 4
 	}
 
-	private float m_deltaTime;
-
 	private List<Node> m_nodes;
 
 	private Dictionary<ElectricalElement, Node> m_nodeTable;
@@ -405,11 +401,11 @@ public class CircuitSimulator
 
 	private CircuitEquationSolver m_equationSolver;
 
-	public float DeltaTime => m_deltaTime;
+	public float DeltaTime { get; }
 
 	public CircuitSimulator(float deltaTime)
 	{
-		m_deltaTime = deltaTime;
+		DeltaTime = deltaTime;
 		m_nodes = new List<Node>();
 		m_nodeTable = new Dictionary<ElectricalElement, Node>();
 		m_equationSolver = new CircuitEquationSolver();
@@ -705,7 +701,7 @@ public class CircuitSimulator
 		ElectricalElement last = null;
 		int startElectrode = branch.StartElectrode;
 		int num2 = 0;
-		SimulationResult result = new SimulationResult(element, startElectrode, potential, 0f - num, isGrounded, m_deltaTime);
+		SimulationResult result = new SimulationResult(element, startElectrode, potential, 0f - num, isGrounded, DeltaTime);
 		ScanElement(element, last, out var U, out var R);
 		result.Element = element;
 		result.U += U - num * R;

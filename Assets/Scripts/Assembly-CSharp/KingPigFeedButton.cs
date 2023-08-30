@@ -9,14 +9,8 @@ public class KingPigFeedButton : Button
 
 	public static int LastDessertCount
 	{
-		get
-		{
-			return GameProgress.GetInt("LastDessertCount");
-		}
-		set
-		{
-			GameProgress.SetInt("LastDessertCount", value);
-		}
+		get => GameProgress.GetInt("LastDessertCount");
+		set => GameProgress.SetInt("LastDessertCount", value);
 	}
 
 	protected override void ButtonAwake()
@@ -74,8 +68,7 @@ public class KingPigFeedButton : Button
 	{
 		if (newTag != null && !wiggling)
 		{
-			GameObject obj = Object.Instantiate(newTag);
-			obj.transform.parent = base.transform;
+			GameObject obj = Object.Instantiate(newTag, base.transform, true);
 			obj.transform.localPosition = new Vector3(1.1f, 1.1f, -1f);
 			wiggling = true;
 		}

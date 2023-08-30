@@ -77,26 +77,14 @@ public class DailyChallengeButton : WPFMonoBehaviour
 
 	private bool DailyChallengeShown
 	{
-		get
-		{
-			return GameProgress.GetBool("DailyChallengeShown");
-		}
-		set
-		{
-			GameProgress.SetBool("DailyChallengeShown", value);
-		}
+		get => GameProgress.GetBool("DailyChallengeShown");
+		set => GameProgress.SetBool("DailyChallengeShown", value);
 	}
 
 	private bool ShowingCutscene
 	{
-		get
-		{
-			return GameProgress.GetBool("DailyChallengeCutscene");
-		}
-		set
-		{
-			GameProgress.SetBool("DailyChallengeCutscene", value);
-		}
+		get => GameProgress.GetBool("DailyChallengeCutscene");
+		set => GameProgress.SetBool("DailyChallengeCutscene", value);
 	}
 
 	private void Awake()

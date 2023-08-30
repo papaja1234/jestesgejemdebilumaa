@@ -244,10 +244,9 @@ public class INSettingsInterface : MonoBehaviour
 
 	private SettingsGroup GenerateSettingsGroup(int index, string groupName)
 	{
-		GameObject obj = UnityEngine.Object.Instantiate(m_settingsGroupPrefab);
+		GameObject obj = UnityEngine.Object.Instantiate(m_settingsGroupPrefab, m_content.transform, false);
 		obj.SetActive(value: true);
 		obj.name = "SettingsGroup_" + index;
-		obj.transform.SetParent(m_content.transform, worldPositionStays: false);
 		SettingsGroup settingsGroup = new SettingsGroup(obj);
 		settingsGroup.GroupNameLocale.ID = groupName;
 		settingsGroup.GroupNameLocale.UpdateText();
@@ -257,10 +256,9 @@ public class INSettingsInterface : MonoBehaviour
 
 	private GameObject GenerateSettingsElementGameObject(SettingsGroup dataGroup, int index)
 	{
-		GameObject obj = UnityEngine.Object.Instantiate(m_settingsElementPrefab);
+		GameObject obj = UnityEngine.Object.Instantiate(m_settingsElementPrefab, dataGroup.GameObject.transform, false);
 		obj.SetActive(value: true);
 		obj.name = "SettingsElement_" + index;
-		obj.transform.SetParent(dataGroup.GameObject.transform, worldPositionStays: false);
 		return obj;
 	}
 

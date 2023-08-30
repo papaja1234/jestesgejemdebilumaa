@@ -1,24 +1,22 @@
 public class Switch : ElectricalElement
 {
-	private bool m_closed;
-
-	public bool IsClosed => m_closed;
+	public bool IsClosed { get; private set; }
 
 	public Switch()
 	{
-		m_closed = false;
+		IsClosed = false;
 	}
 
 	public override void Initialize()
 	{
-		SetClosedInternal(m_closed);
+		SetClosedInternal(IsClosed);
 	}
 
 	public void SetClosed(bool closed)
 	{
-		if (m_closed != closed)
+		if (IsClosed != closed)
 		{
-			m_closed = closed;
+			IsClosed = closed;
 			SetClosedInternal(closed);
 		}
 	}

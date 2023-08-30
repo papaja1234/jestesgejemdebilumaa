@@ -323,8 +323,7 @@ public class RewardDialog : MonoBehaviour
 		UnityEngine.Object original = Resources.Load("UI/Amazon/DailyReward");
 		for (int j = 0; j < rewards.Count; j++)
 		{
-			GameObject gameObject = UnityEngine.Object.Instantiate(original) as GameObject;
-			gameObject.transform.parent = rewardContainer.transform;
+			GameObject gameObject = UnityEngine.Object.Instantiate(original, rewardContainer.transform, true) as GameObject;
 			gameObject.transform.localPosition = new Vector3((float)j * 6.8f, 0f);
 			gameObject.layer = rewardContainer.gameObject.layer;
 			Reward component = gameObject.GetComponent<Reward>();

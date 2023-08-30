@@ -130,8 +130,6 @@ public class AudioManager : Singleton<AudioManager>
 		}
 	}
 
-	private bool audioMuted;
-
 	private Dictionary<int, float> previousPlayTimes = new Dictionary<int, float>();
 
 	private List<AudioSource> activeLoopingSounds = new List<AudioSource>();
@@ -148,17 +146,15 @@ public class AudioManager : Singleton<AudioManager>
 
 	private int m_counter;
 
-	private bool m_paused;
-
 	private const string AudioMuteKey = "AudioMuted";
 
 	private const float AudioClipRepeatLimit = 0.15f;
 
 	private bool m_applicationPaused;
 
-	public bool AudioMuted => audioMuted;
+	public bool AudioMuted { get; private set; }
 
-	public bool Paused => m_paused;
+	public bool Paused { get; private set; }
 
 	public static event OnAudioMuted onAudioMuted;
 
@@ -224,9 +220,8 @@ public class AudioManager : Singleton<AudioManager>
 	{
 		if (base.gameObject.activeInHierarchy && !AudioMuted && active2dOneShotSounds.Count < 20)
 		{
-			AudioSource audioSource = Object.Instantiate(effectSource);
+			AudioSource audioSource = Object.Instantiate(effectSource, base.transform, true);
 			audioSource.gameObject.name = "AudioOneShot -" + effectSource.name;
-			audioSource.gameObject.transform.parent = base.transform;
 			audioSource.Play();
 			active2dOneShotSounds.Add(audioSource);
 			StartCoroutine(Destroy2dOneShotEffect(audioSource));
@@ -239,11 +234,10 @@ public class AudioManager : Singleton<AudioManager>
 	{
 		if (base.gameObject.activeInHierarchy && active3dOneShotSounds.Count < 20)
 		{
-			AudioSource audioSource = Object.Instantiate(effectSource);
+			AudioSource audioSource = Object.Instantiate(effectSource, base.transform, true);
 			audioSource.mute = AudioMuted;
 			audioSource.transform.position = soundPosition;
 			audioSource.gameObject.name = "AudioOneShot -" + effectSource.name;
-			audioSource.gameObject.transform.parent = base.transform;
 			audioSource.Play();
 			active3dOneShotSounds.Add(audioSource);
 			StartCoroutine(Destroy3dOneShotEffect(audioSource));
@@ -256,9 +250,8 @@ public class AudioManager : Singleton<AudioManager>
 	{
 		if (base.gameObject.activeInHierarchy && active3dOneShotSounds.Count < 20 && effectSource != null)
 		{
-			AudioSource audioSource = Object.Instantiate(effectSource);
+			AudioSource audioSource = Object.Instantiate(effectSource, sourceParent, true);
 			audioSource.mute = AudioMuted;
-			audioSource.transform.parent = sourceParent;
 			audioSource.transform.localPosition = Vector3.zero;
 			audioSource.gameObject.name = "AudioOneShot -" + effectSource.name;
 			audioSource.Play();
@@ -402,7 +395,7 @@ public class AudioManager : Singleton<AudioManager>
 	public GameObject SpawnMusic(AudioSource musicPrefab)
 	{
 		GameObject gameObject = Object.Instantiate(musicPrefab.gameObject);
-		gameObject.GetComponent<AudioSource>().mute = audioMuted;
+		gameObject.GetComponent<AudioSource>().mute = AudioMuted;
 		Object.DontDestroyOnLoad(gameObject);
 		m_activeMusic.Add(gameObject.GetComponent<AudioSource>());
 		return gameObject;
@@ -474,7 +467,7 @@ public class AudioManager : Singleton<AudioManager>
 			}
 			loopingSource.Play();
 		}
-		loopingSource.mute = audioMuted;
+		loopingSource.mute = AudioMuted;
 		activeLoopingSounds.Add(loopingSource);
 	}
 
@@ -514,8 +507,8 @@ public class AudioManager : Singleton<AudioManager>
 
 	private void LoadAudioParams()
 	{
-		audioMuted = UserSettings.GetBool("AudioMuted");
-		if (audioMuted)
+		AudioMuted = UserSettings.GetBool("AudioMuted");
+		if (AudioMuted)
 		{
 			AudioListener.volume = 0f;
 		}
@@ -527,14 +520,14 @@ public class AudioManager : Singleton<AudioManager>
 
 	private void SaveAudioParams()
 	{
-		UserSettings.SetBool("AudioMuted", audioMuted);
+		UserSettings.SetBool("AudioMuted", AudioMuted);
 		UserSettings.Save();
 	}
 
 	public void ToggleMute()
 	{
-		audioMuted = !audioMuted;
-		if (audioMuted)
+		AudioMuted = !AudioMuted;
+		if (AudioMuted)
 		{
 			AudioListener.volume = 0f;
 		}
@@ -542,19 +535,19 @@ public class AudioManager : Singleton<AudioManager>
 		{
 			AudioListener.volume = 1f;
 		}
-		MuteSounds(activeLoopingSounds, audioMuted);
-		MuteSounds(active3dOneShotSounds, audioMuted);
-		MuteSounds(m_activeMusic, audioMuted);
+		MuteSounds(activeLoopingSounds, AudioMuted);
+		MuteSounds(active3dOneShotSounds, AudioMuted);
+		MuteSounds(m_activeMusic, AudioMuted);
 		SaveAudioParams();
 		if (AudioManager.onAudioMuted != null)
 		{
-			AudioManager.onAudioMuted(audioMuted);
+			AudioManager.onAudioMuted(AudioMuted);
 		}
 	}
 
 	private void ReceiveGameTimePaused(GameTimePaused data)
 	{
-		m_paused = data.paused;
+		Paused = data.paused;
 		PauseSounds(activeLoopingSounds, data.paused);
 		PauseSounds(m_activeMusic, data.paused);
 		PauseSounds(active3dOneShotSounds, data.paused);

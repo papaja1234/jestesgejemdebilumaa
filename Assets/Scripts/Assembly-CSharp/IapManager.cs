@@ -169,8 +169,6 @@ public class IapManager : Singleton<IapManager>
 
 	private Dictionary<InAppPurchaseItemType, int> m_priceDictionary = new Dictionary<InAppPurchaseItemType, int>();
 
-	private InAppPurchaseStatus m_state;
-
 	private InAppPurchaseItemType m_activePurchase;
 
 	private const string NORMAL_COUNT = "normalCount";
@@ -189,7 +187,7 @@ public class IapManager : Singleton<IapManager>
 
 	private IAPInterface m_iap;
 
-	public InAppPurchaseStatus Status => m_state;
+	public InAppPurchaseStatus Status { get; private set; }
 
 	public bool ReadyForTransaction
 	{
@@ -197,7 +195,7 @@ public class IapManager : Singleton<IapManager>
 		{
 			if (m_iap != null && m_iap.readyForTransactions())
 			{
-				return m_state == InAppPurchaseStatus.Idle;
+				return Status == InAppPurchaseStatus.Idle;
 			}
 			return false;
 		}
@@ -269,7 +267,7 @@ public class IapManager : Singleton<IapManager>
 			m_iap.codeRedeemFailedEvent += HandleCodeRedeemFailedEvent;
 			m_iap.codeVerificationEvent += HandleCodeVerificationEvent;
 			m_iap.deliverItem += HandleDeliverItem;
-			m_state = InAppPurchaseStatus.Init;
+			Status = InAppPurchaseStatus.Init;
 			m_iap.init();
 			EventManager.Connect<PlayerChangedEvent>(OnPlayerChanged);
 			EventManager.Connect<LevelLoadedEvent>(OnLevelLoadedEvent);
@@ -292,23 +290,20 @@ public class IapManager : Singleton<IapManager>
 		{
 			UnityEngine.Object.Destroy(m_iapUnlockFullVersionPageInstance);
 		}
-		m_iapUnlockFullVersionPageInstance = UnityEngine.Object.Instantiate(m_iapUnlockFullVersionPage);
-		m_iapUnlockFullVersionPageInstance.transform.parent = base.transform;
+		m_iapUnlockFullVersionPageInstance = UnityEngine.Object.Instantiate(m_iapUnlockFullVersionPage, base.transform, true);
 		m_iapUnlockFullVersionPageInstance.SetActive(value: false);
 		if (m_errorPopupInstance != null)
 		{
 			UnityEngine.Object.Destroy(m_errorPopupInstance);
 		}
-		m_errorPopupInstance = UnityEngine.Object.Instantiate(m_errorPopup);
-		m_errorPopupInstance.transform.parent = base.transform;
+		m_errorPopupInstance = UnityEngine.Object.Instantiate(m_errorPopup, base.transform, true);
 		m_errorPopupInstance.SetActive(value: false);
 		if (m_ShopPageInstance != null)
 		{
 			m_Shop = null;
 			UnityEngine.Object.Destroy(m_ShopPageInstance);
 		}
-		m_ShopPageInstance = UnityEngine.Object.Instantiate(m_ShopPage);
-		m_ShopPageInstance.transform.parent = base.transform;
+		m_ShopPageInstance = UnityEngine.Object.Instantiate(m_ShopPage, base.transform, true);
 		m_ShopPageInstance.transform.localPosition = Vector3.zero;
 		m_ShopPageInstance.SetActive(value: false);
 		m_Shop = GetShop();
@@ -445,7 +440,7 @@ public class IapManager : Singleton<IapManager>
 
 	private void HandleReadyForTransactionsEvent(bool isReady)
 	{
-		m_state = InAppPurchaseStatus.Idle;
+		Status = InAppPurchaseStatus.Idle;
 		if (isReady)
 		{
 			FetchPurchasableItemList();
@@ -458,9 +453,9 @@ public class IapManager : Singleton<IapManager>
 
 	private void HandlePurchaseFailedEvent(string error)
 	{
-		if (m_state == InAppPurchaseStatus.PurchasingItem)
+		if (Status == InAppPurchaseStatus.PurchasingItem)
 		{
-			m_state = InAppPurchaseStatus.Idle;
+			Status = InAppPurchaseStatus.Idle;
 			ShowErrorPopup("IN_APP_PURCHASE_NOT_READY");
 		}
 		IapManager.onPurchaseFailed(m_activePurchase);
@@ -468,7 +463,7 @@ public class IapManager : Singleton<IapManager>
 
 	private void HandlePurchaseCancelledEvent(string obj)
 	{
-		m_state = InAppPurchaseStatus.Idle;
+		Status = InAppPurchaseStatus.Idle;
 		IapManager.onPurchaseFailed(m_activePurchase);
 	}
 
@@ -479,7 +474,7 @@ public class IapManager : Singleton<IapManager>
 
 	private void HandlePurchaseSucceededEvent(string productId)
 	{
-		m_state = InAppPurchaseStatus.Idle;
+		Status = InAppPurchaseStatus.Idle;
 		InAppPurchaseItemType itemByProductId = GetItemByProductId(productId);
 		if (itemByProductId != 0)
 		{
@@ -511,7 +506,7 @@ public class IapManager : Singleton<IapManager>
 
 	private void HandleProductListReceivedEvent(List<IAPProductInfo> products)
 	{
-		m_state = InAppPurchaseStatus.Idle;
+		Status = InAppPurchaseStatus.Idle;
 		if (products != null && products.Count > 0)
 		{
 			if (productList == null)
@@ -576,7 +571,7 @@ public class IapManager : Singleton<IapManager>
 
 	private void HandleProductListRequestFailedEvent(string error)
 	{
-		m_state = InAppPurchaseStatus.Idle;
+		Status = InAppPurchaseStatus.Idle;
 		IapManager.onProductListReceived(null, error);
 	}
 
@@ -610,7 +605,7 @@ public class IapManager : Singleton<IapManager>
 			ShowErrorPopup("IN_APP_PURCHASE_NOT_READY");
 			return;
 		}
-		m_state = InAppPurchaseStatus.PurchasingItem;
+		Status = InAppPurchaseStatus.PurchasingItem;
 		m_activePurchase = type;
 		m_iap.purchaseProduct(m_itemDictionary[type]);
 		SendStartPurchaseFlurryEvent(type);
@@ -645,14 +640,14 @@ public class IapManager : Singleton<IapManager>
 	{
 		float pollTime = 0.5f;
 		float waitTime = 10f;
-		while (waitTime > 0f && m_state == InAppPurchaseStatus.PurchasingItem)
+		while (waitTime > 0f && Status == InAppPurchaseStatus.PurchasingItem)
 		{
 			yield return new WaitForSeconds(pollTime);
 			waitTime -= pollTime;
 		}
-		if (m_state == InAppPurchaseStatus.PurchasingItem)
+		if (Status == InAppPurchaseStatus.PurchasingItem)
 		{
-			m_state = InAppPurchaseStatus.Idle;
+			Status = InAppPurchaseStatus.Idle;
 			IapManager.onPurchaseFailed(m_activePurchase);
 			ShowErrorPopup("IN_APP_PURCHASE_TIMEOUT");
 		}
@@ -660,7 +655,7 @@ public class IapManager : Singleton<IapManager>
 
 	public void FetchPurchasableItemList()
 	{
-		if (m_state != InAppPurchaseStatus.FetchingItems)
+		if (Status != InAppPurchaseStatus.FetchingItems)
 		{
 			if (!ReadyForTransaction)
 			{
@@ -668,7 +663,7 @@ public class IapManager : Singleton<IapManager>
 				return;
 			}
 			productList = null;
-			m_state = InAppPurchaseStatus.FetchingItems;
+			Status = InAppPurchaseStatus.FetchingItems;
 			m_iap.fetchAvailableProducts(GetPurchasableItemIdentifiers());
 		}
 	}

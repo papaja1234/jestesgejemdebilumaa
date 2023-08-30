@@ -94,8 +94,6 @@ public class LevelComplete : WPFMonoBehaviour
 
 	private bool challenge1CoinsCollected;
 
-	private CoinsCollected coinsCollected;
-
 	[SerializeField]
 	private GameObject[] episodeTitles;
 
@@ -127,7 +125,7 @@ public class LevelComplete : WPFMonoBehaviour
 
 	public GameObject pigFeedButton;
 
-	public CoinsCollected CoinsCollectedNow => coinsCollected;
+	public CoinsCollected CoinsCollectedNow { get; private set; }
 
 	public void SetGoal(GoalChallenge challenge)
 	{
@@ -363,7 +361,7 @@ public class LevelComplete : WPFMonoBehaviour
 		if (!flag4)
 		{
 			num8 += num4;
-			coinsCollected |= CoinsCollected.Challenge1;
+			CoinsCollectedNow |= CoinsCollected.Challenge1;
 			if ((bool)SnoutButton.Instance && (bool)m_starOne)
 			{
 				for (int i = 0; i < num4; i++)
@@ -384,7 +382,7 @@ public class LevelComplete : WPFMonoBehaviour
 					snoutCoinsCollected = false;
 				}
 				num8 += num6;
-				coinsCollected |= CoinsCollected.Challenge3;
+				CoinsCollectedNow |= CoinsCollected.Challenge3;
 				if ((bool)SnoutButton.Instance && (bool)m_starTwo)
 				{
 					for (int j = 0; j < num6; j++)
@@ -400,7 +398,7 @@ public class LevelComplete : WPFMonoBehaviour
 					snoutCoinsCollected = false;
 				}
 				num8 += num5;
-				coinsCollected |= CoinsCollected.Challenge2;
+				CoinsCollectedNow |= CoinsCollected.Challenge2;
 				if ((bool)SnoutButton.Instance && (bool)m_starTwo)
 				{
 					for (int k = 0; k < num5; k++)
@@ -432,7 +430,7 @@ public class LevelComplete : WPFMonoBehaviour
 					snoutCoinsCollected2 = false;
 				}
 				num8 += num6;
-				coinsCollected |= CoinsCollected.Challenge3;
+				CoinsCollectedNow |= CoinsCollected.Challenge3;
 				if ((bool)SnoutButton.Instance && (bool)m_starTwo)
 				{
 					for (int l = 0; l < num6; l++)
@@ -448,7 +446,7 @@ public class LevelComplete : WPFMonoBehaviour
 					snoutCoinsCollected2 = false;
 				}
 				num8 += num5;
-				coinsCollected |= CoinsCollected.Challenge2;
+				CoinsCollectedNow |= CoinsCollected.Challenge2;
 				if ((bool)SnoutButton.Instance && (bool)m_starTwo)
 				{
 					for (int m = 0; m < num5; m++)
@@ -482,7 +480,7 @@ public class LevelComplete : WPFMonoBehaviour
 					snoutCoinsCollected3 = false;
 				}
 				num8 += num6;
-				coinsCollected |= CoinsCollected.Challenge3;
+				CoinsCollectedNow |= CoinsCollected.Challenge3;
 				if ((bool)SnoutButton.Instance && (bool)m_starThree)
 				{
 					for (int n = 0; n < num6; n++)
@@ -498,7 +496,7 @@ public class LevelComplete : WPFMonoBehaviour
 					snoutCoinsCollected3 = false;
 				}
 				num8 += num5;
-				coinsCollected |= CoinsCollected.Challenge2;
+				CoinsCollectedNow |= CoinsCollected.Challenge2;
 				if ((bool)SnoutButton.Instance && (bool)m_starThree)
 				{
 					for (int num14 = 0; num14 < num5; num14++)
@@ -529,7 +527,7 @@ public class LevelComplete : WPFMonoBehaviour
 					snoutCoinsCollected4 = false;
 				}
 				num8 += num6;
-				coinsCollected |= CoinsCollected.Challenge3;
+				CoinsCollectedNow |= CoinsCollected.Challenge3;
 				if ((bool)SnoutButton.Instance && (bool)m_starThree)
 				{
 					for (int num15 = 0; num15 < num6; num15++)
@@ -545,7 +543,7 @@ public class LevelComplete : WPFMonoBehaviour
 					snoutCoinsCollected4 = false;
 				}
 				num8 += num5;
-				coinsCollected |= CoinsCollected.Challenge2;
+				CoinsCollectedNow |= CoinsCollected.Challenge2;
 				if ((bool)SnoutButton.Instance && (bool)m_starThree)
 				{
 					for (int num16 = 0; num16 < num5; num16++)
@@ -974,8 +972,7 @@ public class LevelComplete : WPFMonoBehaviour
 		buttons[2].localPosition -= Vector3.up * 4f;
 		if (buttons[2] != null && WPFMonoBehaviour.gameData.m_unlockLevelAdButtonPrefab != null)
 		{
-			GameObject obj = UnityEngine.Object.Instantiate(WPFMonoBehaviour.gameData.m_unlockLevelAdButtonPrefab);
-			obj.transform.parent = buttons[2];
+			GameObject obj = UnityEngine.Object.Instantiate(WPFMonoBehaviour.gameData.m_unlockLevelAdButtonPrefab, buttons[2], true);
 			obj.transform.localPosition = -Vector3.forward * 2f;
 		}
 	}

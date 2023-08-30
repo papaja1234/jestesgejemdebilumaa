@@ -153,15 +153,9 @@ public class Contraption : WPFMonoBehaviour
 
 	private float m_enginePowerFactor = 1f;
 
-	private ContraptionDataset m_contraptionDataSet;
-
 	private List<Rope> m_ropes = new List<Rope>();
 
-	private float m_powerConsumption;
-
 	private float m_stopTimer;
-
-	private List<ConnectedComponent> m_connectedComponents = new List<ConnectedComponent>();
 
 	private List<int> m_componentsConnectedByRope = new List<int>();
 
@@ -174,8 +168,6 @@ public class Contraption : WPFMonoBehaviour
 	private int m_droppedSandbagLayer;
 
 	private bool m_broken;
-
-	private List<PartPlacementInfo> m_partPlacements = new List<PartPlacementInfo>();
 
 	private int m_staticPartCount;
 
@@ -217,7 +209,7 @@ public class Contraption : WPFMonoBehaviour
 
 	private PartMap m_runtimePartMap;
 
-	public ContraptionDataset DataSet => m_contraptionDataSet;
+	public ContraptionDataset DataSet { get; private set; }
 
 	/// <summary>
 	/// List of every part, This Field is Read-only
@@ -226,10 +218,7 @@ public class Contraption : WPFMonoBehaviour
 
 	public bool HasSuperMagnet
 	{
-		get
-		{
-			return m_hasSuperMagnet;
-		}
+		get => m_hasSuperMagnet;
 		set
 		{
 			if (m_hasSuperMagnet == value)
@@ -261,10 +250,7 @@ public class Contraption : WPFMonoBehaviour
 
 	public bool HasNightVision
 	{
-		get
-		{
-			return m_hasNightVision;
-		}
+		get => m_hasNightVision;
 		set
 		{
 			if (m_hasNightVision != value)
@@ -287,10 +273,7 @@ public class Contraption : WPFMonoBehaviour
 
 	public bool HasTurboCharge
 	{
-		get
-		{
-			return m_hasTurboCharge;
-		}
+		get => m_hasTurboCharge;
 		set
 		{
 			if (m_hasTurboCharge != value)
@@ -326,9 +309,9 @@ public class Contraption : WPFMonoBehaviour
 
 	public Glue.Type CurrentGlue => m_currentGlue;
 
-	public List<PartPlacementInfo> PartPlacements => m_partPlacements;
+	public List<PartPlacementInfo> PartPlacements { get; } = new List<PartPlacementInfo>();
 
-	public float PowerConsumption => m_powerConsumption;
+	public float PowerConsumption { get; private set; }
 
 	public static Contraption Instance { get; private set; }
 
@@ -338,7 +321,7 @@ public class Contraption : WPFMonoBehaviour
 
 	public int GeneralConnectedComponentCount { get; private set; }
 
-	public List<ConnectedComponent> ConnectedComponents => m_connectedComponents;
+	public List<ConnectedComponent> ConnectedComponents { get; private set; } = new List<ConnectedComponent>();
 
 	public List<JointConnection> JointMap => m_jointMap;
 
@@ -347,13 +330,13 @@ public class Contraption : WPFMonoBehaviour
 	public bool ConnectedToGearbox(BasePart part)
 	{
 		int connectedComponent = part.ConnectedComponent;
-		return m_connectedComponents[connectedComponent].hasGearbox;
+		return ConnectedComponents[connectedComponent].hasGearbox;
 	}
 
 	public Gearbox GetGearbox(BasePart part)
 	{
 		int connectedComponent = part.ConnectedComponent;
-		return m_connectedComponents[connectedComponent].gearbox;
+		return ConnectedComponents[connectedComponent].gearbox;
 	}
 
 	public void SetCameraTarget(BasePart target)
@@ -501,19 +484,19 @@ public class Contraption : WPFMonoBehaviour
 	public void SetGroundTouchTime(BasePart part)
 	{
 		int connectedComponent = part.ConnectedComponent;
-		if (connectedComponent >= 0 && connectedComponent < m_connectedComponents.Count)
+		if (connectedComponent >= 0 && connectedComponent < ConnectedComponents.Count)
 		{
-			ConnectedComponent value = m_connectedComponents[connectedComponent];
+			ConnectedComponent value = ConnectedComponents[connectedComponent];
 			value.groundTouchTime = Time.time;
-			m_connectedComponents[connectedComponent] = value;
+			ConnectedComponents[connectedComponent] = value;
 		}
 	}
 
 	public float GetGroundTouchTime(int componentIndex)
 	{
-		if (componentIndex >= 0 && componentIndex < m_connectedComponents.Count)
+		if (componentIndex >= 0 && componentIndex < ConnectedComponents.Count)
 		{
-			return m_connectedComponents[componentIndex].groundTouchTime;
+			return ConnectedComponents[componentIndex].groundTouchTime;
 		}
 		return 0f;
 	}
@@ -522,7 +505,7 @@ public class Contraption : WPFMonoBehaviour
 	{
 		if (INSettings.GetBool(INFeature.DynamicPowerSystem))
 		{
-			ConnectedComponent connectedComponent = m_connectedComponents[part.ConnectedComponent];
+			ConnectedComponent connectedComponent = ConnectedComponents[part.ConnectedComponent];
 			float enginePower = connectedComponent.enginePower;
 			float powerConsumption = connectedComponent.powerConsumption;
 			float num = 0f;
@@ -537,9 +520,9 @@ public class Contraption : WPFMonoBehaviour
 			return Mathf.Pow(num, (num > 1f) ? 0.585f : 0.75f);
 		}
 		int connectedComponent2 = part.ConnectedComponent;
-		if (connectedComponent2 >= 0 && connectedComponent2 < m_connectedComponents.Count)
+		if (connectedComponent2 >= 0 && connectedComponent2 < ConnectedComponents.Count)
 		{
-			ConnectedComponent connectedComponent3 = m_connectedComponents[connectedComponent2];
+			ConnectedComponent connectedComponent3 = ConnectedComponents[connectedComponent2];
 			float num2 = 0f;
 			float num3 = connectedComponent3.powerConsumption;
 			for (int i = 0; i < connectedComponent3.motorWheels.Count; i++)
@@ -574,7 +557,7 @@ public class Contraption : WPFMonoBehaviour
 
 	private void Awake()
 	{
-		m_contraptionDataSet = new ContraptionDataset();
+		DataSet = new ContraptionDataset();
 		m_gameCamera = Camera.main;
 		m_droppedSandbagLayer = LayerMask.NameToLayer("DroppedSandbag");
 		nightVisionGogglesPrefab = Resources.Load<GameObject>("Prefabs/NightVisionGoggles");
@@ -809,7 +792,7 @@ public class Contraption : WPFMonoBehaviour
 		m_stopTimer = 0f;
 		m_parts = new List<BasePart>(GetComponentsInChildren<BasePart>());//Get every BasePart(s)
 		m_ropes.Clear();
-		m_powerConsumption = 0f;
+		PowerConsumption = 0f;
 		m_enginesAmount = 0;
 		if (m_hasTurboCharge)
 		{
@@ -844,7 +827,7 @@ public class Contraption : WPFMonoBehaviour
 			{
 				m_pig = part;
 			}
-			m_powerConsumption += part.m_powerConsumption;
+			PowerConsumption += part.m_powerConsumption;
 			//-----------------------FIRST LOOP-----------------------
 			//END OF BASIC DATA INITIALIZATION
 		}
@@ -853,7 +836,7 @@ public class Contraption : WPFMonoBehaviour
 		{
 			int coordX = part2.m_coordX;
 			int coordY = part2.m_coordY;
-			m_contraptionDataSet.AddPart(coordX, coordY, (int)part2.m_partType, part2.customPartIndex, part2.m_gridRotation, part2.m_flipped);//Load Parts
+			DataSet.AddPart(coordX, coordY, (int)part2.m_partType, part2.customPartIndex, part2.m_gridRotation, part2.m_flipped);//Load Parts
 			part2.contraption = this;
 			part2.EnsureRigidbody();
 			//-----------------------SECOND LOOP-----------------------
@@ -1077,7 +1060,7 @@ public class Contraption : WPFMonoBehaviour
 
 	public void SaveContraption(string currentContraptionName)
 	{
-		WPFPrefs.SaveContraptionDataset(currentContraptionName, m_contraptionDataSet);
+		WPFPrefs.SaveContraptionDataset(currentContraptionName, DataSet);
 		GameProgress.Save();
 	}
 
@@ -1090,22 +1073,22 @@ public class Contraption : WPFMonoBehaviour
 
 	public void CalculatePartPlacement()
 	{
-		m_partPlacements.Clear();
+		PartPlacements.Clear();
 		for (int i = 0; i < m_parts.Count; i++)
 		{
 			AddPartPlacement(m_parts[i]);
 		}
-		foreach (PartPlacementInfo partPlacement in m_partPlacements)
+		foreach (PartPlacementInfo partPlacement in PartPlacements)
 		{
 			partPlacement.averagePosition /= (float)partPlacement.count;
 		}
-		m_partPlacements.Sort(new PartOrder());
+		PartPlacements.Sort(new PartOrder());
 	}
 
 	private void AddPartPlacement(BasePart part)
 	{
 		BasePart.PartType partType = InGameFlightMenu.CombinedTypeForGadgetButtonOrdering(part.m_partType);
-		foreach (PartPlacementInfo partPlacement in m_partPlacements)
+		foreach (PartPlacementInfo partPlacement in PartPlacements)
 		{
 			if (partPlacement.partType == partType && partPlacement.direction == part.EffectDirection())
 			{
@@ -1114,7 +1097,7 @@ public class Contraption : WPFMonoBehaviour
 				return;
 			}
 		}
-		m_partPlacements.Add(new PartPlacementInfo(partType, part.EffectDirection(), part.transform.position, 1));
+		PartPlacements.Add(new PartPlacementInfo(partType, part.EffectDirection(), part.transform.position, 1));
 	}
 
 	public int EnginePoweredPartTypeCount()
@@ -1649,10 +1632,10 @@ public class Contraption : WPFMonoBehaviour
 		}
 		disjointSet.GetComponentIndexes(array, out componentCount);
 		ConnectedComponentCount = componentCount;
-		m_connectedComponents = new List<ConnectedComponent>(componentCount);
+		ConnectedComponents = new List<ConnectedComponent>(componentCount);
 		for (int n = 0; n < componentCount; n++)
 		{
-			m_connectedComponents.Add(new ConnectedComponent
+			ConnectedComponents.Add(new ConnectedComponent
 			{
 				motorWheels = new List<MotorWheel>()
 			});
@@ -1662,7 +1645,7 @@ public class Contraption : WPFMonoBehaviour
 			int num2 = array[num];
 			BasePart basePart4 = parts[num];
 			basePart4.ConnectedComponent = num2;
-			ConnectedComponent value6 = m_connectedComponents[num2];
+			ConnectedComponent value6 = ConnectedComponents[num2];
 			value6.partCount++;
 			value6.powerConsumption += basePart4.m_powerConsumption;
 			value6.enginePower += basePart4.m_enginePower * m_enginePowerFactor;
@@ -1679,7 +1662,7 @@ public class Contraption : WPFMonoBehaviour
 			{
 				value6.motorWheels.Add(item);
 			}
-			m_connectedComponents[num2] = value6;
+			ConnectedComponents[num2] = value6;
 		}
 		for (int num3 = 0; num3 < count; num3++)
 		{
@@ -1829,7 +1812,7 @@ public class Contraption : WPFMonoBehaviour
 		return true;
 	}
 
-	private void SetPartPos(int x, int y, BasePart part)
+	public void SetPartPos(int x, int y, BasePart part)
 	{
 		if (part != null)
 		{
@@ -2539,18 +2522,18 @@ public class Contraption : WPFMonoBehaviour
 
 	public bool HasComponentEngine(int componentIndex)
 	{
-		if (componentIndex >= 0 && componentIndex < m_connectedComponents.Count)
+		if (componentIndex >= 0 && componentIndex < ConnectedComponents.Count)
 		{
-			return m_connectedComponents[componentIndex].hasEngine;
+			return ConnectedComponents[componentIndex].hasEngine;
 		}
 		return false;
 	}
 
 	public int ComponentPartCount(int componentIndex)
 	{
-		if (componentIndex >= 0 && componentIndex < m_connectedComponents.Count)
+		if (componentIndex >= 0 && componentIndex < ConnectedComponents.Count)
 		{
-			return m_connectedComponents[componentIndex].partCount;
+			return ConnectedComponents[componentIndex].partCount;
 		}
 		return 0;
 	}
@@ -2648,8 +2631,7 @@ public class Contraption : WPFMonoBehaviour
 			}
 			if (m_hasNightVision && nightVisionGoggles == null)
 			{
-				nightVisionGoggles = UnityEngine.Object.Instantiate(nightVisionGogglesPrefab);
-				nightVisionGoggles.transform.parent = part.transform.Find("PigVisualization/Face/MaskHolder");
+				nightVisionGoggles = UnityEngine.Object.Instantiate(nightVisionGogglesPrefab, part.transform.Find("PigVisualization/Face/MaskHolder"), true);
 				nightVisionGoggles.transform.localPosition = Vector3.up * 0.02f;
 				nightVisionGoggles.transform.localScale = Vector3.one;
 				PigHat componentInChildren = part.transform.GetComponentInChildren<PigHat>(includeInactive: true);
@@ -2703,9 +2685,9 @@ public class Contraption : WPFMonoBehaviour
 						num += connectedPart.m_powerConsumption;
 					}
 				}
-				ConnectedComponent value = m_connectedComponents[i];
+				ConnectedComponent value = ConnectedComponents[i];
 				value.powerConsumption = num;
-				m_connectedComponents[i] = value;
+				ConnectedComponents[i] = value;
 			}
 			InitializeEngines();
 		}

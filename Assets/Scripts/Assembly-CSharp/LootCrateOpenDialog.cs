@@ -33,17 +33,13 @@ public class LootCrateOpenDialog : WPFMonoBehaviour
 
 	public class LootCrateDelivered : EventManager.Event
 	{
-		private LootCrateType type;
-
-		public LootCrateType Type => type;
+		public LootCrateType Type { get; }
 
 		public LootCrateDelivered(LootCrateType type)
 		{
-			this.type = type;
+			this.Type = type;
 		}
 	}
-
-	private static bool s_dialogOpen;
 
 	private static LootCrateOpenDialog instance;
 
@@ -79,7 +75,7 @@ public class LootCrateOpenDialog : WPFMonoBehaviour
 
 	private bool levelLootcrateOpened;
 
-	public static bool DialogOpen => s_dialogOpen;
+	public static bool DialogOpen { get; private set; }
 
 	public event Dialog.OnClose onClose;
 
@@ -406,7 +402,7 @@ public class LootCrateOpenDialog : WPFMonoBehaviour
 			ResourceBar.Instance.LockItem(ResourceBar.Item.SnoutCoin, showItem: true, enableItem: false, revertable: true);
 		}
 		ResourceBar.Instance.LockItem(ResourceBar.Item.Scrap, showItem: true, enableItem: false, revertable: true);
-		s_dialogOpen = true;
+		DialogOpen = true;
 	}
 
 	private void OnDisable()
@@ -426,7 +422,7 @@ public class LootCrateOpenDialog : WPFMonoBehaviour
 			ResourceBar.Instance.ReleaseItem(ResourceBar.Item.SnoutCoin);
 		}
 		ResourceBar.Instance.ReleaseItem(ResourceBar.Item.Scrap);
-		s_dialogOpen = false;
+		DialogOpen = false;
 	}
 
 	private void HandleKeyReleased(KeyCode obj)

@@ -12,15 +12,13 @@ public class Graph
 		}
 	}
 
-	private int m_count;
-
 	private List<Edge>[] m_graph;
 
-	public int Count => m_count;
+	public int Count { get; }
 
 	public Graph(int count)
 	{
-		m_count = count;
+		Count = count;
 		m_graph = new List<Edge>[count];
 		for (int i = 0; i < count; i++)
 		{
@@ -71,15 +69,13 @@ public class Graph<T>
 		}
 	}
 
-	private int m_count;
-
 	private List<Edge>[] m_graph;
 
-	public int Count => m_count;
+	public int Count { get; }
 
 	public Graph(int count)
 	{
-		m_count = count;
+		Count = count;
 		m_graph = new List<Edge>[count];
 		for (int i = 0; i < count; i++)
 		{

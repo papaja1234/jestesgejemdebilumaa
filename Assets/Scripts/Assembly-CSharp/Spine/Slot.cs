@@ -30,58 +30,31 @@ namespace Spine
 
 		public float R
 		{
-			get
-			{
-				return r;
-			}
-			set
-			{
-				r = value;
-			}
+			get => r;
+			set => r = value;
 		}
 
 		public float G
 		{
-			get
-			{
-				return g;
-			}
-			set
-			{
-				g = value;
-			}
+			get => g;
+			set => g = value;
 		}
 
 		public float B
 		{
-			get
-			{
-				return b;
-			}
-			set
-			{
-				b = value;
-			}
+			get => b;
+			set => b = value;
 		}
 
 		public float A
 		{
-			get
-			{
-				return a;
-			}
-			set
-			{
-				a = value;
-			}
+			get => a;
+			set => a = value;
 		}
 
 		public Attachment Attachment
 		{
-			get
-			{
-				return attachment;
-			}
+			get => attachment;
 			set
 			{
 				if (attachment != value)
@@ -95,26 +68,14 @@ namespace Spine
 
 		public float AttachmentTime
 		{
-			get
-			{
-				return bone.skeleton.time - attachmentTime;
-			}
-			set
-			{
-				attachmentTime = bone.skeleton.time - value;
-			}
+			get => bone.skeleton.time - attachmentTime;
+			set => attachmentTime = bone.skeleton.time - value;
 		}
 
 		public ExposedList<float> AttachmentVertices
 		{
-			get
-			{
-				return attachmentVertices;
-			}
-			set
-			{
-				attachmentVertices = value;
-			}
+			get => attachmentVertices;
+			set => attachmentVertices = value;
 		}
 
 		public Slot(SlotData data, Bone bone)

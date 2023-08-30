@@ -73,8 +73,6 @@ public class Shop : WPFMonoBehaviour
 
 	public GameObject m_restoreButton;
 
-	private SnoutCoinShopPopup m_snoutCoinShop;
-
 	private TextDialog starterPackDialog;
 
 	private ShopRibbon[] m_ribbons;
@@ -101,7 +99,7 @@ public class Shop : WPFMonoBehaviour
 
 	private PurchaseProductConfirmDialog confirmDialog;
 
-	public SnoutCoinShopPopup SnoutCoinShop => m_snoutCoinShop;
+	public SnoutCoinShopPopup SnoutCoinShop { get; private set; }
 
 	private void Awake()
 	{
@@ -313,14 +311,13 @@ public class Shop : WPFMonoBehaviour
 
 	private void EnsureSnoutShop()
 	{
-		if (m_snoutCoinShop == null && m_snoutCoinShopPrefab != null)
+		if (SnoutCoinShop == null && m_snoutCoinShopPrefab != null)
 		{
-			GameObject gameObject = UnityEngine.Object.Instantiate(m_snoutCoinShopPrefab);
-			gameObject.transform.parent = Singleton<IapManager>.Instance.transform;
+			GameObject gameObject = UnityEngine.Object.Instantiate(m_snoutCoinShopPrefab, Singleton<IapManager>.Instance.transform, true);
 			gameObject.transform.localPosition = Vector3.back * 6f;
 			gameObject.name = m_snoutCoinShopPrefab.name;
-			m_snoutCoinShop = gameObject.GetComponent<SnoutCoinShopPopup>();
-			m_snoutCoinShop.UpdatePrices(this);
+			SnoutCoinShop = gameObject.GetComponent<SnoutCoinShopPopup>();
+			SnoutCoinShop.UpdatePrices(this);
 			gameObject.SetActive(value: false);
 		}
 	}
@@ -541,7 +538,7 @@ public class Shop : WPFMonoBehaviour
 		{
 			return;
 		}
-		m_snoutCoinShop.UpdatePrices(this);
+		SnoutCoinShop.UpdatePrices(this);
 		PurchaseInfo[] componentsInChildren = base.gameObject.GetComponentsInChildren<PurchaseInfo>();
 		foreach (PurchaseInfo purchaseInfo in componentsInChildren)
 		{
@@ -778,7 +775,7 @@ public class Shop : WPFMonoBehaviour
 			m_ribbons[i].ribbon = AddRibbon(m_ribbons[i]);
 			if (m_ribbons[i].ribbon == null)
 			{
-				m_ribbons[i].ribbon = m_snoutCoinShop.AddRibbon(m_ribbons[i]);
+				m_ribbons[i].ribbon = SnoutCoinShop.AddRibbon(m_ribbons[i]);
 			}
 		}
 	}
@@ -920,10 +917,10 @@ public class Shop : WPFMonoBehaviour
 		Singleton<IapManager>.Instance.UpdatePosition();
 		if (m_snoutCoinShopPrefab != null && m_snoutCoinShopPrefab.name.Equals(pageName))
 		{
-			if (!m_snoutCoinShop.gameObject.activeInHierarchy)
+			if (!SnoutCoinShop.gameObject.activeInHierarchy)
 			{
-				m_snoutCoinShop.transform.localPosition = Vector3.back * 6f;
-				m_snoutCoinShop.Open(onClose);
+				SnoutCoinShop.transform.localPosition = Vector3.back * 6f;
+				SnoutCoinShop.Open(onClose);
 				UpdateLowerButtons(0);
 			}
 			return;
@@ -1105,7 +1102,7 @@ public class Shop : WPFMonoBehaviour
 			{
 				onClose();
 			}
-			if (m_snoutCoinShop == null || !m_snoutCoinShop.gameObject.activeInHierarchy)
+			if (SnoutCoinShop == null || !SnoutCoinShop.gameObject.activeInHierarchy)
 			{
 				UnityEngine.Object.Destroy(confirmDialog.gameObject);
 			}
@@ -1144,8 +1141,7 @@ public class Shop : WPFMonoBehaviour
 				{
 					return;
 				}
-				GameObject gameObject = UnityEngine.Object.Instantiate(WPFMonoBehaviour.gameData.m_starterPackDialog);
-				gameObject.transform.parent = base.transform.parent;
+				GameObject gameObject = UnityEngine.Object.Instantiate(WPFMonoBehaviour.gameData.m_starterPackDialog, base.transform.parent, true);
 				gameObject.transform.localPosition = -Vector3.forward * 8f;
 				starterPackDialog = gameObject.GetComponent<TextDialog>();
 				if (starterPackDialog != null)

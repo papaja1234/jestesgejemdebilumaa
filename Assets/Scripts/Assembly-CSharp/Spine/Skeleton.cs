@@ -61,122 +61,62 @@ namespace Spine
 
 		public Skin Skin
 		{
-			get
-			{
-				return skin;
-			}
-			set
-			{
-				skin = value;
-			}
+			get => skin;
+			set => skin = value;
 		}
 
 		public float R
 		{
-			get
-			{
-				return r;
-			}
-			set
-			{
-				r = value;
-			}
+			get => r;
+			set => r = value;
 		}
 
 		public float G
 		{
-			get
-			{
-				return g;
-			}
-			set
-			{
-				g = value;
-			}
+			get => g;
+			set => g = value;
 		}
 
 		public float B
 		{
-			get
-			{
-				return b;
-			}
-			set
-			{
-				b = value;
-			}
+			get => b;
+			set => b = value;
 		}
 
 		public float A
 		{
-			get
-			{
-				return a;
-			}
-			set
-			{
-				a = value;
-			}
+			get => a;
+			set => a = value;
 		}
 
 		public float Time
 		{
-			get
-			{
-				return time;
-			}
-			set
-			{
-				time = value;
-			}
+			get => time;
+			set => time = value;
 		}
 
 		public float X
 		{
-			get
-			{
-				return x;
-			}
-			set
-			{
-				x = value;
-			}
+			get => x;
+			set => x = value;
 		}
 
 		public float Y
 		{
-			get
-			{
-				return y;
-			}
-			set
-			{
-				y = value;
-			}
+			get => y;
+			set => y = value;
 		}
 
 		public bool FlipX
 		{
-			get
-			{
-				return flipX;
-			}
-			set
-			{
-				flipX = value;
-			}
+			get => flipX;
+			set => flipX = value;
 		}
 
 		public bool FlipY
 		{
-			get
-			{
-				return flipY;
-			}
-			set
-			{
-				flipY = value;
-			}
+			get => flipY;
+			set => flipY = value;
 		}
 
 		public Bone RootBone

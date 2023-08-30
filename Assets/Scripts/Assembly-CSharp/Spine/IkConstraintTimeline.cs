@@ -20,26 +20,14 @@ namespace Spine
 
 		public int IkConstraintIndex
 		{
-			get
-			{
-				return ikConstraintIndex;
-			}
-			set
-			{
-				ikConstraintIndex = value;
-			}
+			get => ikConstraintIndex;
+			set => ikConstraintIndex = value;
 		}
 
 		public float[] Frames
 		{
-			get
-			{
-				return frames;
-			}
-			set
-			{
-				frames = value;
-			}
+			get => frames;
+			set => frames = value;
 		}
 
 		public IkConstraintTimeline(int frameCount)

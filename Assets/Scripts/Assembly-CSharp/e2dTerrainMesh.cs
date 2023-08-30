@@ -3,23 +3,21 @@ using UnityEngine;
 
 public abstract class e2dTerrainMesh
 {
-	private e2dTerrain mTerrain;
+	protected e2dTerrain Terrain { get; }
 
-	protected e2dTerrain Terrain => mTerrain;
+	protected Transform transform => Terrain.transform;
 
-	protected Transform transform => mTerrain.transform;
+	protected List<e2dCurveNode> TerrainCurve => Terrain.TerrainCurve;
 
-	protected List<e2dCurveNode> TerrainCurve => mTerrain.TerrainCurve;
+	protected List<e2dCurveTexture> CurveTextures => Terrain.CurveTextures;
 
-	protected List<e2dCurveTexture> CurveTextures => mTerrain.CurveTextures;
+	protected List<Texture2D> CurveControlTextures => Terrain.CurveMesh.CurveControlTextures;
 
-	protected List<Texture2D> CurveControlTextures => mTerrain.CurveMesh.CurveControlTextures;
-
-	protected e2dTerrainBoundary Boundary => mTerrain.Boundary;
+	protected e2dTerrainBoundary Boundary => Terrain.Boundary;
 
 	public e2dTerrainMesh(e2dTerrain terrain)
 	{
-		mTerrain = terrain;
+		Terrain = terrain;
 	}
 
 	protected void ResetMeshObjectsTransforms()

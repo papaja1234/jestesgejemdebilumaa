@@ -30,62 +30,32 @@ namespace MentalTools
 
 		public Vector3 Position
 		{
-			get
-			{
-				return position;
-			}
-			set
-			{
-				position = value;
-			}
+			get => position;
+			set => position = value;
 		}
 
 		public Vector3 ForwardTangent
 		{
-			get
-			{
-				return tangent0;
-			}
-			set
-			{
-				tangent0 = value;
-			}
+			get => tangent0;
+			set => tangent0 = value;
 		}
 
 		public Vector3 BackwardTangent
 		{
-			get
-			{
-				return tangent1;
-			}
-			set
-			{
-				tangent1 = value;
-			}
+			get => tangent1;
+			set => tangent1 = value;
 		}
 
 		public TangentType ForwardTangentType
 		{
-			get
-			{
-				return tangetType0;
-			}
-			set
-			{
-				tangetType0 = value;
-			}
+			get => tangetType0;
+			set => tangetType0 = value;
 		}
 
 		public TangentType BackwardTangentType
 		{
-			get
-			{
-				return tangetType1;
-			}
-			set
-			{
-				tangetType1 = value;
-			}
+			get => tangetType1;
+			set => tangetType1 = value;
 		}
 
 		public BezierNode()

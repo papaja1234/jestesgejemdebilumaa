@@ -8,8 +8,6 @@ public class INContraption : MonoBehaviour
 
 	private bool m_enabled;
 
-	private bool m_running;
-
 	private float m_startTime;
 
 	private INBehaviour.StatusCode m_status;
@@ -40,10 +38,7 @@ public class INContraption : MonoBehaviour
 
 	public bool Enabled
 	{
-		get
-		{
-			return m_enabled;
-		}
+		get => m_enabled;
 		private set
 		{
 			m_enabled = value;
@@ -51,17 +46,7 @@ public class INContraption : MonoBehaviour
 		}
 	}
 
-	public bool IsRunning
-	{
-		get
-		{
-			return m_running;
-		}
-		set
-		{
-			m_running = value;
-		}
-	}
+	public bool IsRunning { get; set; }
 
 	public static INContraption Create(Contraption contraption)
 	{
@@ -99,7 +84,7 @@ public class INContraption : MonoBehaviour
 
 	public void OnInterfaceEnabled()
 	{
-		if (!m_running)
+		if (!IsRunning)
 		{
 			PropertyPanelBuilding.Instance?.OnDisable();
 		}
@@ -122,7 +107,7 @@ public class INContraption : MonoBehaviour
 
 	public void OnInterfaceDisabled()
 	{
-		if (!m_running)
+		if (!IsRunning)
 		{
 			PropertyPanelBuilding.Instance?.OnEnable();
 		}
@@ -151,13 +136,13 @@ public class INContraption : MonoBehaviour
 			return;
 		}
 		m_initialized = true;
-		m_status = ((!m_running) ? INBehaviour.StatusCode.Building : INBehaviour.StatusCode.Running);
+		m_status = ((!IsRunning) ? INBehaviour.StatusCode.Building : INBehaviour.StatusCode.Running);
 		m_behaviours = new List<INBehaviour>();
 		if (INSettings.GetBool(INFeature.ColoredFrame))
 		{
 			PartManager.Create<ColoredFrameManager>();
 		}
-		if (!m_running)
+		if (!IsRunning)
 		{
 			if (INSettings.GetBool(INFeature.PropertyPanel))
 			{
@@ -312,7 +297,7 @@ public class INContraption : MonoBehaviour
 
 	private void FixedUpdateSelf()
 	{
-		if (!m_running)
+		if (!IsRunning)
 		{
 			return;
 		}
@@ -541,9 +526,8 @@ public class INContraption : MonoBehaviour
 	public static BasePart SetRuntimePartInternal(Vector3 position, Vector2Int coord, BasePart.GridRotation gridRotation, bool flipped, BasePart.PartType partType, int customIndex)
 	{
 		Contraption contraptionRunning = WPFMonoBehaviour.levelManager.ContraptionRunning;
-		BasePart basePart = UnityEngine.Object.Instantiate(WPFMonoBehaviour.gameData.GetCustomPart(partType, customIndex));
+		BasePart basePart = UnityEngine.Object.Instantiate(WPFMonoBehaviour.gameData.GetCustomPart(partType, customIndex), contraptionRunning.transform, true);
 		basePart.transform.position = position;
-		basePart.transform.parent = contraptionRunning.transform;
 		basePart.CoordX = coord.x;
 		basePart.CoordY = coord.y;
 		basePart.SetRotation(gridRotation);

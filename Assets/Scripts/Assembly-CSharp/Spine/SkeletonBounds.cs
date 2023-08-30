@@ -6,69 +6,21 @@ namespace Spine
 	{
 		private ExposedList<Polygon> polygonPool = new ExposedList<Polygon>();
 
-		private float minX;
-
-		private float minY;
-
-		private float maxX;
-
-		private float maxY;
-
 		public ExposedList<BoundingBoxAttachment> BoundingBoxes { get; private set; }
 
 		public ExposedList<Polygon> Polygons { get; private set; }
 
-		public float MinX
-		{
-			get
-			{
-				return minX;
-			}
-			set
-			{
-				minX = value;
-			}
-		}
+		public float MinX { get; set; }
 
-		public float MinY
-		{
-			get
-			{
-				return minY;
-			}
-			set
-			{
-				minY = value;
-			}
-		}
+		public float MinY { get; set; }
 
-		public float MaxX
-		{
-			get
-			{
-				return maxX;
-			}
-			set
-			{
-				maxX = value;
-			}
-		}
+		public float MaxX { get; set; }
 
-		public float MaxY
-		{
-			get
-			{
-				return maxY;
-			}
-			set
-			{
-				maxY = value;
-			}
-		}
+		public float MaxY { get; set; }
 
-		public float Width => maxX - minX;
+		public float Width => MaxX - MinX;
 
-		public float Height => maxY - minY;
+		public float Height => MaxY - MinY;
 
 		public SkeletonBounds()
 		{
@@ -144,27 +96,27 @@ namespace Spine
 					val4 = Math.Max(val4, val6);
 				}
 			}
-			minX = val;
-			minY = val2;
-			maxX = val3;
-			maxY = val4;
+			MinX = val;
+			MinY = val2;
+			MaxX = val3;
+			MaxY = val4;
 		}
 
 		public bool AabbContainsPoint(float x, float y)
 		{
-			if (x >= minX && x <= maxX && y >= minY)
+			if (x >= MinX && x <= MaxX && y >= MinY)
 			{
-				return y <= maxY;
+				return y <= MaxY;
 			}
 			return false;
 		}
 
 		public bool AabbIntersectsSegment(float x1, float y1, float x2, float y2)
 		{
-			float num = minX;
-			float num2 = minY;
-			float num3 = maxX;
-			float num4 = maxY;
+			float num = MinX;
+			float num2 = MinY;
+			float num3 = MaxX;
+			float num4 = MaxY;
 			if ((x1 <= num && x2 <= num) || (y1 <= num2 && y2 <= num2) || (x1 >= num3 && x2 >= num3) || (y1 >= num4 && y2 >= num4))
 			{
 				return false;
@@ -195,9 +147,9 @@ namespace Spine
 
 		public bool AabbIntersectsSkeleton(SkeletonBounds bounds)
 		{
-			if (minX < bounds.maxX && maxX > bounds.minX && minY < bounds.maxY)
+			if (MinX < bounds.MaxX && MaxX > bounds.MinX && MinY < bounds.MaxY)
 			{
-				return maxY > bounds.minY;
+				return MaxY > bounds.MinY;
 			}
 			return false;
 		}

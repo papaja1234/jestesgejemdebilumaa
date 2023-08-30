@@ -44,21 +44,9 @@ public class DoubleRewardButton : WPFMonoBehaviour
 
 	private TextDialog confirmationFailedDialog;
 
-	private LevelComplete levelComplete;
-
 	private bool isWatchingAd;
 
-	public LevelComplete LevelComplete
-	{
-		get
-		{
-			return levelComplete;
-		}
-		set
-		{
-			levelComplete = value;
-		}
-	}
+	public LevelComplete LevelComplete { get; set; }
 
 	private bool CanShowDisabledButton()
 	{
@@ -313,17 +301,17 @@ public class DoubleRewardButton : WPFMonoBehaviour
 		int num = 0;
 		num += Singleton<DoubleRewardManager>.Instance.RewardCoins;
 		SnoutButton.Instance.AddParticles(base.gameObject, Singleton<DoubleRewardManager>.Instance.RewardCoins);
-		if ((bool)levelComplete && (levelComplete.CoinsCollectedNow & LevelComplete.CoinsCollected.Challenge1) == LevelComplete.CoinsCollected.Challenge1)
+		if ((bool)LevelComplete && (LevelComplete.CoinsCollectedNow & LevelComplete.CoinsCollected.Challenge1) == LevelComplete.CoinsCollected.Challenge1)
 		{
 			SnoutButton.Instance.AddParticles(starOne, value);
 			num += value;
 		}
-		if ((bool)levelComplete && (levelComplete.CoinsCollectedNow & LevelComplete.CoinsCollected.Challenge2) == LevelComplete.CoinsCollected.Challenge2)
+		if ((bool)LevelComplete && (LevelComplete.CoinsCollectedNow & LevelComplete.CoinsCollected.Challenge2) == LevelComplete.CoinsCollected.Challenge2)
 		{
 			SnoutButton.Instance.AddParticles(starTwo, value2);
 			num += value2;
 		}
-		if ((bool)levelComplete && (levelComplete.CoinsCollectedNow & LevelComplete.CoinsCollected.Challenge3) == LevelComplete.CoinsCollected.Challenge3)
+		if ((bool)LevelComplete && (LevelComplete.CoinsCollectedNow & LevelComplete.CoinsCollected.Challenge3) == LevelComplete.CoinsCollected.Challenge3)
 		{
 			SnoutButton.Instance.AddParticles(starThree, value3);
 			num += value3;

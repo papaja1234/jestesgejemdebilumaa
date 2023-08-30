@@ -109,14 +109,8 @@ namespace Ionic.Zlib
 
 		public override long Position
 		{
-			get
-			{
-				throw new NotImplementedException();
-			}
-			set
-			{
-				throw new NotImplementedException();
-			}
+			get => throw new NotImplementedException();
+			set => throw new NotImplementedException();
 		}
 
 		public ZlibBaseStream(Stream stream, CompressionMode compressionMode, CompressionLevel level, ZlibStreamFlavor flavor, bool leaveOpen)

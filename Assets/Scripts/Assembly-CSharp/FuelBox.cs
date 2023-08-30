@@ -8,8 +8,6 @@ public class FuelBox : BasePart
 
 	private GameObject m_fuelSprite;
 
-	private float m_fuelAmount;
-
 	private float m_maxFuelAmount;
 
 	private List<(float, float)> m_collisions;
@@ -20,9 +18,9 @@ public class FuelBox : BasePart
 
 	private bool m_triggered;
 
-	public float FuelAmount => m_fuelAmount;
+	public float FuelAmount { get; private set; }
 
-	public float MaxSupplyFuelAmount => Math.Min(m_fuelAmount, 1f * Time.fixedDeltaTime);
+	public float MaxSupplyFuelAmount => Math.Min(FuelAmount, 1f * Time.fixedDeltaTime);
 
 	public float MaxRefuelingAmount => 0.5f * Time.fixedDeltaTime;
 
@@ -43,8 +41,8 @@ public class FuelBox : BasePart
 		if (!float.IsNaN(fuelAmount))
 		{
 			fuelAmount = Math.Clamp(fuelAmount, 0f, m_maxFuelAmount);
-			fuelAmount = Math.Clamp(fuelAmount, m_fuelAmount - MaxSupplyFuelAmount, m_fuelAmount + MaxRefuelingAmount);
-			m_fuelAmount = fuelAmount;
+			fuelAmount = Math.Clamp(fuelAmount, FuelAmount - MaxSupplyFuelAmount, FuelAmount + MaxRefuelingAmount);
+			FuelAmount = fuelAmount;
 			base.rigidbody.mass = 2f + fuelAmount;
 			float num = fuelAmount / m_maxFuelAmount;
 			Vector3 localPosition = m_fuelSprite.transform.localPosition;
@@ -66,7 +64,7 @@ public class FuelBox : BasePart
 	{
 		base.Initialize();
 		m_maxFuelAmount = 4f;
-		m_fuelAmount = m_maxFuelAmount;
+		FuelAmount = m_maxFuelAmount;
 		SetFuelAmount(m_maxFuelAmount);
 		FindConnectedParts();
 	}

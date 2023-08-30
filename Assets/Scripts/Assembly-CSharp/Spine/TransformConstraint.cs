@@ -24,62 +24,32 @@ namespace Spine
 
 		public Bone Target
 		{
-			get
-			{
-				return target;
-			}
-			set
-			{
-				target = value;
-			}
+			get => target;
+			set => target = value;
 		}
 
 		public float RotateMix
 		{
-			get
-			{
-				return rotateMix;
-			}
-			set
-			{
-				rotateMix = value;
-			}
+			get => rotateMix;
+			set => rotateMix = value;
 		}
 
 		public float TranslateMix
 		{
-			get
-			{
-				return translateMix;
-			}
-			set
-			{
-				translateMix = value;
-			}
+			get => translateMix;
+			set => translateMix = value;
 		}
 
 		public float ScaleMix
 		{
-			get
-			{
-				return scaleMix;
-			}
-			set
-			{
-				scaleMix = value;
-			}
+			get => scaleMix;
+			set => scaleMix = value;
 		}
 
 		public float ShearMix
 		{
-			get
-			{
-				return shearMix;
-			}
-			set
-			{
-				shearMix = value;
-			}
+			get => shearMix;
+			set => shearMix = value;
 		}
 
 		public TransformConstraint(TransformConstraintData data, Skeleton skeleton)

@@ -205,19 +205,7 @@ namespace Ionic.Zlib
 
 		private bool Rfc1950BytesEmitted;
 
-		private bool _WantRfc1950HeaderBytes = true;
-
-		internal bool WantRfc1950HeaderBytes
-		{
-			get
-			{
-				return _WantRfc1950HeaderBytes;
-			}
-			set
-			{
-				_WantRfc1950HeaderBytes = value;
-			}
-		}
+		internal bool WantRfc1950HeaderBytes { get; set; } = true;
 
 		internal DeflateManager()
 		{

@@ -34,8 +34,6 @@ public class LootCrate : Collectable
 	[SerializeField]
 	private LootCrateType crateType;
 
-	private LootCrateOpenDialog dialog;
-
 	private int dailyIndex;
 
 	private bool isAdRevealed;
@@ -44,7 +42,7 @@ public class LootCrate : Collectable
 
 	private float bulletTimeSpeed = 3f;
 
-	public LootCrateOpenDialog Dialog => dialog;
+	public LootCrateOpenDialog Dialog { get; private set; }
 
 	public LootCrateType CrateType => crateType;
 
@@ -53,9 +51,9 @@ public class LootCrate : Collectable
 		base.Start();
 		OnDataLoaded();
 		originalCratePosition = base.transform.position;
-		if (dialog == null)
+		if (Dialog == null)
 		{
-			dialog = SpawnLootCrateOpeningDialog();
+			Dialog = SpawnLootCrateOpeningDialog();
 		}
 		base.rigidbody.useGravity = false;
 		base.rigidbody.isKinematic = true;
@@ -109,9 +107,9 @@ public class LootCrate : Collectable
 
 	private IEnumerator SpawnDialog(int experience)
 	{
-		if (dialog != null)
+		if (Dialog != null)
 		{
-			dialog.PrepareOpening();
+			Dialog.PrepareOpening();
 		}
 		float waitTime = 1f / bulletTimeSpeed;
 		while (waitTime > 0f)
@@ -119,12 +117,12 @@ public class LootCrate : Collectable
 			waitTime -= GameTime.RealTimeDelta;
 			yield return null;
 		}
-		if (dialog != null)
+		if (Dialog != null)
 		{
-			dialog.transform.position = WPFMonoBehaviour.hudCamera.transform.position + Vector3.forward * 5f;
-			dialog.gameObject.SetActive(value: true);
-			dialog.onClose += ContinueGame;
-			dialog.AddLootCrate(crateType, 1, new AnalyticData($"daily_{dailyIndex}", "found", (!isAdRevealed) ? AdWatched.No : AdWatched.Yes), fromQueue: false, experience);
+			Dialog.transform.position = WPFMonoBehaviour.hudCamera.transform.position + Vector3.forward * 5f;
+			Dialog.gameObject.SetActive(value: true);
+			Dialog.onClose += ContinueGame;
+			Dialog.AddLootCrate(crateType, 1, new AnalyticData($"daily_{dailyIndex}", "found", (!isAdRevealed) ? AdWatched.No : AdWatched.Yes), fromQueue: false, experience);
 		}
 		ResourceBar.Instance.ShowItem(ResourceBar.Item.PlayerProgress, showItem: true, enableItem: false);
 		UnityEngine.Object.Destroy(base.gameObject);
@@ -134,9 +132,9 @@ public class LootCrate : Collectable
 	{
 		ResourceBar.Instance.ShowItem(ResourceBar.Item.PlayerProgress, showItem: false);
 		CoroutineRunner.Instance.StartCoroutine(BulletTime(pause: false));
-		if (dialog != null)
+		if (Dialog != null)
 		{
-			dialog.onClose -= ContinueGame;
+			Dialog.onClose -= ContinueGame;
 		}
 	}
 

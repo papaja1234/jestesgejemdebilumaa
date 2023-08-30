@@ -38,12 +38,10 @@ public class CreditsCluster : MonoBehaviour
 
 	private void CreateCreditsLine(string textContent, Vector3 offset, bool localize)
 	{
-		GameObject gameObject = Object.Instantiate(creditsTextPrefab);
-		gameObject.transform.parent = base.transform;
+		GameObject gameObject = Object.Instantiate(creditsTextPrefab, base.transform, true);
 		gameObject.transform.Translate(offset);
 		gameObject.GetComponent<TextMesh>().text = textContent;
-		GameObject gameObject2 = Object.Instantiate(creditsTextPrefab);
-		gameObject2.transform.parent = base.transform;
+		GameObject gameObject2 = Object.Instantiate(creditsTextPrefab, base.transform, true);
 		gameObject2.GetComponent<TextMesh>().text = textContent;
 		gameObject2.transform.Translate(offset + shadowOffset);
 		gameObject2.GetComponent<Renderer>().material = dropShadowMaterial;

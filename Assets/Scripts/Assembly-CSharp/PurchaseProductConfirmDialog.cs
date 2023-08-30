@@ -23,95 +23,23 @@ public class PurchaseProductConfirmDialog : TextDialog
 	[SerializeField]
 	private GameObject productName;
 
-	private string itemSpriteID;
-
-	private string effectSpriteID;
-
-	private string itemLocalizationKey;
-
-	private string itemDescriptionKey;
-
-	private int itemCount;
-
-	private int cost;
-
 	private Sprite buttonBackground;
 
 	private Sprite disabledButtonBackground;
 
 	private Vector2 defaultScale;
 
-	public string ItemSpriteID
-	{
-		get
-		{
-			return itemSpriteID;
-		}
-		set
-		{
-			itemSpriteID = value;
-		}
-	}
+	public string ItemSpriteID { get; set; }
 
-	public string EffectSpriteID
-	{
-		get
-		{
-			return effectSpriteID;
-		}
-		set
-		{
-			effectSpriteID = value;
-		}
-	}
+	public string EffectSpriteID { get; set; }
 
-	public string ItemLocalizationKey
-	{
-		get
-		{
-			return itemLocalizationKey;
-		}
-		set
-		{
-			itemLocalizationKey = value;
-		}
-	}
+	public string ItemLocalizationKey { get; set; }
 
-	public string ItemDescriptionKey
-	{
-		get
-		{
-			return itemDescriptionKey;
-		}
-		set
-		{
-			itemDescriptionKey = value;
-		}
-	}
+	public string ItemDescriptionKey { get; set; }
 
-	public int ItemCount
-	{
-		get
-		{
-			return itemCount;
-		}
-		set
-		{
-			itemCount = value;
-		}
-	}
+	public int ItemCount { get; set; }
 
-	public int Cost
-	{
-		get
-		{
-			return cost;
-		}
-		set
-		{
-			cost = value;
-		}
-	}
+	public int Cost { get; set; }
 
 	protected override void Awake()
 	{
@@ -177,7 +105,7 @@ public class PurchaseProductConfirmDialog : TextDialog
 	{
 		if (Singleton<RuntimeSpriteDatabase>.Instance != null)
 		{
-			if (SpriteScale.GetCustomScale(customScales, itemSpriteID, out var scale))
+			if (SpriteScale.GetCustomScale(customScales, ItemSpriteID, out var scale))
 			{
 				itemIcon.m_scaleX = scale.x;
 				itemIcon.m_scaleY = scale.y;
@@ -187,7 +115,7 @@ public class PurchaseProductConfirmDialog : TextDialog
 				itemIcon.m_scaleX = defaultScale.x;
 				itemIcon.m_scaleY = defaultScale.y;
 			}
-			SpriteData spriteData = Singleton<RuntimeSpriteDatabase>.Instance.Find(itemSpriteID);
+			SpriteData spriteData = Singleton<RuntimeSpriteDatabase>.Instance.Find(ItemSpriteID);
 			if (spriteData != null)
 			{
 				itemIcon.SelectSprite(spriteData, forceResetMesh: true);
@@ -199,13 +127,13 @@ public class PurchaseProductConfirmDialog : TextDialog
 	{
 		if (itemCountTf != null && countText != null)
 		{
-			string text = ((itemCount <= 0) ? string.Empty : $"x{itemCount}");
+			string text = ((ItemCount <= 0) ? string.Empty : $"x{ItemCount}");
 			countText.Text = text;
 		}
-		RefreshTexts(costText, $"[snout] {cost}", updateLocale: false, updateSprites: true);
-		RefreshTexts(productName, itemLocalizationKey, updateLocale: true, updateSprites: false);
-		RefreshTexts(description, itemDescriptionKey, updateLocale: true, updateSprites: false);
-		EnableConfirmButton(cost > 0);
+		RefreshTexts(costText, $"[snout] {Cost}", updateLocale: false, updateSprites: true);
+		RefreshTexts(productName, ItemLocalizationKey, updateLocale: true, updateSprites: false);
+		RefreshTexts(description, ItemDescriptionKey, updateLocale: true, updateSprites: false);
+		EnableConfirmButton(Cost > 0);
 	}
 
 	private void RefreshTexts(GameObject target, string text, bool updateLocale, bool updateSprites)

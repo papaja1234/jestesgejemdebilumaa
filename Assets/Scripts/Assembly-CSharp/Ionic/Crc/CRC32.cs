@@ -11,8 +11,6 @@ namespace Ionic.Crc
 	{
 		private uint dwPolynomial;
 
-		private long _TotalBytesRead;
-
 		private bool reverseBits;
 
 		private uint[] crc32Table;
@@ -21,7 +19,7 @@ namespace Ionic.Crc
 
 		private uint _register = uint.MaxValue;
 
-		public long TotalBytesRead => _TotalBytesRead;
+		public long TotalBytesRead { get; private set; }
 
 		public int Crc32Result => (int)(~_register);
 
@@ -55,16 +53,16 @@ namespace Ionic.Crc
 			}
 			byte[] array = new byte[8192];
 			int count = 8192;
-			_TotalBytesRead = 0L;
+			TotalBytesRead = 0L;
 			int num = input.Read(array, 0, count);
 			output?.Write(array, 0, num);
-			_TotalBytesRead += num;
+			TotalBytesRead += num;
 			while (num > 0)
 			{
 				SlurpBlock(array, 0, num);
 				num = input.Read(array, 0, count);
 				output?.Write(array, 0, num);
-				_TotalBytesRead += num;
+				TotalBytesRead += num;
 			}
 			return (int)(~_register);
 		}
@@ -100,7 +98,7 @@ namespace Ionic.Crc
 					_register = (_register >> 8) ^ crc32Table[(uint)(UIntPtr)num3];
 				}
 			}
-			_TotalBytesRead += count;
+			TotalBytesRead += count;
 		}
 
 		public void UpdateCRC(byte b)

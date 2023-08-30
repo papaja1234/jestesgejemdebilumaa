@@ -6,8 +6,7 @@ public class OptionButtons : SliderButton
 	{
 		GameObject original = (GameObject)Resources.Load("OptionButtons/" + name.ToString());
 		GameObject gameObject = GameObject.Find("InfoButtons");
-		GameObject gameObject2 = Object.Instantiate(original);
-		gameObject2.transform.parent = gameObject.transform;
+		GameObject gameObject2 = Object.Instantiate(original, gameObject.transform, true);
 		gameObject2.name = name;
 		gameObject2.transform.position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z + 0.5f);
 		if (!string.IsNullOrEmpty(methodToInvoke))

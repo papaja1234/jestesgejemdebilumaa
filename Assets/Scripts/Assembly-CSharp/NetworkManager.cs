@@ -33,8 +33,6 @@ public class NetworkManager : Singleton<NetworkManager>
 
 	private bool resolvingAddrFailed;
 
-	private bool connected;
-
 	private bool waitingCheck;
 
 	private bool fallbackChecking;
@@ -53,14 +51,14 @@ public class NetworkManager : Singleton<NetworkManager>
 
 	private bool HasAddress => !string.IsNullOrEmpty(ipAddress);
 
-	public bool HasNetworkAccess => connected;
+	public bool HasNetworkAccess { get; private set; }
 
 	public void Awake()
 	{
 		resolvingConnectivity = false;
 		resolvingIpAddress = false;
 		resolvingAddrFailed = false;
-		connected = false;
+		HasNetworkAccess = false;
 		hasFocus = true;
 		lastCheck = -1f;
 		resolveThread = null;
@@ -130,7 +128,7 @@ public class NetworkManager : Singleton<NetworkManager>
 		}
 		else
 		{
-			OnResponse(connected);
+			OnResponse(HasNetworkAccess);
 		}
 	}
 
@@ -204,7 +202,7 @@ public class NetworkManager : Singleton<NetworkManager>
 		}
 		if (ping.isDone && (float)ping.time > 0f)
 		{
-			if (!connected && OnNetworkChange != null)
+			if (!HasNetworkAccess && OnNetworkChange != null)
 			{
 				OnNetworkChange(hasNetwork: true);
 			}
@@ -212,7 +210,7 @@ public class NetworkManager : Singleton<NetworkManager>
 			{
 				OnCheckResponse(hasNetwork: true);
 			}
-			connected = true;
+			HasNetworkAccess = true;
 			OnCheckResponse = null;
 			resolvingConnectivity = false;
 			waitingCheck = false;
@@ -245,12 +243,12 @@ public class NetworkManager : Singleton<NetworkManager>
 		}
 		resolvingConnectivity = false;
 		waitingCheck = false;
-		connected = fallbackCheck;
+		HasNetworkAccess = fallbackCheck;
 		if (OnCheckResponse != null)
 		{
 			OnCheckResponse(fallbackCheck);
 		}
-		if (fallbackCheck != connected && OnNetworkChange != null)
+		if (fallbackCheck != HasNetworkAccess && OnNetworkChange != null)
 		{
 			OnNetworkChange(fallbackCheck);
 		}

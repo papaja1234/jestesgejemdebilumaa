@@ -156,8 +156,7 @@ public class TutorialBook : WPFMonoBehaviour
 			{
 				m_leftPages.GetComponent<Renderer>().enabled = true;
 				m_cover.GetComponent<Renderer>().enabled = false;
-				m_flippingPage = Object.Instantiate(m_pages[m_currentPage]);
-				m_flippingPage.transform.parent = m_hinge.transform;
+				m_flippingPage = Object.Instantiate(m_pages[m_currentPage], m_hinge.transform, true);
 				m_flippingPage.transform.localPosition = m_leftPages.transform.localPosition + new Vector3(0.43f, -0.045f, 0f);
 				m_flippingPage.transform.localRotation = Quaternion.AngleAxis(180f, Vector3.up);
 				GameObject obj = m_flippingPage.transform.Find("Content").gameObject;
@@ -190,9 +189,8 @@ public class TutorialBook : WPFMonoBehaviour
 			if (m_pageState == 0 && m_pagePivot.transform.rotation.eulerAngles.y > 90f)
 			{
 				Object.Destroy(m_flippingPage);
-				m_flippingPage = Object.Instantiate(m_pages[m_currentPage]);
+				m_flippingPage = Object.Instantiate(m_pages[m_currentPage], m_pagePivot.transform, true);
 				SetPageRenderOrder(m_flippingPage, 100);
-				m_flippingPage.transform.parent = m_pagePivot.transform;
 				m_flippingPage.transform.localPosition = m_flippingPagePosition;
 				m_flippingPage.transform.localRotation = Quaternion.identity;
 				GameObject obj2 = m_flippingPage.transform.Find("Content").gameObject;
@@ -221,9 +219,8 @@ public class TutorialBook : WPFMonoBehaviour
 		if (m_pageState == 0 && m_pagePivot.transform.rotation.eulerAngles.y < 90f)
 		{
 			Object.Destroy(m_flippingPage);
-			m_flippingPage = Object.Instantiate(m_pages[m_currentPage + 1]);
+			m_flippingPage = Object.Instantiate(m_pages[m_currentPage + 1], m_pagePivot.transform, true);
 			SetPageRenderOrder(m_flippingPage, 100);
-			m_flippingPage.transform.parent = m_pagePivot.transform;
 			m_flippingPage.transform.localPosition = m_flippingPagePosition;
 			m_flippingPage.transform.localRotation = Quaternion.identity;
 			m_pageState = 1;
@@ -253,9 +250,8 @@ public class TutorialBook : WPFMonoBehaviour
 			{
 				Object.Destroy(m_flippingPage);
 			}
-			m_flippingPage = Object.Instantiate(m_pages[m_currentPage]);
+			m_flippingPage = Object.Instantiate(m_pages[m_currentPage], m_pagePivot.transform, true);
 			SetPageRenderOrder(m_flippingPage, 100);
-			m_flippingPage.transform.parent = m_pagePivot.transform;
 			m_flippingPage.transform.localPosition = m_flippingPagePosition;
 			m_flippingPage.transform.localRotation = Quaternion.identity;
 			GameObject obj = m_flippingPage.transform.Find("Content").gameObject;
@@ -286,8 +282,7 @@ public class TutorialBook : WPFMonoBehaviour
 			{
 				Object.Destroy(m_flippingPage);
 			}
-			m_flippingPage = Object.Instantiate(m_pages[m_currentPage + 1]);
-			m_flippingPage.transform.parent = m_pagePivot.transform;
+			m_flippingPage = Object.Instantiate(m_pages[m_currentPage + 1], m_pagePivot.transform, true);
 			m_flippingPage.transform.localPosition = m_flippingPagePosition;
 			m_flippingPage.transform.localRotation = Quaternion.identity;
 			SetPageRenderOrder(m_flippingPage, 100);
@@ -308,8 +303,7 @@ public class TutorialBook : WPFMonoBehaviour
 		{
 			Object.Destroy(m_leftPage);
 		}
-		m_leftPage = Object.Instantiate(m_pages[m_currentPage]);
-		m_leftPage.transform.parent = base.transform;
+		m_leftPage = Object.Instantiate(m_pages[m_currentPage], base.transform, true);
 		m_leftPage.transform.localPosition = m_leftPagePosition;
 		m_leftPage.GetComponent<Renderer>().enabled = false;
 	}
@@ -320,8 +314,7 @@ public class TutorialBook : WPFMonoBehaviour
 		{
 			Object.Destroy(m_rightPage);
 		}
-		m_rightPage = Object.Instantiate(m_pages[m_currentPage + 1]);
-		m_rightPage.transform.parent = base.transform;
+		m_rightPage = Object.Instantiate(m_pages[m_currentPage + 1], base.transform, true);
 		m_rightPage.transform.localPosition = m_rightPagePosition;
 		m_rightPage.GetComponent<Renderer>().enabled = false;
 	}

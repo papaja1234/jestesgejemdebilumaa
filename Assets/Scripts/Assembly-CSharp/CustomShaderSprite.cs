@@ -16,8 +16,7 @@ public class CustomShaderSprite : MonoBehaviour
 		{
 			Object.Destroy(currentSprite);
 		}
-		currentSprite = Object.Instantiate(sprite);
-		currentSprite.transform.parent = base.transform;
+		currentSprite = Object.Instantiate(sprite, base.transform, true);
 		currentSprite.transform.localPosition = Vector3.zero;
 		currentSprite.transform.localRotation = Quaternion.identity;
 		currentSprite.transform.localScale = Vector3.one;

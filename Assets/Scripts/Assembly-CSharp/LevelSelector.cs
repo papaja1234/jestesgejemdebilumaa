@@ -86,10 +86,6 @@ public class LevelSelector : WPFMonoBehaviour
 
 	public OneTimeCutScene m_oneTimeCutscene;
 
-	private List<EpisodeLevelInfo> m_levels = new List<EpisodeLevelInfo>();
-
-	private List<int> m_starlimitsLevels = new List<int>();
-
 	private List<PageDot> m_dotsList = new List<PageDot>();
 
 	private int m_page;
@@ -122,29 +118,9 @@ public class LevelSelector : WPFMonoBehaviour
 
 	private bool startedLevelLoading;
 
-	public List<EpisodeLevelInfo> Levels
-	{
-		get
-		{
-			return m_levels;
-		}
-		set
-		{
-			m_levels = value;
-		}
-	}
+	public List<EpisodeLevelInfo> Levels { get; set; } = new List<EpisodeLevelInfo>();
 
-	public List<int> StarLevelLimits
-	{
-		get
-		{
-			return m_starlimitsLevels;
-		}
-		set
-		{
-			m_starlimitsLevels = value;
-		}
-	}
+	public List<int> StarLevelLimits { get; set; } = new List<int>();
 
 	public int EpisodeIndex => m_episodeLevelsGameDataIndex;
 
@@ -258,7 +234,7 @@ public class LevelSelector : WPFMonoBehaviour
 		}
 		Levels = WPFMonoBehaviour.gameData.m_episodeLevels[EpisodeIndex].m_levelInfos;
 		StarLevelLimits = WPFMonoBehaviour.gameData.m_episodeLevels[EpisodeIndex].StarLevelLimits;
-		m_pageCount = Mathf.RoundToInt(m_levels.Count / m_levelsPerPage);
+		m_pageCount = Mathf.RoundToInt(Levels.Count / m_levelsPerPage);
 		m_buttonGrid = base.transform.Find("ButtonGrid").GetComponent<ButtonGrid>();
 		m_currentScreenWidth = Screen.width;
 		m_currentScreenHeight = Screen.height;
@@ -319,7 +295,7 @@ public class LevelSelector : WPFMonoBehaviour
 		{
 			if (m_oneTimeCutscene.enabled && !GameProgress.GetBool(m_oneTimeCutscene.saveId))
 			{
-				Singleton<GameManager>.Instance.LoadLevelAfterCutScene(m_levels[num], m_oneTimeCutscene.cutScene);
+				Singleton<GameManager>.Instance.LoadLevelAfterCutScene(Levels[num], m_oneTimeCutscene.cutScene);
 				GameProgress.SetBool(m_oneTimeCutscene.saveId, value: true);
 			}
 			else
@@ -341,7 +317,7 @@ public class LevelSelector : WPFMonoBehaviour
 		}
 		if (m_oneTimeCutscene.enabled && !GameProgress.GetBool(m_oneTimeCutscene.saveId))
 		{
-			Singleton<GameManager>.Instance.LoadLevelAfterCutScene(m_levels[levelIndex], m_oneTimeCutscene.cutScene);
+			Singleton<GameManager>.Instance.LoadLevelAfterCutScene(Levels[levelIndex], m_oneTimeCutscene.cutScene);
 			GameProgress.SetBool(m_oneTimeCutscene.saveId, value: true);
 		}
 		else
@@ -355,12 +331,12 @@ public class LevelSelector : WPFMonoBehaviour
 		SendStandardFlurryEvent("Select Level", levelIndex);
 		if (m_oneTimeCutscene.enabled && !GameProgress.GetBool(m_oneTimeCutscene.saveId))
 		{
-			Singleton<GameManager>.Instance.LoadLevelAfterCutScene(m_levels[int.Parse(levelIndex)], m_oneTimeCutscene.cutScene);
+			Singleton<GameManager>.Instance.LoadLevelAfterCutScene(Levels[int.Parse(levelIndex)], m_oneTimeCutscene.cutScene);
 			GameProgress.SetBool(m_oneTimeCutscene.saveId, value: true);
 		}
 		else
 		{
-			Singleton<GameManager>.Instance.LoadStarLevelTransition(m_levels[int.Parse(levelIndex)]);
+			Singleton<GameManager>.Instance.LoadStarLevelTransition(Levels[int.Parse(levelIndex)]);
 		}
 	}
 
@@ -429,7 +405,7 @@ public class LevelSelector : WPFMonoBehaviour
 	{
 		int num = 0;
 		m_buttonGrid.Clear();
-		for (int i = 0; i < m_levels.Count; i++)
+		for (int i = 0; i < Levels.Count; i++)
 		{
 			int num2 = i / 5;
 			int page = num2 / 3;
@@ -506,36 +482,32 @@ public class LevelSelector : WPFMonoBehaviour
 				gameObject.GetComponent<Animation>().Play();
 			}
 		}
-		if (m_pageTwoComingSoon && m_levels.Count > 15)
+		if (m_pageTwoComingSoon && Levels.Count > 15)
 		{
-			GameObject gameObject2 = UnityEngine.Object.Instantiate(m_comingSoonIcon);
-			gameObject2.transform.parent = m_buttonGrid.transform.GetChild(22);
+			GameObject gameObject2 = UnityEngine.Object.Instantiate(m_comingSoonIcon, m_buttonGrid.transform.GetChild(22), true);
 			gameObject2.transform.localPosition = Vector3.zero - Vector3.forward * 4f;
-			if (!m_pageThreeComingSoon || m_levels.Count <= 30)
+			if (!m_pageThreeComingSoon || Levels.Count <= 30)
 			{
-				Transform transform = UnityEngine.Object.Instantiate(gameObject2.transform.GetChild(0));
-				transform.parent = gameObject2.transform;
+				Transform transform = UnityEngine.Object.Instantiate(gameObject2.transform.GetChild(0), gameObject2.transform, true);
 				Vector3 localPosition = Vector3.zero + Vector3.right * WPFMonoBehaviour.hudCamera.ScreenToWorldPoint(new Vector3((float)Screen.width * 1.5f, 0f, 0f)).x;
 				localPosition.y = gameObject2.transform.GetChild(0).transform.localPosition.y;
 				transform.transform.localPosition = localPosition;
 				m_extraDarkLayerRight = transform.gameObject;
 			}
 		}
-		if (m_pageThreeComingSoon && m_levels.Count > 30)
+		if (m_pageThreeComingSoon && Levels.Count > 30)
 		{
-			GameObject gameObject3 = UnityEngine.Object.Instantiate(m_comingSoonIcon);
-			gameObject3.transform.parent = m_buttonGrid.transform.GetChild(37);
+			GameObject gameObject3 = UnityEngine.Object.Instantiate(m_comingSoonIcon, m_buttonGrid.transform.GetChild(37), true);
 			gameObject3.transform.localPosition = Vector3.zero - Vector3.forward * 4f;
-			Transform transform2 = UnityEngine.Object.Instantiate(gameObject3.transform.GetChild(0));
-			transform2.parent = gameObject3.transform;
+			Transform transform2 = UnityEngine.Object.Instantiate(gameObject3.transform.GetChild(0), gameObject3.transform, true);
 			Vector3 localPosition2 = Vector3.zero + Vector3.right * WPFMonoBehaviour.hudCamera.ScreenToWorldPoint(new Vector3((float)Screen.width * 1.5f, 0f, 0f)).x;
 			localPosition2.y = gameObject3.transform.GetChild(0).transform.localPosition.y;
 			transform2.transform.localPosition = localPosition2;
 			m_extraDarkLayerRight = transform2.gameObject;
 		}
 		m_startingCutsceneButton.gameObject.SetActive(GameProgress.GetInt(m_startingCutsceneButton.GetComponent<Button>().MethodToCall.GetParameter<string>(0) + "_played") == 1);
-		bool active = num >= m_midCutsceneButtonPage * 15 && m_levels.Count > 15 && !string.IsNullOrEmpty(MidCutscene) && GameProgress.GetInt(m_midCutsceneButton.GetComponent<Button>().MethodToCall.GetParameter<string>(0) + "_played") == 1;
-		bool active2 = m_levels.Count > 15 && !string.IsNullOrEmpty(EndingCutscene) && GameProgress.GetInt(m_endingCutsceneButton.GetComponent<Button>().MethodToCall.GetParameter<string>(0) + "_played") == 1;
+		bool active = num >= m_midCutsceneButtonPage * 15 && Levels.Count > 15 && !string.IsNullOrEmpty(MidCutscene) && GameProgress.GetInt(m_midCutsceneButton.GetComponent<Button>().MethodToCall.GetParameter<string>(0) + "_played") == 1;
+		bool active2 = Levels.Count > 15 && !string.IsNullOrEmpty(EndingCutscene) && GameProgress.GetInt(m_endingCutsceneButton.GetComponent<Button>().MethodToCall.GetParameter<string>(0) + "_played") == 1;
 		if ((bool)m_midCutsceneButton)
 		{
 			m_midCutsceneButton.gameObject.SetActive(active);
@@ -555,8 +527,7 @@ public class LevelSelector : WPFMonoBehaviour
 		float num = (0f - (float)m_pageCount) / 2f * 1.2f;
 		for (int i = 0; i < m_pageCount; i++)
 		{
-			GameObject obj = UnityEngine.Object.Instantiate(m_pageDot);
-			obj.transform.parent = gameObject.transform;
+			GameObject obj = UnityEngine.Object.Instantiate(m_pageDot, gameObject.transform, true);
 			obj.transform.localPosition = new Vector3(num + (float)i * 1.2f, 0f, -95f);
 			obj.name = "Dot" + i + 1;
 			PageDot component = obj.GetComponent<PageDot>();
@@ -863,9 +834,8 @@ public class LevelSelector : WPFMonoBehaviour
 		{
 			return;
 		}
-		GameObject obj = UnityEngine.Object.Instantiate(WPFMonoBehaviour.gameData.m_levelRowUnlockPanel);
+		GameObject obj = UnityEngine.Object.Instantiate(WPFMonoBehaviour.gameData.m_levelRowUnlockPanel, button.transform, true);
 		UnlockLevelRowPanel component = obj.GetComponent<UnlockLevelRowPanel>();
-		obj.transform.parent = button.transform;
 		float num = Mathf.Abs((WPFMonoBehaviour.hudCamera.ScreenToWorldPoint(Vector3.zero) - WPFMonoBehaviour.hudCamera.ScreenToWorldPoint(new Vector3(ButtonXGap, 0f, 0f))).x);
 		float x = button.GetComponent<BoxCollider>().size.x;
 		float num2 = 16.666666f + x;
@@ -932,8 +902,7 @@ public class LevelSelector : WPFMonoBehaviour
 		if ((bool)WPFMonoBehaviour.gameData.m_lockedLevelRowPanel)
 		{
 			float num = Mathf.Abs((WPFMonoBehaviour.hudCamera.ScreenToWorldPoint(Vector3.zero) - WPFMonoBehaviour.hudCamera.ScreenToWorldPoint(new Vector3(ButtonXGap, 0f, 0f))).x);
-			GameObject obj = UnityEngine.Object.Instantiate(WPFMonoBehaviour.gameData.m_lockedLevelRowPanel);
-			obj.transform.parent = button.transform;
+			GameObject obj = UnityEngine.Object.Instantiate(WPFMonoBehaviour.gameData.m_lockedLevelRowPanel, button.transform, true);
 			obj.transform.localPosition = new Vector3(2f * num, 0f, 1f);
 			float x = button.GetComponent<BoxCollider>().size.x;
 			float num2 = 16.666666f + x;

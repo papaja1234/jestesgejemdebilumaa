@@ -9,8 +9,6 @@ public class LootRewardElement : MonoBehaviour
 	[SerializeField]
 	private Transform iconRoot;
 
-	private bool isDuplicatePart;
-
 	[SerializeField]
 	private GameObject openingEffect;
 
@@ -32,17 +30,7 @@ public class LootRewardElement : MonoBehaviour
 
 	public Transform IconRoot => iconRoot;
 
-	public bool IsDuplicatePart
-	{
-		get
-		{
-			return isDuplicatePart;
-		}
-		set
-		{
-			isDuplicatePart = value;
-		}
-	}
+	public bool IsDuplicatePart { get; set; }
 
 	public ParticleSystem BlingEffect => blingEffect;
 
@@ -130,7 +118,7 @@ public class LootRewardElement : MonoBehaviour
 			{
 				skeletonAnimation.state.AddAnimation(0, "Epic_Item", loop: false, 0f);
 			}
-			waitingAnimation = isDuplicatePart;
+			waitingAnimation = IsDuplicatePart;
 			skeletonAnimation.state.End += OnJumpAnimationEnd;
 		}
 	}

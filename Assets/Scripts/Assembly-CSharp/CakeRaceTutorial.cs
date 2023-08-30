@@ -29,38 +29,20 @@ public class CakeRaceTutorial : MonoBehaviour
 
 	private bool StartTutorialShown
 	{
-		get
-		{
-			return GameProgress.GetBool("CakeRaceStartTutorialShown");
-		}
-		set
-		{
-			GameProgress.SetBool("CakeRaceStartTutorialShown", value);
-		}
+		get => GameProgress.GetBool("CakeRaceStartTutorialShown");
+		set => GameProgress.SetBool("CakeRaceStartTutorialShown", value);
 	}
 
 	private bool LootCrateTutorialShown
 	{
-		get
-		{
-			return GameProgress.GetBool("LootCrateTutorialShown");
-		}
-		set
-		{
-			GameProgress.SetBool("LootCrateTutorialShown", value);
-		}
+		get => GameProgress.GetBool("LootCrateTutorialShown");
+		set => GameProgress.SetBool("LootCrateTutorialShown", value);
 	}
 
 	private bool BeginOpeningTutorialShown
 	{
-		get
-		{
-			return GameProgress.GetBool("BeginOpeninTutorialShown");
-		}
-		set
-		{
-			GameProgress.SetBool("BeginOpeninTutorialShown", value);
-		}
+		get => GameProgress.GetBool("BeginOpeninTutorialShown");
+		set => GameProgress.SetBool("BeginOpeninTutorialShown", value);
 	}
 
 	private void Awake()

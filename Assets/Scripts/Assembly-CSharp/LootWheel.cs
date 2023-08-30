@@ -42,19 +42,17 @@ public class LootWheel : WPFMonoBehaviour
 
 		private float[] m_probabilities;
 
-		private int m_rewardIndex;
-
 		public float RotationBegin => m_rotationBegin;
 
 		public float RotationEnd => m_rotationEnd;
 
 		public WheelSlotType SlotType => m_slotType;
 
-		public int RewardIndex => m_rewardIndex;
+		public int RewardIndex { get; private set; }
 
-		public bool RewardsCollected => m_rewardIndex >= m_rewards.Length;
+		public bool RewardsCollected => RewardIndex >= m_rewards.Length;
 
-		public int RewardsLeft => m_rewards.Length - m_rewardIndex;
+		public int RewardsLeft => m_rewards.Length - RewardIndex;
 
 		public int TotalRewards => m_rewards.Length;
 
@@ -64,7 +62,7 @@ public class LootWheel : WPFMonoBehaviour
 		{
 			get
 			{
-				if (m_rewardIndex >= m_rewards.Length)
+				if (RewardIndex >= m_rewards.Length)
 				{
 					return 0f;
 				}
@@ -79,7 +77,7 @@ public class LootWheel : WPFMonoBehaviour
 
 		public LootWheelRewards.LootWheelReward[] InitReward(LootWheelRewards rewards)
 		{
-			m_rewardIndex = 0;
+			RewardIndex = 0;
 			switch (m_slotType)
 			{
 			case WheelSlotType.Part:
@@ -142,9 +140,9 @@ public class LootWheel : WPFMonoBehaviour
 
 		public bool PeekReward(out LootWheelRewards.LootWheelReward reward)
 		{
-			if (m_rewardIndex < m_rewards.Length && m_rewardIndex >= 0)
+			if (RewardIndex < m_rewards.Length && RewardIndex >= 0)
 			{
-				reward = m_rewards[m_rewardIndex];
+				reward = m_rewards[RewardIndex];
 				return true;
 			}
 			reward = LootWheelRewards.LootWheelReward.Empty;
@@ -153,9 +151,9 @@ public class LootWheel : WPFMonoBehaviour
 
 		public bool GetReward(out LootWheelRewards.LootWheelReward reward)
 		{
-			if (m_rewardIndex < m_rewards.Length && m_rewardIndex >= 0)
+			if (RewardIndex < m_rewards.Length && RewardIndex >= 0)
 			{
-				reward = m_rewards[m_rewardIndex++];
+				reward = m_rewards[RewardIndex++];
 				return true;
 			}
 			reward = LootWheelRewards.LootWheelReward.Empty;
@@ -285,8 +283,6 @@ public class LootWheel : WPFMonoBehaviour
 
 	private LootWheelRewards rewards;
 
-	private bool initialized;
-
 	private bool subscribed;
 
 	private GameObject epicPart;
@@ -333,13 +329,13 @@ public class LootWheel : WPFMonoBehaviour
 		}
 	}
 
-	public bool Initialized => initialized;
+	public bool Initialized { get; private set; }
 
 	public bool Dirty => currentSpin > 0;
 
 	private void Awake()
 	{
-		initialized = false;
+		Initialized = false;
 		subscribed = false;
 		spinner = new LootWheelSpinner(wheelRigidbody, needleTransform, wheelSlots);
 		rewards = new LootWheelRewards();
@@ -371,7 +367,7 @@ public class LootWheel : WPFMonoBehaviour
 
 	public void ForceReInit()
 	{
-		initialized = false;
+		Initialized = false;
 		if (rewards.Initialized)
 		{
 			Initialize();
@@ -433,7 +429,7 @@ public class LootWheel : WPFMonoBehaviour
 		SetSpinText(currentSpin);
 		popup.DoneButtonHidden = true;
 		popup.SpinButtonEnabled = true;
-		initialized = true;
+		Initialized = true;
 	}
 
 	private GameObject InstantiateRewardImage(Transform root, LootWheelRewards.LootWheelReward reward)
@@ -448,8 +444,7 @@ public class LootWheel : WPFMonoBehaviour
 		{
 			gameObject.SetActive(value: true);
 			gameObject2 = UnityEngine.Object.Instantiate(scrapIconPrefab);
-			GameObject gameObject3 = UnityEngine.Object.Instantiate(genericTextPrefab);
-			gameObject3.transform.parent = gameObject.transform;
+			GameObject gameObject3 = UnityEngine.Object.Instantiate(genericTextPrefab, gameObject.transform, true);
 			gameObject3.transform.localPosition = Vector3.zero;
 			gameObject3.transform.position += new Vector3(0f, -0.05f, -0.1f);
 			gameObject3.transform.localScale = new Vector3(0.08f, 0.08f, 1f);
@@ -480,7 +475,7 @@ public class LootWheel : WPFMonoBehaviour
 
 	public void Spin()
 	{
-		if (!initialized || spinner.IsSpinning)
+		if (!Initialized || spinner.IsSpinning)
 		{
 			return;
 		}

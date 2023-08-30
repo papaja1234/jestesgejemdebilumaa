@@ -38,8 +38,6 @@ public class GameCenterManager : MonoBehaviour, ISocialProvider
 	[SerializeField]
 	private AchievementPopup m_achievementPopup;
 
-	private Dictionary<string, AchievementDataStruct> m_achievementList = new Dictionary<string, AchievementDataStruct>();
-
 	private Dictionary<string, LeaderboardDataStruct> m_leaderboardList = new Dictionary<string, LeaderboardDataStruct>();
 
 	private List<AchievementQueueBlock> m_achievementsQueue = new List<AchievementQueueBlock>();
@@ -52,7 +50,7 @@ public class GameCenterManager : MonoBehaviour, ISocialProvider
 
 	public List<string> m_leaderboardIDs = new List<string>();
 
-	public Dictionary<string, AchievementDataStruct> Achievements => m_achievementList;
+	public Dictionary<string, AchievementDataStruct> Achievements { get; } = new Dictionary<string, AchievementDataStruct>();
 
 	public bool Authenticated => Social.localUser.authenticated;
 
@@ -212,7 +210,7 @@ public class GameCenterManager : MonoBehaviour, ISocialProvider
 			value.percentComplete = achievement.percentCompleted;
 			value.completed = achievement.completed;
 			value.hidden = achievement.hidden;
-			m_achievementList.Add(achievement.id, value);
+			Achievements.Add(achievement.id, value);
 		}
 		Social.LoadAchievementDescriptions(AchievementDescriptionsDidLoad);
 	}

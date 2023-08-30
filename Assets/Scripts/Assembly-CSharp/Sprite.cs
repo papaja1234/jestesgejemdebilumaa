@@ -35,8 +35,6 @@ public class Sprite : MonoBehaviour, SpriteMeshGenerator
 
 	private int m_spritePivotY;
 
-	private Rect m_uvRect;
-
 	private RuntimeSpriteDatabase m_spriteDatabase;
 
 	public Renderer renderer
@@ -59,14 +57,14 @@ public class Sprite : MonoBehaviour, SpriteMeshGenerator
 
 	public Vector2 PixelSize => new Vector2(m_spriteWidth, m_spriteHeight);
 
-	public Rect UVRect => m_uvRect;
+	public Rect UVRect { get; private set; }
 
 	public void GetPreviewImage(out float aspectRatio, out Rect uvRect)
 	{
 		if (GetComponent<MeshFilter>().sharedMesh != null)
 		{
 			aspectRatio = (float)m_spriteWidth / (float)m_spriteHeight;
-			uvRect = m_uvRect;
+			uvRect = UVRect;
 			return;
 		}
 		SpriteData spriteData = Singleton<RuntimeSpriteDatabase>.Instance.Find(m_id);
@@ -146,7 +144,7 @@ public class Sprite : MonoBehaviour, SpriteMeshGenerator
 				UpdateCollider();
 			}
 		}
-		else if (m_uvRect != data.uv)
+		else if (UVRect != data.uv)
 		{
 			ResetUVs(data, meshFilter.sharedMesh);
 		}
@@ -154,7 +152,7 @@ public class Sprite : MonoBehaviour, SpriteMeshGenerator
 
 	private void ResetUVs(SpriteData data, Mesh mesh)
 	{
-		m_uvRect = data.uv;
+		UVRect = data.uv;
 		float num = 0f;
 		float num2 = 0f;
 		if (data.opaqueBorderPixels > 0)
@@ -171,7 +169,7 @@ public class Sprite : MonoBehaviour, SpriteMeshGenerator
 		array[2].y = data.uv.y + data.uv.height - 1f * num2;
 		array[3].x = data.uv.x + data.uv.width - 1f * num;
 		array[3].y = data.uv.y + num2;
-		m_uvRect = data.uv;
+		UVRect = data.uv;
 		if (RenderingEnabled())
 		{
 			mesh.uv = array;

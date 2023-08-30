@@ -27,23 +27,11 @@ public class HingePlate : BasePart
 
 	public HingePlateType m_type;
 
-	private GameObject m_plate1;
-
-	private GameObject m_plate2;
-
-	private Rigidbody m_plateRigidbody1;
-
-	private Rigidbody m_plateRigidbody2;
-
 	private int m_componentIndex;
-
-	private List<ConnectionData> m_connectedParts1;
-
-	private List<ConnectionData> m_connectedParts2;
 
 	private List<Joint> m_joints;
 
-	private static readonly (int, int)[] s_directions = new(int, int)[8]
+	public static (int, int)[] Directions { get; } = new(int, int)[8]
 	{
 		(1, 0),
 		(1, 1),
@@ -55,19 +43,17 @@ public class HingePlate : BasePart
 		(1, -1)
 	};
 
-	public static (int, int)[] Directions => s_directions;
+	public GameObject LeftPlate { get; private set; }
 
-	public GameObject LeftPlate => m_plate1;
+	public GameObject RightPlate { get; private set; }
 
-	public GameObject RightPlate => m_plate2;
+	public Rigidbody LeftPlateRigidbody { get; private set; }
 
-	public Rigidbody LeftPlateRigidbody => m_plateRigidbody1;
+	public Rigidbody RightPlateRigidbody { get; private set; }
 
-	public Rigidbody RightPlateRigidbody => m_plateRigidbody2;
+	public List<ConnectionData> LeftParts { get; private set; }
 
-	public List<ConnectionData> LeftParts => m_connectedParts1;
-
-	public List<ConnectionData> RightParts => m_connectedParts2;
+	public List<ConnectionData> RightParts { get; private set; }
 
 	public new (int, int) Direction
 	{
@@ -76,18 +62,18 @@ public class HingePlate : BasePart
 			int rotation = GetRotation();
 			if (rotation == 0 || rotation == 1)
 			{
-				return s_directions[rotation * 2];
+				return Directions[rotation * 2];
 			}
-			return s_directions[(rotation - 2) * 2];
+			return Directions[(rotation - 2) * 2];
 		}
 	}
 
-	public override Vector3 Position => (m_plate1.transform.position + m_plate2.transform.position) * 0.5f;
+	public override Vector3 Position => (LeftPlate.transform.position + RightPlate.transform.position) * 0.5f;
 
 	public override IEnumerable<Rigidbody> GetRigidbodies()
 	{
-		yield return m_plateRigidbody1;
-		yield return m_plateRigidbody2;
+		yield return LeftPlateRigidbody;
+		yield return RightPlateRigidbody;
 	}
 
 	public static void InitializeStatic()
@@ -154,8 +140,8 @@ public class HingePlate : BasePart
 			}
 			foreach (HingePlate item4 in array[m])
 			{
-				Collider component = item4.m_plate1.GetComponent<Collider>();
-				Collider component2 = item4.m_plate2.GetComponent<Collider>();
+				Collider component = item4.LeftPlate.GetComponent<Collider>();
+				Collider component2 = item4.RightPlate.GetComponent<Collider>();
 				foreach (Collider item5 in list2)
 				{
 					Physics.IgnoreCollision(component, item5);
@@ -167,11 +153,11 @@ public class HingePlate : BasePart
 
 	public IEnumerable<BasePart> GetConnectedParts()
 	{
-		foreach (ConnectionData item in m_connectedParts1)
+		foreach (ConnectionData item in LeftParts)
 		{
 			yield return item.Part;
 		}
-		foreach (ConnectionData item2 in m_connectedParts2)
+		foreach (ConnectionData item2 in RightParts)
 		{
 			yield return item2.Part;
 		}
@@ -180,16 +166,16 @@ public class HingePlate : BasePart
 	public override void Awake()
 	{
 		base.Awake();
-		m_plate1 = base.transform.Find("Plate1").gameObject;
-		m_plate2 = base.transform.Find("Plate2").gameObject;
+		LeftPlate = base.transform.Find("Plate1").gameObject;
+		RightPlate = base.transform.Find("Plate2").gameObject;
 		PhysicMaterial material = new PhysicMaterial
 		{
 			dynamicFriction = 0.7f,
 			staticFriction = 0.7f,
 			frictionCombine = PhysicMaterialCombine.Average
 		};
-		m_plate1.GetComponent<Collider>().material = material;
-		m_plate2.GetComponent<Collider>().material = material;
+		LeftPlate.GetComponent<Collider>().material = material;
+		RightPlate.GetComponent<Collider>().material = material;
 	}
 
 	public override bool CanBeEnclosed()
@@ -212,8 +198,8 @@ public class HingePlate : BasePart
 
 	public override void Initialize()
 	{
-		m_plateRigidbody1 = m_plate1.GetComponent<Rigidbody>();
-		m_plateRigidbody2 = m_plate2.GetComponent<Rigidbody>();
+		LeftPlateRigidbody = LeftPlate.GetComponent<Rigidbody>();
+		RightPlateRigidbody = RightPlate.GetComponent<Rigidbody>();
 		Create();
 	}
 
@@ -225,25 +211,25 @@ public class HingePlate : BasePart
 	public override void SetRotation(int rotation)
 	{
 		int num = (int)(m_gridRotation = (GridRotation)(rotation % 6));
-		float z = m_plate1.transform.localPosition.z;
+		float z = LeftPlate.transform.localPosition.z;
 		if (num == 0 || num == 1)
 		{
-			m_plate1.transform.localPosition = new Vector3(-0.25f, 0f, z);
-			m_plate2.transform.localPosition = new Vector3(0.25f, 0f, z);
+			LeftPlate.transform.localPosition = new Vector3(-0.25f, 0f, z);
+			RightPlate.transform.localPosition = new Vector3(0.25f, 0f, z);
 			base.transform.localRotation = Quaternion.AngleAxis(90 * num, Vector3.forward);
 		}
 		else
 		{
-			m_plate1.transform.localPosition = new Vector3(-0.25f, -0.5f, z);
-			m_plate2.transform.localPosition = new Vector3(0.25f, -0.5f, z);
+			LeftPlate.transform.localPosition = new Vector3(-0.25f, -0.5f, z);
+			RightPlate.transform.localPosition = new Vector3(0.25f, -0.5f, z);
 			base.transform.localRotation = Quaternion.AngleAxis(90 * (num - 2), Vector3.forward);
 		}
 	}
 
 	private void EnsureRigidbodyPlate()
 	{
-		EnsurePlateRigidbody(m_plate1);
-		EnsurePlateRigidbody(m_plate2);
+		EnsurePlateRigidbody(LeftPlate);
+		EnsurePlateRigidbody(RightPlate);
 	}
 
 	private void EnsurePlateRigidbody(GameObject gameObject)
@@ -310,9 +296,9 @@ public class HingePlate : BasePart
 			rotation -= 2;
 			rotation2 -= 2;
 			int num = (rotation2 - rotation + 4) % 4;
-			(int, int) tuple = s_directions[(4 + rotation * 2) % 8];
-			(int, int) tuple2 = s_directions[(5 + rotation * 2) % 8];
-			(int, int) tuple3 = s_directions[(6 + rotation * 2) % 8];
+			(int, int) tuple = Directions[(4 + rotation * 2) % 8];
+			(int, int) tuple2 = Directions[(5 + rotation * 2) % 8];
+			(int, int) tuple3 = Directions[(6 + rotation * 2) % 8];
 			flip = (x == tuple.Item1 && y == tuple.Item2 && num == 1) || (x == tuple2.Item1 && y == tuple2.Item2 && num == 2) || (x == tuple3.Item1 && y == tuple3.Item2 && num == 3);
 			angle = (flip ? (-90) : 90) * ((num > 2) ? (num - 4) : num);
 			if ((x != tuple.Item1 || y != tuple.Item2 || (num != 1 && num != 0)) && (x != tuple2.Item1 || y != tuple2.Item2 || (num != 2 && num != 1)))
@@ -363,9 +349,9 @@ public class HingePlate : BasePart
 			rotation -= 2;
 			rotation2 -= 2;
 			int num = (rotation2 - rotation + 4) % 4;
-			(int, int) tuple = s_directions[(6 + rotation * 2) % 8];
-			(int, int) tuple2 = s_directions[(7 + rotation * 2) % 8];
-			(int, int) tuple3 = s_directions[rotation * 2 % 8];
+			(int, int) tuple = Directions[(6 + rotation * 2) % 8];
+			(int, int) tuple2 = Directions[(7 + rotation * 2) % 8];
+			(int, int) tuple3 = Directions[rotation * 2 % 8];
 			flip = (x == tuple.Item1 && y == tuple.Item2 && num == 1) || (x == tuple2.Item1 && y == tuple2.Item2 && num == 2) || (x == tuple3.Item1 && y == tuple3.Item2 && num == 3);
 			angle = (flip ? 90 : (-90)) * (num - 2);
 			if ((x != tuple.Item1 || y != tuple.Item2 || num != 1) && (x != tuple2.Item1 || y != tuple2.Item2 || (num != 2 && num != 3)))
@@ -407,27 +393,27 @@ public class HingePlate : BasePart
 	{
 		int coordX = m_coordX;
 		int coordY = m_coordY;
-		GameObject plate = m_plate1;
-		GameObject plate2 = m_plate2;
+		GameObject plate = LeftPlate;
+		GameObject plate2 = RightPlate;
 		Contraption contraption = base.contraption;
-		m_connectedParts1 = new List<ConnectionData>();
-		m_connectedParts2 = new List<ConnectionData>();
+		LeftParts = new List<ConnectionData>();
+		RightParts = new List<ConnectionData>();
 		m_joints = new List<Joint>();
 		for (int i = 0; i < 8; i++)
 		{
-			(int, int) tuple = s_directions[i];
+			(int, int) tuple = Directions[i];
 			BasePart part = contraption.FindPartAt(coordX + tuple.Item1, coordY + tuple.Item2, this);
 			if (ValidatePart(ref part))
 			{
 				if (CanConnectToLeft(part, tuple.Item1, tuple.Item2, out var flip, out var angle))
 				{
-					Rigidbody component = ((!(part is HingePlate hingePlate)) ? part.gameObject : (flip ? hingePlate.m_plate1 : hingePlate.m_plate2)).GetComponent<Rigidbody>();
-					m_connectedParts1.Add(new ConnectionData(part, component, angle));
+					Rigidbody component = ((!(part is HingePlate hingePlate)) ? part.gameObject : (flip ? hingePlate.LeftPlate : hingePlate.RightPlate)).GetComponent<Rigidbody>();
+					LeftParts.Add(new ConnectionData(part, component, angle));
 				}
 				if (CanConnectToRight(part, tuple.Item1, tuple.Item2, out flip, out angle))
 				{
-					Rigidbody component2 = ((!(part is HingePlate hingePlate2)) ? part.gameObject : (flip ? hingePlate2.m_plate2 : hingePlate2.m_plate1)).GetComponent<Rigidbody>();
-					m_connectedParts2.Add(new ConnectionData(part, component2, angle));
+					Rigidbody component2 = ((!(part is HingePlate hingePlate2)) ? part.gameObject : (flip ? hingePlate2.RightPlate : hingePlate2.LeftPlate)).GetComponent<Rigidbody>();
+					RightParts.Add(new ConnectionData(part, component2, angle));
 				}
 			}
 		}
@@ -436,7 +422,7 @@ public class HingePlate : BasePart
 		for (int j = 0; j < 2; j++)
 		{
 			GameObject lhs = ((j == 0) ? plate : plate2);
-			List<ConnectionData> obj = ((j == 0) ? m_connectedParts1 : m_connectedParts2);
+			List<ConnectionData> obj = ((j == 0) ? LeftParts : RightParts);
 			Vector3 anchor = new Vector3((j == 0) ? (-0.25f) : 0.25f, 0f);
 			foreach (ConnectionData item2 in obj)
 			{

@@ -10,8 +10,6 @@ public class INRuntimeGameData : Singleton<INRuntimeGameData>
 	[SerializeField]
 	private GameObject m_partIconContainer;
 
-	private GameData m_gameData;
-
 	private PartListData m_partListData;
 
 	private PartListBuilder m_partListBuilder;
@@ -22,13 +20,13 @@ public class INRuntimeGameData : Singleton<INRuntimeGameData>
 		{
 			if (Singleton<INRuntimeGameData>.instance != null)
 			{
-				return Singleton<INRuntimeGameData>.instance.m_gameData != null;
+				return Singleton<INRuntimeGameData>.instance.GameData != null;
 			}
 			return false;
 		}
 	}
 
-	public GameData GameData => m_gameData;
+	public GameData GameData { get; private set; }
 
 	public GameObject PartContainer => m_partContainer;
 
@@ -39,7 +37,7 @@ public class INRuntimeGameData : Singleton<INRuntimeGameData>
 		SetAsPersistant();
 		m_partListData = INUnity.LoadScriptableObject<PartListData>("PartListData");
 		m_partListBuilder = new PartListBuilder(m_partListData);
-		m_gameData = CreateGameData();
+		GameData = CreateGameData();
 		InitializeSettings();
 	}
 
@@ -73,7 +71,7 @@ public class INRuntimeGameData : Singleton<INRuntimeGameData>
 	{
 		if (INSettings.GetBool(INFeature.ColoredFrame))
 		{
-			List<BasePart> partList = m_gameData.GetCustomPart(BasePart.PartType.MetalFrame).PartList;
+			List<BasePart> partList = GameData.GetCustomPart(BasePart.PartType.MetalFrame).PartList;
 			BasePart part = m_partListBuilder.GetPart(new PartTypeInfo(BasePart.PartType.MetalFrame, 12));
 			float num = INSettings.GetFloat(INFeature.ColoredFrameAlpha);
 			float num2 = INSettings.GetFloat(INFeature.ColoredFrameForegroundAlpha);
@@ -406,23 +404,23 @@ public class INRuntimeGameData : Singleton<INRuntimeGameData>
 
 	private void AddPart(BasePart newPart)
 	{
-		m_gameData.m_parts.Add(newPart.gameObject);
+		GameData.m_parts.Add(newPart.gameObject);
 	}
 
 	private void AddCustomPart(BasePart newPart)
 	{
-		CustomPartInfo customPartInfo = m_gameData.GetCustomPart(newPart.m_partType);
+		CustomPartInfo customPartInfo = GameData.GetCustomPart(newPart.m_partType);
 		if (customPartInfo == null)
 		{
 			customPartInfo = new CustomPartInfo(newPart.m_partType, new List<BasePart>());
-			m_gameData.m_customParts.Add(customPartInfo);
+			GameData.m_customParts.Add(customPartInfo);
 		}
 		customPartInfo.PartList.Add(newPart);
 	}
 
 	private void ReplaceCustomPart(BasePart newPart)
 	{
-		List<BasePart> partList = m_gameData.GetCustomPart(newPart.m_partType).PartList;
+		List<BasePart> partList = GameData.GetCustomPart(newPart.m_partType).PartList;
 		for (int i = 0; i < partList.Count; i++)
 		{
 			BasePart basePart = partList[i];
@@ -441,7 +439,7 @@ public class INRuntimeGameData : Singleton<INRuntimeGameData>
 
 	private void RemoveCustomPart(BasePart.PartType type, int customIndex)
 	{
-		List<BasePart> partList = m_gameData.GetCustomPart(type).PartList;
+		List<BasePart> partList = GameData.GetCustomPart(type).PartList;
 		for (int i = 0; i < partList.Count; i++)
 		{
 			BasePart basePart = partList[i];
@@ -462,14 +460,14 @@ public class INRuntimeGameData : Singleton<INRuntimeGameData>
 	{
 		if (customIndex <= 0)
 		{
-			GameObject part = m_gameData.GetPart(type);
+			GameObject part = GameData.GetPart(type);
 			if (!(part != null))
 			{
 				return null;
 			}
 			return part.GetComponent<BasePart>();
 		}
-		CustomPartInfo customPart = m_gameData.GetCustomPart(type);
+		CustomPartInfo customPart = GameData.GetCustomPart(type);
 		if (customPart != null)
 		{
 			foreach (BasePart part2 in customPart.PartList)
@@ -485,14 +483,14 @@ public class INRuntimeGameData : Singleton<INRuntimeGameData>
 
 	public int GetCustomPartIndex(BasePart.PartType type, string partName)
 	{
-		GameObject part = m_gameData.GetPart(type);
+		GameObject part = GameData.GetPart(type);
 		if (part != null && part.name.Equals(partName))
 		{
 			return 0;
 		}
-		if (m_gameData.GetCustomPart(type) != null)
+		if (GameData.GetCustomPart(type) != null)
 		{
-			foreach (BasePart part2 in m_gameData.GetCustomPart(type).PartList)
+			foreach (BasePart part2 in GameData.GetCustomPart(type).PartList)
 			{
 				if (part2.name.Equals(partName))
 				{

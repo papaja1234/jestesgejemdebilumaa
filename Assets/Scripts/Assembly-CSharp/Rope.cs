@@ -25,10 +25,6 @@ public class Rope : BasePart
 
 	public GameObject m_gridVisualizationNode;
 
-	private BasePart m_leftPart;
-
-	private BasePart m_rightPart;
-
 	private List<Node> m_nodes = new List<Node>();
 
 	private LineRenderer m_lineRenderer;
@@ -45,9 +41,9 @@ public class Rope : BasePart
 
 	public override Vector3 Position => m_nodes[m_nodes.Count / 2].gameObject.transform.position;
 
-	public BasePart LeftPart => m_leftPart;
+	public BasePart LeftPart { get; private set; }
 
-	public BasePart RightPart => m_rightPart;
+	public BasePart RightPart { get; private set; }
 
 	public GameObject FirstSegment => m_nodes[0].gameObject;
 
@@ -201,9 +197,9 @@ public class Rope : BasePart
 	{
 		m_splinePoints.Clear();
 		Rope rope = null;
-		if ((bool)m_leftPart)
+		if ((bool)LeftPart)
 		{
-			rope = m_leftPart.GetComponent<Rope>();
+			rope = LeftPart.GetComponent<Rope>();
 		}
 		for (int i = startIndex; i < endIndex; i++)
 		{
@@ -253,8 +249,8 @@ public class Rope : BasePart
 
 	public void Create(BasePart leftPart, BasePart rightPart)
 	{
-		m_leftPart = leftPart;
-		m_rightPart = rightPart;
+		LeftPart = leftPart;
+		RightPart = rightPart;
 		Vector3 position = base.transform.position - 0.5f * base.transform.right;
 		Quaternion rotation = base.transform.rotation;
 		float num = 74.4f;
@@ -338,7 +334,7 @@ public class Rope : BasePart
 			return;
 		}
 		float num = Mathf.Max(m_nodes[0].rigidbody.velocity.magnitude, m_nodes[m_nodes.Count - 1].rigidbody.velocity.magnitude);
-		Rope rope = ((!(m_rightPart != null)) ? null : m_rightPart.GetComponent<Rope>());
+		Rope rope = ((!(RightPart != null)) ? null : RightPart.GetComponent<Rope>());
 		if ((bool)rope)
 		{
 			Vector3 position = m_nodes[m_nodes.Count - 1].rigidbody.position;

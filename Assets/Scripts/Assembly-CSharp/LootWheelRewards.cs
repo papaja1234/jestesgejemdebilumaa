@@ -28,64 +28,54 @@ public class LootWheelRewards
 
 	public struct LootWheelReward
 	{
-		private int m_amount;
+		public int Amount { get; }
 
-		private int m_value;
+		public int SingleValue { get; }
 
-		private RewardType m_type;
+		public int TotalValue => Amount * SingleValue;
 
-		private LootCrateRewards.Powerup m_powerup;
+		public RewardType Type { get; }
 
-		private BasePart m_part;
+		public LootCrateRewards.Powerup PowerupReward { get; }
 
-		public int Amount => m_amount;
-
-		public int SingleValue => m_value;
-
-		public int TotalValue => m_amount * m_value;
-
-		public RewardType Type => m_type;
-
-		public LootCrateRewards.Powerup PowerupReward => m_powerup;
-
-		public BasePart PartReward => m_part;
+		public BasePart PartReward { get; }
 
 		public static LootWheelReward Empty => default(LootWheelReward);
 
 		public LootWheelReward(int amount, int value, RewardType type)
 		{
-			m_amount = amount;
-			m_value = value;
-			m_type = type;
-			m_powerup = LootCrateRewards.Powerup.None;
-			m_part = null;
+			Amount = amount;
+			SingleValue = value;
+			Type = type;
+			PowerupReward = LootCrateRewards.Powerup.None;
+			PartReward = null;
 		}
 
 		public LootWheelReward(string key, ConfigData amounts, ConfigData values, RewardType type)
 		{
-			m_amount = int.Parse(amounts[key]);
-			m_value = int.Parse(values[key]);
-			m_type = type;
-			m_powerup = LootCrateRewards.Powerup.None;
-			m_part = null;
+			Amount = int.Parse(amounts[key]);
+			SingleValue = int.Parse(values[key]);
+			Type = type;
+			PowerupReward = LootCrateRewards.Powerup.None;
+			PartReward = null;
 		}
 
 		public LootWheelReward(string key, ConfigData amounts, ConfigData values, RewardType type, LootCrateRewards.Powerup powerup)
 		{
-			m_amount = int.Parse(amounts[key]);
-			m_value = int.Parse(values[key]);
-			m_type = type;
-			m_powerup = powerup;
-			m_part = null;
+			Amount = int.Parse(amounts[key]);
+			SingleValue = int.Parse(values[key]);
+			Type = type;
+			PowerupReward = powerup;
+			PartReward = null;
 		}
 
 		public LootWheelReward(string key, ConfigData amounts, ConfigData values, RewardType type, BasePart part)
 		{
-			m_amount = int.Parse(amounts[key]);
-			m_value = int.Parse(values[key]);
-			m_type = type;
-			m_powerup = LootCrateRewards.Powerup.None;
-			m_part = part;
+			Amount = int.Parse(amounts[key]);
+			SingleValue = int.Parse(values[key]);
+			Type = type;
+			PowerupReward = LootCrateRewards.Powerup.None;
+			PartReward = part;
 		}
 	}
 
@@ -117,35 +107,23 @@ public class LootWheelRewards
 
 	private const string PRICE_MULTIPLIER = "price_multiplier";
 
-	private bool m_initialized;
-
-	private int m_totalValue;
-
-	private float m_totalInverseValue;
-
-	private float m_rewardValueAvg;
-
-	private float m_spinPriceVariation;
-
-	private float m_spinPriceMultiplier;
-
 	private ConfigData m_amounts;
 
 	private ConfigData m_values;
 
 	public Action OnInitialized;
 
-	public bool Initialized => m_initialized;
+	public bool Initialized { get; private set; }
 
-	public int TotalRewardValues => m_totalValue;
+	public int TotalRewardValues { get; private set; }
 
-	public float TotalRewardInverseValues => m_totalInverseValue;
+	public float TotalRewardInverseValues { get; private set; }
 
-	public float RewardValueAvg => m_rewardValueAvg;
+	public float RewardValueAvg { get; private set; }
 
-	public float SpinPriceVariation => m_spinPriceVariation;
+	public float SpinPriceVariation { get; private set; }
 
-	public float SpinPriceMultiplier => m_spinPriceMultiplier;
+	public float SpinPriceMultiplier { get; private set; }
 
 	public LootWheelRewards()
 	{
@@ -164,33 +142,33 @@ public class LootWheelRewards
 		instance.OnHasData = (Action)Delegate.Remove(instance.OnHasData, new Action(Initialize));
 		m_amounts = Singleton<GameConfigurationManager>.Instance.GetConfig("loot_wheel_prize_amounts");
 		m_values = Singleton<GameConfigurationManager>.Instance.GetConfig("loot_wheel_prize_values");
-		m_totalValue = 0;
+		TotalRewardValues = 0;
 		for (int i = 0; i < m_values.Keys.Length; i++)
 		{
 			int num = int.Parse(m_amounts[m_amounts.Keys[i]]);
 			int num2 = int.Parse(m_values[m_values.Keys[i]]);
-			m_totalValue += num * num2;
+			TotalRewardValues += num * num2;
 		}
-		m_totalInverseValue = 0f;
+		TotalRewardInverseValues = 0f;
 		for (int j = 0; j < m_values.Keys.Length; j++)
 		{
 			int num3 = int.Parse(m_amounts[m_amounts.Keys[j]]);
 			int num4 = int.Parse(m_values[m_values.Keys[j]]);
-			m_totalInverseValue += (float)m_totalValue / ((float)num3 * (float)num4);
+			TotalRewardInverseValues += (float)TotalRewardValues / ((float)num3 * (float)num4);
 		}
-		m_rewardValueAvg = (float)m_totalValue / (float)m_values.Count;
+		RewardValueAvg = (float)TotalRewardValues / (float)m_values.Count;
 		if (Singleton<BuildCustomizationLoader>.Instance.IsOdyssey)
 		{
-			m_spinPriceMultiplier = 0f;
-			m_spinPriceVariation = 0f;
+			SpinPriceMultiplier = 0f;
+			SpinPriceVariation = 0f;
 		}
 		else
 		{
 			ConfigData config = Singleton<GameConfigurationManager>.Instance.GetConfig("loot_wheel_spin_price_params");
-			m_spinPriceVariation = float.Parse(config["variation_percentage"]);
-			m_spinPriceMultiplier = float.Parse(config["price_multiplier"]);
+			SpinPriceVariation = float.Parse(config["variation_percentage"]);
+			SpinPriceMultiplier = float.Parse(config["price_multiplier"]);
 		}
-		m_initialized = true;
+		Initialized = true;
 		if (OnInitialized != null)
 		{
 			OnInitialized();

@@ -3,17 +3,15 @@ using UnityEngine;
 
 public class PropertyPanelBuilding : PropertyPanel
 {
-	private static PropertyPanelBuilding s_instance;
-
 	private string m_text;
 
 	private Camera m_camera;
 
-	public static PropertyPanelBuilding Instance => s_instance;
+	public static PropertyPanelBuilding Instance { get; private set; }
 
 	public static PropertyPanelBuilding Create()
 	{
-		PropertyPanelBuilding propertyPanelBuilding = (s_instance = new PropertyPanelBuilding());
+		PropertyPanelBuilding propertyPanelBuilding = (Instance = new PropertyPanelBuilding());
 		propertyPanelBuilding.Initialize();
 		return propertyPanelBuilding;
 	}

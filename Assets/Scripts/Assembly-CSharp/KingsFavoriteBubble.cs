@@ -51,11 +51,9 @@ public class KingsFavoriteBubble : MonoBehaviour
 				UnityEngine.Object.Destroy(partContainer.GetChild(i).gameObject);
 			}
 		}
-		GameObject obj = UnityEngine.Object.Instantiate(Singleton<CakeRaceKingsFavorite>.Instance.CurrentFavorite.m_constructionIconSprite.gameObject);
-		obj.transform.parent = partContainer;
+		GameObject obj = UnityEngine.Object.Instantiate(Singleton<CakeRaceKingsFavorite>.Instance.CurrentFavorite.m_constructionIconSprite.gameObject, partContainer, true);
 		obj.transform.localPosition = Vector3.back * 0.5f;
-		GameObject obj2 = UnityEngine.Object.Instantiate(partTierBackgrounds[(int)Singleton<CakeRaceKingsFavorite>.Instance.CurrentFavorite.m_partTier]);
-		obj2.transform.parent = partContainer;
+		GameObject obj2 = UnityEngine.Object.Instantiate(partTierBackgrounds[(int)Singleton<CakeRaceKingsFavorite>.Instance.CurrentFavorite.m_partTier], partContainer, true);
 		obj2.transform.localScale = Vector3.one * 0.5f;
 		obj2.transform.localPosition = Vector3.zero;
 		if (anim != null)

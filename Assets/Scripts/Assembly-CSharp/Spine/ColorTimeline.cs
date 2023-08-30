@@ -28,26 +28,14 @@ namespace Spine
 
 		public int SlotIndex
 		{
-			get
-			{
-				return slotIndex;
-			}
-			set
-			{
-				slotIndex = value;
-			}
+			get => slotIndex;
+			set => slotIndex = value;
 		}
 
 		public float[] Frames
 		{
-			get
-			{
-				return frames;
-			}
-			set
-			{
-				frames = value;
-			}
+			get => frames;
+			set => frames = value;
 		}
 
 		public ColorTimeline(int frameCount)

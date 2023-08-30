@@ -14,14 +14,8 @@ public class e2dCurveNode
 
 	public bool Selected
 	{
-		get
-		{
-			return isSelected;
-		}
-		set
-		{
-			isSelected = value;
-		}
+		get => isSelected;
+		set => isSelected = value;
 	}
 
 	public e2dCurveNode(Vector2 _position)

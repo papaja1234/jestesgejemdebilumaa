@@ -59,21 +59,19 @@ namespace Spine.Unity.Modules
 
 		private Vector2 rootOffset;
 
-		private bool isActive;
-
 		public Rigidbody2D RootRigidbody { get; private set; }
 
 		public Bone StartingBone { get; private set; }
 
 		public Vector3 RootOffset => rootOffset;
 
-		public bool IsActive => isActive;
+		public bool IsActive { get; private set; }
 
 		public Rigidbody2D[] RigidbodyArray
 		{
 			get
 			{
-				if (!isActive)
+				if (!IsActive)
 				{
 					return new Rigidbody2D[0];
 				}
@@ -109,7 +107,7 @@ namespace Spine.Unity.Modules
 
 		public void Apply()
 		{
-			isActive = true;
+			IsActive = true;
 			mix = 1f;
 			Bone bone2 = (StartingBone = skeleton.FindBone(startingBoneName));
 			Bone bone3 = bone2;
@@ -246,7 +244,7 @@ namespace Spine.Unity.Modules
 
 		public void SetSkeletonPosition(Vector3 worldPosition)
 		{
-			if (!isActive)
+			if (!IsActive)
 			{
 				return;
 			}
@@ -262,7 +260,7 @@ namespace Spine.Unity.Modules
 
 		public void Remove()
 		{
-			isActive = false;
+			IsActive = false;
 			foreach (Transform value in boneTable.Values)
 			{
 				Object.Destroy(value.gameObject);

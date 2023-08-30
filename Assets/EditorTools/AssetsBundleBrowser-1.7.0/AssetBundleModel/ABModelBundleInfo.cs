@@ -8,40 +8,28 @@ using UnityEditor.IMGUI.Controls;
 namespace AssetBundleBrowser.AssetBundleModel
 {
     internal sealed class BundleTreeItem : TreeViewItem
-    {   
-        private BundleInfo m_Bundle;
-        internal BundleInfo bundle
-        {
-            get { return m_Bundle; }
-        }
+    {
+        internal BundleInfo bundle { get; }
+
         internal BundleTreeItem(BundleInfo b, int depth, Texture2D iconTexture) : base(b.nameHashCode, depth, b.displayName)
         {
-            m_Bundle = b;
+            bundle = b;
             icon = iconTexture;
             children = new List<TreeViewItem>();
         }
 
         internal MessageSystem.Message BundleMessage()
         {
-            return m_Bundle.HighestMessage();
+            return bundle.HighestMessage();
         }
 
-        public override string displayName
-        {
-            get
-            {
-                return AssetBundleBrowserMain.instance.m_ManageTab.hasSearch ? m_Bundle.m_Name.fullNativeName : m_Bundle.displayName;
-            }
-        }
+        public override string displayName => AssetBundleBrowserMain.instance.m_ManageTab.hasSearch ? bundle.m_Name.fullNativeName : bundle.displayName;
     }
 
     internal class BundleNameData
     {
         private List<string> m_PathTokens;
-        private string m_FullBundleName;
-        private string m_ShortName;
         private string m_VariantName;
-        private string m_FullNativeName;
 
         //input (received from native) is a string of format:
         //  /folder0/.../folderN/name.variant
@@ -62,8 +50,7 @@ namespace AssetBundleBrowser.AssetBundleModel
         {
             return fullNativeName.GetHashCode();
         }
-        internal string fullNativeName
-        { get { return m_FullNativeName; } }
+        internal string fullNativeName { get; private set; }
 
         internal void SetBundleName(string bundleName, string variantName)
         {
@@ -71,28 +58,24 @@ namespace AssetBundleBrowser.AssetBundleModel
             name += System.String.IsNullOrEmpty(variantName) ? "" : "." + variantName;
             SetName(name);
         }
-        internal string bundleName
-        {
-            get { return m_FullBundleName; }
-            //set { SetName(value); }
-        }
-        internal string shortName
-        {
-            get { return m_ShortName; }
-        }
+        internal string bundleName { get; private set; }
+
+        //set { SetName(value); }
+        internal string shortName { get; private set; }
+
         internal string variant
         {
-            get { return m_VariantName; }
+            get => m_VariantName;
             set
             {
                 m_VariantName = value;
-                m_FullNativeName = m_FullBundleName;
-                m_FullNativeName += System.String.IsNullOrEmpty(m_VariantName) ? "" : "." + m_VariantName;
+                fullNativeName = bundleName;
+                fullNativeName += System.String.IsNullOrEmpty(m_VariantName) ? "" : "." + m_VariantName;
             }
         }
         internal List<string> pathTokens
         {
-            get { return m_PathTokens; }
+            get => m_PathTokens;
             set
             {
                 m_PathTokens = value.GetRange(0, value.Count-1);
@@ -121,12 +104,12 @@ namespace AssetBundleBrowser.AssetBundleModel
         }
         private void SetShortName(string inputName)
         {
-            m_ShortName = inputName;
-            int indexOfDot = m_ShortName.LastIndexOf('.');
+            shortName = inputName;
+            int indexOfDot = shortName.LastIndexOf('.');
             if (indexOfDot > -1)
             {
-                m_VariantName = m_ShortName.Substring(indexOfDot + 1);
-                m_ShortName = m_ShortName.Substring(0, indexOfDot);
+                m_VariantName = shortName.Substring(indexOfDot + 1);
+                shortName = shortName.Substring(0, indexOfDot);
             }
             else
                 m_VariantName = string.Empty;
@@ -147,15 +130,15 @@ namespace AssetBundleBrowser.AssetBundleModel
 
         private void GenerateFullName()
         {
-            m_FullBundleName = string.Empty;
+            bundleName = string.Empty;
             for(int i = 0; i < m_PathTokens.Count; i++)
             {
-                m_FullBundleName += m_PathTokens[i];
-                m_FullBundleName += '/';
+                bundleName += m_PathTokens[i];
+                bundleName += '/';
             }
-            m_FullBundleName += m_ShortName;
-            m_FullNativeName = m_FullBundleName;
-            m_FullNativeName += System.String.IsNullOrEmpty(m_VariantName) ? "" : "." + m_VariantName;
+            bundleName += shortName;
+            fullNativeName = bundleName;
+            fullNativeName += System.String.IsNullOrEmpty(m_VariantName) ? "" : "." + m_VariantName;
         }
     }
 
@@ -174,16 +157,11 @@ namespace AssetBundleBrowser.AssetBundleModel
             m_Parent = parent;
         }
 
-        internal BundleFolderInfo parent
-        { get { return m_Parent; } }
-        internal virtual string displayName
-        {
-            get { return m_Name.shortName; }
-        }
-        internal virtual int nameHashCode
-        {
-            get { return m_Name.GetHashCode(); }
-        }
+        internal BundleFolderInfo parent => m_Parent;
+
+        internal virtual string displayName => m_Name.shortName;
+
+        internal virtual int nameHashCode => m_Name.GetHashCode();
         internal abstract BundleTreeItem CreateTreeView(int depth);
 
         protected virtual void RefreshMessages()
@@ -238,10 +216,10 @@ namespace AssetBundleBrowser.AssetBundleModel
         abstract internal void RefreshAssetList();
         abstract internal void AddAssetsToNode(AssetTreeItem node);
         abstract internal void Update();
-        internal virtual bool doneUpdating
-        { get { return m_DoneUpdating; } }
-        internal virtual bool dirty
-        { get { return m_Dirty; } }
+        internal virtual bool doneUpdating => m_DoneUpdating;
+
+        internal virtual bool dirty => m_Dirty;
+
         internal void ForceNeedUpdate()
         {
             m_DoneUpdating = false;
@@ -516,8 +494,7 @@ namespace AssetBundleBrowser.AssetBundleModel
             m_Dirty = true;
         }
 
-        internal bool isSceneBundle
-        { get { return m_IsSceneBundle; } }
+        internal bool isSceneBundle => m_IsSceneBundle;
 
         internal override BundleTreeItem CreateTreeView(int depth)
         {
@@ -585,10 +562,8 @@ namespace AssetBundleBrowser.AssetBundleModel
         {
         }
 
-        internal override string displayName
-        {
-            get { return m_Name.variant; }
-        }
+        internal override string displayName => m_Name.variant;
+
         internal override void Update()
         {
             base.Update();

@@ -8,69 +8,39 @@ namespace Spine
 
 		internal float[] frames;
 
-		private float[][] frameVertices;
-
 		internal VertexAttachment attachment;
 
 		public int SlotIndex
 		{
-			get
-			{
-				return slotIndex;
-			}
-			set
-			{
-				slotIndex = value;
-			}
+			get => slotIndex;
+			set => slotIndex = value;
 		}
 
 		public float[] Frames
 		{
-			get
-			{
-				return frames;
-			}
-			set
-			{
-				frames = value;
-			}
+			get => frames;
+			set => frames = value;
 		}
 
-		public float[][] Vertices
-		{
-			get
-			{
-				return frameVertices;
-			}
-			set
-			{
-				frameVertices = value;
-			}
-		}
+		public float[][] Vertices { get; set; }
 
 		public VertexAttachment Attachment
 		{
-			get
-			{
-				return attachment;
-			}
-			set
-			{
-				attachment = value;
-			}
+			get => attachment;
+			set => attachment = value;
 		}
 
 		public DeformTimeline(int frameCount)
 			: base(frameCount)
 		{
 			frames = new float[frameCount];
-			frameVertices = new float[frameCount][];
+			Vertices = new float[frameCount][];
 		}
 
 		public void SetFrame(int frameIndex, float time, float[] vertices)
 		{
 			frames[frameIndex] = time;
-			frameVertices[frameIndex] = vertices;
+			Vertices[frameIndex] = vertices;
 		}
 
 		public override void Apply(Skeleton skeleton, float lastTime, float time, ExposedList<Event> firedEvents, float alpha)
@@ -85,7 +55,7 @@ namespace Spine
 			{
 				return;
 			}
-			float[][] array2 = frameVertices;
+			float[][] array2 = Vertices;
 			int num = array2[0].Length;
 			ExposedList<float> attachmentVertices = slot.attachmentVertices;
 			if (attachmentVertices.Count != num)

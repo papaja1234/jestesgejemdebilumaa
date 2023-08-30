@@ -32,36 +32,12 @@ public class SandboxUnlockDialog : TextDialog
 	[SerializeField]
 	private GameObject ep6Sprite;
 
-	private string sandboxIdentifier;
-
-	private int cost;
-
 	[SerializeField]
 	private GameObject costTextEnabled;
 
-	public string SandboxIdentifier
-	{
-		get
-		{
-			return sandboxIdentifier;
-		}
-		set
-		{
-			sandboxIdentifier = value;
-		}
-	}
+	public string SandboxIdentifier { get; set; }
 
-	public int Cost
-	{
-		get
-		{
-			return cost;
-		}
-		set
-		{
-			cost = value;
-		}
-	}
+	public int Cost { get; set; }
 
 	protected override void Awake()
 	{
@@ -97,7 +73,7 @@ public class SandboxUnlockDialog : TextDialog
 		ep3Sprite.SetActive(value: false);
 		ep4Sprite.SetActive(value: false);
 		ep6Sprite.SetActive(value: false);
-		switch (sandboxIdentifier)
+		switch (SandboxIdentifier)
 		{
 		case "S-1":
 		case "S-2":
@@ -124,7 +100,7 @@ public class SandboxUnlockDialog : TextDialog
 
 	public void RebuildTexts()
 	{
-		string text = $"[snout] {cost}";
+		string text = $"[snout] {Cost}";
 		TextMesh[] componentsInChildren = costTextEnabled.gameObject.GetComponentsInChildren<TextMesh>(includeInactive: true);
 		for (int i = 0; i < componentsInChildren.Length; i++)
 		{

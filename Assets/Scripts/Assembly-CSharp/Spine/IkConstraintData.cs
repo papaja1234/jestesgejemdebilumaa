@@ -21,38 +21,20 @@ namespace Spine
 
 		public BoneData Target
 		{
-			get
-			{
-				return target;
-			}
-			set
-			{
-				target = value;
-			}
+			get => target;
+			set => target = value;
 		}
 
 		public int BendDirection
 		{
-			get
-			{
-				return bendDirection;
-			}
-			set
-			{
-				bendDirection = value;
-			}
+			get => bendDirection;
+			set => bendDirection = value;
 		}
 
 		public float Mix
 		{
-			get
-			{
-				return mix;
-			}
-			set
-			{
-				mix = value;
-			}
+			get => mix;
+			set => mix = value;
 		}
 
 		public IkConstraintData(string name)

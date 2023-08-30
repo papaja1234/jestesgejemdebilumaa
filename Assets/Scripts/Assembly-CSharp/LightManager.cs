@@ -6,8 +6,6 @@ public class LightManager : MonoBehaviour
 {
 	public static List<Vector3> enabledLightPositions;
 
-	private static LightManager instance;
-
 	[SerializeField]
 	private Material maskNormalMaterial;
 
@@ -24,8 +22,6 @@ public class LightManager : MonoBehaviour
 
 	private bool isInit;
 
-	private bool nvOn;
-
 	private PointLightContainer container;
 
 	private GameObject pointLightPrefab;
@@ -38,15 +34,14 @@ public class LightManager : MonoBehaviour
 
 	private GameObject nightVisionMask;
 
-	public bool NightVisionOn => nvOn;
+	public bool NightVisionOn { get; private set; }
 
-	public static LightManager Instance => instance;
+	public static LightManager Instance { get; private set; }
 
 	private void Awake()
 	{
-		instance = this;
-		nightVisionMask = Object.Instantiate(Resources.Load<GameObject>("Prefabs/Lights/MaskQuadNightVision"));
-		nightVisionMask.transform.parent = WPFMonoBehaviour.ingameCamera.transform;
+		Instance = this;
+		nightVisionMask = Object.Instantiate(Resources.Load<GameObject>("Prefabs/Lights/MaskQuadNightVision"), WPFMonoBehaviour.ingameCamera.transform, true);
 		nightVisionMask.transform.localPosition = Vector3.forward * 0.5f;
 		nightVisionMask.SetActive(value: false);
 		EventManager.Connect<GameStateChanged>(OnGameStateChanged);
@@ -60,8 +55,7 @@ public class LightManager : MonoBehaviour
 	public void Init(LevelManager _levelManager)
 	{
 		levelManager = _levelManager;
-		mask = Object.Instantiate(Resources.Load<GameObject>("Prefabs/Lights/MaskQuad"));
-		mask.transform.parent = WPFMonoBehaviour.ingameCamera.transform;
+		mask = Object.Instantiate(Resources.Load<GameObject>("Prefabs/Lights/MaskQuad"), WPFMonoBehaviour.ingameCamera.transform, true);
 		mask.transform.localPosition = Vector3.forward * 2.5f;
 		if (INSettings.GetBool(INFeature.HideDarkMask))
 		{
@@ -104,10 +98,10 @@ public class LightManager : MonoBehaviour
 	{
 		if (isInit)
 		{
-			nvOn = !nvOn;
-			nightVisionMask.SetActive(nvOn);
-			mask.GetComponent<Renderer>().sharedMaterial = ((!nvOn) ? maskNormalMaterial : maskNVMaterial);
-			container.borderMaterial = ((!nvOn) ? lightBorderNormalMaterial : lightBorderNVMaterial);
+			NightVisionOn = !NightVisionOn;
+			nightVisionMask.SetActive(NightVisionOn);
+			mask.GetComponent<Renderer>().sharedMaterial = ((!NightVisionOn) ? maskNormalMaterial : maskNVMaterial);
+			container.borderMaterial = ((!NightVisionOn) ? lightBorderNormalMaterial : lightBorderNVMaterial);
 			UpdateLights();
 			if (Singleton<SocialGameManager>.IsInstantiated())
 			{
@@ -128,7 +122,7 @@ public class LightManager : MonoBehaviour
 			{
 				startPls.isEnabled = true;
 			}
-			if (disableNv && nvOn)
+			if (disableNv && NightVisionOn)
 			{
 				ToggleNightVision();
 				disableNv = false;
@@ -149,7 +143,7 @@ public class LightManager : MonoBehaviour
 				component.canLitObjects = true;
 				component.usesCurves = false;
 			}
-			if (nvOn)
+			if (NightVisionOn)
 			{
 				disableNv = true;
 			}
@@ -162,7 +156,7 @@ public class LightManager : MonoBehaviour
 			if ((bool)basePart)
 			{
 				Transform transform = basePart.transform;
-				GameObject obj = Object.Instantiate(pointLightPrefab);
+				GameObject obj = Object.Instantiate(pointLightPrefab, transform.Find("Graphics"), true);
 				PointLightSource component2 = obj.GetComponent<PointLightSource>();
 				if (component2 != null)
 				{
@@ -171,7 +165,7 @@ public class LightManager : MonoBehaviour
 					component2.canLitObjects = true;
 					component2.usesCurves = false;
 				}
-				obj.transform.parent = transform.Find("Graphics");
+
 				obj.transform.localPosition = Vector3.zero;
 			}
 			List<WPFMonoBehaviour> list = new List<WPFMonoBehaviour>();
@@ -192,25 +186,23 @@ public class LightManager : MonoBehaviour
 			}
 			foreach (WPFMonoBehaviour item4 in list)
 			{
-				GameObject obj2 = Object.Instantiate(pointLightPrefab);
+				GameObject obj2 = Object.Instantiate(pointLightPrefab, item4.transform, true);
 				PointLightSource component3 = obj2.GetComponent<PointLightSource>();
 				component3.size = 4f;
 				component3.canCollide = true;
 				component3.canLitObjects = true;
 				component3.isEnabled = false;
-				obj2.transform.parent = item4.transform;
 				obj2.transform.localPosition = Vector3.zero;
 			}
 			Rocket[] array4 = Object.FindObjectsOfType<Rocket>();
 			foreach (Rocket rocket in array4)
 			{
-				GameObject obj3 = Object.Instantiate(pointLightPrefab);
+				GameObject obj3 = Object.Instantiate(pointLightPrefab, rocket.transform, true);
 				PointLightSource component4 = obj3.GetComponent<PointLightSource>();
 				component4.size = 2f;
 				component4.canCollide = true;
 				component4.canLitObjects = true;
 				component4.isEnabled = false;
-				obj3.transform.parent = rocket.transform;
 				obj3.transform.localPosition = Vector3.zero;
 			}
 			UpdateLights();

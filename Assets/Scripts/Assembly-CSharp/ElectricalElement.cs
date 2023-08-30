@@ -15,9 +15,7 @@ public abstract class ElectricalElement
 
 		private int m_connectionStack;
 
-		private static Electrode s_empty = new Electrode(null, -1, -1);
-
-		public static Electrode Empty => s_empty;
+		public static Electrode Empty { get; } = new Electrode(null, -1, -1);
 
 		public bool IsEmpty => Index == -1;
 
@@ -48,19 +46,17 @@ public abstract class ElectricalElement
 
 	public const int DefaultElectrodeType = -1;
 
-	private List<Electrode> m_electrodes;
-
 	public int ElementIndex { get; set; }
 
 	public int CircuitIndex { get; set; }
 
-	public List<Electrode> Electrodes => m_electrodes;
+	public List<Electrode> Electrodes { get; }
 
 	public IEnumerable<Electrode> ConnectedElectrodes
 	{
 		get
 		{
-			foreach (Electrode electrode in m_electrodes)
+			foreach (Electrode electrode in Electrodes)
 			{
 				if (electrode.IsConnected)
 				{
@@ -74,7 +70,7 @@ public abstract class ElectricalElement
 
 	public ElectricalElement()
 	{
-		m_electrodes = new List<Electrode>();
+		Electrodes = new List<Electrode>();
 	}
 
 	public virtual void Initialize()
@@ -88,7 +84,7 @@ public abstract class ElectricalElement
 	public int GetConnectedElectrodeCount()
 	{
 		int num = 0;
-		foreach (Electrode electrode in m_electrodes)
+		foreach (Electrode electrode in Electrodes)
 		{
 			if (electrode.IsConnected)
 			{
@@ -100,12 +96,12 @@ public abstract class ElectricalElement
 
 	public Electrode GetElectrodeByIndex(int index)
 	{
-		return m_electrodes[index];
+		return Electrodes[index];
 	}
 
 	public Electrode GetConnectedElectrodeByIndex(int index)
 	{
-		Electrode result = m_electrodes[index];
+		Electrode result = Electrodes[index];
 		if (!result.IsConnected)
 		{
 			return Electrode.Empty;
@@ -115,7 +111,7 @@ public abstract class ElectricalElement
 
 	public Electrode GetElectrodeByType(int type)
 	{
-		foreach (Electrode electrode in m_electrodes)
+		foreach (Electrode electrode in Electrodes)
 		{
 			if (electrode.Type == type)
 			{
@@ -127,7 +123,7 @@ public abstract class ElectricalElement
 
 	public Electrode GetConnectedElectrodeByType(int type)
 	{
-		foreach (Electrode electrode in m_electrodes)
+		foreach (Electrode electrode in Electrodes)
 		{
 			if (electrode.Type == type && electrode.IsConnected)
 			{
@@ -144,9 +140,9 @@ public abstract class ElectricalElement
 
 	public Electrode GetAnotherElectrode(ElectricalElement element)
 	{
-		for (int i = 0; i < m_electrodes.Count; i++)
+		for (int i = 0; i < Electrodes.Count; i++)
 		{
-			Electrode result = m_electrodes[i];
+			Electrode result = Electrodes[i];
 			if (result.Element != element)
 			{
 				return result;
@@ -157,9 +153,9 @@ public abstract class ElectricalElement
 
 	public Electrode GetAnotherConnectedElectrode(ElectricalElement element)
 	{
-		for (int i = 0; i < m_electrodes.Count; i++)
+		for (int i = 0; i < Electrodes.Count; i++)
 		{
-			Electrode result = m_electrodes[i];
+			Electrode result = Electrodes[i];
 			if (result.Element != element && result.IsConnected)
 			{
 				return result;
@@ -170,7 +166,7 @@ public abstract class ElectricalElement
 
 	public int GetAnotherElectrode(int electrode)
 	{
-		for (int i = 0; i < m_electrodes.Count; i++)
+		for (int i = 0; i < Electrodes.Count; i++)
 		{
 			if (i != electrode)
 			{
@@ -182,9 +178,9 @@ public abstract class ElectricalElement
 
 	public int GetAnotherConnectedElectrode(int electrode)
 	{
-		for (int i = 0; i < m_electrodes.Count; i++)
+		for (int i = 0; i < Electrodes.Count; i++)
 		{
-			if (i != electrode && m_electrodes[i].IsConnected)
+			if (i != electrode && Electrodes[i].IsConnected)
 			{
 				return i;
 			}
@@ -199,9 +195,9 @@ public abstract class ElectricalElement
 
 	public int GetElectrodeIndex(ElectricalElement element)
 	{
-		for (int i = 0; i < m_electrodes.Count; i++)
+		for (int i = 0; i < Electrodes.Count; i++)
 		{
-			if (m_electrodes[i].Element == element)
+			if (Electrodes[i].Element == element)
 			{
 				return i;
 			}
@@ -226,16 +222,16 @@ public abstract class ElectricalElement
 
 	public void AddConnectedElement(ElectricalElement element, int type)
 	{
-		Electrode item = new Electrode(element, m_electrodes.Count, type);
-		m_electrodes.Add(item);
+		Electrode item = new Electrode(element, Electrodes.Count, type);
+		Electrodes.Add(item);
 	}
 
 	public void RemoveConnectedElement(ElectricalElement element)
 	{
 		int num = -1;
-		for (int i = 0; i < m_electrodes.Count; i++)
+		for (int i = 0; i < Electrodes.Count; i++)
 		{
-			if (m_electrodes[i].Element == element)
+			if (Electrodes[i].Element == element)
 			{
 				num = i;
 				break;
@@ -243,7 +239,7 @@ public abstract class ElectricalElement
 		}
 		if (num != -1)
 		{
-			m_electrodes.RemoveAt(num);
+			Electrodes.RemoveAt(num);
 		}
 	}
 }

@@ -65,143 +65,74 @@ namespace PlayFab
 				}
 				return ".playfabapi.com";
 			}
-			set
-			{
-				PlayFabSharedPrivate.ProductionEnvironmentUrl = value;
-			}
+			set => PlayFabSharedPrivate.ProductionEnvironmentUrl = value;
 		}
 
 		[Obsolete("This field will become private after Mar 1, 2017", false)]
 		public static string ProductionEnvironmentUrl
 		{
-			get
-			{
-				return ProductionEnvironmentUrlPrivate;
-			}
-			set
-			{
-				ProductionEnvironmentUrlPrivate = value;
-			}
+			get => ProductionEnvironmentUrlPrivate;
+			set => ProductionEnvironmentUrlPrivate = value;
 		}
 
 		public static string TitleId
 		{
-			get
-			{
-				return PlayFabSharedPrivate.TitleId;
-			}
-			set
-			{
-				PlayFabSharedPrivate.TitleId = value;
-			}
+			get => PlayFabSharedPrivate.TitleId;
+			set => PlayFabSharedPrivate.TitleId = value;
 		}
 
 		public static PlayFabLogLevel LogLevel
 		{
-			get
-			{
-				return PlayFabSharedPrivate.LogLevel;
-			}
-			set
-			{
-				PlayFabSharedPrivate.LogLevel = value;
-			}
+			get => PlayFabSharedPrivate.LogLevel;
+			set => PlayFabSharedPrivate.LogLevel = value;
 		}
 
 		public static WebRequestType RequestType
 		{
-			get
-			{
-				return PlayFabSharedPrivate.RequestType;
-			}
-			set
-			{
-				PlayFabSharedPrivate.RequestType = value;
-			}
+			get => PlayFabSharedPrivate.RequestType;
+			set => PlayFabSharedPrivate.RequestType = value;
 		}
 
 		public static int RequestTimeout
 		{
-			get
-			{
-				return PlayFabSharedPrivate.RequestTimeout;
-			}
-			set
-			{
-				PlayFabSharedPrivate.RequestTimeout = value;
-			}
+			get => PlayFabSharedPrivate.RequestTimeout;
+			set => PlayFabSharedPrivate.RequestTimeout = value;
 		}
 
 		public static bool RequestKeepAlive
 		{
-			get
-			{
-				return PlayFabSharedPrivate.RequestKeepAlive;
-			}
-			set
-			{
-				PlayFabSharedPrivate.RequestKeepAlive = value;
-			}
+			get => PlayFabSharedPrivate.RequestKeepAlive;
+			set => PlayFabSharedPrivate.RequestKeepAlive = value;
 		}
 
 		public static bool CompressApiData
 		{
-			get
-			{
-				return PlayFabSharedPrivate.CompressApiData;
-			}
-			set
-			{
-				PlayFabSharedPrivate.CompressApiData = value;
-			}
+			get => PlayFabSharedPrivate.CompressApiData;
+			set => PlayFabSharedPrivate.CompressApiData = value;
 		}
 
 		public static string LoggerHost
 		{
-			get
-			{
-				return PlayFabSharedPrivate.LoggerHost;
-			}
-			set
-			{
-				PlayFabSharedPrivate.LoggerHost = value;
-			}
+			get => PlayFabSharedPrivate.LoggerHost;
+			set => PlayFabSharedPrivate.LoggerHost = value;
 		}
 
 		public static int LoggerPort
 		{
-			get
-			{
-				return PlayFabSharedPrivate.LoggerPort;
-			}
-			set
-			{
-				PlayFabSharedPrivate.LoggerPort = value;
-			}
+			get => PlayFabSharedPrivate.LoggerPort;
+			set => PlayFabSharedPrivate.LoggerPort = value;
 		}
 
 		public static bool EnableRealTimeLogging
 		{
-			get
-			{
-				return PlayFabSharedPrivate.EnableRealTimeLogging;
-			}
-			set
-			{
-				PlayFabSharedPrivate.EnableRealTimeLogging = value;
-			}
+			get => PlayFabSharedPrivate.EnableRealTimeLogging;
+			set => PlayFabSharedPrivate.EnableRealTimeLogging = value;
 		}
 
 		public static int LogCapLimit
 		{
-			get
-			{
-				return PlayFabSharedPrivate.LogCapLimit;
-			}
-			set
-			{
-				PlayFabSharedPrivate.LogCapLimit = value;
-			}
+			get => PlayFabSharedPrivate.LogCapLimit;
+			set => PlayFabSharedPrivate.LogCapLimit = value;
 		}
 
 		private static PlayFabSharedSettings GetSharedSettingsObjectPrivate()

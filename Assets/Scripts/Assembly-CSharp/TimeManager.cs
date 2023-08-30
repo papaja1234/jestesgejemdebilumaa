@@ -14,27 +14,21 @@ public class TimeManager : Singleton<TimeManager>
 
 		public DateTime date;
 
-		private bool fired;
-
-		private bool remove;
-
 		private bool confirming;
 
 		private bool confirmed;
-
-		private float time;
 
 		private float inited;
 
 		private float lastCheck;
 
-		public bool Fired => fired;
+		public bool Fired { get; private set; }
 
-		public bool Remove => remove;
+		public bool Remove { get; private set; }
 
-		public float FireTime => time;
+		public float FireTime { get; }
 
-		public float TimeLeft => inited + time - (float)Singleton<TimeManager>.Instance.TimeFromStart.TotalSeconds;
+		public float TimeLeft => inited + FireTime - (float)Singleton<TimeManager>.Instance.TimeFromStart.TotalSeconds;
 
 		public DateTime Date => date;
 
@@ -48,14 +42,14 @@ public class TimeManager : Singleton<TimeManager>
 			confirming = false;
 			lastCheck = -60f;
 			this.id = id;
-			this.time = (float)time.Subtract(timeMan.CurrentTime).TotalSeconds;
+			this.FireTime = (float)time.Subtract(timeMan.CurrentTime).TotalSeconds;
 			inited = (float)timeMan.TimeFromStart.TotalSeconds;
 			if (onTimedOut != null)
 			{
 				this.onTimedOut = (OnTimedOut)Delegate.Combine(this.onTimedOut, onTimedOut);
 			}
 			date = time;
-			fired = false;
+			Fired = false;
 		}
 
 		public bool Check()
@@ -65,7 +59,7 @@ public class TimeManager : Singleton<TimeManager>
 				confirming = true;
 				OnServerTimeSuccessfull(0uL);
 			}
-			if (!fired && this.onTimedOut != null && TimeLeft < 0f)
+			if (!Fired && this.onTimedOut != null && TimeLeft < 0f)
 			{
 				return confirmed;
 			}
@@ -76,14 +70,14 @@ public class TimeManager : Singleton<TimeManager>
 		{
 			if (this.onTimedOut != null)
 			{
-				this.onTimedOut((int)(time - (float)Singleton<TimeManager>.Instance.TimeFromStart.TotalSeconds));
-				fired = true;
+				this.onTimedOut((int)(FireTime - (float)Singleton<TimeManager>.Instance.TimeFromStart.TotalSeconds));
+				Fired = true;
 			}
 		}
 
 		public void SetRemoved()
 		{
-			remove = true;
+			Remove = true;
 		}
 
 		private void OnServerTimeSuccessfull(ulong serverTime)
@@ -115,10 +109,6 @@ public class TimeManager : Singleton<TimeManager>
 
 	private float lastServerTimeCheck;
 
-	private bool initialized;
-
-	private static double m_realtimeSinceStartup;
-
 	private bool HasTime
 	{
 		get
@@ -133,7 +123,7 @@ public class TimeManager : Singleton<TimeManager>
 
 	private bool CanUpdate => (float)Singleton<TimeManager>.Instance.TimeFromStart.TotalSeconds - lastServerTimeCheck > 5f;
 
-	public bool Initialized => initialized;
+	public bool Initialized { get; private set; }
 
 	public TimeSpan TimeFromStart => new TimeSpan(0, 0, (int)(realtimeSinceStartup - sessionStart));
 
@@ -143,7 +133,7 @@ public class TimeManager : Singleton<TimeManager>
 
 	public int CurrentEpochTime => (int)DateTimeOffset.Now.ToUnixTimeSeconds();
 
-	public static double realtimeSinceStartup => m_realtimeSinceStartup;
+	public static double realtimeSinceStartup { get; private set; }
 
 	public event OnInitializeHandler OnInitialize;
 
@@ -164,7 +154,7 @@ public class TimeManager : Singleton<TimeManager>
 
 	private void OnPlayerChanged(PlayerChangedEvent data)
 	{
-		initialized = false;
+		Initialized = false;
 		sessionStart = realtimeSinceStartup;
 		timers = new Dictionary<string, Timer>();
 		lastServerTime = -1;
@@ -173,7 +163,7 @@ public class TimeManager : Singleton<TimeManager>
 
 	private void Initialize()
 	{
-		if (initialized)
+		if (Initialized)
 		{
 			return;
 		}
@@ -185,7 +175,7 @@ public class TimeManager : Singleton<TimeManager>
 				timers.Add(timerIds[i], new Timer(timerIds[i], ConvertSeconds2DateTime(GameProgress.GetTimerData<int>(timerIds[i], "date")), null, this));
 			}
 		}
-		initialized = true;
+		Initialized = true;
 		if (this.OnInitialize != null)
 		{
 			this.OnInitialize();
@@ -194,7 +184,7 @@ public class TimeManager : Singleton<TimeManager>
 
 	private void Update()
 	{
-		m_realtimeSinceStartup += Time.unscaledDeltaTime;
+		realtimeSinceStartup += Time.unscaledDeltaTime;
 		if (!HasTime && !timePending && CanUpdate)
 		{
 			timePending = true;
@@ -259,7 +249,7 @@ public class TimeManager : Singleton<TimeManager>
 		lastServerTimeCheck = (float)Singleton<TimeManager>.Instance.TimeFromStart.TotalSeconds;
 		lastServerTime = (int)currentTime;
 		timePending = false;
-		if (!initialized)
+		if (!Initialized)
 		{
 			Initialize();
 		}

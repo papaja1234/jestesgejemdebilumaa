@@ -12,11 +12,9 @@ public class INDataDetector : MonoBehaviour
 
 		private Stopwatch m_stopwatch;
 
-		private float m_result;
-
 		public bool IsRunning => m_stopwatch.IsRunning;
 
-		public float FPS => m_result;
+		public float FPS { get; private set; }
 
 		public FPSCounter(float updateInterval)
 		{
@@ -33,7 +31,7 @@ public class INDataDetector : MonoBehaviour
 				float num = (float)m_stopwatch.ElapsedMilliseconds / 1000f;
 				if (num >= m_updateInterval)
 				{
-					m_result = m_frameCount / num;
+					FPS = m_frameCount / num;
 					m_frameCount = 0f;
 					m_stopwatch.Restart();
 				}
@@ -53,7 +51,7 @@ public class INDataDetector : MonoBehaviour
 		public void Reset()
 		{
 			m_frameCount = 0f;
-			m_result = 0f;
+			FPS = 0f;
 			m_stopwatch.Reset();
 		}
 	}

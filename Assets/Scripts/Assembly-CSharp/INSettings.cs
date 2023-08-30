@@ -39,34 +39,30 @@ public static class INSettings
 
 	private class SettingType
 	{
-		private SettingTypeCode m_mainType;
+		public SettingTypeCode MainType { get; }
 
-		private SettingTypeCode[] m_genericArguments;
+		public SettingTypeCode[] GenericArguments { get; }
 
-		public SettingTypeCode MainType => m_mainType;
-
-		public SettingTypeCode[] GenericArguments => m_genericArguments;
-
-		public bool IsGeneric => m_genericArguments != null;
+		public bool IsGeneric => GenericArguments != null;
 
 		public SettingType(SettingTypeCode mainType, SettingTypeCode[] genericArguments)
 		{
-			m_mainType = mainType;
-			m_genericArguments = genericArguments;
+			MainType = mainType;
+			GenericArguments = genericArguments;
 		}
 
 		public override string ToString()
 		{
 			StringBuilder stringBuilder = new StringBuilder();
-			stringBuilder.Append(m_mainType.ToString());
-			if (m_genericArguments != null && m_genericArguments.Length != 0)
+			stringBuilder.Append(MainType.ToString());
+			if (GenericArguments != null && GenericArguments.Length != 0)
 			{
 				stringBuilder.Append('<');
-				stringBuilder.Append(m_genericArguments[0].ToString());
-				for (int i = 1; i < m_genericArguments.Length; i++)
+				stringBuilder.Append(GenericArguments[0].ToString());
+				for (int i = 1; i < GenericArguments.Length; i++)
 				{
 					stringBuilder.Append(", ");
-					stringBuilder.Append(m_genericArguments[i].ToString());
+					stringBuilder.Append(GenericArguments[i].ToString());
 				}
 				stringBuilder.Append('>');
 			}
@@ -329,10 +325,6 @@ public static class INSettings
 
 	private static readonly int s_count = Enum.GetNames(typeof(INFeature)).Length;
 
-	private static bool s_versionSelected;
-
-	private static int s_versionType;
-
 	private static SettingDeclarationContainer s_declarations;
 
 	private static SettingDataContainer s_defaultSettings;
@@ -341,13 +333,13 @@ public static class INSettings
 
 	private static Action[] s_settingEditedEvents = new Action[s_count];
 
-	public static bool VersionSelected => s_versionSelected;
+	public static bool VersionSelected { get; private set; }
 
-	public static int VersionType => s_versionType;
+	public static int VersionType { get; private set; }
 
 	public static void Initialize(int version)
 	{
-		s_versionSelected = true;
+		VersionSelected = true;
 		Load(version);
 		PartHPStatus = 2;
 		InitializeSettings();
@@ -362,7 +354,7 @@ public static class INSettings
 			0 => string.Empty, 
 			_ => "B", 
 		};
-		s_versionType = version;
+		VersionType = version;
 		s_declarations = INJsonSerializer.Deserialize<SerializedDeclarations>(INUnity.LoadTextAsset("INDeclarationSettings").text).Convert();
 		if (version != 0)
 		{

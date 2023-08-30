@@ -11,8 +11,6 @@ public class ResourceBarItem : WPFMonoBehaviour
 	[SerializeField]
 	private float paddingRight;
 
-	private bool show = true;
-
 	private Vector3 targetPosition = Vector3.zero;
 
 	private bool isInit;
@@ -23,13 +21,13 @@ public class ResourceBarItem : WPFMonoBehaviour
 
 	public float PaddingRight => paddingRight;
 
-	public bool IsShowing => show;
+	public bool IsShowing { get; private set; } = true;
 
 	public bool IsEnabled { get; private set; }
 
 	public void SetItem(bool show, bool enable)
 	{
-		this.show = show;
+		this.IsShowing = show;
 		IsEnabled = enable;
 		base.transform.localPosition = Vector3.right * base.transform.localPosition.x + Vector3.up * ((!show) ? 3f : 0f);
 		if (enabledObjects != null)

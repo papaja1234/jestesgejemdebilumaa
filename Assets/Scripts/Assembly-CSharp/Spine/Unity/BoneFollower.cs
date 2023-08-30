@@ -33,10 +33,7 @@ namespace Spine.Unity
 
 		public SkeletonRenderer SkeletonRenderer
 		{
-			get
-			{
-				return skeletonRenderer;
-			}
+			get => skeletonRenderer;
 			set
 			{
 				skeletonRenderer = value;

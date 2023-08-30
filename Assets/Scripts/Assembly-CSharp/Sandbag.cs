@@ -103,12 +103,11 @@ public class Sandbag : BasePart
 		m_partType = PartType.Sandbag;
 		if (m_numberOfBalloons > 1)
 		{
-			GameObject obj = Object.Instantiate(base.gameObject);
+			GameObject obj = Object.Instantiate(base.gameObject, base.contraption.transform, true);
 			obj.transform.position = base.transform.position;
 			Sandbag component = obj.GetComponent<Sandbag>();
 			component.m_numberOfBalloons = m_numberOfBalloons - 1;
 			base.contraption.AddRuntimePart(component);
-			obj.transform.parent = base.contraption.transform;
 		}
 		if (!base.gameObject.GetComponent<SphereCollider>())
 		{

@@ -5,9 +5,7 @@ public class StarBox : OneTimeCollectable
 {
 	public delegate void Collected();
 
-	private static List<StarBox> starBoxes = new List<StarBox>();
-
-	public static List<StarBox> StarBoxes => starBoxes;
+	public static List<StarBox> StarBoxes { get; } = new List<StarBox>();
 
 	public static event Collected onCollected;
 
@@ -15,13 +13,13 @@ public class StarBox : OneTimeCollectable
 
 	protected virtual void Awake()
 	{
-		starBoxes.Add(this);
+		StarBoxes.Add(this);
 	}
 
 	protected override void OnDestroy()
 	{
 		base.OnDestroy();
-		starBoxes.Remove(this);
+		StarBoxes.Remove(this);
 	}
 
 	public override bool IsDisabled()

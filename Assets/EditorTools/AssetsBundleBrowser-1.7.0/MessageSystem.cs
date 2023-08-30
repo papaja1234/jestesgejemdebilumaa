@@ -158,13 +158,7 @@ namespace AssetBundleBrowser
 
             internal MessageType severity;
             internal string message;
-            internal Texture2D icon
-            {
-                get
-                {
-                    return GetIcon(severity);
-                }
-            }
+            internal Texture2D icon => GetIcon(severity);
         }
 
         internal static Message GetMessage(MessageFlag lookup)

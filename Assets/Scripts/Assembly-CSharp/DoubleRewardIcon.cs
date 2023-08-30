@@ -16,16 +16,14 @@ public class DoubleRewardIcon : MonoBehaviour
 
 	private int prevSeconds;
 
-	private static DoubleRewardIcon instance;
-
-	public static DoubleRewardIcon Instance => instance;
+	public static DoubleRewardIcon Instance { get; private set; }
 
 	private void Awake()
 	{
-		if (instance == null || instance == this)
+		if (Instance == null || Instance == this)
 		{
 			renderers = GetComponentsInChildren<MeshRenderer>();
-			instance = this;
+			Instance = this;
 		}
 		else
 		{

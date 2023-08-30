@@ -8,14 +8,8 @@ public class UITextLocale : MonoBehaviour
 
 	public string ID
 	{
-		get
-		{
-			return m_id;
-		}
-		set
-		{
-			m_id = value;
-		}
+		get => m_id;
+		set => m_id = value;
 	}
 
 	public string Text => INLocalization.Instance.GetText(m_id);

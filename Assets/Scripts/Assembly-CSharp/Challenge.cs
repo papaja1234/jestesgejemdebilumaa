@@ -36,47 +36,39 @@ public abstract class Challenge : WPFMonoBehaviour
 
 	public GameObject m_tutorialBookPage;
 
-	private static List<Challenge> s_challenges = new List<Challenge>();
-
 	[SerializeField]
 	private int m_challengeNumber;
 
-	public static List<Challenge> Challenges => s_challenges;
+	public static List<Challenge> Challenges { get; } = new List<Challenge>();
 
 	public virtual ChallengeType Type => ChallengeType.DontUseParts;
 
 	public int ChallengeNumber
 	{
-		get
-		{
-			return m_challengeNumber;
-		}
-		set
-		{
-			m_challengeNumber = value;
-		}
+		get => m_challengeNumber;
+		set => m_challengeNumber = value;
 	}
 
 	public List<IconPlacement> Icons => m_icons;
 
 	protected virtual void Awake()
 	{
-		s_challenges.Add(this);
+		Challenges.Add(this);
 		Refresh();
 	}
 
 	protected virtual void OnDestroy()
 	{
-		s_challenges.Remove(this);
+		Challenges.Remove(this);
 		Refresh();
 	}
 
 	private void Refresh()
 	{
-		s_challenges.Sort(new ChallengeOrder());
-		for (int i = 0; i < s_challenges.Count; i++)
+		Challenges.Sort(new ChallengeOrder());
+		for (int i = 0; i < Challenges.Count; i++)
 		{
-			s_challenges[i].m_challengeNumber = i + 1;
+			Challenges[i].m_challengeNumber = i + 1;
 		}
 	}
 

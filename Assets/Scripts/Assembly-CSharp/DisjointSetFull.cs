@@ -2,45 +2,30 @@ using System;
 
 public class DisjointSetFull
 {
-	private int m_count;
-
 	private int[] m_parent;
 
 	private int[] m_size;
 
-	public int Count
-	{
-		get
-		{
-			return m_count;
-		}
-		set
-		{
-			m_count = value;
-		}
-	}
+	public int Count { get; set; }
 
 	public int Capacity
 	{
-		get
-		{
-			return m_parent.Length;
-		}
+		get => m_parent.Length;
 		set
 		{
 			int[] array = new int[value];
 			int[] array2 = new int[value];
-			Array.Copy(m_parent, 0, array, 0, m_count);
-			Array.Copy(m_size, 0, array2, 0, m_count);
+			Array.Copy(m_parent, 0, array, 0, Count);
+			Array.Copy(m_size, 0, array2, 0, Count);
 			m_parent = array;
 			m_size = array2;
-			MakeSet(m_count, value - 1);
+			MakeSet(Count, value - 1);
 		}
 	}
 
 	public DisjointSetFull(int count)
 	{
-		m_count = count;
+		Count = count;
 		if (count == 0)
 		{
 			m_parent = Array.Empty<int>();
@@ -99,15 +84,15 @@ public class DisjointSetFull
 
 	public void Clear()
 	{
-		m_count = 0;
+		Count = 0;
 		Array.Clear(m_parent, 0, m_parent.Length);
 		Array.Clear(m_size, 0, m_size.Length);
 	}
 
 	public int[] ToArray()
 	{
-		int[] array = new int[m_count];
-		for (int i = 0; i < m_count; i++)
+		int[] array = new int[Count];
+		for (int i = 0; i < Count; i++)
 		{
 			array[i] = FindSet(i);
 		}
@@ -117,14 +102,14 @@ public class DisjointSetFull
 	public int[][] ToSets()
 	{
 		int num = 0;
-		int[] array = new int[m_count];
-		int[] array2 = new int[m_count];
-		int[] array3 = new int[m_count];
-		for (int i = 0; i < m_count; i++)
+		int[] array = new int[Count];
+		int[] array2 = new int[Count];
+		int[] array3 = new int[Count];
+		for (int i = 0; i < Count; i++)
 		{
 			array[FindSet(i)]++;
 		}
-		for (int j = 0; j < m_count; j++)
+		for (int j = 0; j < Count; j++)
 		{
 			if (array[j] != 0)
 			{
@@ -139,7 +124,7 @@ public class DisjointSetFull
 		{
 			array4[k] = new int[array[array2[k]]];
 		}
-		for (int l = 0; l < m_count; l++)
+		for (int l = 0; l < Count; l++)
 		{
 			int num2 = array3[FindSet(l)];
 			ref int reference = ref array5[num2];

@@ -19,13 +19,11 @@ public class AppInterfaceSidebar : MonoBehaviour
 	[SerializeField]
 	private GameObject m_sidebarElementPrefab;
 
-	private bool m_enabled;
-
-	public bool Enabled => m_enabled;
+	public bool Enabled { get; private set; }
 
 	private void Awake()
 	{
-		m_enabled = true;
+		Enabled = true;
 		GenerateSidebarElements();
 	}
 
@@ -35,10 +33,9 @@ public class AppInterfaceSidebar : MonoBehaviour
 		int num = 0;
 		foreach (SidebarElementData sidebarElement in m_sidebarElements)
 		{
-			GameObject obj = UnityEngine.Object.Instantiate(sidebarElementPrefab);
+			GameObject obj = UnityEngine.Object.Instantiate(sidebarElementPrefab, base.transform, false);
 			obj.SetActive(value: true);
 			obj.name = "SidebarElement_" + (num + 1);
-			obj.transform.SetParent(base.transform, worldPositionStays: false);
 			RectTransform obj2 = (RectTransform)obj.transform;
 			obj2.anchoredPosition = new Vector2(0f, -50f * (float)(2 * num + 1));
 			obj2.sizeDelta = new Vector2(0f, 100f);
@@ -49,9 +46,9 @@ public class AppInterfaceSidebar : MonoBehaviour
 
 	public void SetEnabled(bool enabled)
 	{
-		if (m_enabled ^ enabled)
+		if (Enabled ^ enabled)
 		{
-			m_enabled = enabled;
+			Enabled = enabled;
 			CanvasGroup component = GetComponent<CanvasGroup>();
 			component.alpha = (enabled ? 1f : 0f);
 			component.blocksRaycasts = enabled;

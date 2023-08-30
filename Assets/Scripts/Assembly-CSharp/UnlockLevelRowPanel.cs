@@ -18,13 +18,9 @@ public class UnlockLevelRowPanel : MonoBehaviour
 	[SerializeField]
 	private float buttonOffset;
 
-	private LevelRowUnlockDialog unlockDialog;
-
 	private GameObject openPopupButton;
 
-	private int page;
-
-	public LevelRowUnlockDialog UnlockDialog => unlockDialog;
+	public LevelRowUnlockDialog UnlockDialog { get; private set; }
 
 	public Vector2 BackgroundScale
 	{
@@ -35,17 +31,7 @@ public class UnlockLevelRowPanel : MonoBehaviour
 		}
 	}
 
-	public int Page
-	{
-		get
-		{
-			return page;
-		}
-		set
-		{
-			page = value;
-		}
-	}
+	public int Page { get; set; }
 
 	public Vector2 RealSize => new Vector2(bgCollider.size.x * bgCollider.transform.localScale.x, bgCollider.size.y * bgCollider.transform.localScale.y);
 
@@ -60,9 +46,9 @@ public class UnlockLevelRowPanel : MonoBehaviour
 	private void Awake()
 	{
 		openPopupButton = base.transform.Find("OpenPopupButton").gameObject;
-		unlockDialog = Object.Instantiate(unlockDialogPrefab).GetComponent<LevelRowUnlockDialog>();
+		UnlockDialog = Object.Instantiate(unlockDialogPrefab).GetComponent<LevelRowUnlockDialog>();
 		UnlockDialog.transform.position = new Vector3(0f, 0f, -95f);
-		unlockDialog.Close();
+		UnlockDialog.Close();
 	}
 
 	private void Start()
@@ -73,9 +59,9 @@ public class UnlockLevelRowPanel : MonoBehaviour
 	public void SetCost(int cost)
 	{
 		string text = $"[snout] {cost}";
-		unlockDialog.transform.Find("PayUnlockBtn/Text").gameObject.GetComponent<TextMesh>().text = text;
-		unlockDialog.transform.Find("PayUnlockBtnDisabled/Text").gameObject.GetComponent<TextMesh>().text = text;
-		unlockDialog.ShowConfirmEnabled = () => GameProgress.SnoutCoinCount() >= cost;
+		UnlockDialog.transform.Find("PayUnlockBtn/Text").gameObject.GetComponent<TextMesh>().text = text;
+		UnlockDialog.transform.Find("PayUnlockBtnDisabled/Text").gameObject.GetComponent<TextMesh>().text = text;
+		UnlockDialog.ShowConfirmEnabled = () => GameProgress.SnoutCoinCount() >= cost;
 	}
 
 	public void AdButtonPressed()
@@ -96,9 +82,9 @@ public class UnlockLevelRowPanel : MonoBehaviour
 
 	public void OpenUnlockDialog()
 	{
-		unlockDialog.Open();
-		UserSettings.SetInt(Singleton<GameManager>.Instance.CurrentSceneName + "_active_page", page);
-		Transform transform = unlockDialog.transform.Find("PayUnlockBtn");
+		UnlockDialog.Open();
+		UserSettings.SetInt(Singleton<GameManager>.Instance.CurrentSceneName + "_active_page", Page);
+		Transform transform = UnlockDialog.transform.Find("PayUnlockBtn");
 		if ((bool)transform)
 		{
 			transform.GetComponent<Button>().MethodToCall.SetMethod(this, "PayButtonPressed");

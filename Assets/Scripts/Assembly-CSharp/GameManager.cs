@@ -43,13 +43,7 @@ public class GameManager : Singleton<GameManager>
 
 	private GameState m_loadingLevelGameState;
 
-	private int m_currentLevel;
-
-	private int m_currentEpisodeIndex;
-
 	private int m_pagesComingSoonBitmask;
-
-	private EpisodeType m_currentEpisodeType;
 
 	private string m_currentSandboxIdentifier;
 
@@ -57,21 +51,11 @@ public class GameManager : Singleton<GameManager>
 
 	private string m_currentLevelName = string.Empty;
 
-	private string m_currentEpisode = string.Empty;
-
 	private List<EpisodeLevelInfo> m_levels = new List<EpisodeLevelInfo>();
 
 	private SandboxSelector m_sandboxSelector;
 
 	private List<int> m_starlevelLimits = new List<int>();
-
-	private string m_openingCutscene;
-
-	private string m_endingCutscene;
-
-	private string m_midCutscene;
-
-	private bool m_isCutsceneStartedFromLevelSelection;
 
 	private bool m_openLevel;
 
@@ -103,27 +87,27 @@ public class GameManager : Singleton<GameManager>
 		}
 	}
 
-	public EpisodeType CurrentEpisodeType => m_currentEpisodeType;
+	public EpisodeType CurrentEpisodeType { get; private set; }
 
-	public string CurrentEpisode => m_currentEpisode;
+	public string CurrentEpisode { get; private set; } = string.Empty;
 
-	public int CurrentEpisodeIndex => m_currentEpisodeIndex;
+	public int CurrentEpisodeIndex { get; private set; }
 
-	public int CurrentLevel => m_currentLevel;
+	public int CurrentLevel { get; private set; }
 
 	public string CurrentLevelLabel
 	{
 		get
 		{
-			if (m_currentEpisodeType == EpisodeType.Normal)
+			if (CurrentEpisodeType == EpisodeType.Normal)
 			{
-				return LevelSelector.DifferentiatedLevelLabel(m_currentLevel);
+				return LevelSelector.DifferentiatedLevelLabel(CurrentLevel);
 			}
-			if (m_currentEpisodeType == EpisodeType.Sandbox)
+			if (CurrentEpisodeType == EpisodeType.Sandbox)
 			{
 				return m_currentSandboxIdentifier.Substring(2);
 			}
-			if (m_currentEpisodeType == EpisodeType.Race)
+			if (CurrentEpisodeType == EpisodeType.Race)
 			{
 				return m_currentRaceLevelIdentifier.Substring(2);
 			}
@@ -135,11 +119,11 @@ public class GameManager : Singleton<GameManager>
 	{
 		get
 		{
-			if (m_currentEpisodeType == EpisodeType.Normal)
+			if (CurrentEpisodeType == EpisodeType.Normal)
 			{
 				for (int i = 0; i < m_gameData.m_episodeLevels.Count; i++)
 				{
-					if (m_gameData.m_episodeLevels[i].Name == m_currentEpisode)
+					if (m_gameData.m_episodeLevels[i].Name == CurrentEpisode)
 					{
 						return m_gameData.m_episodeLevels[i].Label;
 					}
@@ -147,11 +131,11 @@ public class GameManager : Singleton<GameManager>
 			}
 			else
 			{
-				if (m_currentEpisodeType == EpisodeType.Sandbox)
+				if (CurrentEpisodeType == EpisodeType.Sandbox)
 				{
 					return "S";
 				}
-				if (m_currentEpisodeType == EpisodeType.Race)
+				if (CurrentEpisodeType == EpisodeType.Race)
 				{
 					return "R";
 				}
@@ -167,7 +151,7 @@ public class GameManager : Singleton<GameManager>
 			string empty = string.Empty;
 			try
 			{
-				empty = ((m_gameState == GameState.CakeRaceMenu) ? "CakeRaceMenu" : ((m_gameState == GameState.WorkShop) ? "WorkShop" : ((m_gameState == GameState.KingPigFeeding) ? "Feed" : ((m_currentEpisodeType == EpisodeType.Normal) ? (CurrentEpisodeLabel + "-" + CurrentLevelLabel) : ((m_currentEpisodeType == EpisodeType.Sandbox) ? ((m_gameState != GameState.Level) ? m_currentEpisode : m_currentSandboxIdentifier) : ((m_currentEpisodeType != EpisodeType.Race) ? SceneManager.GetActiveScene().name : m_currentRaceLevelIdentifier))))));
+				empty = ((m_gameState == GameState.CakeRaceMenu) ? "CakeRaceMenu" : ((m_gameState == GameState.WorkShop) ? "WorkShop" : ((m_gameState == GameState.KingPigFeeding) ? "Feed" : ((CurrentEpisodeType == EpisodeType.Normal) ? (CurrentEpisodeLabel + "-" + CurrentLevelLabel) : ((CurrentEpisodeType == EpisodeType.Sandbox) ? ((m_gameState != GameState.Level) ? CurrentEpisode : m_currentSandboxIdentifier) : ((CurrentEpisodeType != EpisodeType.Race) ? SceneManager.GetActiveScene().name : m_currentRaceLevelIdentifier))))));
 			}
 			catch
 			{
@@ -210,15 +194,15 @@ public class GameManager : Singleton<GameManager>
 					num = gameObject.GetComponent<LevelSelector>().CurrentPage;
 				}
 				string text = string.Empty;
-				if (m_currentEpisodeType == EpisodeType.Normal)
+				if (CurrentEpisodeType == EpisodeType.Normal)
 				{
-					text = m_gameData.m_episodeLevels[m_currentEpisodeIndex].FlurryID;
+					text = m_gameData.m_episodeLevels[CurrentEpisodeIndex].FlurryID;
 				}
-				else if (m_currentEpisodeType == EpisodeType.Sandbox)
+				else if (CurrentEpisodeType == EpisodeType.Sandbox)
 				{
 					text = "SB";
 				}
-				else if (m_currentEpisodeType == EpisodeType.Race)
+				else if (CurrentEpisodeType == EpisodeType.Race)
 				{
 					text = "Race";
 				}
@@ -228,41 +212,41 @@ public class GameManager : Singleton<GameManager>
 		}
 	}
 
-	public bool OverrideInFlightMusic => m_gameData.m_episodeLevels[m_currentEpisodeIndex].OverrideInFlightMusic;
+	public bool OverrideInFlightMusic => m_gameData.m_episodeLevels[CurrentEpisodeIndex].OverrideInFlightMusic;
 
 	public GameObject OverriddenInFlightMusic
 	{
 		get
 		{
-			if (m_currentEpisodeType == EpisodeType.Normal)
+			if (CurrentEpisodeType == EpisodeType.Normal)
 			{
-				return m_gameData.m_episodeLevels[m_currentEpisodeIndex].InFlightMusic;
+				return m_gameData.m_episodeLevels[CurrentEpisodeIndex].InFlightMusic;
 			}
 			return m_gameData.commonAudioCollection.InFlightMusic;
 		}
 	}
 
-	public bool OverrideBuildMusic => m_gameData.m_episodeLevels[m_currentEpisodeIndex].OverrideBuildMusic;
+	public bool OverrideBuildMusic => m_gameData.m_episodeLevels[CurrentEpisodeIndex].OverrideBuildMusic;
 
 	public GameObject OverriddenBuildMusic
 	{
 		get
 		{
-			if (m_currentEpisodeType == EpisodeType.Normal)
+			if (CurrentEpisodeType == EpisodeType.Normal)
 			{
-				return m_gameData.m_episodeLevels[m_currentEpisodeIndex].BuildingMusic;
+				return m_gameData.m_episodeLevels[CurrentEpisodeIndex].BuildingMusic;
 			}
 			return m_gameData.commonAudioCollection.BuildMusic;
 		}
 	}
 
-	public string OpeningCutscene => m_openingCutscene;
+	public string OpeningCutscene { get; private set; }
 
-	public string EndingCutscene => m_endingCutscene;
+	public string EndingCutscene { get; private set; }
 
-	public string MidCutscene => m_midCutscene;
+	public string MidCutscene { get; private set; }
 
-	public bool IsCutsceneStartedFromLevelSelection => m_isCutsceneStartedFromLevelSelection;
+	public bool IsCutsceneStartedFromLevelSelection { get; private set; }
 
 	public int LevelCount => m_levels.Count;
 
@@ -326,12 +310,12 @@ public class GameManager : Singleton<GameManager>
 
 	public void OpenEpisode(LevelSelector episodeLevels)
 	{
-		m_currentEpisode = SceneManager.GetActiveScene().name;
-		m_currentEpisodeType = EpisodeType.Normal;
-		m_currentEpisodeIndex = episodeLevels.EpisodeIndex;
-		m_openingCutscene = episodeLevels.OpeningCutscene;
-		m_midCutscene = episodeLevels.MidCutscene;
-		m_endingCutscene = episodeLevels.EndingCutscene;
+		CurrentEpisode = SceneManager.GetActiveScene().name;
+		CurrentEpisodeType = EpisodeType.Normal;
+		CurrentEpisodeIndex = episodeLevels.EpisodeIndex;
+		OpeningCutscene = episodeLevels.OpeningCutscene;
+		MidCutscene = episodeLevels.MidCutscene;
+		EndingCutscene = episodeLevels.EndingCutscene;
 		m_levels = new List<EpisodeLevelInfo>(episodeLevels.Levels);
 		m_starlevelLimits = new List<int>(episodeLevels.StarLevelLimits);
 		m_pagesComingSoonBitmask = Convert.ToInt32(episodeLevels.m_pageTwoComingSoon) + Convert.ToInt32(episodeLevels.m_pageThreeComingSoon);
@@ -339,20 +323,20 @@ public class GameManager : Singleton<GameManager>
 
 	public void OpenSandboxEpisode(SandboxSelector sandboxLevels)
 	{
-		m_currentEpisode = SceneManager.GetActiveScene().name;
+		CurrentEpisode = SceneManager.GetActiveScene().name;
 		m_sandboxSelector = sandboxLevels;
-		m_currentEpisodeType = EpisodeType.Sandbox;
+		CurrentEpisodeType = EpisodeType.Sandbox;
 	}
 
 	public void OpenRaceEpisode(RaceLevelSelector raceLevels)
 	{
-		m_currentEpisode = SceneManager.GetActiveScene().name;
-		m_currentEpisodeType = EpisodeType.Race;
+		CurrentEpisode = SceneManager.GetActiveScene().name;
+		CurrentEpisodeType = EpisodeType.Race;
 	}
 
 	public void CloseEpisode()
 	{
-		m_currentEpisode = null;
+		CurrentEpisode = null;
 		m_levels.Clear();
 	}
 
@@ -383,12 +367,12 @@ public class GameManager : Singleton<GameManager>
 
 	public int NextLevel()
 	{
-		int num = m_currentLevel;
-		if (m_currentLevel < m_levels.Count - 1 && m_levels[m_currentLevel + 1] == GetCurrentRowJokerLevel())
+		int num = CurrentLevel;
+		if (CurrentLevel < m_levels.Count - 1 && m_levels[CurrentLevel + 1] == GetCurrentRowJokerLevel())
 		{
 			num++;
 		}
-		if (m_currentLevel < m_levels.Count - 1)
+		if (CurrentLevel < m_levels.Count - 1)
 		{
 			num++;
 		}
@@ -397,7 +381,7 @@ public class GameManager : Singleton<GameManager>
 
 	public void LoadNextLevel()
 	{
-		if (m_currentEpisodeType == EpisodeType.Race)
+		if (CurrentEpisodeType == EpisodeType.Race)
 		{
 			LoadRaceLevel(NextRaceLevel());
 			return;
@@ -430,17 +414,17 @@ public class GameManager : Singleton<GameManager>
 			{
 				GameProgress.SetMinimumLockedLevel(CurrentEpisodeIndex, GameProgress.GetMinimumLockedLevel(CurrentEpisodeIndex) + 1);
 			}
-			m_currentLevel = num;
+			CurrentLevel = num;
 			LoadLevel(CurrentLevel);
 		}
-		if (m_currentEpisode != string.Empty)
+		if (CurrentEpisode != string.Empty)
 		{
-			int num4 = m_currentLevel / 15;
-			if (m_currentLevel / 5 % 3 == 2 && m_currentLevel % 5 == 3 && !flag2)
+			int num4 = CurrentLevel / 15;
+			if (CurrentLevel / 5 % 3 == 2 && CurrentLevel % 5 == 3 && !flag2)
 			{
 				num4++;
 			}
-			UserSettings.SetInt(m_currentEpisode + "_active_page", num4);
+			UserSettings.SetInt(CurrentEpisode + "_active_page", num4);
 		}
 	}
 
@@ -452,21 +436,21 @@ public class GameManager : Singleton<GameManager>
 	public LevelLoader CurrentLevelLoader()
 	{
 		string text;
-		if (m_currentEpisodeType == EpisodeType.Sandbox)
+		if (CurrentEpisodeType == EpisodeType.Sandbox)
 		{
 			text = ((!(m_sandboxSelector == null)) ? m_sandboxSelector.FindLevel(m_currentSandboxIdentifier).m_levelLoaderPath.Remove(0, "Assets/Resources/".Length) : GetSandboxLevelData(m_currentSandboxIdentifier).m_levelLoaderPath.Remove(0, "Assets/Resources/".Length));
 		}
-		else if (m_currentEpisodeType == EpisodeType.Race)
+		else if (CurrentEpisodeType == EpisodeType.Race)
 		{
 			text = gameData.FindRaceLevel(m_currentRaceLevelIdentifier).m_levelLoaderPath.Remove(0, "Assets/Resources/".Length);
 		}
 		else
 		{
-			if (m_currentLevel >= m_levels.Count)
+			if (CurrentLevel >= m_levels.Count)
 			{
 				return null;
 			}
-			text = m_levels[m_currentLevel].levelLoaderPath.Remove(0, "Assets/Resources/".Length);
+			text = m_levels[CurrentLevel].levelLoaderPath.Remove(0, "Assets/Resources/".Length);
 		}
 		int startIndex = text.LastIndexOf('.');
 		text = text.Remove(startIndex);
@@ -475,7 +459,7 @@ public class GameManager : Singleton<GameManager>
 
 	public void LoadLevel(int index)
 	{
-		m_currentLevel = index;
+		CurrentLevel = index;
 		m_currentLevelName = m_levels[index].sceneName;
 		Singleton<Loader>.Instance.LoadLevel("LevelStub", GameState.Level, showLoadingScreen: true);
 	}
@@ -498,7 +482,7 @@ public class GameManager : Singleton<GameManager>
 		if (m_sandboxSelector == null)
 		{
 			m_currentLevelName = GetSandboxLevelData(sandboxIdentifier).SceneName;
-			m_currentEpisodeType = EpisodeType.Sandbox;
+			CurrentEpisodeType = EpisodeType.Sandbox;
 		}
 		else
 		{
@@ -516,7 +500,7 @@ public class GameManager : Singleton<GameManager>
 	{
 		m_currentRaceLevelIdentifier = raceLevelIdentifier;
 		m_currentLevelName = gameData.FindRaceLevel(raceLevelIdentifier).SceneName;
-		m_currentEpisodeType = EpisodeType.Race;
+		CurrentEpisodeType = EpisodeType.Race;
 		Singleton<Loader>.Instance.LoadLevel("LevelStub", GameState.Level, showLoadingScreen: true);
 	}
 
@@ -532,14 +516,14 @@ public class GameManager : Singleton<GameManager>
 		}
 		m_currentRaceLevelIdentifier = raceLevelIdentifier;
 		m_currentLevelName = levelData.SceneName;
-		m_currentEpisode = "RaceLevelSelection";
-		m_currentEpisodeType = EpisodeType.Race;
+		CurrentEpisode = "RaceLevelSelection";
+		CurrentEpisodeType = EpisodeType.Race;
 		Singleton<Loader>.Instance.LoadLevel("LevelStub", GameState.Level, showLoadingScreen: true);
 	}
 
 	public void LoadUnlockedLevelFromLevelCompleteMenu(string levelName)
 	{
-		m_currentLevel = GetCurrentRowJokerLevelIndex();
+		CurrentLevel = GetCurrentRowJokerLevelIndex();
 		m_currentLevelName = levelName;
 		Singleton<Loader>.Instance.LoadLevel(levelName, GameState.Level, showLoadingScreen: true);
 	}
@@ -558,9 +542,9 @@ public class GameManager : Singleton<GameManager>
 
 	public void LoadStarLevelTransition(EpisodeLevelInfo level)
 	{
-		if (gameData.m_episodeLevels[m_currentEpisodeIndex].m_showStarLevelTransition)
+		if (gameData.m_episodeLevels[CurrentEpisodeIndex].m_showStarLevelTransition)
 		{
-			m_currentLevel = m_levels.IndexOf(level);
+			CurrentLevel = m_levels.IndexOf(level);
 			m_currentLevelName = level.sceneName;
 			Singleton<Loader>.Instance.LoadLevel("StarLevelTransition", GameState.StarLevelCutscene, showLoadingScreen: true);
 		}
@@ -572,7 +556,7 @@ public class GameManager : Singleton<GameManager>
 
 	public void LoadLevelAfterCutScene(EpisodeLevelInfo level, string cutScene)
 	{
-		m_currentLevel = m_levels.IndexOf(level);
+		CurrentLevel = m_levels.IndexOf(level);
 		m_currentLevelName = level.sceneName;
 		Singleton<Loader>.Instance.LoadLevel(cutScene, GameState.Cutscene, showLoadingScreen: true);
 	}
@@ -613,7 +597,7 @@ public class GameManager : Singleton<GameManager>
 
 	public void LoadMidCutscene(bool isStartedFromLevelSelection = false)
 	{
-		m_isCutsceneStartedFromLevelSelection = isStartedFromLevelSelection;
+		IsCutsceneStartedFromLevelSelection = isStartedFromLevelSelection;
 		Singleton<Loader>.Instance.LoadLevel(MidCutscene, GameState.Cutscene, showLoadingScreen: true);
 	}
 
@@ -659,7 +643,7 @@ public class GameManager : Singleton<GameManager>
 	public bool CurrentStarLevelUnlocked()
 	{
 		int num = 0;
-		int num2 = m_currentLevel / 5 * 5;
+		int num2 = CurrentLevel / 5 * 5;
 		if (m_levels.Count < 5)
 		{
 			return false;
@@ -673,7 +657,7 @@ public class GameManager : Singleton<GameManager>
 
 	public bool CurrentEpisodeThreeStarred()
 	{
-		if (m_currentEpisodeType == EpisodeType.Normal)
+		if (CurrentEpisodeType == EpisodeType.Normal)
 		{
 			bool flag = true;
 			for (int i = 0; i < m_levels.Count && flag; i++)
@@ -682,7 +666,7 @@ public class GameManager : Singleton<GameManager>
 			}
 			return flag;
 		}
-		if (m_currentEpisodeType == EpisodeType.Race)
+		if (CurrentEpisodeType == EpisodeType.Race)
 		{
 			bool flag2 = true;
 			for (int j = 0; j < gameData.m_raceLevels.Levels.Count; j++)
@@ -696,7 +680,7 @@ public class GameManager : Singleton<GameManager>
 
 	public bool CurrentEpisodeThreeStarredNormalLevels()
 	{
-		if (m_currentEpisodeType != EpisodeType.Normal)
+		if (CurrentEpisodeType != EpisodeType.Normal)
 		{
 			return false;
 		}
@@ -714,7 +698,7 @@ public class GameManager : Singleton<GameManager>
 
 	public bool CurrentEpisodeThreeStarredSpecialLevels()
 	{
-		if (m_currentEpisodeType != EpisodeType.Normal)
+		if (CurrentEpisodeType != EpisodeType.Normal)
 		{
 			return false;
 		}
@@ -737,7 +721,7 @@ public class GameManager : Singleton<GameManager>
 
 	public EpisodeLevelInfo GetCurrentRowJokerLevel()
 	{
-		int num = m_currentLevel / 5 * 5;
+		int num = CurrentLevel / 5 * 5;
 		if (m_levels.Count >= 5)
 		{
 			return m_levels[num + 4];
@@ -747,7 +731,7 @@ public class GameManager : Singleton<GameManager>
 
 	public int GetCurrentRowJokerLevelIndex()
 	{
-		return m_currentLevel / 5 * 5 + 4;
+		return CurrentLevel / 5 * 5 + 4;
 	}
 
 	public void InitializeTestLevelState()
@@ -764,17 +748,17 @@ public class GameManager : Singleton<GameManager>
 			return;
 		}
 		m_gameState = GameState.Level;
-		m_currentEpisodeType = EpisodeType.Normal;
+		CurrentEpisodeType = EpisodeType.Normal;
 		LevelManager levelManager = array2[0];
 		if (levelManager.m_sandbox)
 		{
-			m_currentEpisodeType = EpisodeType.Sandbox;
+			CurrentEpisodeType = EpisodeType.Sandbox;
 		}
 		else if (levelManager.m_raceLevel)
 		{
-			m_currentEpisodeType = EpisodeType.Race;
+			CurrentEpisodeType = EpisodeType.Race;
 		}
-		if (m_currentEpisodeType == EpisodeType.Sandbox)
+		if (CurrentEpisodeType == EpisodeType.Sandbox)
 		{
 			foreach (SandboxLevels.LevelData level in gameData.m_sandboxLevels.Levels)
 			{
@@ -786,7 +770,7 @@ public class GameManager : Singleton<GameManager>
 			}
 			return;
 		}
-		if (m_currentEpisodeType == EpisodeType.Race)
+		if (CurrentEpisodeType == EpisodeType.Race)
 		{
 			foreach (RaceLevels.LevelData level2 in gameData.m_raceLevels.Levels)
 			{
@@ -805,9 +789,9 @@ public class GameManager : Singleton<GameManager>
 			{
 				if (levelInfos[j].sceneName == m_currentLevelName)
 				{
-					m_currentEpisodeIndex = i;
-					m_currentEpisode = m_gameData.m_episodeLevels[m_currentEpisodeIndex].Name;
-					m_currentLevel = j;
+					CurrentEpisodeIndex = i;
+					CurrentEpisode = m_gameData.m_episodeLevels[CurrentEpisodeIndex].Name;
+					CurrentLevel = j;
 					break;
 				}
 			}
@@ -908,10 +892,10 @@ public class GameManager : Singleton<GameManager>
 
 	public bool IsLastLevelInEpisode()
 	{
-		return m_currentEpisodeType switch
+		return CurrentEpisodeType switch
 		{
 			EpisodeType.Race => m_currentRaceLevelIdentifier == gameData.m_raceLevels.Levels[gameData.m_raceLevels.Levels.Count - 1].m_identifier, 
-			EpisodeType.Normal => m_currentLevel == m_levels.Count - 2, 
+			EpisodeType.Normal => CurrentLevel == m_levels.Count - 2, 
 			_ => false, 
 		};
 	}
@@ -920,14 +904,14 @@ public class GameManager : Singleton<GameManager>
 	{
 		if (CurrentEpisodeIndex == 4 || CurrentEpisodeIndex == 5)
 		{
-			return m_currentLevel == 13;
+			return CurrentLevel == 13;
 		}
 		return false;
 	}
 
 	public bool HasNextLevel()
 	{
-		switch (m_currentEpisodeType)
+		switch (CurrentEpisodeType)
 		{
 		case EpisodeType.Race:
 			return !IsLastLevelInEpisode();
@@ -944,7 +928,7 @@ public class GameManager : Singleton<GameManager>
 
 	public bool HasCutScene()
 	{
-		switch (m_currentEpisodeType)
+		switch (CurrentEpisodeType)
 		{
 		default:
 			return false;
@@ -952,11 +936,11 @@ public class GameManager : Singleton<GameManager>
 		case EpisodeType.Race:
 			return false;
 		case EpisodeType.Normal:
-			if (!IsLastLevelInEpisode() || string.IsNullOrEmpty(m_endingCutscene))
+			if (!IsLastLevelInEpisode() || string.IsNullOrEmpty(EndingCutscene))
 			{
 				if (HasMidCutsceneEnabled())
 				{
-					return !string.IsNullOrEmpty(m_midCutscene);
+					return !string.IsNullOrEmpty(MidCutscene);
 				}
 				return false;
 			}

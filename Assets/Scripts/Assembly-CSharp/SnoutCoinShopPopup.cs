@@ -32,8 +32,6 @@ public class SnoutCoinShopPopup : MonoBehaviour
 
 	private bool m_playingAnimation;
 
-	private static bool s_dialogOpen;
-
 	private Shop shop;
 
 	private Action OnClose;
@@ -42,7 +40,7 @@ public class SnoutCoinShopPopup : MonoBehaviour
 
 	public GameObject MostPopularRibbon => m_mostPopularRibbon;
 
-	public static bool DialogOpen => s_dialogOpen;
+	public static bool DialogOpen { get; private set; }
 
 	private void Start()
 	{
@@ -69,13 +67,13 @@ public class SnoutCoinShopPopup : MonoBehaviour
 		m_mostPopularRibbon.SetActive(value: false);
 		ShowOfferBanner(show: false);
 		UpdatePrices();
-		s_dialogOpen = true;
+		DialogOpen = true;
 		EventManager.Send(new UIEvent(UIEvent.Type.OpenedSnoutCoinShop));
 	}
 
 	private void OnDisable()
 	{
-		s_dialogOpen = false;
+		DialogOpen = false;
 		EventManager.Send(new UIEvent(UIEvent.Type.ClosedSnoutCoinShop));
 	}
 
@@ -123,9 +121,8 @@ public class SnoutCoinShopPopup : MonoBehaviour
 		GameObject gameObject = null;
 		if (transform2 != null)
 		{
-			gameObject = UnityEngine.Object.Instantiate(original);
+			gameObject = UnityEngine.Object.Instantiate(original, transform2, true);
 			gameObject.name = text;
-			gameObject.transform.parent = transform2;
 			gameObject.transform.localPosition = Vector3.zero;
 			gameObject.transform.localScale = Vector3.one;
 			gameObject.SetActive(value: true);

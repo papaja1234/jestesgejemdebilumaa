@@ -37,14 +37,8 @@ namespace PlayFab.Internal
 
 		public bool SessionStarted
 		{
-			get
-			{
-				return _sessionStarted;
-			}
-			set
-			{
-				_sessionStarted = value;
-			}
+			get => _sessionStarted;
+			set => _sessionStarted = value;
 		}
 
 		public string AuthKey { get; set; }

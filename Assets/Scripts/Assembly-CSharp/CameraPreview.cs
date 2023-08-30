@@ -39,11 +39,9 @@ public class CameraPreview : WPFMonoBehaviour
 
 	private float m_timer;
 
-	private bool m_done;
-
 	private int m_fastPreviewMultiplier = 1;
 
-	public bool Done => m_done;
+	public bool Done { get; private set; }
 
 	public List<CameraControlPoint> ControlPoints
 	{
@@ -84,7 +82,7 @@ public class CameraPreview : WPFMonoBehaviour
 
 	public void UpdateCameraPreview(ref Vector3 cameraPosition, ref float cameraOrtoSize)
 	{
-		if (m_done)
+		if (Done)
 		{
 			return;
 		}
@@ -108,7 +106,7 @@ public class CameraPreview : WPFMonoBehaviour
 			m_timer = 0f;
 			if (m_currentControlPointIndex == m_controlPoints.Count - 2)
 			{
-				m_done = true;
+				Done = true;
 				return;
 			}
 		}

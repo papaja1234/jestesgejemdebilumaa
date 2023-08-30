@@ -34,8 +34,6 @@ public class StickyWheel : BasePart
 
 	private Collider m_supportCollider;
 
-	private bool m_hasContact = true;
-
 	private float m_thrust;
 
 	private float m_thrustTimer;
@@ -62,7 +60,7 @@ public class StickyWheel : BasePart
 
 	private bool m_connected;
 
-	public bool HasContact => m_hasContact;
+	public bool HasContact { get; private set; } = true;
 
 	public override bool CanBeEnabled()
 	{
@@ -171,7 +169,7 @@ public class StickyWheel : BasePart
 			float angle = 0f - z + Mathf.Sin(2f * m_angle * (MathF.PI / 180f)) * 8f;
 			m_fakeWheelPivot.transform.localRotation = Quaternion.AngleAxis(angle, Vector3.forward);
 		}
-		if (!m_spiderReported && Singleton<SocialGameManager>.IsInstantiated() && base.transform.rotation.eulerAngles.z > 100f && base.transform.rotation.eulerAngles.z < 260f && m_hasContact)
+		if (!m_spiderReported && Singleton<SocialGameManager>.IsInstantiated() && base.transform.rotation.eulerAngles.z > 100f && base.transform.rotation.eulerAngles.z < 260f && HasContact)
 		{
 			m_spiderTimer += Time.deltaTime;
 			if (m_spiderTimer > 3f)
@@ -206,7 +204,7 @@ public class StickyWheel : BasePart
 			float value = (num2 - num3) / m_maximumSpeed * num4;
 			value = Mathf.Clamp(value, num3, num2);
 			loopingWheelSound.pitch = value;
-			if (m_hasContact)
+			if (HasContact)
 			{
 				loopingWheelSound.volume = 0.15f * (Mathf.Abs(m_spinSpeed) / num - 1f);
 			}
@@ -257,7 +255,7 @@ public class StickyWheel : BasePart
 			float num = SpeedInDirection(vector);
 			m_lastForceDirection = vector;
 			m_spinSpeed = 0f;
-			m_hasContact = true;
+			HasContact = true;
 			colliderRigidbody = ((layer != BasePart.m_groundLayer) ? hitInfo.collider.gameObject.GetComponent<Rigidbody>() : null);
 			if (m_enabled && m_maximumSpeed > 0f && num < m_maximumSpeed && num > 0f - m_maximumSpeed)
 			{
@@ -280,7 +278,7 @@ public class StickyWheel : BasePart
 		}
 		else
 		{
-			m_hasContact = false;
+			HasContact = false;
 			colliderRigidbody = null;
 			if (m_enabled)
 			{

@@ -77,11 +77,9 @@ public class INContraptionDataManager
 		}
 	}
 
-	private string m_dataDirectory;
-
 	private StringBuilder m_builder;
 
-	public string DataDirectory => m_dataDirectory;
+	public string DataDirectory { get; private set; }
 
 	public static INContraptionDataManager Instance { get; private set; }
 
@@ -110,19 +108,19 @@ public class INContraptionDataManager
 	{
 		int versionType = INSettings.VersionType;
 		m_builder = new StringBuilder();
-		m_dataDirectory = INUnity.DataPath + "/contraptions" + versionType switch
+		DataDirectory = INUnity.DataPath + "/contraptions" + versionType switch
 		{
 			2 => "A", 
 			1 => "O", 
 			0 => "", 
 			_ => "B", 
 		};
-		Directory.CreateDirectory(m_dataDirectory);
+		Directory.CreateDirectory(DataDirectory);
 	}
 
 	public ContraptionDataset LoadContraptionData(string levelName)
 	{
-		string dataDirectory = m_dataDirectory;
+		string dataDirectory = DataDirectory;
 		if (!Settings.Enabled)
 		{
 			return WPFPrefs.LoadOriginalContraptionDataset(dataDirectory, levelName);
@@ -154,7 +152,7 @@ public class INContraptionDataManager
 
 	public void SaveContraptionData(string levelName, ContraptionDataset data)
 	{
-		string dataDirectory = m_dataDirectory;
+		string dataDirectory = DataDirectory;
 		if (!Settings.Enabled)
 		{
 			WPFPrefs.SaveOriginalContraptionDataset(dataDirectory, levelName, data);

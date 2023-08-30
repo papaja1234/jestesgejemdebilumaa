@@ -36,14 +36,8 @@ namespace Spine
 
 		public string Name
 		{
-			get
-			{
-				return name;
-			}
-			set
-			{
-				name = value;
-			}
+			get => name;
+			set => name = value;
 		}
 
 		public ExposedList<BoneData> Bones => bones;
@@ -52,134 +46,68 @@ namespace Spine
 
 		public ExposedList<Skin> Skins
 		{
-			get
-			{
-				return skins;
-			}
-			set
-			{
-				skins = value;
-			}
+			get => skins;
+			set => skins = value;
 		}
 
 		public Skin DefaultSkin
 		{
-			get
-			{
-				return defaultSkin;
-			}
-			set
-			{
-				defaultSkin = value;
-			}
+			get => defaultSkin;
+			set => defaultSkin = value;
 		}
 
 		public ExposedList<EventData> Events
 		{
-			get
-			{
-				return events;
-			}
-			set
-			{
-				events = value;
-			}
+			get => events;
+			set => events = value;
 		}
 
 		public ExposedList<Animation> Animations
 		{
-			get
-			{
-				return animations;
-			}
-			set
-			{
-				animations = value;
-			}
+			get => animations;
+			set => animations = value;
 		}
 
 		public ExposedList<IkConstraintData> IkConstraints
 		{
-			get
-			{
-				return ikConstraints;
-			}
-			set
-			{
-				ikConstraints = value;
-			}
+			get => ikConstraints;
+			set => ikConstraints = value;
 		}
 
 		public ExposedList<TransformConstraintData> TransformConstraints
 		{
-			get
-			{
-				return transformConstraints;
-			}
-			set
-			{
-				transformConstraints = value;
-			}
+			get => transformConstraints;
+			set => transformConstraints = value;
 		}
 
 		public ExposedList<PathConstraintData> PathConstraints
 		{
-			get
-			{
-				return pathConstraints;
-			}
-			set
-			{
-				pathConstraints = value;
-			}
+			get => pathConstraints;
+			set => pathConstraints = value;
 		}
 
 		public float Width
 		{
-			get
-			{
-				return width;
-			}
-			set
-			{
-				width = value;
-			}
+			get => width;
+			set => width = value;
 		}
 
 		public float Height
 		{
-			get
-			{
-				return height;
-			}
-			set
-			{
-				height = value;
-			}
+			get => height;
+			set => height = value;
 		}
 
 		public string Version
 		{
-			get
-			{
-				return version;
-			}
-			set
-			{
-				version = value;
-			}
+			get => version;
+			set => version = value;
 		}
 
 		public string Hash
 		{
-			get
-			{
-				return hash;
-			}
-			set
-			{
-				hash = value;
-			}
+			get => hash;
+			set => hash = value;
 		}
 
 		public BoneData FindBone(string boneName)
