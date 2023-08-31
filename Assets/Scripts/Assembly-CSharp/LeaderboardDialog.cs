@@ -204,7 +204,7 @@ public class LeaderboardDialog : TextDialog
 				showingCupAnimationPhase = -1;
 				base.Close();
 			}
-			else if (currentView == LeaderboardView.PlayerInfo || currentView == LeaderboardView.CupInfo)
+			else if (currentView is LeaderboardView.PlayerInfo or LeaderboardView.CupInfo)
 			{
 				ChangeView(LeaderboardView.List, GetCupAndSeasonTitle());
 			}

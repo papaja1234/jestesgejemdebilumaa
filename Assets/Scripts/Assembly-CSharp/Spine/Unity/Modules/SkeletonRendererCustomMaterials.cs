@@ -83,7 +83,7 @@ namespace Spine.Unity.Modules
 				if (!string.IsNullOrEmpty(slotMaterialOverride.slotName))
 				{
 					Slot key = skeletonRenderer.skeleton.FindSlot(slotMaterialOverride.slotName);
-					if (skeletonRenderer.CustomSlotMaterials.TryGetValue(key, out var value) && !(value != slotMaterialOverride.material))
+					if (skeletonRenderer.CustomSlotMaterials.TryGetValue(key, out Material value) && !(value != slotMaterialOverride.material))
 					{
 						skeletonRenderer.CustomSlotMaterials.Remove(key);
 					}
@@ -116,7 +116,7 @@ namespace Spine.Unity.Modules
 			for (int i = 0; i < customMaterialOverrides.Count; i++)
 			{
 				AtlasMaterialOverride atlasMaterialOverride = customMaterialOverrides[i];
-				if (skeletonRenderer.CustomMaterialOverride.TryGetValue(atlasMaterialOverride.originalMaterial, out var value) && !(value != atlasMaterialOverride.replacementMaterial))
+				if (skeletonRenderer.CustomMaterialOverride.TryGetValue(atlasMaterialOverride.originalMaterial, out Material value) && !(value != atlasMaterialOverride.replacementMaterial))
 				{
 					skeletonRenderer.CustomMaterialOverride.Remove(atlasMaterialOverride.originalMaterial);
 				}

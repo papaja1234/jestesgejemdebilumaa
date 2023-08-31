@@ -56,7 +56,7 @@ public static class PartExtensions
 
 	public static bool IsColoredrame(this BasePart part)
 	{
-		if (part.m_partType != BasePart.PartType.MetalFrame || 12 > part.customPartIndex || part.customPartIndex > 129)
+		if (part.m_partType != BasePart.PartType.MetalFrame || part.customPartIndex is < 12 or > 129)
 		{
 			return part.IsTransparentFrame();
 		}
@@ -185,7 +185,7 @@ public static class PartExtensions
 
 	public static bool IsEntityLight(this BasePart part)
 	{
-		if (part.m_partType != BasePart.PartType.PointLight || 0 > part.customPartIndex || part.customPartIndex > 4)
+		if (part.m_partType != BasePart.PartType.PointLight || part.customPartIndex is < 0 or > 4)
 		{
 			if (part.m_partType == BasePart.PartType.SpotLight && 0 <= part.customPartIndex)
 			{

@@ -26,14 +26,14 @@ namespace PlayFab.Json
 				double result3;
 				if (type == typeof(DateTime))
 				{
-					if (DateTime.TryParseExact(text, PlayFabUtil._defaultDateTimeFormats, CultureInfo.CurrentCulture, PlayFabUtil.DateTimeStyles, out var result))
+					if (DateTime.TryParseExact(text, PlayFabUtil._defaultDateTimeFormats, CultureInfo.CurrentCulture, PlayFabUtil.DateTimeStyles, out DateTime result))
 					{
 						return result;
 					}
 				}
 				else if (type == typeof(DateTimeOffset))
 				{
-					if (DateTimeOffset.TryParseExact(text, PlayFabUtil._defaultDateTimeFormats, CultureInfo.CurrentCulture, PlayFabUtil.DateTimeStyles, out var result2))
+					if (DateTimeOffset.TryParseExact(text, PlayFabUtil._defaultDateTimeFormats, CultureInfo.CurrentCulture, PlayFabUtil.DateTimeStyles, out DateTimeOffset result2))
 					{
 						return result2;
 					}

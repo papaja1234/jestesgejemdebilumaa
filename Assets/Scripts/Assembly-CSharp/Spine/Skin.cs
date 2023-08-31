@@ -66,7 +66,7 @@ namespace Spine
 
 		public Attachment GetAttachment(int slotIndex, string name)
 		{
-			Attachments.TryGetValue(new AttachmentKeyTuple(slotIndex, name), out var value);
+			Attachments.TryGetValue(new AttachmentKeyTuple(slotIndex, name), out Attachment value);
 			return value;
 		}
 

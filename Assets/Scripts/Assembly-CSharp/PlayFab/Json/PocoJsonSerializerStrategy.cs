@@ -158,7 +158,7 @@ namespace PlayFab.Json
 					}
 					if (type == typeof(Uri))
 					{
-						if (Uri.IsWellFormedUriString(text, UriKind.RelativeOrAbsolute) && Uri.TryCreate(text, UriKind.RelativeOrAbsolute, out var result2))
+						if (Uri.IsWellFormedUriString(text, UriKind.RelativeOrAbsolute) && Uri.TryCreate(text, UriKind.RelativeOrAbsolute, out Uri result2))
 						{
 							return result2;
 						}
@@ -329,7 +329,7 @@ namespace PlayFab.Json
 			{
 				if (item.Value != null)
 				{
-					MapClrMemberNameToJsonFieldName(item.Key, out var jsonName, out var jsonProp);
+					MapClrMemberNameToJsonFieldName(item.Key, out var jsonName, out JsonProperty jsonProp);
 					if (dictionary.ContainsKey(jsonName))
 					{
 						throw new Exception("The given key is defined multiple times in the same type: " + input.GetType().Name + "." + jsonName);

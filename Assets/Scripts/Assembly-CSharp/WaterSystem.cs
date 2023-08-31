@@ -80,7 +80,7 @@ public class WaterSystem : INBehaviour
 		List<BasePart> list = new List<BasePart>();
 		foreach (BasePart part in Contraption.Instance.Parts)
 		{
-			if ((part.m_enclosedInto == null || part.m_partType == BasePart.PartType.KingPig || part.m_partType == BasePart.PartType.GoldenPig) && part.rigidbody != null && !part.rigidbody.IsFixed())
+			if ((part.m_enclosedInto == null || part.m_partType is BasePart.PartType.KingPig or BasePart.PartType.GoldenPig) && part.rigidbody != null && !part.rigidbody.IsFixed())
 			{
 				list.Add(part);
 			}

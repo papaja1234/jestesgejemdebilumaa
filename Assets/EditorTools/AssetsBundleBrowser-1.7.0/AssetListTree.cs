@@ -256,7 +256,7 @@ namespace AssetBundleBrowser
                 return false;
 
             //can't drag onto none or >1 bundles
-            if (m_SourceBundles.Count == 0 || m_SourceBundles.Count > 1)
+            if (m_SourceBundles.Count is 0 or > 1)
                 return false;
             
             //can't drag nothing

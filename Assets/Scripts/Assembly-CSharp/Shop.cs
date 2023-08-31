@@ -154,7 +154,7 @@ public class Shop : WPFMonoBehaviour
 		bool flag2 = IsSaleOn("SnoutCoinPackHugeSale");
 		if (isSnoutCoinPackMediumSale || flag2)
 		{
-			if (!DateTime.TryParse(GameProgress.GetString("CoinCrazeSale_lastShown", DateTime.MinValue.ToShortDateString()), out var result))
+			if (!DateTime.TryParse(GameProgress.GetString("CoinCrazeSale_lastShown", DateTime.MinValue.ToShortDateString()), out DateTime result))
 			{
 				result = DateTime.MinValue;
 			}
@@ -180,7 +180,7 @@ public class Shop : WPFMonoBehaviour
 		{
 			return;
 		}
-		if (!DateTime.TryParse(GameProgress.GetString("CrateCrazeSale_lastShown", DateTime.MinValue.ToShortDateString()), out var result2))
+		if (!DateTime.TryParse(GameProgress.GetString("CrateCrazeSale_lastShown", DateTime.MinValue.ToShortDateString()), out DateTime result2))
 		{
 			result2 = DateTime.MinValue;
 		}
@@ -272,7 +272,7 @@ public class Shop : WPFMonoBehaviour
 	public static DateTime ConvertStringToDate(string rawDate)
 	{
 		string[] formats = new string[8] { "d.M.yy", "d.MM.yy", "dd.M.yy", "dd.MM.yy", "d.M.yyyy", "d.MM.yyyy", "dd.M.yyyy", "dd.MM.yyyy" };
-		if (!string.IsNullOrEmpty(rawDate) && DateTime.TryParseExact(rawDate, formats, CultureInfo.InvariantCulture, DateTimeStyles.None, out var result))
+		if (!string.IsNullOrEmpty(rawDate) && DateTime.TryParseExact(rawDate, formats, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime result))
 		{
 			return result;
 		}
@@ -525,7 +525,7 @@ public class Shop : WPFMonoBehaviour
 			return null;
 		}
 		int productPrice = Singleton<VirtualCatalogManager>.Instance.GetProductPrice(purchaseType);
-		if (productPrice == int.MaxValue || productPrice < 0)
+		if (productPrice is int.MaxValue or < 0)
 		{
 			return null;
 		}

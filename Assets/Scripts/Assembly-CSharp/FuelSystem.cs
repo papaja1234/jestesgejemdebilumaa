@@ -64,7 +64,7 @@ public class FuelSystem : PartManager
 		List<BasePart> list = new List<BasePart>();
 		foreach (BasePart part in Contraption.Instance.Parts)
 		{
-			if (part is JetEngine || part is FuelTube || part is FuelBox)
+			if (part is JetEngine or FuelTube or FuelBox)
 			{
 				list.Add(part);
 			}

@@ -77,7 +77,7 @@ namespace Ionic.Zlib
 			_codec = codec;
 			_codec.Message = null;
 			blocks = null;
-			if (w < 8 || w > 15)
+			if (w is < 8 or > 15)
 			{
 				End();
 				throw new ZlibException("Bad window size.");

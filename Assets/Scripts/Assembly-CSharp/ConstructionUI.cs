@@ -1220,7 +1220,7 @@ public class ConstructionUI : WPFMonoBehaviour
 			if (m_useDragOffset)
 			{
 				int key2 = num3 * 1000 + num2;
-				if (m_cellMap.TryGetValue(key2, out var value))
+				if (m_cellMap.TryGetValue(key2, out Transform value))
 				{
 					if ((bool)m_mouseOverCell)
 					{
@@ -1415,7 +1415,7 @@ public class ConstructionUI : WPFMonoBehaviour
 				if (part.m_partType == BasePart.PartType.GoldenPig)
 				{
 					BasePart basePart = m_contraption.FindPartAt(coordX + j, coordY + i);
-					if ((bool)basePart && (basePart.m_partType == BasePart.PartType.Rope || basePart.m_partType == BasePart.PartType.Spring))
+					if ((bool)basePart && basePart.m_partType is BasePart.PartType.Rope or BasePart.PartType.Spring)
 					{
 						continue;
 					}
@@ -1438,7 +1438,7 @@ public class ConstructionUI : WPFMonoBehaviour
 					{
 						basePart2 = basePart2.enclosedPart;
 					}
-					if ((basePart2.m_partType == BasePart.PartType.KingPig || basePart2.m_partType == BasePart.PartType.GoldenPig) && ((part.m_partType != BasePart.PartType.Rope && part.m_partType != BasePart.PartType.Spring) || basePart2.m_partType != BasePart.PartType.GoldenPig))
+					if (basePart2.m_partType is BasePart.PartType.KingPig or BasePart.PartType.GoldenPig && ((part.m_partType != BasePart.PartType.Rope && part.m_partType != BasePart.PartType.Spring) || basePart2.m_partType != BasePart.PartType.GoldenPig))
 					{
 						ClearNonChassisPart(coordX + l, coordY + k);
 					}
@@ -1476,7 +1476,7 @@ public class ConstructionUI : WPFMonoBehaviour
 			if (extensionData != null)
 			{
 				(int, int) key = ((int)basePart3.m_partType, basePart3.customPartIndex);
-				if (extensionData.PartRotations != null && extensionData.PartRotations.TryGetValue(key, out var value))
+				if (extensionData.PartRotations != null && extensionData.PartRotations.TryGetValue(key, out (int, bool) value))
 				{
 					if (value.Item2)
 					{

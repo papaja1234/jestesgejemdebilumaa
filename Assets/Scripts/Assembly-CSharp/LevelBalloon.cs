@@ -114,7 +114,7 @@ public class LevelBalloon : WPFMonoBehaviour
 	private void OnGameStateChanged(GameStateChanged newState)
 	{
 		LevelManager.GameState state = newState.state;
-		if (state == LevelManager.GameState.Running || state == LevelManager.GameState.ShowingUnlockedParts || state == LevelManager.GameState.Building)
+		if (state is LevelManager.GameState.Running or LevelManager.GameState.ShowingUnlockedParts or LevelManager.GameState.Building)
 		{
 			LoadState();
 		}

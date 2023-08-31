@@ -79,7 +79,7 @@ public class ScrapButton : SoftCurrencyButton
 	private void OnCraftingMachineEvent(WorkshopMenu.CraftingMachineEvent data)
 	{
 		WorkshopMenu.CraftingMachineAction action = data.action;
-		if (action == WorkshopMenu.CraftingMachineAction.RemoveScrap || action == WorkshopMenu.CraftingMachineAction.AddScrap || action == WorkshopMenu.CraftingMachineAction.ResetScrap)
+		if (action is WorkshopMenu.CraftingMachineAction.RemoveScrap or WorkshopMenu.CraftingMachineAction.AddScrap or WorkshopMenu.CraftingMachineAction.ResetScrap)
 		{
 			UpdateCount(data.scrapAmountInMachine);
 		}

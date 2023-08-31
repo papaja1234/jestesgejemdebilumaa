@@ -74,7 +74,7 @@ public class Spring : BasePart
 		base.rigidbody.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
 		if (INSettings.GetBool(INFeature.ElasticSpringConnection))
 		{
-			m_elastic = m_enclosedInto != null || customPartIndex == 0 || customPartIndex == 2;
+			m_elastic = m_enclosedInto != null || customPartIndex is 0 or 2;
 		}
 	}
 
@@ -102,7 +102,7 @@ public class Spring : BasePart
 	{
 		if (INSettings.GetBool(INFeature.ElasticSpringConnection))
 		{
-			m_elastic = m_enclosedInto != null || customPartIndex == 0 || customPartIndex == 2;
+			m_elastic = m_enclosedInto != null || customPartIndex is 0 or 2;
 		}
 		if (INSettings.GetBool(INFeature.ElasticSpringConnection) && m_elastic)
 		{

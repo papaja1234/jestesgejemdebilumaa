@@ -191,7 +191,7 @@ namespace Spine
 					pathConstraintData.position *= scale;
 				}
 				pathConstraintData.spacing = ReadFloat(input);
-				if (pathConstraintData.spacingMode == SpacingMode.Length || pathConstraintData.spacingMode == SpacingMode.Fixed)
+				if (pathConstraintData.spacingMode is SpacingMode.Length or SpacingMode.Fixed)
 				{
 					pathConstraintData.spacing *= scale;
 				}
@@ -696,7 +696,7 @@ namespace Spine
 						if (num27 == 1)
 						{
 							pathConstraintPositionTimeline = new PathConstraintSpacingTimeline(num28);
-							if (pathConstraintData.spacingMode == SpacingMode.Length || pathConstraintData.spacingMode == SpacingMode.Fixed)
+							if (pathConstraintData.spacingMode is SpacingMode.Length or SpacingMode.Fixed)
 							{
 								num29 = scale;
 							}

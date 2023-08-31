@@ -30,7 +30,7 @@ public class Loader : Singleton<Loader>
 	{
 		Singleton<GuiManager>.Instance.IsEnabled = false;
 		yield return null;
-		if (!levelName.Equals("DailyChallenge") && !levelName.Equals("CakeRaceIntro") && (levelName.Equals("LevelStub") || nextState == GameManager.GameState.Cutscene || nextState == GameManager.GameState.StarLevelCutscene))
+		if (!levelName.Equals("DailyChallenge") && !levelName.Equals("CakeRaceIntro") && (levelName.Equals("LevelStub") || nextState is GameManager.GameState.Cutscene or GameManager.GameState.StarLevelCutscene))
 		{
 			LevelLoader levelLoader = Singleton<GameManager>.instance.CurrentLevelLoader();
 			string bundleId = ((!(levelLoader != null)) ? string.Empty : levelLoader.AssetBundleName);

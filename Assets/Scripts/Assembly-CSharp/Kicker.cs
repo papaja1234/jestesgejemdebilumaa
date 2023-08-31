@@ -122,7 +122,7 @@ public class Kicker : BasePart
 				{
 					return;
 				}
-				foreach (var connectedJoint in m_connectedJoints)
+				foreach ((Rigidbody, Joint) connectedJoint in m_connectedJoints)
 				{
 					Joint item = connectedJoint.Item2;
 					bool flag = false;
@@ -375,7 +375,7 @@ public class Kicker : BasePart
 
 	public IEnumerable<BasePart> GetConnectedParts()
 	{
-		if (customPartIndex == 2 || customPartIndex == 4 || customPartIndex == 3)
+		if (customPartIndex is 2 or 4 or 3)
 		{
 			if (m_connectedParts == null)
 			{
@@ -420,7 +420,7 @@ public class Kicker : BasePart
 			{
 				yield break;
 			}
-			foreach (var connectedJoint in m_connectedJoints)
+			foreach ((Rigidbody, Joint) connectedJoint in m_connectedJoints)
 			{
 				if (connectedJoint.Item1 != null)
 				{

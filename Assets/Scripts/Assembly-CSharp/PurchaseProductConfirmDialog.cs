@@ -105,7 +105,7 @@ public class PurchaseProductConfirmDialog : TextDialog
 	{
 		if (Singleton<RuntimeSpriteDatabase>.Instance != null)
 		{
-			if (SpriteScale.GetCustomScale(customScales, ItemSpriteID, out var scale))
+			if (SpriteScale.GetCustomScale(customScales, ItemSpriteID, out Vector2 scale))
 			{
 				itemIcon.m_scaleX = scale.x;
 				itemIcon.m_scaleY = scale.y;

@@ -467,11 +467,11 @@ public class PartGeneratorManager : PartManager
 					if (instance.CanConnectTo(part, basePart, BasePart.Direction.Right))
 					{
 						BasePart.JointConnectionDirection customJointConnectionDirection2 = basePart.GetCustomJointConnectionDirection();
-						if (customJointConnectionDirection == BasePart.JointConnectionDirection.Right || customJointConnectionDirection == BasePart.JointConnectionDirection.LeftAndRight)
+						if (customJointConnectionDirection is BasePart.JointConnectionDirection.Right or BasePart.JointConnectionDirection.LeftAndRight)
 						{
 							instance.AddCustomConnectionBetweenParts(part, basePart);
 						}
-						else if (customJointConnectionDirection2 == BasePart.JointConnectionDirection.Left || customJointConnectionDirection2 == BasePart.JointConnectionDirection.LeftAndRight)
+						else if (customJointConnectionDirection2 is BasePart.JointConnectionDirection.Left or BasePart.JointConnectionDirection.LeftAndRight)
 						{
 							instance.AddCustomConnectionBetweenParts(basePart, part);
 						}
@@ -483,11 +483,11 @@ public class PartGeneratorManager : PartManager
 					if (instance.CanConnectTo(part, basePart2, BasePart.Direction.Down))
 					{
 						BasePart.JointConnectionDirection customJointConnectionDirection3 = basePart2.GetCustomJointConnectionDirection();
-						if (customJointConnectionDirection == BasePart.JointConnectionDirection.Down || customJointConnectionDirection == BasePart.JointConnectionDirection.UpAndDown)
+						if (customJointConnectionDirection is BasePart.JointConnectionDirection.Down or BasePart.JointConnectionDirection.UpAndDown)
 						{
 							instance.AddCustomConnectionBetweenParts(part, basePart2);
 						}
-						else if (customJointConnectionDirection3 == BasePart.JointConnectionDirection.Up || customJointConnectionDirection3 == BasePart.JointConnectionDirection.UpAndDown)
+						else if (customJointConnectionDirection3 is BasePart.JointConnectionDirection.Up or BasePart.JointConnectionDirection.UpAndDown)
 						{
 							instance.AddCustomConnectionBetweenParts(basePart2, part);
 						}
@@ -503,11 +503,11 @@ public class PartGeneratorManager : PartManager
 						if (instance.CanConnectTo(part, basePart3, BasePart.Direction.Left))
 						{
 							BasePart.JointConnectionDirection customJointConnectionDirection4 = basePart3.GetCustomJointConnectionDirection();
-							if (customJointConnectionDirection == BasePart.JointConnectionDirection.Left || customJointConnectionDirection == BasePart.JointConnectionDirection.LeftAndRight)
+							if (customJointConnectionDirection is BasePart.JointConnectionDirection.Left or BasePart.JointConnectionDirection.LeftAndRight)
 							{
 								instance.AddCustomConnectionBetweenParts(part, basePart3);
 							}
-							else if (customJointConnectionDirection4 == BasePart.JointConnectionDirection.Right || customJointConnectionDirection4 == BasePart.JointConnectionDirection.LeftAndRight)
+							else if (customJointConnectionDirection4 is BasePart.JointConnectionDirection.Right or BasePart.JointConnectionDirection.LeftAndRight)
 							{
 								instance.AddCustomConnectionBetweenParts(basePart3, part);
 							}
@@ -519,11 +519,11 @@ public class PartGeneratorManager : PartManager
 						if (instance.CanConnectTo(part, basePart4, BasePart.Direction.Up))
 						{
 							BasePart.JointConnectionDirection customJointConnectionDirection5 = basePart4.GetCustomJointConnectionDirection();
-							if (customJointConnectionDirection == BasePart.JointConnectionDirection.Up || customJointConnectionDirection == BasePart.JointConnectionDirection.UpAndDown)
+							if (customJointConnectionDirection is BasePart.JointConnectionDirection.Up or BasePart.JointConnectionDirection.UpAndDown)
 							{
 								instance.AddCustomConnectionBetweenParts(part, basePart4);
 							}
-							else if (customJointConnectionDirection5 == BasePart.JointConnectionDirection.Down || customJointConnectionDirection5 == BasePart.JointConnectionDirection.UpAndDown)
+							else if (customJointConnectionDirection5 is BasePart.JointConnectionDirection.Down or BasePart.JointConnectionDirection.UpAndDown)
 							{
 								instance.AddCustomConnectionBetweenParts(basePart4, part);
 							}
@@ -590,7 +590,7 @@ public class PartGeneratorManager : PartManager
 					for (int j = -2; j <= 2; j += 4)
 					{
 						BasePart basePart7 = runtimeContraption.FindPartAt(coordX + j, coordY + i);
-						if (basePart7 != null && (basePart7.m_partType == BasePart.PartType.Wings || basePart7.m_partType == BasePart.PartType.MetalWing) && basePart7.collider != null)
+						if (basePart7 != null && basePart7.m_partType is BasePart.PartType.Wings or BasePart.PartType.MetalWing && basePart7.collider != null)
 						{
 							Physics.IgnoreCollision(part.collider, basePart7.collider);
 						}
@@ -606,7 +606,7 @@ public class PartGeneratorManager : PartManager
 						{
 							continue;
 						}
-						if (basePart8.m_partType == BasePart.PartType.WoodenFrame || basePart8.m_partType == BasePart.PartType.MetalFrame)
+						if (basePart8.m_partType is BasePart.PartType.WoodenFrame or BasePart.PartType.MetalFrame)
 						{
 							if (i == 0)
 							{
@@ -843,7 +843,7 @@ public class PartGeneratorManager : PartManager
 				}
 			}
 		}
-		foreach (var cachedPart in m_cachedParts)
+		foreach ((BasePart, BasePart, int, int) cachedPart in m_cachedParts)
 		{
 			(BasePart, GrapplingHook, int, int) tuple = (cachedPart.Item1, (GrapplingHook)cachedPart.Item2, cachedPart.Item3, cachedPart.Item4);
 			BasePart item = tuple.Item1;

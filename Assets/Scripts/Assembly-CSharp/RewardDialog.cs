@@ -454,7 +454,7 @@ public class RewardDialog : MonoBehaviour
 		{
 			dayTexts[i].transform.parent.gameObject.SetActive((day == 0 && i == 1) || day > 0);
 			int num = day + i;
-			if (num < 1 || num > 30)
+			if (num is < 1 or > 30)
 			{
 				dayTexts[i].text = "-";
 			}

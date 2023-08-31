@@ -1090,7 +1090,7 @@ namespace Ionic.Zlib
 		{
 			_codec = codec;
 			_codec.Message = null;
-			if (windowBits < 9 || windowBits > 15)
+			if (windowBits is < 9 or > 15)
 			{
 				throw new ZlibException("windowBits must be in the range 9..15.");
 			}
@@ -1277,7 +1277,7 @@ namespace Ionic.Zlib
 			if (_codec.AvailableBytesIn != 0 || lookahead != 0 || (flush != 0 && status != FINISH_STATE))
 			{
 				BlockState blockState = DeflateFunction(flush);
-				if (blockState == BlockState.FinishStarted || blockState == BlockState.FinishDone)
+				if (blockState is BlockState.FinishStarted or BlockState.FinishDone)
 				{
 					status = FINISH_STATE;
 				}

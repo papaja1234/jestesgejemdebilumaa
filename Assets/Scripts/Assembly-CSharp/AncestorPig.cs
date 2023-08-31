@@ -259,7 +259,7 @@ public class AncestorPig : WPFMonoBehaviour
 		{
 			float radius = ((SphereCollider)GetComponent<Collider>()).radius;
 			LayerMask layerMask = 1 << LayerMask.NameToLayer("Light");
-			if (Physics.SphereCast(base.transform.position - Vector3.forward * 2f, radius, Vector3.forward * 3f, out var hitInfo, float.MaxValue, ~layerMask.value))
+			if (Physics.SphereCast(base.transform.position - Vector3.forward * 2f, radius, Vector3.forward * 3f, out RaycastHit hitInfo, float.MaxValue, ~layerMask.value))
 			{
 				Challenge componentInParent = hitInfo.collider.GetComponentInParent<Challenge>();
 				if ((bool)componentInParent)

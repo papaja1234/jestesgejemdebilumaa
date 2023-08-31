@@ -266,7 +266,7 @@ public class WorkshopMenu : MonoBehaviour
 
 	private void OnItemPurchase(IapManager.InAppPurchaseItemType type)
 	{
-		if (type == IapManager.InAppPurchaseItemType.WoodenLootCrate || type == IapManager.InAppPurchaseItemType.MetalLootCrate || type == IapManager.InAppPurchaseItemType.GoldenLootCrate)
+		if (type is IapManager.InAppPurchaseItemType.WoodenLootCrate or IapManager.InAppPurchaseItemType.MetalLootCrate or IapManager.InAppPurchaseItemType.GoldenLootCrate)
 		{
 			partListingButton.UpdateNewTagState();
 		}
@@ -1086,7 +1086,7 @@ public class WorkshopMenu : MonoBehaviour
 			return;
 		}
 		checkMark.SetActive(value: false);
-		if (AlienCustomizationManager.GetNextUnlockable(out var part))
+		if (AlienCustomizationManager.GetNextUnlockable(out BasePart part))
 		{
 			string id = part.m_constructionIconSprite.Id;
 			Singleton<RuntimeSpriteDatabase>.Instance.Find(id);

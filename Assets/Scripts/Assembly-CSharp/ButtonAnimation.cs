@@ -119,7 +119,7 @@ public class ButtonAnimation : MonoBehaviour
 				StartCoroutine(DelayScaling(animationClipLength));
 			}
 		}
-		else if (input.type == InputEvent.EventType.Release || input.type == InputEvent.EventType.MouseLeave)
+		else if (input.type is InputEvent.EventType.Release or InputEvent.EventType.MouseLeave)
 		{
 			mouseOver = false;
 		}

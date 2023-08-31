@@ -184,7 +184,7 @@ public class LevelComplete : WPFMonoBehaviour
 
 	private void HandleIapManageronPurchaseSucceeded(IapManager.InAppPurchaseItemType type)
 	{
-		if (type == IapManager.InAppPurchaseItemType.UnlockFullVersion || type == IapManager.InAppPurchaseItemType.UnlockTenLevels || type == IapManager.InAppPurchaseItemType.UnlockEpisode)
+		if (type is IapManager.InAppPurchaseItemType.UnlockFullVersion or IapManager.InAppPurchaseItemType.UnlockTenLevels or IapManager.InAppPurchaseItemType.UnlockEpisode)
 		{
 			Singleton<GameManager>.Instance.LoadNextLevel();
 		}
@@ -259,9 +259,7 @@ public class LevelComplete : WPFMonoBehaviour
 		m_starThree.SetActive(value: false);
 		if (m_challenges.Count >= 2 && m_challenges[1].IsCompleted() && !m_challenges[0].IsCompleted())
 		{
-			Challenge value = m_challenges[0];
-			m_challenges[0] = m_challenges[1];
-			m_challenges[1] = value;
+			(m_challenges[0], m_challenges[1]) = (m_challenges[1], m_challenges[0]);
 		}
 		float waitTime = 0.1f;
 		while (!Mathf.Approximately(Time.timeScale, 1f) || waitTime > 0f)
@@ -935,7 +933,7 @@ public class LevelComplete : WPFMonoBehaviour
 				transform.gameObject.SetActive(nextButtonState == (NextButtonState)i);
 			}
 		}
-		if (nextButtonState == NextButtonState.NextLevelButton || nextButtonState != NextButtonState.CutsceneButton || !(array[(int)nextButtonState] != null))
+		if (nextButtonState is NextButtonState.NextLevelButton or not NextButtonState.CutsceneButton || !(array[(int)nextButtonState] != null))
 		{
 			return;
 		}

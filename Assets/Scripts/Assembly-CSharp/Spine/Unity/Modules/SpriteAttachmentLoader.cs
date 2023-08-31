@@ -56,7 +56,7 @@ namespace Spine.Unity.Modules
 			RegionAttachment regionAttachment = new RegionAttachment(name);
 			Texture2D texture = sprite.texture;
 			int instanceID = texture.GetInstanceID();
-			if (!atlasTable.TryGetValue(instanceID, out var value))
+			if (!atlasTable.TryGetValue(instanceID, out AtlasRegion value))
 			{
 				Material material = new Material(shader);
 				if (sprite.packed)

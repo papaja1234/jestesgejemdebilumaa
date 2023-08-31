@@ -103,7 +103,7 @@ public class PressureButton : WPFMonoBehaviour
 
 	private void OnGameStateChanged(GameStateChanged newState)
 	{
-		if ((newState.state == LevelManager.GameState.Running && lastTrackedState == LevelManager.GameState.Building) || ((newState.state == LevelManager.GameState.Building || newState.state == LevelManager.GameState.ShowingUnlockedParts) && (lastTrackedState == LevelManager.GameState.Running || lastTrackedState == LevelManager.GameState.PausedWhileRunning)))
+		if ((newState.state == LevelManager.GameState.Running && lastTrackedState == LevelManager.GameState.Building) || (newState.state is LevelManager.GameState.Building or LevelManager.GameState.ShowingUnlockedParts && lastTrackedState is LevelManager.GameState.Running or LevelManager.GameState.PausedWhileRunning))
 		{
 			Released();
 		}

@@ -667,7 +667,7 @@ public class Contraption : WPFMonoBehaviour
 			{
 				return true;
 			}
-			if ((part1.m_partType == BasePart.PartType.Wings || part1.m_partType == BasePart.PartType.MetalWing) && (part2.m_partType == BasePart.PartType.Wings || part2.m_partType == BasePart.PartType.MetalWing))
+			if (part1.m_partType is BasePart.PartType.Wings or BasePart.PartType.MetalWing && part2.m_partType is BasePart.PartType.Wings or BasePart.PartType.MetalWing)
 			{
 				if (INSettings.GetBool(INFeature.RotatableWing))
 				{
@@ -690,7 +690,7 @@ public class Contraption : WPFMonoBehaviour
 						goto RETURN_TRUE;
 					}
 				}
-				else if (direction == BasePart.Direction.Down || direction == BasePart.Direction.Up)
+				else if (direction is BasePart.Direction.Down or BasePart.Direction.Up)
 				{
 					return true;
 				}
@@ -857,11 +857,11 @@ public class Contraption : WPFMonoBehaviour
 				if (CanConnectTo(part3, basePart, BasePart.Direction.Right))
 				{
 					BasePart.JointConnectionDirection customJointConnectionDirection2 = basePart.GetCustomJointConnectionDirection();
-					if (customJointConnectionDirection == BasePart.JointConnectionDirection.Right || customJointConnectionDirection == BasePart.JointConnectionDirection.LeftAndRight)
+					if (customJointConnectionDirection is BasePart.JointConnectionDirection.Right or BasePart.JointConnectionDirection.LeftAndRight)
 					{
 						AddCustomConnectionBetweenParts(part3, basePart);
 					}
-					else if (customJointConnectionDirection2 == BasePart.JointConnectionDirection.Left || customJointConnectionDirection2 == BasePart.JointConnectionDirection.LeftAndRight)
+					else if (customJointConnectionDirection2 is BasePart.JointConnectionDirection.Left or BasePart.JointConnectionDirection.LeftAndRight)
 					{
 						AddCustomConnectionBetweenParts(basePart, part3);
 					}
@@ -873,11 +873,11 @@ public class Contraption : WPFMonoBehaviour
 				if (CanConnectTo(part3, basePart2, BasePart.Direction.Down))
 				{
 					BasePart.JointConnectionDirection customJointConnectionDirection3 = basePart2.GetCustomJointConnectionDirection();
-					if (customJointConnectionDirection == BasePart.JointConnectionDirection.Down || customJointConnectionDirection == BasePart.JointConnectionDirection.UpAndDown)
+					if (customJointConnectionDirection is BasePart.JointConnectionDirection.Down or BasePart.JointConnectionDirection.UpAndDown)
 					{
 						AddCustomConnectionBetweenParts(part3, basePart2);
 					}
-					else if (customJointConnectionDirection3 == BasePart.JointConnectionDirection.Up || customJointConnectionDirection3 == BasePart.JointConnectionDirection.UpAndDown)
+					else if (customJointConnectionDirection3 is BasePart.JointConnectionDirection.Up or BasePart.JointConnectionDirection.UpAndDown)
 					{
 						AddCustomConnectionBetweenParts(basePart2, part3);
 					}
@@ -893,11 +893,11 @@ public class Contraption : WPFMonoBehaviour
 					if (CanConnectTo(part3, basePart3, BasePart.Direction.Left))
 					{
 						BasePart.JointConnectionDirection customJointConnectionDirection4 = basePart3.GetCustomJointConnectionDirection();
-						if (customJointConnectionDirection == BasePart.JointConnectionDirection.Left || customJointConnectionDirection == BasePart.JointConnectionDirection.LeftAndRight)
+						if (customJointConnectionDirection is BasePart.JointConnectionDirection.Left or BasePart.JointConnectionDirection.LeftAndRight)
 						{
 							AddCustomConnectionBetweenParts(part3, basePart3);
 						}
-						else if (customJointConnectionDirection4 == BasePart.JointConnectionDirection.Right || customJointConnectionDirection4 == BasePart.JointConnectionDirection.LeftAndRight)
+						else if (customJointConnectionDirection4 is BasePart.JointConnectionDirection.Right or BasePart.JointConnectionDirection.LeftAndRight)
 						{
 							AddCustomConnectionBetweenParts(basePart3, part3);
 						}
@@ -909,11 +909,11 @@ public class Contraption : WPFMonoBehaviour
 					if (CanConnectTo(part3, basePart4, BasePart.Direction.Up))
 					{
 						BasePart.JointConnectionDirection customJointConnectionDirection5 = basePart4.GetCustomJointConnectionDirection();
-						if (customJointConnectionDirection == BasePart.JointConnectionDirection.Up || customJointConnectionDirection == BasePart.JointConnectionDirection.UpAndDown)
+						if (customJointConnectionDirection is BasePart.JointConnectionDirection.Up or BasePart.JointConnectionDirection.UpAndDown)
 						{
 							AddCustomConnectionBetweenParts(part3, basePart4);
 						}
-						else if (customJointConnectionDirection5 == BasePart.JointConnectionDirection.Down || customJointConnectionDirection5 == BasePart.JointConnectionDirection.UpAndDown)
+						else if (customJointConnectionDirection5 is BasePart.JointConnectionDirection.Down or BasePart.JointConnectionDirection.UpAndDown)
 						{
 							AddCustomConnectionBetweenParts(basePart4, part3);
 						}
@@ -981,7 +981,7 @@ public class Contraption : WPFMonoBehaviour
 				for (int k = -2; k <= 2; k += 4)
 				{
 					BasePart basePart7 = FindPartAt(coordX2 + k, coordY2 + j, part3);
-					if (basePart7 != null && (basePart7.m_partType == BasePart.PartType.Wings || basePart7.m_partType == BasePart.PartType.MetalWing) && basePart7.collider != null)
+					if (basePart7 != null && basePart7.m_partType is BasePart.PartType.Wings or BasePart.PartType.MetalWing && basePart7.collider != null)
 					{
 						Physics.IgnoreCollision(part3.collider, basePart7.collider);
 					}
@@ -997,7 +997,7 @@ public class Contraption : WPFMonoBehaviour
 					{
 						continue;
 					}
-					if (basePart8.m_partType == BasePart.PartType.WoodenFrame || basePart8.m_partType == BasePart.PartType.MetalFrame)
+					if (basePart8.m_partType is BasePart.PartType.WoodenFrame or BasePart.PartType.MetalFrame)
 					{
 						if (j == 0)
 						{
@@ -1214,7 +1214,7 @@ public class Contraption : WPFMonoBehaviour
 			ActivateAllPoweredParts();
 			return;
 		}
-		if (type == BasePart.PartType.Balloon || type == BasePart.PartType.Sandbag)
+		if (type is BasePart.PartType.Balloon or BasePart.PartType.Sandbag)
 		{
 			ActivateOnePartOfType(type);
 			return;
@@ -1829,7 +1829,7 @@ public class Contraption : WPFMonoBehaviour
 
 	public bool IsPartTypeAt(int x, int y, BasePart.PartType type, BasePart.GridRotation rotation)
 	{
-		if (m_runtimePartMap.TryGet(x, y, 0, out var part) && (bool)part && part.m_partType == type)
+		if (m_runtimePartMap.TryGet(x, y, 0, out BasePart part) && (bool)part && part.m_partType == type)
 		{
 			return part.m_gridRotation == rotation;
 		}
@@ -2187,7 +2187,7 @@ public class Contraption : WPFMonoBehaviour
 					result = j != 3;
 					if (part is Rope)
 					{
-						if (part.m_gridRotation == BasePart.GridRotation.Deg_0 || part.m_gridRotation == BasePart.GridRotation.Deg_270)
+						if (part.m_gridRotation is BasePart.GridRotation.Deg_0 or BasePart.GridRotation.Deg_270)
 						{
 							break;
 						}
@@ -2701,7 +2701,7 @@ public class Contraption : WPFMonoBehaviour
 
 	public BasePart FindPartAt(int x, int y, int level = 0)
 	{
-		m_runtimePartMap.TryGet(x, y, level, out var part);
+		m_runtimePartMap.TryGet(x, y, level, out BasePart part);
 		return part;
 	}
 
@@ -2750,7 +2750,7 @@ public class Contraption : WPFMonoBehaviour
 	public void OnButtonTriggered(UIPartTriggerButton button)
 	{
 		BasePart.PartType partType = button.Info.PartType;
-		if (partType == BasePart.PartType.EngineSmall || partType == BasePart.PartType.Engine || partType == BasePart.PartType.EngineBig)
+		if (partType is BasePart.PartType.EngineSmall or BasePart.PartType.Engine or BasePart.PartType.EngineBig)
 		{
 			ActivateAllPoweredParts(button.Info.ComponentIndex);
 		}

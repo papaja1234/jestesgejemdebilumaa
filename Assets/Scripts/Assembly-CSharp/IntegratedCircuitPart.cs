@@ -149,8 +149,8 @@ public class IntegratedCircuitPart : ElectricalPart
 		int num2 = num / 2;
 		bool flag = (m_flipped = num % 2 == 1);
 		m_gridRotation = (GridRotation)num2;
-		int num3 = ((flag && (num2 == 0 || num2 == 2)) ? 180 : 0);
-		int num4 = ((flag && (num2 == 1 || num2 == 3)) ? 180 : 0);
+		int num3 = ((flag && num2 is 0 or 2) ? 180 : 0);
+		int num4 = ((flag && num2 is 1 or 3) ? 180 : 0);
 		int num5 = 90 * num2;
 		base.transform.localRotation = Quaternion.Euler(num3, num4, num5);
 	}

@@ -172,7 +172,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_jointPreprocessing: 0
-  m_eightWay: 0
+  m_eightWay: 1
   m_coordX: 0
   m_coordY: 0
   m_mass: 1
@@ -209,6 +209,7 @@ MonoBehaviour:
   lateSpeed: {x: 0, y: 0, z: 0}
   m_hp: 3000
   m_maxHp: 3000
+  m_minDamage: 31.4
   activeSprite: {fileID: 1633241513102640}
   inactiveSprite: {fileID: 1498811109052415}
 --- !u!114 &114280068366452608

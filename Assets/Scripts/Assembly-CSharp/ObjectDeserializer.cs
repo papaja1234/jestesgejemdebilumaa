@@ -377,7 +377,7 @@ public class ObjectDeserializer
 		while (reader.GetIndentation() == depth)
 		{
 			PropertyData propertyData = reader.ReadProperty();
-			if (propertyData.type == "Generic" && (propertyData.name == "InitialModule" || propertyData.name == "EmissionModule" || propertyData.name == "ShapeModule"))
+			if (propertyData.type == "Generic" && propertyData.name is "InitialModule" or "EmissionModule" or "ShapeModule")
 			{
 				ReadParticleSystemModule(particleSystem, propertyData.name, depth + 1, reader);
 			}
@@ -692,7 +692,7 @@ public class ObjectDeserializer
 				while (reader.GetIndentation() == depth + 1)
 				{
 					propertyData = reader.ReadProperty();
-					if (propertyData.type == "Generic" || propertyData.type == "Keyframe")
+					if (propertyData.type is "Generic" or "Keyframe")
 					{
 						object value2 = array.GetValue(i);
 						ReadGeneric(value2, depth + 1, reader);

@@ -802,9 +802,9 @@ public class PartListing : Widget
 				}
 				if (IsKingsFavorite(data.parts[tier][index]))
 				{
-					AddKingsFavoriteTag(bg, out var _);
+					AddKingsFavoriteTag(bg, out GameObject _);
 				}
-				if (CustomizationManager.IsPartNew(data.parts[tier][index]) && AddNewContentTag(bg, out var item))
+				if (CustomizationManager.IsPartNew(data.parts[tier][index]) && AddNewContentTag(bg, out GameObject item))
 				{
 					newButtons.Add(item);
 				}
@@ -817,7 +817,7 @@ public class PartListing : Widget
 					{
 						if (IsKingsFavorite(data.parts[tier][index]))
 						{
-							AddKingsFavoriteTag(bg, out var _);
+							AddKingsFavoriteTag(bg, out GameObject _);
 						}
 						else
 						{
@@ -841,7 +841,7 @@ public class PartListing : Widget
 							data.UpdateSelectionIcon(gameData.GetCustomPart(data.PartType, lastUsedPartIndex).name);
 							if (CustomizationManager.IsPartNew(data.parts[tier][index]))
 							{
-								if (AddNewContentTag(bg, out var item2))
+								if (AddNewContentTag(bg, out GameObject item2))
 								{
 									newButtons.Add(item2);
 								}
@@ -910,7 +910,7 @@ public class PartListing : Widget
 					continue;
 				}
 				PartData data_ = data;
-				if (!AddNewContentTag(data.partInstances[tier][index], out var gameObject))
+				if (!AddNewContentTag(data.partInstances[tier][index], out GameObject gameObject))
 				{
 					continue;
 				}
@@ -965,7 +965,7 @@ public class PartListing : Widget
 					continue;
 				}
 				PartData data_ = data;
-				if (!AddNewContentTag(data.partInstances[tier][index], out var gameObject))
+				if (!AddNewContentTag(data.partInstances[tier][index], out GameObject gameObject))
 				{
 					continue;
 				}
@@ -1102,7 +1102,7 @@ public class PartListing : Widget
 	private Material GetDarkMaterial(Material mat)
 	{
 		string key = mat.name;
-		if (darkMaterials.TryGetValue(key, out var value))
+		if (darkMaterials.TryGetValue(key, out Material value))
 		{
 			return value;
 		}
@@ -1120,7 +1120,7 @@ public class PartListing : Widget
 	private Material GetNormalMaterial(Material mat)
 	{
 		string key = mat.name;
-		if (normalMaterials.TryGetValue(key, out var value))
+		if (normalMaterials.TryGetValue(key, out Material value))
 		{
 			return value;
 		}

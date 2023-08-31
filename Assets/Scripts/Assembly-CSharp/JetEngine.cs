@@ -299,7 +299,7 @@ public class JetEngine : BasePropulsion
 
 	private float GetDefenseFactor(BasePart part)
 	{
-		if (part.IsMetalBox() || part is JetEngine || part is FuelTube)
+		if (part.IsMetalBox() || part is JetEngine or FuelTube)
 		{
 			return 1f;
 		}

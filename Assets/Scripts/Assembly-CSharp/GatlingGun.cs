@@ -103,8 +103,7 @@ public class GatlingGun : BasePart
 		bool flag6 = base.contraption.CanConnectTo(this, BasePart.Rotate(Direction.DownLeft, m_gridRotation));
 		bool flag7 = base.contraption.CanConnectTo(this, BasePart.Rotate(Direction.UpRight, m_gridRotation));
 		bool flag8 = base.contraption.CanConnectTo(this, BasePart.Rotate(Direction.DownRight, m_gridRotation));
-		bool flag9 = m_gridRotation == GridRotation.Deg_135 || m_gridRotation == GridRotation.Deg_45 ||
-		             m_gridRotation == GridRotation.Deg_225 || m_gridRotation == GridRotation.Deg_315;
+		bool flag9 = m_gridRotation is GridRotation.Deg_135 or GridRotation.Deg_45 or GridRotation.Deg_225 or GridRotation.Deg_315;
 		m_leftAttachment.SetActive(flag3 && !flag9);
 		m_rightAttachment.SetActive(flag4 && !flag9);
 		m_topAttachment.SetActive(flag && !flag9);

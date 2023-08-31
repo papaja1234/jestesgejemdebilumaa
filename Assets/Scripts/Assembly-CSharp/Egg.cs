@@ -20,7 +20,7 @@ public class Egg : BasePart
 	{
 		base.Initialize();
 		int num = customPartIndex;
-		m_isSpecialEgg = num == 2 || num == 3 || num == 4;
+		m_isSpecialEgg = num is 2 or 3 or 4;
 	}
 
 	protected override void OnTouch()
@@ -158,7 +158,7 @@ public class Egg : BasePart
 		if (INSettings.GetBool(INFeature.SpecialEggs) && m_isSpecialEgg)
 		{
 			int num = customPartIndex;
-			if (num == 2 || num == 3 || num == 4)
+			if (num is 2 or 3 or 4)
 			{
 				base.contraption.ChangeOneShotPartAmount(m_partType, EffectDirection(), 1);
 				OnTouch();

@@ -137,9 +137,7 @@ public class CircuitSimulator
 					float num7 = value.InvR;
 					if (!num2)
 					{
-						int num8 = num4;
-						num4 = num5;
-						num5 = num8;
+						(num4, num5) = (num5, num4);
 						num6 = 0f - num6;
 						num7 = 0f - num7;
 					}
@@ -500,8 +498,8 @@ public class CircuitSimulator
 			{
 				if (electrodes[i].IsConnected && !node2.Visited[i])
 				{
-					ScanBranch(node2, i, out var end, out var branch);
-					if ((branch.Type == BranchType.Common || branch.Type == BranchType.Grounded) && branch.IsShortCircuit)
+					ScanBranch(node2, i, out Node end, out Branch branch);
+					if (branch.Type is BranchType.Common or BranchType.Grounded && branch.IsShortCircuit)
 					{
 						branch.AdditionalVariableIndex = num2;
 						num2++;
@@ -537,8 +535,8 @@ public class CircuitSimulator
 		}
 		Node start = new Node(electricalElement, -1);
 		int anotherConnectedElectrode = electricalElement.GetAnotherConnectedElectrode(-1);
-		ScanBranch(start, anotherConnectedElectrode, out var _, out var branch);
-		bool flag = electricalElement is Ground || electricalElement is Vcc;
+		ScanBranch(start, anotherConnectedElectrode, out Node _, out Branch branch);
+		bool flag = electricalElement is Ground or Vcc;
 		bool flag2 = branch.Type == BranchType.Grounded;
 		start.IsGrounded = flag || flag2;
 		if (!flag && flag2)
@@ -575,7 +573,7 @@ public class CircuitSimulator
 			int connectedElectrodeCount = electricalElement.GetConnectedElectrodeCount();
 			if (connectedElectrodeCount == 0 || (connectedElectrodeCount == 1 && electricalElement2 != null))
 			{
-				if (electricalElement is Ground || electricalElement is Vcc)
+				if (electricalElement is Ground or Vcc)
 				{
 					branch.Type = BranchType.Grounded;
 				}

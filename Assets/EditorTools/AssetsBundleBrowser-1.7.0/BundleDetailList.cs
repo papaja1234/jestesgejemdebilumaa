@@ -73,7 +73,7 @@ namespace AssetBundleBrowser
             {
                 Color old = GUI.color;
                 if (args.item.depth == 1 &&
-                    (args.item.displayName == k_MessageEmpty || args.item.displayName == k_DependencyEmpty))
+                    args.item.displayName is k_MessageEmpty or k_DependencyEmpty)
                     GUI.color = AssetBundleModel.Model.k_LightGrey;
                 base.RowGUI(args);
                 GUI.color = old;

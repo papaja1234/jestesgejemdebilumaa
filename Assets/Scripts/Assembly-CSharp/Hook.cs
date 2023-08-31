@@ -33,7 +33,7 @@ public class Hook : MonoBehaviour
 	private void FixedUpdate()
 	{
 		float num = m_rigidbody.velocity.magnitude * Time.fixedDeltaTime;
-		if (num > 0.1f && Physics.Raycast(new Ray(base.transform.position, base.transform.right), out var hitInfo, num, ~((LayerMask)(1 << LayerMask.NameToLayer("Light"))).value) && (hitInfo.collider.tag == "Dynamic" || hitInfo.collider.tag == "Contraption"))
+		if (num > 0.1f && Physics.Raycast(new Ray(base.transform.position, base.transform.right), out RaycastHit hitInfo, num, ~((LayerMask)(1 << LayerMask.NameToLayer("Light"))).value) && hitInfo.collider.tag is "Dynamic" or "Contraption")
 		{
 			base.transform.parent = null;
 			attachType = AttachType.Dynamic;
@@ -81,7 +81,7 @@ public class Hook : MonoBehaviour
 
 	public void OnCollisionEnter(Collision coll)
 	{
-		if (coll.collider.tag == "Collectable" || coll.collider.tag == "DynamicCollectable")
+		if (coll.collider.tag is "Collectable" or "DynamicCollectable")
 		{
 			return;
 		}

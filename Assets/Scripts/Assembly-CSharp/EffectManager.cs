@@ -126,7 +126,7 @@ public class EffectManager : MonoBehaviour
 
 	private ParticleManager GetParticleManager(ParticleSystem prefab)
 	{
-		if (m_particles.TryGetValue(prefab, out var value))
+		if (m_particles.TryGetValue(prefab, out ParticleManager value))
 		{
 			return value;
 		}

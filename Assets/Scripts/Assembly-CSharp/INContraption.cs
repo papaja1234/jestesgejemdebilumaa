@@ -411,7 +411,7 @@ public class INContraption : MonoBehaviour
 		float fixedTime = Time.fixedTime;
 		float fixedDeltaTime = Time.fixedDeltaTime;
 		Component[] components2;
-		if (components.TryGetValue(typeof(T), out var value))
+		if (components.TryGetValue(typeof(T), out ContraptionExtensionData.ComponentsData value))
 		{
 			if (value.Time < fixedTime)
 			{
@@ -432,7 +432,7 @@ public class INContraption : MonoBehaviour
 
 	public static INPhysicMaterial GetMaterial(Rigidbody rigidbody)
 	{
-		if (Instance.m_materials.TryGetValue(rigidbody, out var value))
+		if (Instance.m_materials.TryGetValue(rigidbody, out INPhysicMaterial value))
 		{
 			return value;
 		}
@@ -447,7 +447,7 @@ public class INContraption : MonoBehaviour
 
 	public static INBounds GetBounds(Rigidbody rigidbody)
 	{
-		if (Instance.m_bounds.TryGetValue(rigidbody, out var value))
+		if (Instance.m_bounds.TryGetValue(rigidbody, out INBounds value))
 		{
 			return value;
 		}

@@ -677,7 +677,7 @@ namespace AssetBundleBrowser.AssetBundleModel
             if (!name.StartsWith("Assets/"))
                 return false;
             string ext = System.IO.Path.GetExtension(name);
-            if (ext == ".dll" || ext == ".cs" || ext == ".meta" || ext == ".js" || ext == ".boo")
+            if (ext is ".dll" or ".cs" or ".meta" or ".js" or ".boo")
                 return false;
 
             return true;

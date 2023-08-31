@@ -219,7 +219,7 @@ namespace Pathfinding.Serialization.JsonFx
 			{
 				if (object.Equals(targetType, typeof(DateTime)))
 				{
-					if (DateTime.TryParse((string)value, DateTimeFormatInfo.InvariantInfo, DateTimeStyles.AllowWhiteSpaces | DateTimeStyles.NoCurrentDateDefault | DateTimeStyles.RoundtripKind, out var result))
+					if (DateTime.TryParse((string)value, DateTimeFormatInfo.InvariantInfo, DateTimeStyles.AllowWhiteSpaces | DateTimeStyles.NoCurrentDateDefault | DateTimeStyles.RoundtripKind, out DateTime result))
 					{
 						return result;
 					}
@@ -239,7 +239,7 @@ namespace Pathfinding.Serialization.JsonFx
 					}
 					else if (object.Equals(targetType, typeof(Uri)))
 					{
-						if (Uri.TryCreate((string)value, UriKind.RelativeOrAbsolute, out var result2))
+						if (Uri.TryCreate((string)value, UriKind.RelativeOrAbsolute, out Uri result2))
 						{
 							return result2;
 						}

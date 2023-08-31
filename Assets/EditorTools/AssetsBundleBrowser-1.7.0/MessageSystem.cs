@@ -58,7 +58,7 @@ namespace AssetBundleBrowser
 
             internal void SetFlag(MessageFlag flag, bool on)
             {
-                if (flag == MessageFlag.Info || flag == MessageFlag.Warning || flag == MessageFlag.Error)
+                if (flag is MessageFlag.Info or MessageFlag.Warning or MessageFlag.Error)
                     return;
 
                 if (on)

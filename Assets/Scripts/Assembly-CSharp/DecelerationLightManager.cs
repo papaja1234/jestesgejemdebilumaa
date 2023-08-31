@@ -93,7 +93,7 @@ public class DecelerationLightManager : PartManager
 			}
 		}
 		Vector2[] array6 = new Vector2[num];
-		foreach (var item2 in list)
+		foreach ((int, int, float) item2 in list)
 		{
 			Vector2 vector3 = ComputeForce(array4[item2.Item1], array4[item2.Item2], item2.Item3);
 			array6[item2.Item1] += vector3 / array5[item2.Item1];

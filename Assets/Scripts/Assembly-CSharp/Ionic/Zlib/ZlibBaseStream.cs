@@ -187,7 +187,7 @@ namespace Ionic.Zlib
 					_z.NextOut = 0;
 					_z.AvailableBytesOut = _workingBuffer.Length;
 					int num = ((!_wantCompress) ? _z.Inflate(FlushType.Finish) : _z.Deflate(FlushType.Finish));
-					if (num == 1 || num == 0)
+					if (num is 1 or 0)
 					{
 						if (_workingBuffer.Length - _z.AvailableBytesOut > 0)
 						{

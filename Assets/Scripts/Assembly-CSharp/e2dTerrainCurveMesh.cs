@@ -104,7 +104,7 @@ public class e2dTerrainCurveMesh : e2dTerrainMesh
 		{
 			for (int k = j + 2; k < list.Count - 1; k++)
 			{
-				if (e2dUtils.SegmentsIntersect(list[j], list[j + 1], list[k], list[k + 1], out var intersection))
+				if (e2dUtils.SegmentsIntersect(list[j], list[j + 1], list[k], list[k + 1], out Vector2 intersection))
 				{
 					for (int l = j + 1; l <= k; l++)
 					{
@@ -127,7 +127,7 @@ public class e2dTerrainCurveMesh : e2dTerrainMesh
 			Vector2 vector = base.TerrainCurve[1].position - base.TerrainCurve[0].position;
 			Vector2 vector2 = GetNodeStripeSize(0) * new Vector2(vector.y, 0f - vector.x).normalized;
 			Vector2 b = point - base.TerrainCurve[0].position;
-			if (!e2dUtils.HalfLineAndLineIntersect(Vector2.zero, b, vector2, vector2 + vector, out var result))
+			if (!e2dUtils.HalfLineAndLineIntersect(Vector2.zero, b, vector2, vector2 + vector, out Vector2 result))
 			{
 				result = Vector2.zero;
 			}
@@ -147,7 +147,7 @@ public class e2dTerrainCurveMesh : e2dTerrainMesh
 			Vector2 vector = base.TerrainCurve[base.TerrainCurve.Count - 1].position - base.TerrainCurve[base.TerrainCurve.Count - 2].position;
 			Vector2 vector2 = GetNodeStripeSize(base.TerrainCurve.Count - 1) * new Vector2(vector.y, 0f - vector.x).normalized;
 			Vector2 b = point - base.TerrainCurve[base.TerrainCurve.Count - 1].position;
-			if (!e2dUtils.HalfLineAndLineIntersect(Vector2.zero, b, vector2, vector2 + vector, out var result))
+			if (!e2dUtils.HalfLineAndLineIntersect(Vector2.zero, b, vector2, vector2 + vector, out Vector2 result))
 			{
 				result = Vector2.zero;
 			}

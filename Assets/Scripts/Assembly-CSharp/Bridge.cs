@@ -258,7 +258,7 @@ public class Bridge : ExportAction
 		{
 			LoadStepStates();
 		}
-		if ((newState.state == LevelManager.GameState.Building || newState.state == LevelManager.GameState.ShowingUnlockedParts) && (newState.prevState == LevelManager.GameState.Running || newState.prevState == LevelManager.GameState.PausedWhileRunning) && !isBroken)
+		if (newState.state is LevelManager.GameState.Building or LevelManager.GameState.ShowingUnlockedParts && newState.prevState is LevelManager.GameState.Running or LevelManager.GameState.PausedWhileRunning && !isBroken)
 		{
 			LoadStepStates();
 		}
@@ -326,7 +326,7 @@ public class Bridge : ExportAction
 
 	private void OnBridgeBroken(object sender)
 	{
-		if (WPFMonoBehaviour.levelManager.gameState == LevelManager.GameState.Running || WPFMonoBehaviour.levelManager.gameState == LevelManager.GameState.PreviewWhileRunning)
+		if (WPFMonoBehaviour.levelManager.gameState is LevelManager.GameState.Running or LevelManager.GameState.PreviewWhileRunning)
 		{
 			Singleton<AudioManager>.Instance.SpawnOneShotEffect(Singleton<GameManager>.Instance.gameData.commonAudioCollection.bridgeBreak, base.transform.position);
 		}

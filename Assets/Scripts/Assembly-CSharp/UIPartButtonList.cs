@@ -230,7 +230,7 @@ public class UIPartButtonList : MonoBehaviour
 		}
 		if (INSettings.GetBool(INFeature.SpecialUmbrellas))
 		{
-			FindSpriteInfo(BasePart.PartType.Umbrella, out var buttonInfo, out var spriteInfo2);
+			FindSpriteInfo(BasePart.PartType.Umbrella, out UIPartButtonInfo buttonInfo, out ButtonSpriteInfo spriteInfo2);
 			buttonInfo.ButtonType = UIPartButtonType.Slider;
 			buttonInfo.ButtonIndex = 1;
 			spriteInfo2.Scale *= 0.8f;
@@ -278,7 +278,7 @@ public class UIPartButtonList : MonoBehaviour
 		}
 		if (INSettings.GetBool(INFeature.RotatableTNT))
 		{
-			FindSpriteInfo(BasePart.PartType.TNT, out var buttonInfo2, out var spriteInfo9);
+			FindSpriteInfo(BasePart.PartType.TNT, out UIPartButtonInfo buttonInfo2, out ButtonSpriteInfo spriteInfo9);
 			for (int l = 1; l < 4; l++)
 			{
 				buttonInfo2.PartIndex = l;
@@ -288,7 +288,7 @@ public class UIPartButtonList : MonoBehaviour
 		}
 		if (INSettings.GetBool(INFeature.RotatableGearbox))
 		{
-			FindSpriteInfo(BasePart.PartType.Gearbox, out var buttonInfo3, out var spriteInfo10);
+			FindSpriteInfo(BasePart.PartType.Gearbox, out UIPartButtonInfo buttonInfo3, out ButtonSpriteInfo spriteInfo10);
 			for (int m = 1; m < 4; m++)
 			{
 				buttonInfo3.PartIndex = m;
@@ -298,7 +298,7 @@ public class UIPartButtonList : MonoBehaviour
 		}
 		if (INSettings.GetBool(INFeature.SeparatedPointLightButtons))
 		{
-			FindSpriteInfo(BasePart.PartType.PointLight, out var buttonInfo4, out var spriteInfo11);
+			FindSpriteInfo(BasePart.PartType.PointLight, out UIPartButtonInfo buttonInfo4, out ButtonSpriteInfo spriteInfo11);
 			for (int n = 1; n < 4; n++)
 			{
 				buttonInfo4.PartIndex = n;
@@ -311,7 +311,7 @@ public class UIPartButtonList : MonoBehaviour
 		}
 		if (INSettings.GetBool(INFeature.SeparatedSpotLightButtons))
 		{
-			FindSpriteInfo(BasePart.PartType.SpotLight, out var buttonInfo5, out var spriteInfo12);
+			FindSpriteInfo(BasePart.PartType.SpotLight, out UIPartButtonInfo buttonInfo5, out ButtonSpriteInfo spriteInfo12);
 			spriteInfo12.Rotation = Quaternion.AngleAxis(-35f, Vector3.forward);
 			m_spriteInfoMap[buttonInfo5] = spriteInfo12;
 			for (int num = 1; num < 8; num++)
@@ -519,7 +519,7 @@ public class UIPartButtonList : MonoBehaviour
 					m_buttonInfoMap.Add(current2, value);
 					list.Add(null);
 				}
-				m_buttonStateMap.TryGetValue((part, current2.ButtonIndex), out var value2);
+				m_buttonStateMap.TryGetValue((part, current2.ButtonIndex), out ButtonState value2);
 				if (list[value] == null && value2.Button != null && !array2[value2.Index])
 				{
 					list[value] = value2.Button;
@@ -599,7 +599,7 @@ public class UIPartButtonList : MonoBehaviour
 	{
 		buttonInfo.ComponentRank = -1;
 		buttonInfo.PartType = GetBasePartType(buttonInfo.PartType);
-		if (FindSpriteInfo(buttonInfo, out var spriteInfo))
+		if (FindSpriteInfo(buttonInfo, out ButtonSpriteInfo spriteInfo))
 		{
 			button.SetSprite(enabled: true, spriteInfo.Texture, spriteInfo.UVRect, spriteInfo.Scale / 0.7f, spriteInfo.Rotation);
 		}
@@ -766,7 +766,7 @@ public class UIPartButtonList : MonoBehaviour
 	private static BasePart.PartType GetBasePartType(BasePart.PartType partType)
 	{
 		partType = BasePart.BaseType(partType);
-		if (partType == BasePart.PartType.EngineSmall || partType == BasePart.PartType.EngineBig)
+		if (partType is BasePart.PartType.EngineSmall or BasePart.PartType.EngineBig)
 		{
 			partType = BasePart.PartType.Engine;
 		}

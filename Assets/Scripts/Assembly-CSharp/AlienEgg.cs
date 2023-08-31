@@ -48,7 +48,7 @@ public class AlienEgg : Egg
 		Singleton<AudioManager>.Instance.Play2dEffect(WPFMonoBehaviour.gameData.commonAudioCollection.SuperGlueApplied);
 		foreach (BasePart part in base.contraption.Parts)
 		{
-			if ((part.m_partType == PartType.WoodenFrame || part.m_partType == PartType.MetalFrame) && part.ConnectedComponent == base.ConnectedComponent)
+			if (part.m_partType is PartType.WoodenFrame or PartType.MetalFrame && part.ConnectedComponent == base.ConnectedComponent)
 			{
 				m_parts.Add(part);
 			}

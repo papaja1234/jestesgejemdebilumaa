@@ -185,7 +185,7 @@ public class GuiManager : Singleton<GuiManager>
 		Widget widget = null;
 		Camera camera = FindCamera();
 		guiLayerMask = 1 << camera.gameObject.layer;
-		if (Physics.Raycast(camera.ScreenPointToRay(screenPosition), out var hitInfo, 100f, guiLayerMask))
+		if (Physics.Raycast(camera.ScreenPointToRay(screenPosition), out RaycastHit hitInfo, 100f, guiLayerMask))
 		{
 			widget = hitInfo.collider.gameObject.GetComponent<Widget>();
 		}
@@ -224,7 +224,7 @@ public class GuiManager : Singleton<GuiManager>
 			{
 				Touch touch = Input.touches[num];
 				m_touchIds[i] = touch.fingerId;
-				bool flag = touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled;
+				bool flag = touch.phase is TouchPhase.Ended or TouchPhase.Canceled;
 				FocusData focusData = GetFocusData(touch.fingerId);
 				if (i == 0)
 				{

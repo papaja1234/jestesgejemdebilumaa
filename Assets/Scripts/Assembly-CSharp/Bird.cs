@@ -355,7 +355,7 @@ public class Bird : WPFMonoBehaviour
 		if ((bool)m_slingshot && m_slingshot.IsFree())
 		{
 			int layerMask = 1 << LayerMask.NameToLayer("Ground");
-			if (!Physics.Raycast(m_slingshotRestPosition, vector.normalized, out var _, vector.magnitude, layerMask))
+			if (!Physics.Raycast(m_slingshotRestPosition, vector.normalized, out RaycastHit _, vector.magnitude, layerMask))
 			{
 				m_timer += Time.deltaTime;
 			}

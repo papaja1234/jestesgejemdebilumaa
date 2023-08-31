@@ -273,7 +273,7 @@ public class Rope : BasePart
 			}
 			GameObject gameObject = Object.Instantiate(m_segment, position, rotation);
 			Rigidbody component = gameObject.GetComponent<Rigidbody>();
-			if (INSettings.GetBool(INFeature.CollidableRope) && (m_partTier == PartTier.Rare || m_partTier == PartTier.Epic))
+			if (INSettings.GetBool(INFeature.CollidableRope) && m_partTier is PartTier.Rare or PartTier.Epic)
 			{
 				gameObject.layer = LayerMask.NameToLayer("Contraption");
 			}

@@ -21,6 +21,7 @@ public class ScriptEngine : MonoBehaviour
     
     static ScriptEngine()
     {
+        
         //add all currently referenced assemblies so mods have access to them
         Assembly[] referencedAssemblies = AppDomain.CurrentDomain.GetAssemblies();
 

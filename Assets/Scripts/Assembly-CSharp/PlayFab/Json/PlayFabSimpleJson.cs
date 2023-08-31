@@ -380,7 +380,7 @@ namespace PlayFab.Json
 					if (55296 <= result && result <= 56319)
 					{
 						index += 4;
-						if (json.Length - index < 6 || !(json.Substring(index, 2) == "\\u") || !uint.TryParse(json.Substring(index + 2, 4), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out var result2) || 56320 > result2 || result2 > 57343)
+						if (json.Length - index < 6 || !(json.Substring(index, 2) == "\\u") || !uint.TryParse(json.Substring(index + 2, 4), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out var result2) || result2 is < 56320 or > 57343)
 						{
 							success = false;
 							return string.Empty;
@@ -412,7 +412,7 @@ namespace PlayFab.Json
 
 		private static string ConvertFromUtf32(int utf32)
 		{
-			if (utf32 < 0 || utf32 > 1114111)
+			if (utf32 is < 0 or > 1114111)
 			{
 				throw new ArgumentOutOfRangeException("utf32", "The argument must be from 0 to 0x10FFFF.");
 			}

@@ -64,9 +64,7 @@ public class PreviewMenu : WPFMonoBehaviour
 			bool flag = GameProgress.IsChallengeCompleted(Singleton<GameManager>.Instance.CurrentSceneName, m_challenges[1].ChallengeNumber);
 			if (!num && flag)
 			{
-				Challenge value = m_challenges[0];
-				m_challenges[0] = m_challenges[1];
-				m_challenges[1] = value;
+				(m_challenges[0], m_challenges[1]) = (m_challenges[1], m_challenges[0]);
 			}
 		}
 		if (m_challenges == null || m_challenges.Count == 0)

@@ -126,7 +126,7 @@ public class LootCrateSlot : WPFMonoBehaviour
 		timeTf.gameObject.SetActive(state != State.Unlocked);
 		lockIcon.enabled = state == State.Inactive;
 		clockIcon.enabled = state == State.Locked;
-		bool flag = state == State.Unlocked || state == State.Inactive;
+		bool flag = state is State.Unlocked or State.Inactive;
 		crateHolder.transform.localScale = Vector3.one * ((!flag) ? 1f : 1.2f);
 		crateHolder.transform.localPosition = Vector3.up * ((!flag) ? 0.1f : 0f);
 		if (crateType != LootCrateType.None && crateHolder.childCount == 0 && state != 0)

@@ -902,7 +902,7 @@ public class GameManager : Singleton<GameManager>
 
 	public bool HasMidCutsceneEnabled()
 	{
-		if (CurrentEpisodeIndex == 4 || CurrentEpisodeIndex == 5)
+		if (CurrentEpisodeIndex is 4 or 5)
 		{
 			return CurrentLevel == 13;
 		}

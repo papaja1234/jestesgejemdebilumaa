@@ -59,7 +59,7 @@ public class DailyChallengeProgram
 		{
 			return true;
 		}
-		if (DecodeJson(rawData, out var data))
+		if (DecodeJson(rawData, out Hashtable data))
 		{
 			specialDays = new Dictionary<DateTime, LootCrateType[]>();
 			foreach (object key2 in data.Keys)
@@ -80,7 +80,7 @@ public class DailyChallengeProgram
 
 	private bool LoadDefaultProgram(string rawData)
 	{
-		if (DecodeJson(rawData, out var data))
+		if (DecodeJson(rawData, out Hashtable data))
 		{
 			defaultProgram = new Dictionary<DayOfWeek, LootCrateType[]>();
 			foreach (object key2 in data.Keys)

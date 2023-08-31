@@ -129,8 +129,8 @@ public class Glue : MonoBehaviour
 
 	private static void CheckSideAndAppendGlue(BasePart partWithGlue, BasePart anotherPart, Direction dir, Type type)
 	{
-		bool flag = dir == Direction.Up || dir == Direction.Down;
-		bool flag2 = dir == Direction.Left || dir == Direction.Right;
+		bool flag = dir is Direction.Up or Direction.Down;
+		bool flag2 = dir is Direction.Left or Direction.Right;
 		Glue component = partWithGlue.GetComponent<Glue>();
 		if (anotherPart != null)
 		{

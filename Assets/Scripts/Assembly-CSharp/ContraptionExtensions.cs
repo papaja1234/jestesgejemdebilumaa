@@ -39,7 +39,7 @@ public static class ContraptionExtensions
 
 	public static List<Joint> FindPartFixedJointsFast(this Contraption contraption, BasePart part)
 	{
-		return FindPartJointsInternal(part, (Joint joint) => joint is FixedJoint || joint is HingeJoint);
+		return FindPartJointsInternal(part, (Joint joint) => joint is FixedJoint or HingeJoint);
 	}
 
 	public static bool IsGearBoxEnabled(this Contraption contraption, int connectedComponent)
@@ -91,7 +91,7 @@ public static class ContraptionExtensions
 			{
 				continue;
 			}
-			foreach (var item2 in value)
+			foreach ((BasePart, Joint) item2 in value)
 			{
 				Joint item = item2.Item2;
 				if (item != null && match(item))

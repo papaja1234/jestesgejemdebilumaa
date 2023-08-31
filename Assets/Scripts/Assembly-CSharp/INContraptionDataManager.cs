@@ -204,7 +204,7 @@ public class INContraptionDataManager
 		{
 		case ContraptionDataSettings.SerializationFormat.ALL:
 		{
-			if (TryLoadCSVFile(path, out var result))
+			if (TryLoadCSVFile(path, out ContraptionData result))
 			{
 				return result;
 			}

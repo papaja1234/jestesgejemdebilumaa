@@ -122,7 +122,7 @@ public class Bundle : MonoBehaviour
 
 	public static void UnloadAssetBundle(string bundleId, bool unloadAllLoadedObjects)
 	{
-		if (bundleObjects != null && bundleObjects.TryGetValue(bundleId, out var value) && value.IsAssetBundleInMemory)
+		if (bundleObjects != null && bundleObjects.TryGetValue(bundleId, out BundleObject value) && value.IsAssetBundleInMemory)
 		{
 			value.UnloadBundle(unloadAllLoadedObjects);
 		}

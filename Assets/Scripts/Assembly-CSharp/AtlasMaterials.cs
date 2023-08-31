@@ -169,7 +169,7 @@ public class AtlasMaterials : MonoBehaviour
 			cachedMaterialInstances = new Dictionary<string, Material>();
 		}
 		string materialKey = GetMaterialKey(source, materialType);
-		if (cachedMaterialInstances.TryGetValue(materialKey, out var value))
+		if (cachedMaterialInstances.TryGetValue(materialKey, out Material value))
 		{
 			return value;
 		}

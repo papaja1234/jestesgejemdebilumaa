@@ -168,7 +168,7 @@ public class MainMenu : MonoBehaviour
 		GameObject gameObject = GameObject.Find("StartButton");
 		Vector3 position = gameObject.transform.position;
 		Vector3 position2 = Singleton<GuiManager>.Instance.FindCamera().transform.position;
-		if (Physics.Raycast(position2, (position - position2) * 1.1f, out var hitInfo))
+		if (Physics.Raycast(position2, (position - position2) * 1.1f, out RaycastHit hitInfo))
 		{
 			return hitInfo.collider.gameObject == gameObject;
 		}

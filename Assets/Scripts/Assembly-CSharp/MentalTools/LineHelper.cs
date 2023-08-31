@@ -42,12 +42,12 @@ namespace MentalTools
 			float num6 = x3 - x1;
 			float num7 = y3 - y1;
 			float num8 = (num6 * num4 - num7 * num3) / num5;
-			if (num8 < 0f || num8 > 1f)
+			if (num8 is < 0f or > 1f)
 			{
 				return 0;
 			}
 			float num9 = (num6 * num2 - num7 * num) / num5;
-			if (num9 < 0f || num9 > 1f)
+			if (num9 is < 0f or > 1f)
 			{
 				return 0;
 			}
@@ -79,12 +79,12 @@ namespace MentalTools
 			float num6 = x3 - x1;
 			float num7 = y3 - y1;
 			float num8 = (num6 * num4 - num7 * num3) / num5;
-			if (num8 < 0f || num8 > 1f)
+			if (num8 is < 0f or > 1f)
 			{
 				return 0;
 			}
 			float num9 = (num6 * num2 - num7 * num) / num5;
-			if (num9 < 0f || num9 > 1f)
+			if (num9 is < 0f or > 1f)
 			{
 				return 0;
 			}

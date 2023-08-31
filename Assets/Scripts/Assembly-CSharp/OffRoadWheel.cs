@@ -305,7 +305,7 @@ public class OffRoadWheel : BasePart
 		bool flag = true;
 		foreach (Vector3 item in m_lastContactDirection)
 		{
-			if (!Physics.Raycast(m_wheelPivot.transform.position, item, out var hitInfo, m_radius + 0.1f) || !(hitInfo.collider != m_supportCollider))
+			if (!Physics.Raycast(m_wheelPivot.transform.position, item, out RaycastHit hitInfo, m_radius + 0.1f) || !(hitInfo.collider != m_supportCollider))
 			{
 				continue;
 			}

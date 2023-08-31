@@ -60,7 +60,7 @@ public class HingePlate : BasePart
 		get
 		{
 			int rotation = GetRotation();
-			if (rotation == 0 || rotation == 1)
+			if (rotation is 0 or 1)
 			{
 				return Directions[rotation * 2];
 			}
@@ -212,7 +212,7 @@ public class HingePlate : BasePart
 	{
 		int num = (int)(m_gridRotation = (GridRotation)(rotation % 6));
 		float z = LeftPlate.transform.localPosition.z;
-		if (num == 0 || num == 1)
+		if (num is 0 or 1)
 		{
 			LeftPlate.transform.localPosition = new Vector3(-0.25f, 0f, z);
 			RightPlate.transform.localPosition = new Vector3(0.25f, 0f, z);
@@ -270,7 +270,7 @@ public class HingePlate : BasePart
 		{
 			(int, int) direction = Direction;
 			PartType partType = part.m_partType;
-			if (m_type == HingePlateType.Common && (partType == PartType.WoodenFrame || partType == PartType.MetalFrame || partType == PartType.Kicker) && x == -direction.Item1)
+			if (m_type == HingePlateType.Common && partType is PartType.WoodenFrame or PartType.MetalFrame or PartType.Kicker && x == -direction.Item1)
 			{
 				return y == -direction.Item2;
 			}
@@ -323,7 +323,7 @@ public class HingePlate : BasePart
 		if ((object)hingePlate == null)
 		{
 			(int, int) direction = Direction;
-			if (m_type == HingePlateType.Common && (part is Frame || part is Kicker) && x == direction.Item1)
+			if (m_type == HingePlateType.Common && part is Frame or Kicker && x == direction.Item1)
 			{
 				return y == direction.Item2;
 			}

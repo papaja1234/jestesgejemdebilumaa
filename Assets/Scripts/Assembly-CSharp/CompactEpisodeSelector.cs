@@ -263,7 +263,7 @@ public class CompactEpisodeSelector : MonoBehaviour
 			m_initialInputPos = pointer.position;
 			m_lastInputPos = pointer.position;
 			m_interacting = true;
-			if (Physics.Raycast(m_hudCamera.ScreenPointToRay(pointer.position), out var hitInfo))
+			if (Physics.Raycast(m_hudCamera.ScreenPointToRay(pointer.position), out RaycastHit hitInfo))
 			{
 				if (hitInfo.collider.transform.name.Equals("SliderToggle"))
 				{

@@ -541,7 +541,7 @@ public class LootWheel : WPFMonoBehaviour
 
 	private void GiveReward(WheelSlot slot)
 	{
-		if (!slot.GetReward(out var reward))
+		if (!slot.GetReward(out LootWheelRewards.LootWheelReward reward))
 		{
 			return;
 		}

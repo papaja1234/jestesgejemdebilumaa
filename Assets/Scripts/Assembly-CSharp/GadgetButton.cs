@@ -83,7 +83,7 @@ public class GadgetButton : Button
 	protected override void OnActivate()
 	{
 		base.OnActivate();
-		if ((m_partType == BasePart.PartType.RedRocket || m_partType == BasePart.PartType.Rocket) && Singleton<SocialGameManager>.IsInstantiated())
+		if (m_partType is BasePart.PartType.RedRocket or BasePart.PartType.Rocket && Singleton<SocialGameManager>.IsInstantiated())
 		{
 			Singleton<SocialGameManager>.Instance.TryReportAchievementProgress("grp.CRASH_COURSE", 100.0, (int limit) => levelManager.ContraptionProto.GetPartCount(m_partType) >= limit);
 		}

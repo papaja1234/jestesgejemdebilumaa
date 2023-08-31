@@ -420,7 +420,7 @@ public class DessertSelector : MonoBehaviour, WidgetListener
 						break;
 					}
 					}
-					if (feedingPrize2.type == FeedingPrize.PrizeType.SnoutCoins || feedingPrize2.type == FeedingPrize.PrizeType.Scrap)
+					if (feedingPrize2.type is FeedingPrize.PrizeType.SnoutCoins or FeedingPrize.PrizeType.Scrap)
 					{
 						DelayAction(delegate
 						{
@@ -489,7 +489,7 @@ public class DessertSelector : MonoBehaviour, WidgetListener
 		DelayAction(delegate
 		{
 			scaleAnimTime = 0f;
-			if (prizeType == FeedingPrize.PrizeType.Junk || prizeType == FeedingPrize.PrizeType.None)
+			if (prizeType is FeedingPrize.PrizeType.Junk or FeedingPrize.PrizeType.None)
 			{
 				GameObject obj = GameObject.FindGameObjectWithTag("KingPigMouth");
 				int num = UnityEngine.Random.Range(0, m_JunkPrizes.Length);

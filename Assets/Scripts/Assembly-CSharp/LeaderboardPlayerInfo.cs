@@ -118,7 +118,7 @@ public class LeaderboardPlayerInfo : MonoBehaviour
 		{
 			if (rankBackgrounds[i] != null)
 			{
-				rankBackgrounds[i].enabled = i + 1 == rank || (i == 3 && (rank > 3 || rank == 0));
+				rankBackgrounds[i].enabled = i + 1 == rank || (i == 3 && rank is > 3 or 0);
 			}
 		}
 		if (isLocalPlayer)

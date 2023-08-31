@@ -247,7 +247,7 @@ public class StickyWheel : BasePart
 			m_thrust = 0f;
 		}
 		m_lastPosition = m_wheelPivot.transform.position;
-		hasHit = Physics.Raycast(m_lastPosition, m_lastContactDirection, out var hitInfo, m_radius + 0.1f, ~m_nonCollideLayerMask);
+		hasHit = Physics.Raycast(m_lastPosition, m_lastContactDirection, out RaycastHit hitInfo, m_radius + 0.1f, ~m_nonCollideLayerMask);
 		if (hasHit && hitInfo.collider != m_supportCollider && CanCollide(hitInfo.collider.gameObject.layer))
 		{
 			int layer = hitInfo.collider.gameObject.layer;

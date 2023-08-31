@@ -243,7 +243,7 @@ public class IngameCamera : WPFMonoBehaviour
 			}
 			DoPanning();
 		}
-		if (WPFMonoBehaviour.levelManager.gameState == LevelManager.GameState.PreviewWhileBuilding || WPFMonoBehaviour.levelManager.gameState == LevelManager.GameState.PreviewWhileRunning)
+		if (WPFMonoBehaviour.levelManager.gameState is LevelManager.GameState.PreviewWhileBuilding or LevelManager.GameState.PreviewWhileRunning)
 		{
 			DoPanning();
 		}

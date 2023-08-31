@@ -131,7 +131,7 @@ public class CartWheel : BasePart
 		if ((bool)base.contraption && base.contraption.IsRunning)
 		{
 			m_lastPosition = m_axle.position;
-			if (Physics.Raycast(m_axle.position, m_lastContactDirection, out var hitInfo, m_radius + 0.1f) && hitInfo.collider != m_supportCollider)
+			if (Physics.Raycast(m_axle.position, m_lastContactDirection, out RaycastHit hitInfo, m_radius + 0.1f) && hitInfo.collider != m_supportCollider)
 			{
 				colliderRigidbody = ((hitInfo.collider.gameObject.layer != BasePart.m_groundLayer) ? hitInfo.rigidbody : null);
 				Vector3 lastForceDirection = Vector3.Cross(hitInfo.normal, Vector3.forward);

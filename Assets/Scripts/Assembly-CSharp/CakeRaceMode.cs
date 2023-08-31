@@ -263,7 +263,7 @@ public class CakeRaceMode : GameMode
 			{
 				GameTime.Pause(pause: false);
 			}
-			if (currentState == LevelManager.GameState.Running || currentState == LevelManager.GameState.PausedWhileRunning)
+			if (currentState is LevelManager.GameState.Running or LevelManager.GameState.PausedWhileRunning)
 			{
 				StopRunningContraption();
 				retries++;

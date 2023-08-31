@@ -683,11 +683,11 @@ public sealed class LevelManager : WPFMonoBehaviour
 	{
 		if (obj == KeyCode.Escape)
 		{
-			if (gameState == GameState.Building || gameState == GameState.Running)
+			if (gameState is GameState.Building or GameState.Running)
 			{
 				EventManager.Send(new UIEvent(UIEvent.Type.Pause));
 			}
-			else if (gameState == GameState.PausedWhileBuilding || gameState == GameState.PausedWhileRunning)
+			else if (gameState is GameState.PausedWhileBuilding or GameState.PausedWhileRunning)
 			{
 				EventManager.Send(new UIEvent(UIEvent.Type.ContinueFromPause));
 			}
@@ -776,7 +776,7 @@ public sealed class LevelManager : WPFMonoBehaviour
 		Vector3 position = CurrentGameMode.ContraptionRunning.FindPig().transform.position;
 		Vector3 vector = position;
 		int layerMask = 1 << LayerMask.NameToLayer("Ground");
-		if (Physics.Raycast(new Ray(position, new Vector3(0f, -1f, 0f)), out var hitInfo, 100f, layerMask))
+		if (Physics.Raycast(new Ray(position, new Vector3(0f, -1f, 0f)), out RaycastHit hitInfo, 100f, layerMask))
 		{
 			vector.y = position.y - hitInfo.distance + 1.1f;
 		}
@@ -1451,7 +1451,7 @@ public sealed class LevelManager : WPFMonoBehaviour
 	private void OnApplicationFocus(bool focus)
 	{
 		Shop shop = Singleton<IapManager>.Instance.GetShop();
-		if (!focus && (!(shop != null) || (!shop.gameObject.activeInHierarchy && !shop.SnoutCoinShop.gameObject.activeInHierarchy)) && !Application.isEditor && (gameState == GameState.Running || gameState == GameState.Building))
+		if (!focus && (!(shop != null) || (!shop.gameObject.activeInHierarchy && !shop.SnoutCoinShop.gameObject.activeInHierarchy)) && !Application.isEditor && gameState is GameState.Running or GameState.Building)
 		{
 			EventManager.Send(new UIEvent(UIEvent.Type.Pause));
 		}

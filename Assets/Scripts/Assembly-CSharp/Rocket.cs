@@ -185,12 +185,12 @@ public class Rocket : BasePropulsion
 			m_boostForce = INSettings.GetFloat(INFeature.AlienSodaForceValue);
 			m_maximumSpeed = INSettings.GetFloat(INFeature.AlienSodaSpeedValue);
 		}
-		else if (m_partType == PartType.CokeBottle || m_partType == PartType.SodaBottle)
+		else if (m_partType is PartType.CokeBottle or PartType.SodaBottle)
 		{
 			m_boostForce *= INSettings.GetFloat(INFeature.CokeSodaForce);
 			m_maximumSpeed *= INSettings.GetFloat(INFeature.CokeSodaSpeed);
 		}
-		else if (m_partType == PartType.Rocket || m_partType == PartType.RedRocket)
+		else if (m_partType is PartType.Rocket or PartType.RedRocket)
 		{
 			m_boostForce *= INSettings.GetFloat(INFeature.RocketForce);
 			m_maximumSpeed *= INSettings.GetFloat(INFeature.RocketSpeed);
@@ -310,7 +310,7 @@ public class Rocket : BasePropulsion
 			Vector3 direction = base.transform.TransformDirection(m_direction);
 			if (customPartIndex == 1)
 			{
-				if (RaycastWithParts(base.transform.position, direction, out var hitInfo, float2))
+				if (RaycastWithParts(base.transform.position, direction, out RaycastHit hitInfo, float2))
 				{
 					Vector3 velocity = base.rigidbody.velocity;
 					if (hitInfo.rigidbody != null)

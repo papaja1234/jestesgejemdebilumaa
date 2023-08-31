@@ -89,27 +89,27 @@ public class PointLight : BasePart
 			entityLight.Length = INSettings.GetFloat(INFeature.CircleLightRadius);
 			if (m_partTier == PartTier.Regular)
 			{
-				entityLight.Type = (EntityLight.EntityLightType)2;
+				entityLight.Type = 2;
 				entityLight.Angle = INSettings.GetFloat(INFeature.CircleLightAngle2);
 			}
 			else if (m_partTier == PartTier.Common)
 			{
-				entityLight.Type = (EntityLight.EntityLightType)2;
+				entityLight.Type = 2;
 				entityLight.Angle = INSettings.GetFloat(INFeature.CircleLightAngle1);
 			}
 			else if (m_partTier == PartTier.Rare)
 			{
-				entityLight.Type = (EntityLight.EntityLightType)3;
+				entityLight.Type = 3;
 				entityLight.Angle = INSettings.GetFloat(INFeature.CircleLightAngle2);
 			}
 			else if (m_partTier == PartTier.Epic)
 			{
-				entityLight.Type = (EntityLight.EntityLightType)3;
+				entityLight.Type = 3;
 				entityLight.Angle = INSettings.GetFloat(INFeature.CircleLightAngle1);
 			}
 			else if (m_partTier == PartTier.Legendary)
 			{
-				entityLight.Type = (EntityLight.EntityLightType)4;
+				entityLight.Type = 4;
 				entityLight.Angle = 360f;
 			}
 		}

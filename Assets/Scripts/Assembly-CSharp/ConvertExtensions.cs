@@ -16,7 +16,7 @@ public static class ConvertExtensions
 			for (int i = 0; i < (int)SortedPartType.MAX; i++)
 			{
 				SortedPartType sortedPartType = (SortedPartType)i;
-				if (!Enum.TryParse<BasePart.PartType>(sortedPartType.ToString(), out var result))
+				if (!Enum.TryParse<BasePart.PartType>(sortedPartType.ToString(), out BasePart.PartType result))
 				{
 					result = BasePart.PartType.Unknown;
 				}
@@ -25,7 +25,7 @@ public static class ConvertExtensions
 			for (int j = 0; j < (int)BasePart.PartType.MAX; j++)
 			{
 				BasePart.PartType partType = (BasePart.PartType)j;
-				if (!Enum.TryParse<SortedPartType>(partType.ToString(), out var result2))
+				if (!Enum.TryParse<SortedPartType>(partType.ToString(), out SortedPartType result2))
 				{
 					result2 = SortedPartType.Unknown;
 				}
@@ -35,7 +35,7 @@ public static class ConvertExtensions
 
 		public BasePart.PartType ToPartType(SortedPartType sortedPartType)
 		{
-			if (sortedPartType < SortedPartType.Unknown || sortedPartType >= SortedPartType.MAX)
+			if (sortedPartType is < SortedPartType.Unknown or >= SortedPartType.MAX)
 			{
 				return (BasePart.PartType)sortedPartType;
 			}
@@ -44,7 +44,7 @@ public static class ConvertExtensions
 
 		public SortedPartType ToSortedPartType(BasePart.PartType partType)
 		{
-			if (partType < BasePart.PartType.Unknown || partType >= BasePart.PartType.MAX)
+			if (partType is < BasePart.PartType.Unknown or >= BasePart.PartType.MAX)
 			{
 				return (SortedPartType)partType;
 			}

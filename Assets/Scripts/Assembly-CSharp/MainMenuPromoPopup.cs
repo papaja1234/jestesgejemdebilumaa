@@ -43,7 +43,7 @@ public class MainMenuPromoPopup : MonoBehaviour
 	private void OnLevelLoaded(LevelLoadedEvent data)
 	{
 		GameManager.GameState gameState = Singleton<GameManager>.Instance.GetGameState();
-		if (base.gameObject.activeSelf && (gameState == GameManager.GameState.Level || gameState == GameManager.GameState.Cutscene))
+		if (base.gameObject.activeSelf && gameState is GameManager.GameState.Level or GameManager.GameState.Cutscene)
 		{
 			GetComponent<Dialog>().Close();
 		}

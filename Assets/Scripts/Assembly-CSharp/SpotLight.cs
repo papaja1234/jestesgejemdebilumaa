@@ -89,7 +89,7 @@ public class SpotLight : BasePart
 		bool flag6 = base.contraption.CanConnectTo(this, BasePart.Rotate(Direction.DownLeft, m_gridRotation));
 		bool flag7 = base.contraption.CanConnectTo(this, BasePart.Rotate(Direction.UpRight, m_gridRotation));
 		bool flag8 = base.contraption.CanConnectTo(this, BasePart.Rotate(Direction.DownRight, m_gridRotation));
-		bool flag9 = m_gridRotation == GridRotation.Deg_135 || m_gridRotation == GridRotation.Deg_45 || m_gridRotation == GridRotation.Deg_225 || m_gridRotation == GridRotation.Deg_315;
+		bool flag9 = m_gridRotation is GridRotation.Deg_135 or GridRotation.Deg_45 or GridRotation.Deg_225 or GridRotation.Deg_315;
 		m_leftAttachment.SetActive(flag3 && !flag9);
 		m_rightAttachment.SetActive(flag4 && !flag9);
 		m_topAttachment.SetActive(flag && !flag9);
@@ -180,25 +180,25 @@ public class SpotLight : BasePart
 			EntityLight entityLight = base.gameObject.AddComponent<EntityLight>();
 			if (m_partTier == PartTier.Regular)
 			{
-				entityLight.Type = (EntityLight.EntityLightType)0;
+				entityLight.Type = 0;
 				entityLight.HalfWidth = INSettings.GetFloat(INFeature.LinearLightWidth1) * 0.5f;
 				entityLight.Length = INSettings.GetFloat(INFeature.LinearLightLength2);
 			}
 			else if (m_partTier == PartTier.Common)
 			{
-				entityLight.Type = (EntityLight.EntityLightType)0;
+				entityLight.Type = 0;
 				entityLight.HalfWidth = INSettings.GetFloat(INFeature.LinearLightWidth1) * 0.5f;
 				entityLight.Length = INSettings.GetFloat(INFeature.LinearLightLength1);
 			}
 			else if (m_partTier == PartTier.Rare)
 			{
-				entityLight.Type = (EntityLight.EntityLightType)1;
+				entityLight.Type = 1;
 				entityLight.HalfWidth = INSettings.GetFloat(INFeature.LinearLightWidth2) * 0.5f;
 				entityLight.Length = INSettings.GetFloat(INFeature.LinearLightLength2);
 			}
 			else if (m_partTier == PartTier.Epic)
 			{
-				entityLight.Type = (EntityLight.EntityLightType)1;
+				entityLight.Type = 1;
 				entityLight.HalfWidth = INSettings.GetFloat(INFeature.LinearLightWidth2) * 0.5f;
 				entityLight.Length = INSettings.GetFloat(INFeature.LinearLightLength1);
 			}

@@ -311,7 +311,7 @@ public class AudioManager : Singleton<AudioManager>
 
 	public GameObject SpawnCombinedLoopingEffect(AudioSource effectSource, Transform soundHost)
 	{
-		if (!m_combinedLoops.TryGetValue(effectSource, out var value))
+		if (!m_combinedLoops.TryGetValue(effectSource, out CombinedLoopingEffect value))
 		{
 			value = new CombinedLoopingEffect(effectSource);
 			m_combinedLoops[effectSource] = value;
@@ -322,7 +322,7 @@ public class AudioManager : Singleton<AudioManager>
 
 	public void RemoveCombinedLoopingEffect(AudioSource prefab, GameObject loopingEffect)
 	{
-		if (m_combinedLoops.TryGetValue(prefab, out var value))
+		if (m_combinedLoops.TryGetValue(prefab, out CombinedLoopingEffect value))
 		{
 			value.RemoveLoop(loopingEffect);
 		}

@@ -137,9 +137,7 @@ public class BaseGameMode : GameMode
 		while (--num >= 1)
 		{
 			int num2 = Random.Range(0, num + 1);
-			DessertPlace dessertPlace = array[num];
-			array[num] = array[num2];
-			array[num2] = dessertPlace;
+			(array[num], array[num2]) = (array[num2], array[num]);
 		}
 		int levelDessertsCount = levelManager.LevelDessertsCount;
 		int num3 = ((levelDessertsCount <= array.Length && !forceFillAllPlaces) ? levelDessertsCount : array.Length);
@@ -212,7 +210,7 @@ public class BaseGameMode : GameMode
 			{
 				GameTime.Pause(pause: false);
 			}
-			if (currentState == LevelManager.GameState.Running || currentState == LevelManager.GameState.PausedWhileRunning)
+			if (currentState is LevelManager.GameState.Running or LevelManager.GameState.PausedWhileRunning)
 			{
 				StopRunningContraption();
 				retries++;

@@ -3,10 +3,6 @@ using UnityEngine;
 
 public class EntityLight : MonoBehaviour
 {
-	
-	/// <summary>
-	/// Data Container for this Entity Light's properties
-	/// </summary>
 	public struct LightData
 	{
 		public Vector2 Position0;
@@ -35,10 +31,9 @@ public class EntityLight : MonoBehaviour
 			Position1 = position;
 		}
 	}
-	
 
 	[SerializeField]
-	private EntityLightType m_type;
+	private int m_type;
 
 	[SerializeField]
 	private float m_angle;
@@ -79,7 +74,10 @@ public class EntityLight : MonoBehaviour
 
 	public bool Enabled
 	{
-		get => m_enabled;
+		get
+		{
+			return m_enabled;
+		}
 		set
 		{
 			m_enabled = value;
@@ -90,56 +88,63 @@ public class EntityLight : MonoBehaviour
 		}
 	}
 
-	public EntityLightType Type
+	public int Type
 	{
-		get => m_type;
-		set => m_type = value;
+		get
+		{
+			return m_type;
+		}
+		set
+		{
+			m_type = value;
+		}
 	}
 
 	public float Length
 	{
-		get => m_length;
-		set => m_length = value;
+		get
+		{
+			return m_length;
+		}
+		set
+		{
+			m_length = value;
+		}
 	}
 
 	public float HalfWidth
 	{
-		get => m_halfWidth;
-		set => m_halfWidth = value;
+		get
+		{
+			return m_halfWidth;
+		}
+		set
+		{
+			m_halfWidth = value;
+		}
 	}
 
 	public float Angle
 	{
-		get => m_angle;
-		set => m_angle = value;
+		get
+		{
+			return m_angle;
+		}
+		set
+		{
+			m_angle = value;
+		}
 	}
 
 	public float Cos { get; private set; }
 
-	/// <summary>
-	/// <example>
-	/// ThinLightPillar = 0,
-	/// BoldLightPillar = 1,
-	/// WideLightShield = 2,
-	/// LightBox = 3,
-	/// SmallLightShield = 4,
-	/// </example>
-	/// </summary>
-	public enum EntityLightType
-	{
-		ThinLightPillar = 0,
-		BoldLightPillar = 1,
-		WideLightShield = 2,
-		LightBox = 3,
-		SmallLightShield = 4,
-	}
-	public bool IsLightPillar//int Type: 0,1 for light pillar
+	public bool IsLightPillar
 	{
 		get
 		{
-			if ((int)m_type != 0)
+			if (m_type != 0)
 			{
-				return (int)m_type == 1;
+				return m_type == 1;
 			}
 			return true;
 		}
@@ -149,15 +154,15 @@ public class EntityLight : MonoBehaviour
 	{
 		get
 		{
-			if ((int)m_type != 2)
+			if (m_type != 2)
 			{
-				return (int)m_type == 4;
+				return m_type == 4;
 			}
 			return true;
 		}
 	}
 
-	public bool IsLightBox => (int)m_type == 3;
+	public bool IsLightBox => m_type == 3;
 
 	public int Index { get; set; }
 
@@ -175,11 +180,11 @@ public class EntityLight : MonoBehaviour
 		Transform = base.transform.Find("INLight");
 		if (Transform == null)
 		{
-			GameObject gameObject = new GameObject("INLight");
-			Transform = gameObject.transform;
+			GameObject _gameObject = new GameObject("INLight");
+			Transform = _gameObject.transform;
 			Transform.parent = base.transform;
-			gameObject.AddComponent<MeshRenderer>();
-			gameObject.AddComponent<MeshFilter>();
+			_gameObject.AddComponent<MeshRenderer>();
+			_gameObject.AddComponent<MeshFilter>();
 		}
 		Transform.localPosition = new Vector3(0f, 0.5f, -0.5f);
 		Transform.localRotation = new Quaternion(0f, 0f, 0.70710677f, 0.70710677f);
@@ -193,7 +198,7 @@ public class EntityLight : MonoBehaviour
 	{
 		m_manager = EntityLightManager.Instance;
 		Transform.gameObject.layer = LayerMask.NameToLayer("Ground");
-		if ((int)m_type == 0 || (int)m_type == 1)
+		if (m_type is 0 or 1)
 		{
 			m_meshFilter.sharedMesh = MeshExtensions.CreateRectMesh(m_length, m_halfWidth);
 		}
@@ -263,7 +268,7 @@ public class EntityLight : MonoBehaviour
 			if (flag)
 			{
 				float a = 0.5f;
-				switch ((int)m_type)
+				switch (m_type)
 				{
 				case 0:
 					color = new Color(0.5f, 0.75f, 1f, a);
@@ -283,7 +288,7 @@ public class EntityLight : MonoBehaviour
 			else
 			{
 				float a2 = 0.7f;
-				switch ((int)m_type)
+				switch (m_type)
 				{
 				case 0:
 					color = new Color(0.55f, 0.5f, 1f, a2);
@@ -306,7 +311,7 @@ public class EntityLight : MonoBehaviour
 
 	public void UpdateSelf()
 	{
-		if ((int)m_type != 0 && (int)m_type != 1)
+		if (m_type != 0 && m_type != 1)
 		{
 			return;
 		}
@@ -317,7 +322,7 @@ public class EntityLight : MonoBehaviour
 			if (gearbox.m_partTier != 0)
 			{
 				BasePart.GridRotation gridRotation = Part.m_gridRotation;
-				bool flag = gearbox.IsEnabled() ^ (gridRotation == BasePart.GridRotation.Deg_0 || gridRotation == BasePart.GridRotation.Deg_45 || gridRotation == BasePart.GridRotation.Deg_90 || gridRotation == BasePart.GridRotation.Deg_135);
+				bool flag = gearbox.IsEnabled() ^ gridRotation is BasePart.GridRotation.Deg_0 or BasePart.GridRotation.Deg_45 or BasePart.GridRotation.Deg_90 or BasePart.GridRotation.Deg_135;
 				Sides = (flag ? 1 : 2);
 			}
 		}
@@ -335,8 +340,8 @@ public class EntityLight : MonoBehaviour
 		BasePart component = data.Rigidbody.GetComponent<BasePart>();
 		if (!m_ignoreCollision || !(component != null) || component.ConnectedComponent != Part.ConnectedComponent)
 		{
-			EntityLightType type = Type;
-			if ((int)type == 0 || (int)type == 1)
+			int type = Type;
+			if (type is 0 or 1)
 			{
 				HandlePillarCollision(ref data, ref result);
 			}
@@ -435,7 +440,7 @@ public class EntityLight : MonoBehaviour
 			Vector2 vector5 = num7 * vector3;
 			float num8 = (0f - num3) * (num6 + 1f) + num7;
 			float num9 = (0f - num4) * (num6 + 1f);
-			if ((int)m_type == 3)
+			if (m_type == 3)
 			{
 				float num10 = 0.5f * num2 * num2 / (m_length - m_halfWidth);
 				num8 += (1f - timeOfImpact) * num10;
@@ -470,7 +475,7 @@ public class EntityLight : MonoBehaviour
 	{
 		if (!Contraption.Instance.IsRunning)
 		{
-			if ((int)m_type == 4)
+			if (m_type == 4)
 			{
 				m_meshRenderer.material.color = Color.clear;
 				return;
@@ -506,7 +511,7 @@ public class EntityLight : MonoBehaviour
 			Color color = m_color;
 			Color a = (m_colored ? m_color : new Color(1f, 0.25f, 0.25f));
 			a.a = 0.1f;
-			if ((int)m_type == 4)
+			if (m_type == 4)
 			{
 				color.a /= m_coefficient;
 				a.a /= m_coefficient;
@@ -566,6 +571,6 @@ public class EntityLight : MonoBehaviour
 		Vector3 point = raycastHit.point;
 		bool num = direction.x * (point.y - position.y) - direction.y * (point.x - position.x) > 0f;
 		BasePart.GridRotation gridRotation = component.Part.m_gridRotation;
-		return num ^ gearbox.IsEnabled() ^ (gridRotation == BasePart.GridRotation.Deg_0 || gridRotation == BasePart.GridRotation.Deg_45 || gridRotation == BasePart.GridRotation.Deg_90 || gridRotation == BasePart.GridRotation.Deg_135);
+		return num ^ gearbox.IsEnabled() ^ gridRotation is BasePart.GridRotation.Deg_0 or BasePart.GridRotation.Deg_45 or BasePart.GridRotation.Deg_90 or BasePart.GridRotation.Deg_135;
 	}
 }

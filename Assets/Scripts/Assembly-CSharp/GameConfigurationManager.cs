@@ -96,7 +96,7 @@ public class GameConfigurationManager : Singleton<GameConfigurationManager>
 
 	public ConfigData GetConfig(string itemKey)
 	{
-		if (config != null && config.TryGetValue(itemKey, out var value))
+		if (config != null && config.TryGetValue(itemKey, out ConfigData value))
 		{
 			return value;
 		}

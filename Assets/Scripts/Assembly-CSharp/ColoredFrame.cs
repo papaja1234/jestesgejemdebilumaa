@@ -135,7 +135,7 @@ public class ColoredFrame : Frame
 		{
 			(MeshRenderer, Material) tuple = coloredPartMaterials[i];
 			(Renderer, Material) tuple2 = (tuple.Item1, tuple.Item2);
-			var (renderer, _) = tuple2;
+			(Renderer renderer, _) = tuple2;
 			if (renderer != null)
 			{
 				float num = ((m_color.a > 0.5f) ? m_color.a : 0.5f);

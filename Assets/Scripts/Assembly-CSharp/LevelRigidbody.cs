@@ -137,7 +137,7 @@ public class LevelRigidbody : WPFMonoBehaviour
 				UpdateIceCollider();
 			}
 		}
-		else if ((newState.state == LevelManager.GameState.Building || newState.state == LevelManager.GameState.ShowingUnlockedParts) && (lastTrackedState == LevelManager.GameState.Running || lastTrackedState == LevelManager.GameState.PausedWhileRunning))
+		else if (newState.state is LevelManager.GameState.Building or LevelManager.GameState.ShowingUnlockedParts && lastTrackedState is LevelManager.GameState.Running or LevelManager.GameState.PausedWhileRunning)
 		{
 			EndLevel();
 		}

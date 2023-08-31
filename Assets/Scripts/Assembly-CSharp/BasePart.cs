@@ -676,7 +676,7 @@ public class BasePart : WPFMonoBehaviour
 
 	public JointConnectionDirection GlobalJointConnectionDirection(JointConnectionDirection localDirection)
 	{
-		if (localDirection == JointConnectionDirection.Any || localDirection == JointConnectionDirection.None)
+		if (localDirection is JointConnectionDirection.Any or JointConnectionDirection.None)
 		{
 			return localDirection;
 		}
@@ -684,13 +684,13 @@ public class BasePart : WPFMonoBehaviour
 		switch (localDirection)
 		{
 		case JointConnectionDirection.LeftAndRight:
-			if (m_gridRotation == GridRotation.Deg_90 || m_gridRotation == GridRotation.Deg_270)
+			if (m_gridRotation is GridRotation.Deg_90 or GridRotation.Deg_270)
 			{
 				jointConnectionDirection = JointConnectionDirection.UpAndDown;
 			}
 			break;
 		case JointConnectionDirection.UpAndDown:
-			if (m_gridRotation == GridRotation.Deg_90 || m_gridRotation == GridRotation.Deg_270)
+			if (m_gridRotation is GridRotation.Deg_90 or GridRotation.Deg_270)
 			{
 				jointConnectionDirection = JointConnectionDirection.LeftAndRight;
 			}
@@ -827,7 +827,7 @@ public class BasePart : WPFMonoBehaviour
 		switch (source)
 		{
 		case JointConnectionDirection.LeftAndRight:
-			if (target == JointConnectionDirection.UpAndDown || target == JointConnectionDirection.Up || target == JointConnectionDirection.Down)
+			if (target is JointConnectionDirection.UpAndDown or JointConnectionDirection.Up or JointConnectionDirection.Down)
 			{
 				return GridRotation.Deg_90;
 			}
@@ -835,7 +835,7 @@ public class BasePart : WPFMonoBehaviour
 		default:
 			return (GridRotation)((target - source + 4) % 4);
 		case JointConnectionDirection.UpAndDown:
-			if (target == JointConnectionDirection.LeftAndRight || target == JointConnectionDirection.Left || target == JointConnectionDirection.Right)
+			if (target is JointConnectionDirection.LeftAndRight or JointConnectionDirection.Left or JointConnectionDirection.Right)
 			{
 				return GridRotation.Deg_90;
 			}

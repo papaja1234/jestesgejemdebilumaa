@@ -134,7 +134,7 @@ PlayerSettings:
     16:10: 0
     16:9: 1
     Others: 0
-  bundleVersion: Imaginary
+  bundleVersion: pre.Tension
   preloadedAssets: []
   metroInputSource: 0
   wsaTransparentSwapchain: 0
@@ -741,7 +741,7 @@ PlayerSettings:
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend:
-    Android: 1
+    Android: 0
   il2cppCompilerConfiguration: {}
   managedStrippingLevel:
     Android: 1

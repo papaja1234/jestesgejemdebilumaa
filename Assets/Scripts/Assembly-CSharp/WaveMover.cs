@@ -55,7 +55,7 @@ public class WaveMover : MonoBehaviour
 		if (m_useRealtime)
 		{
 			num = realtimeSinceStartup - m_lastRT;
-			if (num <= 0f || num > 0.2f)
+			if (num is <= 0f or > 0.2f)
 			{
 				num = 0.05f;
 			}

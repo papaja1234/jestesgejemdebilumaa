@@ -85,7 +85,7 @@ public class PartTrigger : ElectricalPart
 		}
 		else if (m_isTriple)
 		{*/
-			foreach (var basepart in m_connectedParts)
+			foreach (BasePart basepart in m_connectedParts)
 			{
 				if (m_level != 0 && m_newLevel != 0 && m_level != m_newLevel && basepart != null &&
 				    basepart.ConnectedComponent == base.ConnectedComponent)

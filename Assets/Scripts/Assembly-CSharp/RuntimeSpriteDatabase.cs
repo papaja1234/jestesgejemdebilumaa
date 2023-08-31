@@ -37,7 +37,7 @@ public class RuntimeSpriteDatabase : Singleton<RuntimeSpriteDatabase>
 		{
 			Load();
 		}
-		m_data.TryGetValue(id, out var value);
+		m_data.TryGetValue(id, out SpriteData value);
 		return value;
 	}
 
@@ -118,7 +118,7 @@ public class RuntimeSpriteDatabase : Singleton<RuntimeSpriteDatabase>
 			{
 				string[] array = streamReader.ReadLine().Split(separator, options);
 				string text = array[0];
-				if (array.Length == 14 || array.Length == 15)
+				if (array.Length is 14 or 15)
 				{
 					string text2 = array[1].Substring(1, array[1].Length - 2);
 					int opaqueBorderPixels = ((array.Length != 14) ? int.Parse(array[14]) : 0);
@@ -142,7 +142,7 @@ public class RuntimeSpriteDatabase : Singleton<RuntimeSpriteDatabase>
 					float width = float.Parse(array2[3], CultureInfo.InvariantCulture);
 					float height = float.Parse(array2[4], CultureInfo.InvariantCulture);
 					Rect uv = new Rect(x, y, width, height);
-					if (dictionary.TryGetValue(key, out var value2))
+					if (dictionary.TryGetValue(key, out SpriteData value2))
 					{
 						value2.uv = uv;
 					}

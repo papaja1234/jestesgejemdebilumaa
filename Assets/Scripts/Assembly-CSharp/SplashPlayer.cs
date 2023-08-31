@@ -38,7 +38,7 @@ public class SplashPlayer : MonoBehaviour
 		else
 		{
 			string currentLocale = Singleton<Localizer>.Instance.CurrentLocale;
-			if (Singleton<BuildCustomizationLoader>.Instance.CustomerID == "chinatelecom" || Singleton<BuildCustomizationLoader>.Instance.CustomerID == "chinamobile")
+			if (Singleton<BuildCustomizationLoader>.Instance.CustomerID is "chinatelecom" or "chinamobile")
 			{
 				if (currentLocale == "zh-CN")
 				{

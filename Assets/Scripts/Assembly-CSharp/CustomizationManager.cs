@@ -285,7 +285,7 @@ public class CustomizationManager
 
 	public static BasePart GetRandomLootCrateRewardPartFromTier(BasePart.PartTier tier, bool onlyLocked = false)
 	{
-		if (!Singleton<PredefinedRewards>.Instance.AllRewardsGiven && Singleton<PredefinedRewards>.Instance.GetReward(tier, out var part))
+		if (!Singleton<PredefinedRewards>.Instance.AllRewardsGiven && Singleton<PredefinedRewards>.Instance.GetReward(tier, out BasePart part))
 		{
 			return part;
 		}
@@ -313,7 +313,7 @@ public class CustomizationManager
 
 	public static BasePart GetRandomCraftablePartFromTier(BasePart.PartTier tier, bool onlyLocked = false)
 	{
-		if (!Singleton<PredefinedRewards>.Instance.AllRewardsGiven && Singleton<PredefinedRewards>.Instance.GetReward(tier, out var part))
+		if (!Singleton<PredefinedRewards>.Instance.AllRewardsGiven && Singleton<PredefinedRewards>.Instance.GetReward(tier, out BasePart part))
 		{
 			return part;
 		}

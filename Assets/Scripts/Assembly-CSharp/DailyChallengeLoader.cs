@@ -74,7 +74,7 @@ public class DailyChallengeLoader : WPFMonoBehaviour
 	{
 		if (!loading)
 		{
-			if (!ImageReady || state == State.Error || state == State.None)
+			if (!ImageReady || state is State.Error or State.None)
 			{
 				SetDisabled();
 				Singleton<NetworkManager>.Instance.CheckAccess(OnNetworkCheck);

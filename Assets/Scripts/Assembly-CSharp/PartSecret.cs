@@ -58,7 +58,7 @@ public class PartSecret : MonoBehaviour
 		}
 		Ray ray = gameCamera.ScreenPointToRay(pos);
 		int layerMask = 1 << LayerMask.NameToLayer("Default");
-		if (Physics.Raycast(ray, out var hitInfo, float.MaxValue, layerMask) && hitInfo.transform == base.transform)
+		if (Physics.Raycast(ray, out RaycastHit hitInfo, float.MaxValue, layerMask) && hitInfo.transform == base.transform)
 		{
 			if ((bool)onTapAnimation)
 			{

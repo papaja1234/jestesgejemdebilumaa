@@ -169,7 +169,7 @@ public class FanPropeller : BasePropulsion
 			position2.z = 0f;
 			int layerMask = ((m_enclosedInto != null) ? (-5) : ((1 << LayerMask.NameToLayer("Ground")) | (1 << LayerMask.NameToLayer("IceGround"))));
 			RaycastHit hitInfo;
-			if (INSettings.GetBool(INFeature.StableLevitationFan) && m_partType == PartType.Fan && (customPartIndex == 1 || customPartIndex == 2 || customPartIndex == 4))
+			if (INSettings.GetBool(INFeature.StableLevitationFan) && m_partType == PartType.Fan && customPartIndex is 1 or 2 or 4)
 			{
 				Vector3 position3 = base.transform.position;
 				position3.z = -0.1f;
@@ -233,7 +233,7 @@ public class FanPropeller : BasePropulsion
 			}
 		}
 		float num17 = ((num10 > 200f) ? (200f / num10) : 1f);
-		foreach (var item2 in list)
+		foreach ((float, Vector2, Rigidbody, Rigidbody) item2 in list)
 		{
 			float num18 = item2.Item1 * num17;
 			Vector2 item = item2.Item2;

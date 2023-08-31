@@ -340,7 +340,7 @@ namespace Spine.Unity
 				for (int j = 0; j < submeshInstructions.Count; j++)
 				{
 					Material material2 = items3[j].material;
-					if (CustomMaterialOverride.TryGetValue(material2, out var value2))
+					if (CustomMaterialOverride.TryGetValue(material2, out Material value2))
 					{
 						items3[j].material = value2;
 					}

@@ -22,9 +22,7 @@ public static class CircuitFactory
 	{
 		if (left.Electrodes.Count > right.Electrodes.Count)
 		{
-			ElectricalElement electricalElement = left;
-			left = right;
-			right = electricalElement;
+			(left, right) = (right, left);
 		}
 		foreach (ElectricalElement.Electrode electrode in left.Electrodes)
 		{

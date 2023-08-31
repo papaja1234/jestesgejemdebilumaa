@@ -51,7 +51,7 @@ namespace PlayFab.Json
 				{
 					return AddValue(key);
 				}
-				if (!_dictionary.TryGetValue(key, out var value))
+				if (!_dictionary.TryGetValue(key, out TValue value))
 				{
 					return AddValue(key);
 				}
@@ -69,7 +69,7 @@ namespace PlayFab.Json
 						_dictionary[key] = val;
 						return val;
 					}
-					if (_dictionary.TryGetValue(key, out var value))
+					if (_dictionary.TryGetValue(key, out TValue value))
 					{
 						return value;
 					}

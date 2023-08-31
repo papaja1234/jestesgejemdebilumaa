@@ -404,7 +404,7 @@ public class Tutorial : WPFMonoBehaviour
 		}
 		if (WPFMonoBehaviour.levelManager.gameState == LevelManager.GameState.Building)
 		{
-			if ((m_state == State.OpenBook || m_state == State.DragPart || m_state == State.Initial) && WPFMonoBehaviour.levelManager.ContraptionProto.FindPig() != null && !m_contraptionStarted)
+			if (m_state is State.OpenBook or State.DragPart or State.Initial && WPFMonoBehaviour.levelManager.ContraptionProto.FindPig() != null && !m_contraptionStarted)
 			{
 				m_pointer.Show(show: false);
 				m_state = State.StartContraption;
@@ -412,7 +412,7 @@ public class Tutorial : WPFMonoBehaviour
 				m_timeline = m_startContraptionTimeline;
 				m_timeline.Start();
 			}
-			if (!m_playing && (m_state == State.DragPart || m_state == State.Initial) && WPFMonoBehaviour.levelManager.ContraptionProto.Parts.Count == 0 && (bool)m_constructionUI && !m_constructionUI.IsDragging())
+			if (!m_playing && m_state is State.DragPart or State.Initial && WPFMonoBehaviour.levelManager.ContraptionProto.Parts.Count == 0 && (bool)m_constructionUI && !m_constructionUI.IsDragging())
 			{
 				m_playing = true;
 				m_state = State.DragPart;
@@ -453,7 +453,7 @@ public class Tutorial : WPFMonoBehaviour
 			{
 				m_timeline.Start();
 			}
-			if ((m_state == State.DragPart || m_state == State.DragPig) && m_constructionUI.IsDragging())
+			if (m_state is State.DragPart or State.DragPig && m_constructionUI.IsDragging())
 			{
 				m_playing = false;
 				m_pointer.Show(show: false);

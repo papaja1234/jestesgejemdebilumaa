@@ -26,9 +26,9 @@ public class FuelBox : BasePart
 
 	public IEnumerable<BasePart> GetConnectedParts()
 	{
-		foreach (var connectedPart in m_connectedParts)
+		foreach ((BasePart, Joint) connectedPart in m_connectedParts)
 		{
-			var (basePart, _) = connectedPart;
+			(BasePart basePart, _) = connectedPart;
 			if (basePart != null && connectedPart.Item2 != null)
 			{
 				yield return basePart;

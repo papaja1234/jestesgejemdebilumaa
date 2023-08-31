@@ -217,7 +217,7 @@ public class AchievementData : Singleton<AchievementData>
 		{
 			InitializeAchievementLimits();
 		}
-		if (AchievementsLimits.TryGetValue(id, out var value))
+		if (AchievementsLimits.TryGetValue(id, out AchievementDescriptor value))
 		{
 			return (int)value.limit;
 		}

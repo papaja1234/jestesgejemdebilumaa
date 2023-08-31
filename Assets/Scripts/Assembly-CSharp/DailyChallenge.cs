@@ -398,7 +398,7 @@ public class DailyChallenge : Singleton<DailyChallenge>
 			return;
 		}
 		DailyLevel daily = Singleton<GameManager>.instance.gameData.m_dailyChallengeData.GetDaily(Challenges[index].DailyKey);
-		if (daily != null && daily.GetPosition(Challenges[index].positionIndex, out var position))
+		if (daily != null && daily.GetPosition(Challenges[index].positionIndex, out Vector3 position))
 		{
 			GameObject gameObject = WPFMonoBehaviour.gameData.m_lootCrates[(int)TodaysLootCrate(index)];
 			LootCrate component = UnityEngine.Object.Instantiate(gameObject, position, Quaternion.identity).GetComponent<LootCrate>();

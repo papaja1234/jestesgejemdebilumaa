@@ -64,7 +64,7 @@ public class SnoutCoinAdRewardDialog : TextDialog
 		{
 			rewardCount = GetSnoutCoinRewardCount();
 		}
-		if (rewardCount >= 0 && (state == State.Failed || state == State.Finished || state == State.Stalled))
+		if (rewardCount >= 0 && state is State.Failed or State.Finished or State.Stalled)
 		{
 			rewardAmountSpriteText.Text = $"x{rewardCount}";
 			SetState(State.Loading);
