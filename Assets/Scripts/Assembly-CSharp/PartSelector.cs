@@ -153,7 +153,7 @@ public class PartSelector : WPFMonoBehaviour, WidgetListener
 		if (Singleton<BuildCustomizationLoader>.Instance.IsHDVersion)
 		{
 			m_scrollList.SetMaxRows(2);
-			m_scrollList.SetButtonScale(INSettings.GetFloat(INFeature.PartSelectorScale));
+			m_scrollList.SetButtonScale(0.5f);
 		}
 		else
 		{
