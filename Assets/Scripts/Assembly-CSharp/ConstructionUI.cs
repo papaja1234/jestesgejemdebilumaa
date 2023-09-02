@@ -171,8 +171,10 @@ public class ConstructionUI : WPFMonoBehaviour
 	public List<BasePart> SelectedParts = new List<BasePart>();
 	public bool waitForSetEnd;
 	public bool hasSelection = false;
+	public GameObject selectionFrame;
 	private void AddMove()
 	{
+		
 		m_lastMoveTime = Time.time;
 		MoveCount++;
 	}
@@ -270,6 +272,7 @@ public class ConstructionUI : WPFMonoBehaviour
 	{
 		EventManager.Connect<UIEvent>(ReceiveUIEvent);
 		EventManager.Connect<CustomizePartUI.PartCustomizationEvent>(OnPartCustomization);
+		selectionFrame.GetComponent<RectTransform>().localScale = Vector3.zero;
 		int num = 0;
 		int num2 = 0;
 		/*(bool)*/m_useDragOffset = DeviceInfo.UsesTouchInput && !Singleton<BuildCustomizationLoader>.Instance.IsHDVersion;
@@ -435,14 +438,14 @@ public class ConstructionUI : WPFMonoBehaviour
 			m_lastMoveTime = Time.time;
 			if ((bool)m_dragIcon)
 			{
-				Vector3 position = WPFMonoBehaviour.hudCamera.GetComponent<Camera>().ScreenToWorldPoint(GuiManager.GetPointer().position);
+				Vector3 position = WPFMonoBehaviour.hudCamera.GetComponent<Camera>().ScreenToWorldPoint(GuiManager.GetPointer().position);//probably the right one
 				position.z = WPFMonoBehaviour.hudCamera.transform.position.z + 2f;
 				position += m_dragOffset;
 				position += m_dragIconOffset;
 				m_dragIcon.transform.position = position;
 			}
 		}
-/*
+
 		if (Input.mousePresent && Input.GetMouseButtonDown(2))
 		{
 			Vector3 mousePos = Input.mousePosition;
@@ -450,18 +453,18 @@ public class ConstructionUI : WPFMonoBehaviour
 			hasSelection = false;
 			if(waitForSetEnd)
 			{
-				selectionEnd = WPFMonoBehaviour.ingameCamera.GetComponent<Camera>().ScreenToWorldPoint(mousePos);
+				selectionEnd = WPFMonoBehaviour.hudCamera.GetComponent<Camera>().ScreenToWorldPoint(GuiManager.GetPointer().position);
 				//RectTransform rectTransform = new RectTransform(){position = selectionStart, pivot = Vector2.zero};
 				SelectGridParts();
 			}
 			else
 			{
-				Debug.Log(Input.mousePosition);
-				selectionStart = WPFMonoBehaviour.ingameCamera.GetComponent<Camera>().ScreenToWorldPoint(mousePos);
+				selectionStart = WPFMonoBehaviour.hudCamera.GetComponent<Camera>().ScreenToWorldPoint(GuiManager.GetPointer().position);
+				selectionFrame.GetComponent<RectTransform>().position = mousePos;
 				waitForSetEnd = true;
-			}STILL WIP
-			BUG:: ScreenToWorldPoint returns wrong coordinates, right coordinates being the position of part you see in building menu
-		}*/
+			}//STILL WIP
+			//BUG:: ScreenToWorldPoint returns wrong coordinates, right coordinates being the position of part you see in building menu
+		}
 
 		//Debug.Log(Input.touches[0].position);
 		SetButtonPositions();
