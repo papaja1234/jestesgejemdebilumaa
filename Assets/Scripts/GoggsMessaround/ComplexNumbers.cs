@@ -10,18 +10,19 @@ public record Complex
 
     public float Re => (float)Real;
     public float Im => (float)Imaginary;
-
+    public float Modulus => (float)GetModulus(this);
+    public float Argument => (float)GetArgument(this);
     public static string ToString(Complex z)
     {
         return $"{z.Real}+{z.Imaginary}i";
     }
 
-    public static double Modulus(Complex z)
+    public static double GetModulus(Complex z)
     {
         return Math.Sqrt(z.Imaginary * z.Imaginary + z.Real * z.Real);
     }
 
-    public static double Argument(Complex z)
+    public static double GetArgument(Complex z)
     {
         //double re = z.Real;
         //double im = z.Imaginary;
@@ -96,22 +97,22 @@ public record Complex
 
     public static Complex Ln(Complex z)
     {
-        double r = Modulus(z);
-        double t = Argument(z);
+        double r = GetModulus(z);
+        double t = GetArgument(z);
         return new Complex { Real = Math.Log(r), Imaginary = t };
     }
 
     public static Complex Ln(Complex z, int branch)
     {
-        double r = Modulus(z);
-        double t = Argument(z);
+        double r = GetModulus(z);
+        double t = GetArgument(z);
         return new Complex { Real = Math.Log(r), Imaginary = t + branch * Math.PI * 2 };
     }
 
     public static Complex Sin(Complex z)
     {
-        double r = Modulus(z);
-        double t = Argument(z);
+        double r = GetModulus(z);
+        double t = GetArgument(z);
         return new Complex
         {
             Real = Math.Sin(r * Math.Cos(t)) * Math.Cosh(r * Math.Sin(t)),
@@ -121,8 +122,8 @@ public record Complex
 
     public static Complex Cos(Complex z)
     {
-        double r = Modulus(z);
-        double t = Argument(z);
+        double r = GetModulus(z);
+        double t = GetArgument(z);
         return new Complex
         {
             Real = Math.Cos(r * Math.Cos(t)) * Math.Cosh(r * Math.Sin(t)),
@@ -281,7 +282,7 @@ public record Complex
 
     public static Complex operator /(Complex z, Complex w)
     {
-        double m = Modulus(z);
+        double m = GetModulus(z);
         return new Complex
         {
             Real = (z.Real * w.Real + z.Imaginary * w.Imaginary) / m,
@@ -291,32 +292,32 @@ public record Complex
 
     public static Complex operator /(Complex z, double w)
     {
-        double m = Modulus(z);
+        double m = GetModulus(z);
         return new Complex { Real = z.Real * w / m, Imaginary = z.Imaginary * w / m };
     }
 
     public static Complex operator /(Complex z, int w)
     {
-        double m = Modulus(z);
+        double m = GetModulus(z);
         return new Complex { Real = z.Real * w / m, Imaginary = z.Imaginary * w / m };
     }
 
     public static Complex operator /(int w, Complex z)
     {
-        double m = Modulus(z);
+        double m = GetModulus(z);
         return new Complex { Real = z.Real * w / m, Imaginary = z.Imaginary * w / m };
     }
 
     public static Complex operator /(double w, Complex z)
     {
-        double m = Modulus(z);
+        double m = GetModulus(z);
         return new Complex { Real = z.Real * w / m, Imaginary = z.Imaginary * w / m };
     }
 
     public static Complex operator ^(Complex z, Complex w)
     {
-        double r = Modulus(z);
-        double t = Argument(z);
+        double r = GetModulus(z);
+        double t = GetArgument(z);
         Complex a = new Complex
             { Real = -t * w.Imaginary + w.Real * Math.Log(r), Imaginary = t * w.Real + w.Imaginary * Math.Log(r) };
         return Exp(a);
@@ -324,32 +325,32 @@ public record Complex
 
     public static Complex operator ^(Complex z, double w)
     {
-        double r = Modulus(z);
-        double t = Argument(z);
+        double r = GetModulus(z);
+        double t = GetArgument(z);
         Complex a = new Complex { Real = w * Math.Log(r), Imaginary = t * w };
         return Exp(a);
     }
 
     public static Complex operator ^(Complex z, int w)
     {
-        double r = Modulus(z);
-        double t = Argument(z);
+        double r = GetModulus(z);
+        double t = GetArgument(z);
         Complex a = new Complex { Real = w * Math.Log(r), Imaginary = t * w };
         return Exp(a);
     }
 
     public static Complex operator ^(int w, Complex z)
     {
-        double r = Modulus(z);
-        double t = Argument(z);
+        double r = GetModulus(z);
+        double t = GetArgument(z);
         Complex a = new Complex { Real = w * Math.Log(r), Imaginary = t * w };
         return Exp(a);
     }
 
     public static Complex operator ^(double w, Complex z)
     {
-        double r = Modulus(z);
-        double t = Argument(z);
+        double r = GetModulus(z);
+        double t = GetArgument(z);
         Complex a = new Complex { Real = w * Math.Log(r), Imaginary = t * w };
         return Exp(a);
     }

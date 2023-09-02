@@ -18,13 +18,15 @@ public class MovableLight : BasePart
 
 	private Rigidbody childRigidbody;
 
+	private ConfigurableJoint configurableJoint;
+
 	public void Start()
 	{
 		lightHandle = base.transform.Find("Handle").gameObject;
 		childCollider = lightHandle.GetComponent<BoxCollider>();
 		childRigidbody = lightHandle.GetComponent<Rigidbody>();
 		childRigidbody.interpolation = RigidbodyInterpolation.Interpolate;
-		childRigidbody.collisionDetectionMode = CollisionDetectionMode.Continuous;
+		childRigidbody.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
 		Physics.IgnoreCollision(base.collider, childCollider);
 		if ((bool)base.enclosedInto)
 		{
@@ -32,6 +34,14 @@ public class MovableLight : BasePart
 			Physics.IgnoreCollision(childCollider, base.enclosedInto.collider);
 		}
 		childCollider.size = new Vector3(1f, 0.5f, 1f);
+		configurableJoint = lightHandle.GetComponent<ConfigurableJoint>();
+	}
+
+	public override void EnsureRigidbody()
+	{
+		base.EnsureRigidbody();
+		configurableJoint.connectedBody = rigidbody;
+		
 	}
 
 	public override bool IsTriggerable()
@@ -72,7 +82,7 @@ public class MovableLight : BasePart
 			base.collider.enabled = true;
 		}
 		childCollider.transform.localScale = new Vector3(m_OutLength, 1f, 1f);
-		childCollider.transform.localPosition = new Vector3(m_OutLength / 2f + 0.5f + m_deltaX, 0f, 0.05f);
+		//childCollider.transform.localPosition = new Vector3(m_OutLength / 2f + 0.5f + m_deltaX, 0f, 0.05f);
 		lightHandle.transform.localRotation = new Quaternion(0f, 0f, 0f, 0f);
 		if (activated)
 		{

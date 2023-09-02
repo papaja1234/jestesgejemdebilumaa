@@ -16,23 +16,32 @@ public class BetterBoxCollider : MonoBehaviour
 
     public float ForceCoefficient;
 
+    private float time;
     private Vector3 DiagonalVector;
     // Start is called before the first frame update
     private void Start()
     {
-        //BoxCollider.isTrigger = true;
+        BoxCollider.isTrigger = false;
         HalfWidth = BoxCollider.size.y * 0.5f;
     }
 
-    
-   void Update()
+
+    private void Update()
    {
        Vector3 size = BoxCollider.size;
+       
        DiagonalVector = new Vector3(size.x * 0.5f, size.y * 0.5f, 0);
    }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        
+    }
+
     private void OnCollisionStay(Collision collisionInfo)
     {
+        if (Time.time - time < 0.02f) return;
+        time = Time.time;
         Rigidbody hitRigidbody = collisionInfo.collider.attachedRigidbody;
         ContactPoint[] contacts = new ContactPoint[10];//this hardcoded number trolled me
         int count = collisionInfo.GetContacts(contacts);
@@ -50,10 +59,10 @@ public class BetterBoxCollider : MonoBehaviour
         }
         else
         {
-            average.x = 0;
+            //average.x = 0;
         }
 
-        Vector3 force = -(average.normalized * ForceCoefficient)/(average.magnitude+5f*HalfWidth);
+        Vector3 force = -(average.normalized * ForceCoefficient);
         force.z = 0;
         Debug.Log("Added Force\n" +
                   force);
