@@ -72,6 +72,7 @@ public class CustomizePartUI : WPFMonoBehaviour
 		}
 		cachedPartListing.CreateSelectionIcons();
 		initButtonsDone = true;
+		ExportAllPartData(WPFMonoBehaviour.gameData, @"C:\Users\Me\Documents\CustomizePartUI.InitButtons().txt");
 	}
 
 	public void CustomButtonPressed(int partTypeIndex, int partIndex)

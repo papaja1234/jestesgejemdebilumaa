@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.IO;
 using System.Reflection;
 using UnityEngine;
 
@@ -312,5 +313,98 @@ public class WPFMonoBehaviour : MonoBehaviour
 			}
 		}
 		return list;
+	}
+
+	public static string GetPartStringData(BasePart part)
+	{
+		string str = "Part: " + part.ToString() + '\n';
+		str += "	public bool m_eightWay = " + part.m_eightWay.ToString() + ";\n";
+		str += "	public int m_coordX = " + part.m_coordX.ToString() + ";\n";
+		str += "	public int m_coordY = " + part.m_coordY.ToString() + ";\n";
+		str += "	public float m_mass = " + part.m_mass.ToString() + ";\n";
+		str += "	public float m_interactiveRadius = " + part.m_interactiveRadius.ToString() + ";\n";
+		str += "	public float m_breakVelocity = " + part.m_breakVelocity.ToString() + ";\n";
+		str += "	public float m_powerConsumption = " + part.m_powerConsumption.ToString() + ";\n";
+		str += "	public float m_enginePower = " + part.m_enginePower.ToString() + ";\n";
+		str += "	public float m_ZOffset = " + part.m_ZOffset.ToString() + ";\n";
+		str += "	public int customPartIndex = " + part.customPartIndex.ToString() + ";\n";
+		str += "	public bool craftable = " + part.craftable.ToString() + ";\n";
+		str += "	public bool lootCrateReward = " + part.lootCrateReward.ToString() + ";\n";
+		// str += "	public List<string> tags = " + part.tags.ToString() + ";\n";
+		str += "	public JointType m_jointType = " + part.m_jointType.ToString() + ";\n";
+		str += "	public PartTier m_partTier = " + part.m_partTier.ToString() + ";\n";
+		str += "	public PartType m_partType = " + part.m_partType.ToString() + ";\n";
+		str += "	public AutoAlignType m_autoAlign = " + part.m_autoAlign.ToString() + ";\n";
+		str += "	public bool m_flipped = " + part.m_flipped.ToString() + ";\n";
+		str += "	public GridRotation m_gridRotation = " + part.m_gridRotation.ToString() + ";\n";
+		str += "	public int m_gridXmin = " + part.m_gridXmin.ToString() + ";\n";
+		str += "	public int m_gridXmax = " + part.m_gridXmax.ToString() + ";\n";
+		str += "	public int m_gridYmin = " + part.m_gridYmin.ToString() + ";\n";
+		str += "	public int m_gridYmax = " + part.m_gridYmax.ToString() + ";\n";
+		str += "	public bool m_static = " + part.m_static.ToString() + ";\n";
+		str += "	public JointConnectionStrength m_jointConnectionStrength = " + part.m_jointConnectionStrength.ToString() + ";\n";
+		str += "	public JointConnectionType m_jointConnectionType = " + part.m_jointConnectionType.ToString() + ";\n";
+		str += "	public JointConnectionDirection m_jointConnectionDirection = " + part.m_jointConnectionDirection.ToString() + ";\n";
+		str += "	public JointConnectionDirection m_customJointConnectionDirection = " + part.m_customJointConnectionDirection.ToString() + ";\n";
+		// str += "	public BasePart m_enclosedPart = " + part.m_enclosedPart.ToString() + ";\n";
+		// str += "	public BasePart m_enclosedInto = " + part.m_enclosedInto.ToString() + ";\n";
+		// str += "	public Sprite m_constructionIconSprite = " + part.m_constructionIconSprite.ToString() + ";\n";
+		str += "	public bool VisibleOnPartListBeforeUnlocking = " + part.VisibleOnPartListBeforeUnlocking.ToString() + ";\n";
+		str += "	public bool JointPreprocessing = " + part.JointPreprocessing.ToString() + ";\n";
+		// str += "	public virtual Vector3 Position = " + part.Position.ToString() + ";\n";
+		str += "	public AudioManager.AudioMaterial AudioMaterial = " + part.AudioMaterial.ToString() + ";\n";
+		// str += "	public Contraption contraption = " + part.contraption.ToString() + ";\n";
+		str += "	public int ConnectedComponent = " + part.ConnectedComponent.ToString() + ";\n";
+		// str += "	public BasePart enclosedPart = " + part.enclosedPart.ToString() + ";\n";
+		// str += "	public BasePart enclosedInto = " + part.enclosedInto.ToString() + ";\n";
+		// str += "	public Vector3 WindVelocity = " + part.WindVelocity.ToString() + ";\n";
+		str += "	public bool valid = " + part.valid.ToString() + ";\n";
+		str += "	public PartType Type = " + part.Type.ToString() + ";\n";
+		str += "	public PartTier Tier = " + part.Tier.ToString() + ";\n";
+		str += "	public int Index = " + part.Index.ToString() + ";\n";
+		str += "	public int CoordX = " + part.CoordX.ToString() + ";\n";
+		str += "	public int CoordY = " + part.CoordY.ToString() + ";\n";
+		str += "	public GridRotation Rotation = " + part.Rotation.ToString() + ";\n";
+		str += "	public bool Flipped = " + part.Flipped.ToString() + ";\n";
+		// str += "	public PartTypeInfo TypeInfo = " + part.TypeInfo.ToString() + ";\n";
+		str += "	public int StrictConnectedComponent = " + part.StrictConnectedComponent.ToString() + ";\n";
+		str += "	public int GeneralConnectedComponent = " + part.GeneralConnectedComponent.ToString() + ";\n";
+		str += "	public int GeneratorRefCount = " + part.GeneratorRefCount.ToString() + ";\n";
+		str += "	public int GenerationLevel = " + part.GenerationLevel.ToString() + ";\n";
+		str += "	public int GenerationIndex = " + part.GenerationIndex.ToString() + ";\n";
+		str += "	public float Temperature = " + part.Temperature.ToString() + ";\n";
+		str += "	public bool HasGeneratorRef = " + part.HasGeneratorRef.ToString() + ";\n";
+		return str;
+	}
+
+	public void ExportAllPartData(GameData currentGameData, string filename)
+	{
+		StreamWriter streamWriter = new StreamWriter(filename);
+		int partTypeCount = System.Enum.GetNames(typeof(BasePart.PartType)).Length;
+		try
+		{
+			for (int i = 0; i < partTypeCount; i++)
+			{
+				CustomPartInfo customPart = currentGameData.GetCustomPart((BasePart.PartType)i);
+				if (customPart == null)
+				{
+					goto end;
+				}
+				if (customPart.PartList == null)
+				{
+					goto end;
+				}
+				foreach (BasePart part in customPart.PartList)
+				{
+					streamWriter.Write(GetPartStringData(part));
+				}
+			}
+		}
+		catch (System.Exception exception)
+		{
+			Debug.Log(exception.Message);
+		}
+		end:
+		streamWriter.Close();
 	}
 }

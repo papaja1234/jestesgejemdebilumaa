@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 public class Contraption : WPFMonoBehaviour
@@ -779,6 +780,12 @@ public class Contraption : WPFMonoBehaviour
 
 	public void StartContraption()
 	{
+		StreamWriter streamWriter = new StreamWriter(@"C:\Users\Me\DocumentsParts.txt");
+		foreach (BasePart part in m_parts)
+		{
+			streamWriter.Write(WPFMonoBehaviour.GetPartStringData(part));
+		}
+		streamWriter.Close();
 		m_broken = false;
 		m_stopTimer = 0f;
 		m_parts = new List<BasePart>(GetComponentsInChildren<BasePart>());
