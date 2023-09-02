@@ -8,6 +8,7 @@
  * this #if preprocessor command is used for my debugging?
  * Remove this #if preprocessor command if it's useless.
  */
+#define GOGGS_SCRIPT_ENGINE
 #if GOGGS_SCRIPT_ENGINE
 #nullable enable
 using System;
@@ -168,9 +169,12 @@ namespace GoggsMessaround.CSharpScriptEngine
 			Assembly? l_CompiledScriptAssembly = Assembly.Load(l_compiledScriptAsmBinDat);
 			//the entry point method symbol of the script assembly
 			IMethodSymbol? l_EntryPointMethodSymbol = l_Compilation.GetEntryPoint(cancellationToken: System.Threading.CancellationToken.None);
-			bool l_fScriptClassIsInNamespace = string.IsNullOrWhiteSpace(l_EntryPointMethodSymbol.ContainingNamespace.MetadataName);
+			bool l_fScriptClassIsInNamespace =
+				string.IsNullOrWhiteSpace(l_EntryPointMethodSymbol.ContainingNamespace.MetadataName);
 			Type l_ScriptClassType = l_CompiledScriptAssembly.GetType($"{(l_fScriptClassIsInNamespace ? string.Empty : l_EntryPointMethodSymbol.ContainingNamespace.MetadataName + ".")}{l_EntryPointMethodSymbol.ContainingType.MetadataName}");
-			MethodInfo l_ScriptAssemblyEntryPointMethod = l_ScriptClassType.GetMethod(l_EntryPointMethodSymbol.MetadataName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static);
+			MethodInfo l_ScriptAssemblyEntryPointMethod = l_ScriptClassType.GetMethod(
+				l_EntryPointMethodSymbol.MetadataName,
+				BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static);
 			if (this.m_submissionIndex >= this.m_submissionStates.Length)
 			{
 				Array.Resize(ref this.m_submissionStates, Math.Max(this.m_submissionIndex, this.m_submissionStates.Length * 2));

@@ -3,6 +3,7 @@
  * this #if preprocessor command is used for my debugging?
  * Remove this #if preprocessor command if it's useless.
  */
+#define GOGGS_SCRIPT_ENGINE
 #if GOGGS_SCRIPT_ENGINE
 using System.IO;
 
