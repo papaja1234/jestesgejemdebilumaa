@@ -10,7 +10,9 @@
 #define GOGGS_SCRIPT_ENGINE
 #if GOGGS_SCRIPT_ENGINE
 #nullable enable
+using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Reflection.Metadata;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
@@ -62,6 +64,8 @@ namespace GoggsMessaround.CSharpScriptEngine
 			this.fCompilationOptimizationLevel = compilationOptimizationLevel;
 			this.fCompilationPlatform = compilationPlatform;
 		}
+
+		
 	}
 }
 #endif

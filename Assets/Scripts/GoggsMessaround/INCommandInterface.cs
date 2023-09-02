@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
+using GoggsMessaround.CSharpScriptEngine;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
@@ -10,7 +11,7 @@ using UnityEngine.UI;
 
 public class INCommandInterface : MonoBehaviour
 {
-    private ScriptEngine ScriptEngine;
+    private ScriptEngine scriptEngine;
     public Text ConsoleInput;
     public Text ConsoleOutput;
     [FormerlySerializedAs("Enter")] public UnityEngine.UI.Button EnterButton;
@@ -21,8 +22,7 @@ public class INCommandInterface : MonoBehaviour
     
     private void Start()
     {
-        ScriptEngine = gameObject.AddComponent<ScriptEngine>();
-        ScriptEngine.print("STASIS");
+        scriptEngine = new ScriptEngine(ScriptEngine.GetDefaultConfig());
         EnterButton.onClick.AddListener(ExecuteCode);
         ClearButton.onClick.AddListener(ClearConsole);
         /*//testing
@@ -48,15 +48,16 @@ public class INCommandInterface : MonoBehaviour
     private void ExecuteCode()
     {
         randomClassName = ScriptEngine.RandomString(13, "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ");
-        string code = ScriptEngine.WarpCodeSnippet(ConsoleInput.text, randomClassName);
-        Assembly? nullableAssembly= ScriptEngine.Compile(code, index.ToString());
+        string code = scriptEngine.WarpCodeSnippet(ConsoleInput.text, randomClassName);
+        CompiledScriptInfo info = scriptEngine.Compile(code);
+        Assembly? nullableAssembly = info.m_Assembly;
         if (nullableAssembly != null)
         {
             object assemblyInstance = nullableAssembly.CreateInstance(randomClassName)!;
-            MethodInfo methodInfo = nullableAssembly.GetType(randomClassName).GetMethod("Main")!;
+            //object ret = info.m_ScriptEntryPointMethodDelegate?.Invoke() ?? throw new InvalidOperationException();
             try
             {
-                object returnValue = methodInfo.Invoke(assemblyInstance, new object[]{});
+                object returnValue = info.m_ScriptEntryPointMethodDelegate();//null ref
                 ConsoleOutput.text = returnValue.ToString();
             }
             catch (Exception e)
