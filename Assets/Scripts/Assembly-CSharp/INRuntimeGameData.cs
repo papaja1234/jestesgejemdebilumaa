@@ -78,7 +78,7 @@ public class INRuntimeGameData : Singleton<INRuntimeGameData>
 			float num = INSettings.GetFloat(INFeature.ColoredFrameAlpha);
 			float num2 = INSettings.GetFloat(INFeature.ColoredFrameForegroundAlpha);
 			float num3 = INSettings.GetFloat(INFeature.ColoredFrameBackgroundAlpha);
-			Shader shader = INUnity.LoadShader("Unlit_ColorTransparent_SolidColor");
+			Shader shader = INUnity.LoadShader("PreAlpha_Unlit_ColorTransparent_Geometry");
 			for (int i = 0; i < 120; i++)
 			{
 				int num4 = i - 118;

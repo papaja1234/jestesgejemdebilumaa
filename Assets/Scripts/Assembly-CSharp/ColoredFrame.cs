@@ -104,9 +104,9 @@ public class ColoredFrame : Frame
 							float num2 = ((m_color.a > 0.5f) ? m_color.a : 0.5f);
 							// BUG: Weird colored frame
 							//     meshRenderer.material.shader = INUnity.LoadShader("Unlit_ColorTransparent_Geometry");
-							// Fix: Use "Unlit_ColorTransparent_GrayOverlay"
+							// Fix: Use "PreAlpha_Unlit_ColorTransparent_Geometry"
 							// Provided by: Goggs
-							meshRenderer.material.shader = INUnity.LoadShader("Unlit_ColorTransparent_GrayOverlay");
+							meshRenderer.material.shader = INUnity.LoadShader("PreAlpha_Unlit_ColorTransparent_Geometry");
 							meshRenderer.material.color = new Color(m_color.r, m_color.g, m_color.b, num2 * meshRenderer.material.color.a);
 							meshRenderer.material.SetFloat("_Blend", @float);
 						}
