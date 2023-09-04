@@ -70,7 +70,7 @@ MonoBehaviour:
   m_breakVelocity: 10
   m_powerConsumption: 0
   m_enginePower: 0
-  m_ZOffset: 0.1
+  m_ZOffset: -0.1
   customPartIndex: 11
   craftable: 1
   lootCrateReward: 1
