@@ -70,6 +70,7 @@ MonoBehaviour:
   - {fileID: 1544964612535747, guid: 2357d0bc3d789482d9d51b9d663e2188, type: 3}
   - {fileID: 1797414415238928, guid: 310146838884eebefbeed11cd4910bae, type: 3}
   - {fileID: 1544964612535747, guid: 04e5ab0239f5f01a2ac62e0c855b79cd, type: 3}
+  - {fileID: 1393897600726479, guid: 2caf81e48e926844ca45f9e150c81dbe, type: 3}
   PartIcons:
   - Part: {fileID: 1780987275874567, guid: a4e12d208b234a44aaab3e8410333301, type: 3}
     MaterialName: IngameAtlas4

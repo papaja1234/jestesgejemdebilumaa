@@ -282,7 +282,9 @@ public class FanPropeller : BasePropulsion
 		{
 			smokeCloud.Play();
 		}
-		base.contraption.UpdateEngineStates(base.ConnectedComponent);
+		// BUG: So many function call being recursive
+		// FIX: Disable the below line of code
+		// 	   base.contraption.UpdateEngineStates(base.ConnectedComponent);
 		if (m_enabled)
 		{
 			PlayPropellerSound();
