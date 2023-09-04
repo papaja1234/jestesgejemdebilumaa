@@ -342,6 +342,41 @@
 				"en-US": "Battery Status",
 				"zh-Hans": "设备电池状态"
 			}
+		},
+		{
+			"id": "AppInterface_Console",
+			"text": {
+				"en-US": "Console Interface",
+				"zh-Hans": ""
+			}
+		},
+		{
+			"id": "ConsoleInterface_TextArea",
+			"text": {
+				"en-US": "// Enter top-level C# Program Code here",
+				"zh-Hans": ""
+			}
+		},
+		{
+			"id": "ConsoleInterface_OutputArea",
+			"text": {
+				"en-US": "Program output will be shown here",
+				"zh-Hans": ""
+			}
+		},
+		{
+			"id": "ConsoleInterface_Compile",
+			"text": {
+				"en-US": "Compile",
+				"zh-Hans": ""
+			}
+		},
+		{
+			"id": "ConsoleInterface_Run",
+			"text": {
+				"en-US": "Run",
+				"zh-Hans": ""
+			}
 		}
 	]
 }
