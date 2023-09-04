@@ -189,5 +189,7 @@ AlienRapidGunExtended_IconSprite		768		384		210		105		0.4		0.4		768
 AlienRapidGunExtended_Sprite			768		384		210		105		0.4		0.4		768
 AlienExplodingBullet					768		512		105		105		0.4		0.4		768
 AlienExplodingBulletParticle			896		512		105		105		0.4		0.4		768
-AlienHyperPropeller_IconSprite          512     0       54      100     0.4     0.4     768
-AlienHyperPropeller_Sprite              512     0       54      100     0.4     0.4     768
+AlienHyperPropeller_IconSprite			512		0		54		100		0.4		0.4		768
+AlienHyperPropeller_Sprite				512		0		54		100		0.4		0.4		768
+AlienGlassFrame_IconSprite				640		0		110		110		0.4		0.4		768
+AlienGlassFrame_Sprite					640		0		110		110		0.4		0.4		768
