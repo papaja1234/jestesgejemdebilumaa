@@ -351,6 +351,7 @@ public class INRuntimeGameData : Singleton<INRuntimeGameData>
 			AddCustomPart(CreatePartAndSetParent(BasePart.PartType.WoodenFrame, 12));
 			AddCustomPart(CreatePartAndSetParent(BasePart.PartType.Engine, 7));
 			AddCustomPart(CreatePartAndSetParent(BasePart.PartType.EngineBig, 7));
+			AddCustomPart(CreatePartAndSetParent(BasePart.PartType.StickyWheel, 4));
 		}
 		else
 		{
@@ -363,6 +364,7 @@ public class INRuntimeGameData : Singleton<INRuntimeGameData>
 			RemoveCustomPart(BasePart.PartType.WoodenFrame, 12);
 			RemoveCustomPart(BasePart.PartType.Engine, 7);
 			RemoveCustomPart(BasePart.PartType.EngineBig, 7);
+			RemoveCustomPart(BasePart.PartType.StickyWheel, 4);
 		}
 	}
 
