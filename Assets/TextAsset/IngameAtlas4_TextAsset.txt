@@ -198,6 +198,6 @@ AlienEngineNormal_Sprite				640		128		90		82		0.4		0.4		768
 AlienEngineBig_IconSprite				768		128		114		100		0.4		0.4		768
 AlienEngineBig_Sprite					768		128		114		100		0.4		0.4		768
 AlienOffRoadStickyWheel_IconSprite		0		896		142		152		0.4		0.4		768
-AlienOffRoadStickyWheel_WheelSprite		142		896		142		140		0.5		0.5		768
-AlienOffRoadStickyWheel_SpokeSprite		284		896		66		64		0.5		0.5		768
-AlienOffRoadStickyWheel_SupportSprite	384		0		66		65		0.5		0.5		768
+AlienOffRoadStickyWheel_WheelSprite		142		896		142		140		0.4		0.4		768
+AlienOffRoadStickyWheel_SpokeSprite		284		896		66		64		0.4		0.4		768
+AlienOffRoadStickyWheel_SupportSprite	384		0		66		65		0.4		0.4		768
