@@ -193,10 +193,10 @@ AlienHyperPropeller_IconSprite			512		0		54		100		0.4		0.4		768
 AlienHyperPropeller_Sprite				512		0		54		100		0.4		0.4		768
 AlienGlassFrame_IconSprite				640		0		110		110		0.4		0.4		768
 AlienGlassFrame_Sprite					640		0		110		110		0.4		0.4		768
-AlienEngineNormal_IconSprite			640		128		90		82		0.4		0.4		768
-AlienEngineNormal_Sprite				640		128		90		82		0.4		0.4		768
-AlienEngineBig_IconSprite				768		128		114		100		0.4		0.4		768
-AlienEngineBig_Sprite					768		128		114		100		0.4		0.4		768
+AlienEngineNormal_IconSprite			640		128		90		94		0.4		0.4		768
+AlienEngineNormal_Sprite				640		128		90		94		0.4		0.4		768
+AlienEngineBig_IconSprite				768		128		114		90		0.4		0.4		768
+AlienEngineBig_Sprite					768		128		114		90		0.4		0.4		768
 AlienOffRoadStickyWheel_IconSprite		0		896		142		152		0.4		0.4		768
 AlienOffRoadStickyWheel_WheelSprite		142		896		142		140		0.4		0.4		768
 AlienOffRoadStickyWheel_SpokeSprite		284		896		66		64		0.4		0.4		768
