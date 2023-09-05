@@ -50,11 +50,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7fadf2ec4238b3d4bbb985831bd4adc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_content: {fileID: 0}
-  m_consoleCode: {fileID: 0}
-  m_consoleOutput: {fileID: 0}
-  m_compileButton: {fileID: 0}
-  m_runButton: {fileID: 0}
+  m_content: {fileID: 5283007433594105721}
+  m_consoleCode: {fileID: 8652822690228540490}
+  m_consoleOutput: {fileID: 6376358433555370383}
+  m_compileButton: {fileID: 6938316760522381169}
+  m_runButton: {fileID: 8599905179475597593}
 --- !u!1 &652566524892942824
 GameObject:
   m_ObjectHideFlags: 0

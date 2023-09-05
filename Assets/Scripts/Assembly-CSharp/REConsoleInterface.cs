@@ -25,6 +25,8 @@ public class REConsoleInterface : MonoBehaviour
 	[SerializeField]
 	private UnityEngine.UI.Button m_runButton;
 
+	private byte[] m_assemblyData;
+
 	public bool IsChanged { get; private set; }
 
 	public static REConsoleInterface Instance { get; private set; }
@@ -32,6 +34,8 @@ public class REConsoleInterface : MonoBehaviour
 	private void Awake()
 	{
 		Instance = this;
+		m_compileButton.onClick.AddListener(Compile);
+		m_runButton.onClick.AddListener(Run);
 	}
 
 	private void Update()
@@ -70,38 +74,56 @@ public class REConsoleInterface : MonoBehaviour
 
 			if (!result.Success)
 			{
-				Console.WriteLine("Compilation errors:");
+				m_consoleOutput.text = INLocalization.Instance.GetText("ConsoleInterface_CompileFailed");
 				foreach (var diagnostic in result.Diagnostics)
 				{
-					Console.WriteLine(diagnostic);
+					m_consoleOutput.text += diagnostic;
 				}
 			}
 			else
 			{
 				ms.Seek(0, SeekOrigin.Begin);
-				byte[] assemblyData = ms.ToArray();
-				var assembly = Assembly.Load(assemblyData);
-				string typeName = "SystemCommandExecution.Program";
-				Type dynamicType = assembly.GetType(typeName);
-				if (dynamicType == null)
-				{
-					Console.WriteLine($"Error getting the type {typeName}");
-					return;
-				}
-				object instance = Activator.CreateInstance(dynamicType);
-				if (instance == null)
-				{
-					Console.WriteLine("Failed to create an instance of dynamicType");
-					return;
-				}
-				MethodInfo methodInfo = dynamicType.GetMethod("DynamicMain");
-				if (methodInfo == null)
-				{
-					Console.WriteLine("Failed to get method info of dynamicType");
-					return;
-				}
-				methodInfo.Invoke(instance, null);
+				m_assemblyData = ms.ToArray();
+				m_consoleOutput.text = INLocalization.Instance.GetText("ConsoleInterface_CompileSuccess");
 			}
+		}
+	}
+
+	private void Run()
+	{
+		var assembly = Assembly.Load(m_assemblyData);
+		string typeName = "BPProgram";
+		Type dynamicType = assembly.GetType(typeName);
+		m_consoleOutput.text = "";
+		if (dynamicType == null)
+		{
+			m_consoleOutput.text += INLocalization.Instance.GetText("ConsoleInterface_RuntimeErrorGetType");
+			return;
+		}
+		object instance = Activator.CreateInstance(dynamicType);
+		if (instance == null)
+		{
+			m_consoleOutput.text += INLocalization.Instance.GetText("ConsoleInterface_RuntimeErrorInitType");
+			return;
+		}
+		MethodInfo methodInfo = dynamicType.GetMethod("BPMain");
+		if (methodInfo == null)
+		{
+			m_consoleOutput.text += INLocalization.Instance.GetText("ConsoleInterface_RuntimeErrorInitType");
+			return;
+		}
+		object returnValue = methodInfo.Invoke(instance, null);
+		if (returnValue == null)
+		{
+			m_consoleOutput.text += INLocalization.Instance.GetText("ConsoleInterface_RuntimeErrorInvokeMethod");
+			return;
+		}
+		try {
+			m_consoleOutput.text += INLocalization.Instance.GetText("ConsoleInterface_ReturnValue") + (int) returnValue;
+		}
+		catch (Exception exception)
+		{
+			m_consoleOutput.text += INLocalization.Instance.GetText("ConsoleInterface_RuntimeErrorReturnConvert") + exception.Message;
 		}
 	}
 }

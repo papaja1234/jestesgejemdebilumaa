@@ -353,7 +353,7 @@
 		{
 			"id": "ConsoleInterface_TextArea",
 			"text": {
-				"en-US": "// Enter top-level C# Program Code here",
+				"en-US": "// Enter C# Program Code here\n// You must have one class named BPProgram\n// You must have a public static int method named BPMain which returns success code\nusing System;\nclass BPProgram\n{\n\tpublic static int BPMain()\n\t{\n\t\treturn 0;\n\t}\n}",
 				"zh-Hans": ""
 			}
 		},
@@ -375,6 +375,62 @@
 			"id": "ConsoleInterface_Run",
 			"text": {
 				"en-US": "Run",
+				"zh-Hans": ""
+			}
+		},
+		{
+			"id": "ConsoleInterface_CompileFailed",
+			"text": {
+				"en-US": "Compilation failed:",
+				"zh-Hans": ""
+			}
+		},
+		{
+			"id": "ConsoleInterface_CompileSuccess",
+			"text": {
+				"en-US": "Compilation success!",
+				"zh-Hans": ""
+			}
+		},
+		{
+			"id": "ConsoleInterface_RuntimeErrorGetType",
+			"text": {
+				"en-US": "Error getting class BPProgram",
+				"zh-Hans": ""
+			}
+		},
+		{
+			"id": "ConsoleInterface_RuntimeErrorInitType",
+			"text": {
+				"en-US": "Error initializing class BPProgram",
+				"zh-Hans": ""
+			}
+		},
+		{
+			"id": "ConsoleInterface_RuntimeErrorGetMethod",
+			"text": {
+				"en-US": "Error getting method BPProgram.BPMain()",
+				"zh-Hans": ""
+			}
+		},
+		{
+			"id": "ConsoleInterface_RuntimeErrorInvokeMethod",
+			"text": {
+				"en-US": "Error getting return value of BPProgram.BPMain()",
+				"zh-Hans": ""
+			}
+		},
+		{
+			"id": "ConsoleInterface_RuntimeErrorReturnConvert",
+			"text": {
+				"en-US": "Failed to convert return value of BPProgram.BPMain() . Make sure it is an int type. Exception Message: ",
+				"zh-Hans": ""
+			}
+		},
+		{
+			"id": "ConsoleInterface_ReturnValue",
+			"text": {
+				"en-US": "Program exited with return value: ",
 				"zh-Hans": ""
 			}
 		}
