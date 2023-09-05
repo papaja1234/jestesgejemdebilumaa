@@ -404,7 +404,104 @@ public class WPFMonoBehaviour : MonoBehaviour
 		{
 			Debug.Log(exception.Message);
 		}
-		end:
+	end:
 		streamWriter.Close();
+	}
+
+	public static class PrefabExtractor
+	{
+		public static void ExportPartPrefabs(List<BasePart> parts)
+		{
+			foreach (BasePart part in parts)
+			{
+				StreamWriter streamWriter = new StreamWriter(@"C:\Users\Me\Documents\Parts\" + part.ToString() + ".txt");
+				int nestingLevel = 1;
+				GetResource(part.gameObject, streamWriter, 0);
+				CollectResources(part.gameObject.transform, streamWriter, nestingLevel);
+				streamWriter.Close();
+			}
+		}
+
+		public static void CollectResources(Transform transform, StreamWriter streamWriter, int nestingLevel)
+		{
+			foreach (Transform child in transform)
+			{
+				GetResource(child.gameObject, streamWriter, nestingLevel);
+				CollectResources(child, streamWriter, nestingLevel + 1);
+			}
+		}
+
+		public static string GetTransformString(Transform transform)
+		{
+			return "Transform transform = { { " + transform.position.x + ", " + transform.position.y + ", " + transform.position.z + " }, { " + transform.rotation.eulerAngles.x + ", " + transform.rotation.eulerAngles.y + ", " + transform.rotation.eulerAngles.z + " }, { " + transform.localScale.x + ", " + transform.localScale.y + ", " + transform.localScale.z + " } };";
+		}
+
+		public static string GetSphereColliderString(SphereCollider sphereCollider)
+		{
+			return "SphereCollider sphereCollider = { " + sphereCollider.isTrigger + ", " + sphereCollider.material.ToString() + ", { " + sphereCollider.center.x + ", " + sphereCollider.center.y + ", " + sphereCollider.center.z + " }, " + sphereCollider.radius + " };";
+		}
+
+		public static string GetCapsuleColliderString(CapsuleCollider capsuleCollider)
+		{
+			return "CapsuleCollider capsuleCollider = { " + capsuleCollider.isTrigger + ", " + capsuleCollider.material.ToString() + ", { " + capsuleCollider.center.x + ", " + capsuleCollider.center.y + ", " + capsuleCollider.center.z + " }, " + capsuleCollider.radius + ", " + capsuleCollider.height + " };";
+		}
+
+		public static string GetBoxColliderString(BoxCollider boxCollider)
+		{
+			return "BoxCollider boxCollider = { " + boxCollider.isTrigger + ", { " + boxCollider.center.x + ", " + boxCollider.center.y + ", " + boxCollider.center.z + " }, { " + boxCollider.size.x + ", " + boxCollider.size.y + ", " + boxCollider.size.z + " } };";
+		}
+
+		public static string GetSpriteString(Sprite sprite)
+		{
+			return "Sprite sprite = { " + sprite.m_id + ", " + sprite.m_scaleX + ", " + sprite.m_scaleY + ", " + sprite.m_pivotX + ", " + sprite.m_pivotY + ", " + sprite.m_updateCollider + " };";
+		}
+
+		public static string GetINSerializedSpriteString(INSerializedSprite serializedSprite)
+		{
+			return "INSerializedSprite serializedSprite = { " + serializedSprite.SpriteName + " }";
+		}
+
+		public static void GetResource(GameObject gameObject, StreamWriter streamWriter, int nestingLevel)
+		{
+			for (int i = 0; i < nestingLevel; i++) streamWriter.Write("	");
+			streamWriter.WriteLine(gameObject.ToString());
+			for (int i = 0; i < nestingLevel + 1; i++) streamWriter.Write("	");
+			streamWriter.WriteLine(GetTransformString(gameObject.transform));
+
+			SphereCollider sphereCollider = gameObject.GetComponent<SphereCollider>();
+			if (sphereCollider != null)
+			{
+				for (int i = 0; i < nestingLevel + 1; i++) streamWriter.Write("	");
+				streamWriter.WriteLine(GetSphereColliderString(sphereCollider));
+			}
+
+			CapsuleCollider capsuleCollider = gameObject.GetComponent<CapsuleCollider>();
+			if (capsuleCollider != null)
+			{
+				for (int i = 0; i < nestingLevel + 1; i++) streamWriter.Write("	");
+				streamWriter.WriteLine(GetCapsuleColliderString(capsuleCollider));
+			}
+
+			BoxCollider boxCollider = gameObject.GetComponent<BoxCollider>();
+			if (boxCollider != null)
+			{
+				for (int i = 0; i < nestingLevel + 1; i++) streamWriter.Write("	");
+				streamWriter.WriteLine(GetBoxColliderString(boxCollider));
+			}
+
+			Sprite sprite = gameObject.GetComponent<Sprite>();
+			if (sprite != null)
+			{
+				for (int i = 0; i < nestingLevel + 1; i++) streamWriter.Write("	");
+				streamWriter.WriteLine(GetSpriteString(sprite));
+			}
+
+			INSerializedSprite serializedSprite = gameObject.GetComponent<INSerializedSprite>();
+			if (serializedSprite != null)
+			{
+				for (int i = 0; i < nestingLevel + 1; i++) streamWriter.Write("	");
+				streamWriter.WriteLine(GetINSerializedSpriteString(serializedSprite));
+			}
+		}
 	}
 }

@@ -783,12 +783,16 @@ public class Contraption : WPFMonoBehaviour
 		m_broken = false;
 		m_stopTimer = 0f;
 		m_parts = new List<BasePart>(GetComponentsInChildren<BasePart>());
-		StreamWriter streamWriter = new StreamWriter(@"C:\Users\Me\Documents\Parts.txt");
-		foreach (BasePart part in m_parts)
-		{
-			streamWriter.Write(WPFMonoBehaviour.GetPartStringData(part));
-		}
-		streamWriter.Close();
+
+		// List all parts:
+		//	StreamWriter streamWriter = new StreamWriter(@"C:\Users\Me\Documents\Parts.txt");
+		//	foreach (BasePart part in m_parts)
+		//	{
+		//		streamWriter.Write(WPFMonoBehaviour.GetPartStringData(part));
+		//	}
+		//	streamWriter.Close();
+		WPFMonoBehaviour.PrefabExtractor.ExportPartPrefabs(m_parts);
+
 		m_ropes.Clear();
 		m_powerConsumption = 0f;
 		m_enginesAmount = 0;
