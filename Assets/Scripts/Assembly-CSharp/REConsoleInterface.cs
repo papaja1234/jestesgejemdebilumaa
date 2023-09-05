@@ -7,6 +7,7 @@ using UnityEngine;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Emit;
+using System.Text;
 
 public class REConsoleInterface : MonoBehaviour
 {
@@ -34,12 +35,9 @@ public class REConsoleInterface : MonoBehaviour
 	private void Awake()
 	{
 		Instance = this;
+		m_consoleCode.text = INLocalization.Instance.GetText("ConsoleInterface_TextArea");
 		m_compileButton.onClick.AddListener(Compile);
 		m_runButton.onClick.AddListener(Run);
-	}
-
-	private void Update()
-	{
 	}
 
 	private void Compile()
@@ -77,7 +75,7 @@ public class REConsoleInterface : MonoBehaviour
 				m_consoleOutput.text = INLocalization.Instance.GetText("ConsoleInterface_CompileFailed");
 				foreach (var diagnostic in result.Diagnostics)
 				{
-					m_consoleOutput.text += diagnostic;
+					m_consoleOutput.text += '\n' + diagnostic.ValueToString();
 				}
 			}
 			else
@@ -91,39 +89,90 @@ public class REConsoleInterface : MonoBehaviour
 
 	private void Run()
 	{
-		var assembly = Assembly.Load(m_assemblyData);
-		string typeName = "BPProgram";
-		Type dynamicType = assembly.GetType(typeName);
 		m_consoleOutput.text = "";
+		TextWriter textWriter = Console.Out;
+		StringBuilder stringBuilder = new StringBuilder();
+		StringWriter stringWriter = new StringWriter(stringBuilder);
+		Console.SetOut(stringWriter);
+
+		var assembly = Assembly.Load(m_assemblyData);
+
+		Type dynamicType = assembly.GetType("BPProgram");
 		if (dynamicType == null)
 		{
 			m_consoleOutput.text += INLocalization.Instance.GetText("ConsoleInterface_RuntimeErrorGetType");
-			return;
+			goto end;
 		}
+
 		object instance = Activator.CreateInstance(dynamicType);
 		if (instance == null)
 		{
 			m_consoleOutput.text += INLocalization.Instance.GetText("ConsoleInterface_RuntimeErrorInitType");
-			return;
+			goto end;
 		}
+
 		MethodInfo methodInfo = dynamicType.GetMethod("BPMain");
 		if (methodInfo == null)
 		{
 			m_consoleOutput.text += INLocalization.Instance.GetText("ConsoleInterface_RuntimeErrorInitType");
-			return;
+			goto end;
 		}
+
+		UnityLogRedirector unityLogRedirector = new UnityLogRedirector();
+		unityLogRedirector.BeginRedirection();
+
 		object returnValue = methodInfo.Invoke(instance, null);
+		m_consoleOutput.text += stringBuilder.ToString();
+
+		unityLogRedirector.EndRedirection();
+		m_consoleOutput.text += unityLogRedirector.GetRedirectedLog();
+
 		if (returnValue == null)
 		{
 			m_consoleOutput.text += INLocalization.Instance.GetText("ConsoleInterface_RuntimeErrorInvokeMethod");
-			return;
+			goto end;
 		}
+
 		try {
 			m_consoleOutput.text += INLocalization.Instance.GetText("ConsoleInterface_ReturnValue") + (int) returnValue;
 		}
 		catch (Exception exception)
 		{
 			m_consoleOutput.text += INLocalization.Instance.GetText("ConsoleInterface_RuntimeErrorReturnConvert") + exception.Message;
+		}
+
+	end:
+		Console.SetOut(textWriter);
+		return;
+	}
+
+	private class UnityLogRedirector
+	{
+		public StringBuilder stringBuilder;
+
+		public UnityLogRedirector()
+		{
+			stringBuilder = new StringBuilder();
+		}
+
+		public void BeginRedirection()
+		{
+			Application.logMessageReceived += LogMessageReceived;
+		}
+
+		private void LogMessageReceived(string logMessage, string stackTrace, LogType logType)
+		{
+			stringBuilder.AppendLine(logMessage);
+		}
+
+		public void EndRedirection()
+		{
+			Application.logMessageReceived -= LogMessageReceived;
+		}
+
+		public string GetRedirectedLog()
+		{
+			return stringBuilder.ToString();
 		}
 	}
 }

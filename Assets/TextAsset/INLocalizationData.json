@@ -353,7 +353,7 @@
 		{
 			"id": "ConsoleInterface_TextArea",
 			"text": {
-				"en-US": "// Enter C# Program Code here\n// You must have one class named BPProgram\n// You must have a public static int method named BPMain which returns success code\nusing System;\nclass BPProgram\n{\n\tpublic static int BPMain()\n\t{\n\t\treturn 0;\n\t}\n}",
+				"en-US": "// Enter C# Program Code here\n// You must have one class named BPProgram\n// You must have a public static int method named BPMain()\n// BPMain() must returns int success/failure code\n// BPMain() must also take no arguments\n// Honestly, you would better off be using an external text editor\n// Have a good time programming!\n\nusing System;\nusing UnityEngine;\n\nclass BPProgram\n{\n\tpublic static int BPMain()\n\t{\n\t\tConsole.WriteLine(\"Hello, Bad Piggies!\");\n\t\treturn 0;\n\t}\n}",
 				"zh-Hans": ""
 			}
 		},
