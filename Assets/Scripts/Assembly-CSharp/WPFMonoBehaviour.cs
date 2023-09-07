@@ -377,34 +377,13 @@ public class WPFMonoBehaviour : MonoBehaviour
 		return str;
 	}
 
-	public void ExportAllPartData(GameData currentGameData, string filename)
+	public static void ExportAllPartData(List<BasePart> parts)
 	{
-		StreamWriter streamWriter = new StreamWriter(filename);
-		int partTypeCount = System.Enum.GetNames(typeof(BasePart.PartType)).Length;
-		try
+		StreamWriter streamWriter = new StreamWriter(@"C:\Users\Me\Documents\Parts.txt");
+		foreach (BasePart part in parts)
 		{
-			for (int i = 0; i < partTypeCount; i++)
-			{
-				CustomPartInfo customPart = currentGameData.GetCustomPart((BasePart.PartType)i);
-				if (customPart == null)
-				{
-					goto end;
-				}
-				if (customPart.PartList == null)
-				{
-					goto end;
-				}
-				foreach (BasePart part in customPart.PartList)
-				{
-					streamWriter.Write(GetPartStringData(part));
-				}
-			}
+			streamWriter.Write(GetPartStringData(part));
 		}
-		catch (System.Exception exception)
-		{
-			Debug.Log(exception.Message);
-		}
-	end:
 		streamWriter.Close();
 	}
 
@@ -433,32 +412,32 @@ public class WPFMonoBehaviour : MonoBehaviour
 
 		public static string GetTransformString(Transform transform)
 		{
-			return "Transform transform = { { " + transform.position.x + ", " + transform.position.y + ", " + transform.position.z + " }, { " + transform.rotation.eulerAngles.x + ", " + transform.rotation.eulerAngles.y + ", " + transform.rotation.eulerAngles.z + " }, { " + transform.localScale.x + ", " + transform.localScale.y + ", " + transform.localScale.z + " } };";
+			return "transform " + transform.position.x + " " + transform.position.y + " " + transform.position.z + " " + transform.rotation.eulerAngles.x + " " + transform.rotation.eulerAngles.y + " " + transform.rotation.eulerAngles.z + " " + transform.localScale.x + " " + transform.localScale.y + " " + transform.localScale.z;
 		}
 
 		public static string GetSphereColliderString(SphereCollider sphereCollider)
 		{
-			return "SphereCollider sphereCollider = { " + sphereCollider.isTrigger + ", " + sphereCollider.material.ToString() + ", { " + sphereCollider.center.x + ", " + sphereCollider.center.y + ", " + sphereCollider.center.z + " }, " + sphereCollider.radius + " };";
+			return "sphereCollider " + sphereCollider.isTrigger + " " + sphereCollider.material.ToString() + " " + sphereCollider.center.x + " " + sphereCollider.center.y + " " + sphereCollider.center.z + " " + sphereCollider.radius;
 		}
 
 		public static string GetCapsuleColliderString(CapsuleCollider capsuleCollider)
 		{
-			return "CapsuleCollider capsuleCollider = { " + capsuleCollider.isTrigger + ", " + capsuleCollider.material.ToString() + ", { " + capsuleCollider.center.x + ", " + capsuleCollider.center.y + ", " + capsuleCollider.center.z + " }, " + capsuleCollider.radius + ", " + capsuleCollider.height + " };";
+			return "capsuleCollider " + capsuleCollider.isTrigger + " " + capsuleCollider.material.ToString() + " " + capsuleCollider.center.x + " " + capsuleCollider.center.y + " " + capsuleCollider.center.z + " " + capsuleCollider.radius + " " + capsuleCollider.height;
 		}
 
 		public static string GetBoxColliderString(BoxCollider boxCollider)
 		{
-			return "BoxCollider boxCollider = { " + boxCollider.isTrigger + ", { " + boxCollider.center.x + ", " + boxCollider.center.y + ", " + boxCollider.center.z + " }, { " + boxCollider.size.x + ", " + boxCollider.size.y + ", " + boxCollider.size.z + " } };";
+			return "boxCollider " + boxCollider.isTrigger + " " + boxCollider.center.x + " " + boxCollider.center.y + " " + boxCollider.center.z + " " + boxCollider.size.x + " " + boxCollider.size.y + " " + boxCollider.size.z;
 		}
 
 		public static string GetSpriteString(Sprite sprite)
 		{
-			return "Sprite sprite = { " + sprite.m_id + ", " + sprite.m_scaleX + ", " + sprite.m_scaleY + ", " + sprite.m_pivotX + ", " + sprite.m_pivotY + ", " + sprite.m_updateCollider + " };";
+			return "sprite " + sprite.m_id + " " + sprite.m_scaleX + " " + sprite.m_scaleY + " " + sprite.m_pivotX + " " + sprite.m_pivotY + " " + sprite.m_updateCollider;
 		}
 
 		public static string GetINSerializedSpriteString(INSerializedSprite serializedSprite)
 		{
-			return "INSerializedSprite serializedSprite = { " + serializedSprite.SpriteName + " }";
+			return "serializedSprite " + serializedSprite.SpriteName;
 		}
 
 		public static void GetResource(GameObject gameObject, StreamWriter streamWriter, int nestingLevel)

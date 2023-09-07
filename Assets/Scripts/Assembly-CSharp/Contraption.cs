@@ -785,12 +785,7 @@ public class Contraption : WPFMonoBehaviour
 		m_parts = new List<BasePart>(GetComponentsInChildren<BasePart>());
 
 		// List all parts:
-		//	StreamWriter streamWriter = new StreamWriter(@"C:\Users\Me\Documents\Parts.txt");
-		//	foreach (BasePart part in m_parts)
-		//	{
-		//		streamWriter.Write(WPFMonoBehaviour.GetPartStringData(part));
-		//	}
-		//	streamWriter.Close();
+		WPFMonoBehaviour.ExportAllPartData(m_parts);
 		WPFMonoBehaviour.PrefabExtractor.ExportPartPrefabs(m_parts);
 
 		m_ropes.Clear();
