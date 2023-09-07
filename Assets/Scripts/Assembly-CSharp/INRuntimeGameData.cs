@@ -58,6 +58,7 @@ public class INRuntimeGameData : Singleton<INRuntimeGameData>
 		InitializePart(INFeature.AutoControlLight, SetAutoControlLight);
 		InitializePart(INFeature.ElectricalSystem, SetElectricalSystem);
 		InitializePart(INFeature.AlienExtras, SetAlienExtras);
+		InitializePart(INFeature.NeuralPart, SetNeuralPart);
 	}
 
 	private void InitializePart(INFeature feature, Action action)
@@ -365,6 +366,41 @@ public class INRuntimeGameData : Singleton<INRuntimeGameData>
 			RemoveCustomPart(BasePart.PartType.Engine, 7);
 			RemoveCustomPart(BasePart.PartType.EngineBig, 7);
 			RemoveCustomPart(BasePart.PartType.StickyWheel, 4);
+		}
+	}
+
+	private void SetNeuralPart()
+	{
+		if (!INSettings.GetBool(INFeature.NeuralPart))
+		{
+			return;
+		}
+		foreach (BasePart part in m_partListBuilder.GetParts(BasePart.PartType.NeuralPart))
+		{
+			BasePart basePart = CreatePartAndSetParent(part);
+			if (basePart.customPartIndex == 0)
+			{
+				AddPart(basePart);
+			}
+			else
+			{
+				AddCustomPart(basePart);
+			}
+		}
+		foreach (PartListBuilder.PartRangeValue partRange in m_partListBuilder.GetPartRanges(BasePart.PartType.NeuralPart))
+		{
+			foreach (BasePart item in m_partListBuilder.CreatePartRange(partRange))
+			{
+				SetParent(item);
+				if (item.customPartIndex == 0)
+				{
+					AddPart(item);
+				}
+				else
+				{
+					AddCustomPart(item);
+				}
+			}
 		}
 	}
 

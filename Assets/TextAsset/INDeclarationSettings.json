@@ -1018,6 +1018,11 @@
 			"name": "AlienExtras",
 			"type": "Boolean",
 			"value": true
+		},
+		{
+			"name": "NeuralPart",
+			"type": "Boolean",
+			"value": true
 		}
 	]
 }

@@ -644,6 +644,11 @@
 			"name": "AlienExtras",
 			"scope": "Global",
 			"value": true
+		},
+		{
+			"name": "NeuralPart",
+			"scope": "Global",
+			"value": true
 		}
 	]
 }
