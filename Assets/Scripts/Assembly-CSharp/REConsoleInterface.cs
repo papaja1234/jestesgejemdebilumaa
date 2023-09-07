@@ -26,11 +26,38 @@ public class REConsoleInterface : MonoBehaviour
 	[SerializeField]
 	private UnityEngine.UI.Button m_runButton;
 
-	private byte[] m_assemblyData;
+	[SerializeField]
+	private string m_assemblyName;
+
+	[SerializeField]
+	private string m_className;
+
+	[SerializeField]
+	private string m_methodName;
+
+	public string AssemblyName => m_assemblyName;
+
+	public string ClassName => m_className;
+
+	public string MethodName => m_methodName;
 
 	public bool IsChanged { get; private set; }
 
 	public static REConsoleInterface Instance { get; private set; }
+
+	private TextWriter m_consoleOut;
+
+	private StringBuilder m_logBuilder;
+
+	private Assembly m_programAssembly;
+
+	private Type m_programType;
+
+	private MethodInfo m_programMethod;
+
+	private MonoBehaviour m_programInstance;
+
+	private GameObject m_programObject;
 
 	private void Awake()
 	{
@@ -38,103 +65,113 @@ public class REConsoleInterface : MonoBehaviour
 		m_consoleCode.text = INLocalization.Instance.GetText("ConsoleInterface_TextArea");
 		m_compileButton.onClick.AddListener(Compile);
 		m_runButton.onClick.AddListener(Run);
+		m_logBuilder = new StringBuilder();
 	}
 
 	private void Compile()
 	{
-		string code = m_consoleCode.text;
-		SyntaxTree syntaxTree = CSharpSyntaxTree.ParseText(code);
-		string assemblyName = "DynamicAssembly";
+		SyntaxTree syntaxTree = CSharpSyntaxTree.ParseText(m_consoleCode.text);
 
-		List<MetadataReference> references = new List<MetadataReference>();
-
-        foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies().Where(assembly => !assembly.IsDynamic))
-        {
-            try
-            {
-                references.Add(MetadataReference.CreateFromFile(assembly.Location));
-            }
-            catch (Exception ex)
-            {
-                Debug.LogWarning($"Failed to add reference for assembly {assembly.FullName}: {ex.Message}");
-            }
-        }
-
-		CSharpCompilation compilation = CSharpCompilation.Create(
-			assemblyName,
-			syntaxTrees: new[] { syntaxTree },
-			references: references,
-			options: new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
-
-		using (var ms = new MemoryStream())
+		List<MetadataReference> m_metadatareferences = new List<MetadataReference>();
+		foreach (Assembly assembly in AppDomain.CurrentDomain.GetAssemblies().Where(assembly => !assembly.IsDynamic))
 		{
-			EmitResult result = compilation.Emit(ms);
-
-			if (!result.Success)
+			if (assembly.Location.Length != 0)
 			{
-				m_consoleOutput.text = INLocalization.Instance.GetText("ConsoleInterface_CompileFailed");
-				foreach (var diagnostic in result.Diagnostics)
+				try
 				{
-					m_consoleOutput.text += '\n' + diagnostic.ValueToString();
+					m_metadatareferences.Add(MetadataReference.CreateFromFile(assembly.Location));
+				}
+				catch (Exception exception)
+				{
+					Debug.Log(INLocalization.Instance.GetText("ConsoleInterface_PreCompileErrorMetadataReference") + exception.Message);
 				}
 			}
-			else
-			{
-				ms.Seek(0, SeekOrigin.Begin);
-				m_assemblyData = ms.ToArray();
-				m_consoleOutput.text = INLocalization.Instance.GetText("ConsoleInterface_CompileSuccess");
-			}
 		}
+
+		CSharpCompilation compilation = CSharpCompilation.Create(
+			assemblyName: m_assemblyName,
+			syntaxTrees: new[] { syntaxTree },
+			references: m_metadatareferences,
+			options: new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary)
+		);
+
+		MemoryStream memoryStream = new MemoryStream();
+		EmitResult result = compilation.Emit(memoryStream);
+
+		if (!result.Success)
+		{
+			m_consoleOutput.text = INLocalization.Instance.GetText("ConsoleInterface_CompileFailed");
+			foreach (Diagnostic diagnostic in result.Diagnostics)
+			{
+				m_consoleOutput.text += '\n' + diagnostic.ValueToString();
+			}
+			return;
+		}
+
+		memoryStream.Seek(0, SeekOrigin.Begin);
+		byte[] m_assemblyData = memoryStream.ToArray();
+		memoryStream.Close();
+
+		m_programAssembly = Assembly.Load(m_assemblyData);
+
+		m_programType = m_programAssembly.GetType(m_className);
+		if (m_programType == null)
+		{
+			m_consoleOutput.text = INLocalization.Instance.GetText("ConsoleInterface_PostCompileErrorGetType");
+			return;
+		}
+
+		if (m_programInstance != null)
+		{
+			Destroy(m_programInstance);
+		}
+
+		m_programInstance = gameObject.AddComponent(m_programType) as MonoBehaviour;
+		if (m_programInstance == null)
+		{
+			m_consoleOutput.text = INLocalization.Instance.GetText("ConsoleInterface_PostCompileErrorInitType");
+			return;
+		}
+
+		m_programMethod = m_programType.GetMethod(m_methodName);
+		if (m_programMethod == null)
+		{
+			m_consoleOutput.text = INLocalization.Instance.GetText("ConsoleInterface_PostCompileErrorGetMethod");
+			return;
+		}
+
+		m_consoleOutput.text = INLocalization.Instance.GetText("ConsoleInterface_CompileSuccess");
 	}
 
 	private void Run()
 	{
-		m_consoleOutput.text = "";
-		TextWriter textWriter = Console.Out;
-		StringBuilder stringBuilder = new StringBuilder();
-		StringWriter stringWriter = new StringWriter(stringBuilder);
-		Console.SetOut(stringWriter);
+		m_consoleOut = Console.Out;
+		m_logBuilder.Clear();
+		Console.SetOut(new StringWriter(m_logBuilder));
+		Application.logMessageReceived += DebugLogReader;
 
-		var assembly = Assembly.Load(m_assemblyData);
-
-		Type dynamicType = assembly.GetType("BPProgram");
-		if (dynamicType == null)
+		if (m_programAssembly == null || m_programType == null || m_programMethod == null || m_programInstance == null)
 		{
-			m_consoleOutput.text += INLocalization.Instance.GetText("ConsoleInterface_RuntimeErrorGetType");
+			m_consoleOutput.text = INLocalization.Instance.GetText("ConsoleInterface_InvalidCompile");
 			goto end;
 		}
 
-		object instance = Activator.CreateInstance(dynamicType);
-		if (instance == null)
+		m_programObject = new GameObject();
+		object returnValue = null;
+		try
 		{
-			m_consoleOutput.text += INLocalization.Instance.GetText("ConsoleInterface_RuntimeErrorInitType");
+			returnValue = m_programMethod.Invoke(m_programObject, new object[] { m_programObject });
+		}
+		catch (Exception exception)
+		{
+			m_consoleOutput.text = INLocalization.Instance.GetText("ConsoleInterface_RuntimeException") + exception.Message + "\nNote: It may not be possible to get the actual exception that occurred";
 			goto end;
 		}
+		m_consoleOutput.text = m_logBuilder.ToString();
 
-		MethodInfo methodInfo = dynamicType.GetMethod("BPMain");
-		if (methodInfo == null)
+		try
 		{
-			m_consoleOutput.text += INLocalization.Instance.GetText("ConsoleInterface_RuntimeErrorInitType");
-			goto end;
-		}
-
-		UnityLogRedirector unityLogRedirector = new UnityLogRedirector();
-		unityLogRedirector.BeginRedirection();
-
-		object returnValue = methodInfo.Invoke(instance, null);
-		m_consoleOutput.text += stringBuilder.ToString();
-
-		unityLogRedirector.EndRedirection();
-		m_consoleOutput.text += unityLogRedirector.GetRedirectedLog();
-
-		if (returnValue == null)
-		{
-			m_consoleOutput.text += INLocalization.Instance.GetText("ConsoleInterface_RuntimeErrorInvokeMethod");
-			goto end;
-		}
-
-		try {
-			m_consoleOutput.text += INLocalization.Instance.GetText("ConsoleInterface_ReturnValue") + (int) returnValue;
+			m_consoleOutput.text += INLocalization.Instance.GetText("ConsoleInterface_ReturnValue") + returnValue;
 		}
 		catch (Exception exception)
 		{
@@ -142,37 +179,17 @@ public class REConsoleInterface : MonoBehaviour
 		}
 
 	end:
-		Console.SetOut(textWriter);
+		if (m_programObject != null)
+		{
+			Destroy(m_programObject);
+		}
+		Application.logMessageReceived -= DebugLogReader;
+		Console.SetOut(m_consoleOut);
 		return;
 	}
 
-	private class UnityLogRedirector
+	private void DebugLogReader(string logMessage, string stackTrace, LogType logType)
 	{
-		public StringBuilder stringBuilder;
-
-		public UnityLogRedirector()
-		{
-			stringBuilder = new StringBuilder();
-		}
-
-		public void BeginRedirection()
-		{
-			Application.logMessageReceived += LogMessageReceived;
-		}
-
-		private void LogMessageReceived(string logMessage, string stackTrace, LogType logType)
-		{
-			stringBuilder.AppendLine(logMessage);
-		}
-
-		public void EndRedirection()
-		{
-			Application.logMessageReceived -= LogMessageReceived;
-		}
-
-		public string GetRedirectedLog()
-		{
-			return stringBuilder.ToString();
-		}
+		m_logBuilder.AppendLine(logMessage);
 	}
 }

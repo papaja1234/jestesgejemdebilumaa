@@ -353,7 +353,7 @@
 		{
 			"id": "ConsoleInterface_TextArea",
 			"text": {
-				"en-US": "// Enter C# Program Code here\n// You must have one class named BPProgram\n// You must have a public static int method named BPMain()\n// BPMain() must returns int success/failure code\n// BPMain() must also take no arguments\n// Honestly, you would better off be using an external text editor\n// Have a good time programming!\n\nusing System;\nusing UnityEngine;\n\nclass BPProgram\n{\n\tpublic static int BPMain()\n\t{\n\t\tConsole.WriteLine(\"Hello, Bad Piggies!\");\n\t\treturn 0;\n\t}\n}",
+				"en-US": "// Enter C# Program Code here\n// You must have one class named BPProgram\n// The class must inherit from MonoBehaviour class\n// You must have a public static int method named BPMain()\n// BPMain() must returns int success/failure code\n// BPMain() must also take GameObject as an argument\n// Honestly, you would better off be using an external text editor\n// Have a good time programming!\n\n// WARNING: CRITICAL WARNING: Running code made by some random people is a potential rick\n// because it is equivalent of installing a random software on the internet and mindlessly running it.\n// User precautions are adviced. Please check the code thoroughly before running it. Thanks\nusing System;\nusing UnityEngine;\n\nclass BPProgram : MonoBehaviour\n{\n\tpublic static int BPMain(GameObject gameObject)\n\t{\n\t\t// Insert your quick code here (Make sure to check the above warning)\n\t\tConsole.WriteLine(\"Hello, Bad Piggies!\");\n\t\treturn 0;\n\t}\n}",
 				"zh-Hans": ""
 			}
 		},
@@ -379,37 +379,44 @@
 			}
 		},
 		{
+			"id": "ConsoleInterface_PreCompileErrorMetadataReference",
+			"text": {
+				"en-US": "Unable to get metadata references: ",
+				"zh-Hans": ""
+			}
+		},
+		{
 			"id": "ConsoleInterface_CompileFailed",
 			"text": {
-				"en-US": "Compilation failed:",
+				"en-US": "Compilation failed, generated errors list:",
 				"zh-Hans": ""
 			}
 		},
 		{
 			"id": "ConsoleInterface_CompileSuccess",
 			"text": {
-				"en-US": "Compilation success!",
+				"en-US": "Compilation success! You can now press the Run button.",
 				"zh-Hans": ""
 			}
 		},
 		{
-			"id": "ConsoleInterface_RuntimeErrorGetType",
+			"id": "ConsoleInterface_PostCompileErrorGetType",
 			"text": {
-				"en-US": "Error getting class BPProgram",
+				"en-US": "Post compile error: Error getting class BPProgram",
 				"zh-Hans": ""
 			}
 		},
 		{
-			"id": "ConsoleInterface_RuntimeErrorInitType",
+			"id": "ConsoleInterface_PostCompileErrorInitType",
 			"text": {
-				"en-US": "Error initializing class BPProgram",
+				"en-US": "Post compile error: Error initializing class BPProgram",
 				"zh-Hans": ""
 			}
 		},
 		{
-			"id": "ConsoleInterface_RuntimeErrorGetMethod",
+			"id": "ConsoleInterface_PostCompileErrorGetMethod",
 			"text": {
-				"en-US": "Error getting method BPProgram.BPMain()",
+				"en-US": "Post compile error: Error getting method BPProgram.BPMain()",
 				"zh-Hans": ""
 			}
 		},
@@ -424,6 +431,20 @@
 			"id": "ConsoleInterface_RuntimeErrorReturnConvert",
 			"text": {
 				"en-US": "Failed to convert return value of BPProgram.BPMain() . Make sure it is an int type. Exception Message: ",
+				"zh-Hans": ""
+			}
+		},
+		{
+			"id": "ConsoleInterface_RuntimeException",
+			"text": {
+				"en-US": "Runtime exception was thrown in the compiled code: ",
+				"zh-Hans": ""
+			}
+		},
+		{
+			"id": "ConsoleInterface_InvalidCompile",
+			"text": {
+				"en-US": "The program was either not compiled or was not successful on compilation, please successfully compile the program before running.",
 				"zh-Hans": ""
 			}
 		},
