@@ -187,10 +187,8 @@ public class Button : Widget
 			mouseOver = false;
 			down = false;
 		}
-		if (m_inputDelegate != null)
-		{
-			m_inputDelegate(input);
-		}
+
+		m_inputDelegate?.Invoke(input);
 	}
 
 	private void Update()

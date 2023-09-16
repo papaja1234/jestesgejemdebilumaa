@@ -83,6 +83,8 @@ MonoBehaviour:
   m_constructionIconSprite: {fileID: 114937761766899137, guid: 1fd53c605a4692f4f87ccb7a33f850d5, type: 3}
   lateSpeed: {x: 0, y: 0, z: 0}
   m_hp: 1000
+  m_maxHp: 0
+  m_minDamage: 31.4
   m_inWorldCoordinates: 1
   m_direction: {x: 0, y: 1, z: 0}
   m_numberOfBalloons: 1

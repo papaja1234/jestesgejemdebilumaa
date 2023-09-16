@@ -68,10 +68,7 @@ public class FreeLootCrate : MonoBehaviour
 		{
 			GameProgress.SetInt(crateID + crateType, @int + 1);
 			WorkshopMenu.AnyLootCrateCollected = true;
-			if (OnFreeLootCrateCollected != null)
-			{
-				OnFreeLootCrateCollected();
-			}
+			OnFreeLootCrateCollected?.Invoke();
 			Camera hudCamera = Singleton<GuiManager>.Instance.FindCamera();
 			LootCrate.SpawnLootCrateOpeningDialog(crateType, 1, hudCamera, null, new LootCrate.AnalyticData(crateID, "free", LootCrate.AdWatched.NotApplicaple));
 			TryReportAchievements();

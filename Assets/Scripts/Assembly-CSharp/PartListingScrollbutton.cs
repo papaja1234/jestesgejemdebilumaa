@@ -31,10 +31,7 @@ public class PartListingScrollbutton : Widget
 		if (input.type == InputEvent.EventType.Drag && !interacting)
 		{
 			interacting = true;
-			if (OnDragBegin != null)
-			{
-				OnDragBegin();
-			}
+			OnDragBegin?.Invoke();
 		}
 		if (input.type == InputEvent.EventType.Drag)
 		{
@@ -42,18 +39,12 @@ public class PartListingScrollbutton : Widget
 			position = base.transform.parent.InverseTransformPoint(position);
 			position.z = -1f;
 			base.transform.localPosition = position;
-			if (OnDrag != null)
-			{
-				OnDrag(position.x);
-			}
+			OnDrag?.Invoke(position.x);
 		}
 		if (input.type == InputEvent.EventType.Release && interacting)
 		{
 			interacting = false;
-			if (OnDragEnd != null)
-			{
-				OnDragEnd();
-			}
+			OnDragEnd?.Invoke();
 		}
 		lastEvent = input.type;
 		receivingInput = true;

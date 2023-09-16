@@ -90,10 +90,7 @@ public class LootCrate : Collectable
 			StartCoroutine(SpawnDialog(0));
 		}
 		DisableGoal(disable: true);
-		if (OnCollect != null)
-		{
-			OnCollect();
-		}
+		OnCollect?.Invoke();
 	}
 
 	protected override void OnReset()

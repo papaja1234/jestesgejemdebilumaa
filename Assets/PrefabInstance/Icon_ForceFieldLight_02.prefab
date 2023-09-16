@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1791194212841921604}
   - component: {fileID: 1791194212841924554}
   m_Layer: 10
-  m_Name: Icon_ForceFieldLight_01
+  m_Name: Icon_ForceFieldLight_02
   m_TagString: 
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

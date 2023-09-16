@@ -93,9 +93,7 @@ public class GridLayout : MonoBehaviour
 				num5++;
 			}
 		}
-		if (onUpdateLayout != null)
-		{
-			onUpdateLayout();
-		}
+
+		onUpdateLayout?.Invoke();
 	}
 }

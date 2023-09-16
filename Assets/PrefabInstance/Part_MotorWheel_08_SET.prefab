@@ -375,6 +375,7 @@ MonoBehaviour:
   lateSpeed: {x: 0, y: 0, z: 0}
   m_hp: 3200
   m_maxHp: 3200
+  m_minDamage: 31.4
   m_force: 65
   m_enabled: 0
   m_maximumSpeed: 0

@@ -174,10 +174,8 @@ public class SpriteAnimation : MonoBehaviour
 		{
 			m_childAnimations[i].PlayImmediately(animation.name);
 		}
-		if (onPlay != null)
-		{
-			onPlay(animation.name);
-		}
+
+		onPlay?.Invoke(animation.name);
 	}
 
 	private void PlayImmediately(string name)

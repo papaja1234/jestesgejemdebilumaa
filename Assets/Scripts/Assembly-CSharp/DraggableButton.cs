@@ -131,10 +131,8 @@ public class DraggableButton : Widget
 				dragIcon.SetActive(value: false);
 				dragIcon.transform.localPosition = Vector3.zero;
 			}
-			if (m_listener != null)
-			{
-				m_listener.CancelDrag(this, dragObject);
-			}
+
+			m_listener?.CancelDrag(this, dragObject);
 		}
 	}
 
@@ -224,16 +222,11 @@ public class DraggableButton : Widget
 			{
 				dragIcon.SetActive(value: true);
 			}
-			if (m_listener != null)
-			{
-				m_listener.StartDrag(this, dragObject);
-			}
+
+			m_listener?.StartDrag(this, dragObject);
 			selectedVisual.GetComponent<Renderer>().enabled = true;
 			GetComponent<Renderer>().enabled = false;
-			if (m_listener != null)
-			{
-				m_listener.Select(this, dragObject);
-			}
+			m_listener?.Select(this, dragObject);
 		}
 		else if (input.type == InputEvent.EventType.Release)
 		{
@@ -271,10 +264,7 @@ public class DraggableButton : Widget
 					dragIcon.transform.localPosition = Vector3.zero;
 				}
 				isDragging = false;
-				if (m_listener != null)
-				{
-					m_listener.Drop(this, position, dragObject);
-				}
+				m_listener?.Drop(this, position, dragObject);
 			}
 		}
 		if (animate)

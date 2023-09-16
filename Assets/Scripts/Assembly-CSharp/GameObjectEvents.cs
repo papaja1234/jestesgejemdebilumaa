@@ -9,33 +9,21 @@ public class GameObjectEvents : MonoBehaviour
 
 	private void OnEnable()
 	{
-		if (OnEnabled != null)
-		{
-			OnEnabled(obj: true);
-		}
+		OnEnabled?.Invoke(obj: true);
 	}
 
 	private void OnDisable()
 	{
-		if (OnEnabled != null)
-		{
-			OnEnabled(obj: false);
-		}
+		OnEnabled?.Invoke(obj: false);
 	}
 
 	private void OnBecameVisible()
 	{
-		if (OnVisible != null)
-		{
-			OnVisible(obj: true);
-		}
+		OnVisible?.Invoke(obj: true);
 	}
 
 	private void OnBecameInvisible()
 	{
-		if (OnVisible != null)
-		{
-			OnVisible(obj: false);
-		}
+		OnVisible?.Invoke(obj: false);
 	}
 }

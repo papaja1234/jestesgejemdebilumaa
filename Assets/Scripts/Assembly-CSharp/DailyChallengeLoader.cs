@@ -170,10 +170,8 @@ public class DailyChallengeLoader : WPFMonoBehaviour
 			{
 				crateIcon.SetActive(value: false);
 			}
-			if (OnImageLoading != null)
-			{
-				OnImageLoading();
-			}
+
+			OnImageLoading?.Invoke();
 			break;
 		case State.Error:
 			dailyImage.SetActive(value: false);
@@ -196,10 +194,7 @@ public class DailyChallengeLoader : WPFMonoBehaviour
 			dailyMaterials[challengeIndex].SetFloat("_Grayness", (!flag) ? 0f : 1f);
 			UpdateLootCrateImage(flag);
 			ImageReady = true;
-			if (OnImageReady != null)
-			{
-				OnImageReady();
-			}
+			OnImageReady?.Invoke();
 			OnImageReady = null;
 			break;
 		case State.TimeOut:

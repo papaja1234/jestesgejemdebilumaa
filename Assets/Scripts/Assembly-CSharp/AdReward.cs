@@ -112,50 +112,29 @@ public class AdReward : IDisposable
 		switch (state)
 		{
 		case State.Loading:
-			if (OnLoading != null)
-			{
-				OnLoading();
-			}
+			OnLoading?.Invoke();
 			StartLoading();
 			break;
 		case State.WaitingFail:
 			CoroutineRunner.Instance.StartCoroutine(FailureWait());
 			break;
 		case State.Failed:
-			if (OnFailed != null)
-			{
-				OnFailed();
-			}
+			OnFailed?.Invoke();
 			break;
 		case State.Ready:
-			if (OnReady != null)
-			{
-				OnReady();
-			}
+			OnReady?.Invoke();
 			break;
 		case State.Finished:
-			if (OnAdFinished != null)
-			{
-				OnAdFinished();
-			}
+			OnAdFinished?.Invoke();
 			break;
 		case State.Stalled:
-			if (OnFailed != null)
-			{
-				OnFailed();
-			}
+			OnFailed?.Invoke();
 			break;
 		case State.Cancelled:
-			if (OnCancel != null)
-			{
-				OnCancel();
-			}
+			OnCancel?.Invoke();
 			break;
 		case State.ConfirmationFailed:
-			if (OnConfirmationFailed != null)
-			{
-				OnConfirmationFailed();
-			}
+			OnConfirmationFailed?.Invoke();
 			break;
 		case State.WaitingConfirmation:
 			break;
@@ -198,17 +177,11 @@ public class AdReward : IDisposable
 	{
 		if (canPlay)
 		{
-			if (OnAdPlayFailed != null)
-			{
-				OnAdPlayFailed();
-			}
+			OnAdPlayFailed?.Invoke();
 		}
 		else
 		{
-			if (OnAdPlayFailed != null)
-			{
-				OnAdPlayFailed();
-			}
+			OnAdPlayFailed?.Invoke();
 			SetState(State.Failed);
 		}
 		Singleton<GuiManager>.Instance.enabled = true;

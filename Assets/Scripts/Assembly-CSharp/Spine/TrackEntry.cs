@@ -80,34 +80,22 @@ namespace Spine
 
 		internal void OnStart(AnimationState state, int index)
 		{
-			if (this.Start != null)
-			{
-				this.Start(state, index);
-			}
+			this.Start?.Invoke(state, index);
 		}
 
 		internal void OnEnd(AnimationState state, int index)
 		{
-			if (this.End != null)
-			{
-				this.End(state, index);
-			}
+			this.End?.Invoke(state, index);
 		}
 
 		internal void OnEvent(AnimationState state, int index, Event e)
 		{
-			if (this.Event != null)
-			{
-				this.Event(state, index, e);
-			}
+			this.Event?.Invoke(state, index, e);
 		}
 
 		internal void OnComplete(AnimationState state, int index, int loopCount)
 		{
-			if (this.Complete != null)
-			{
-				this.Complete(state, index, loopCount);
-			}
+			this.Complete?.Invoke(state, index, loopCount);
 		}
 
 		public override string ToString()

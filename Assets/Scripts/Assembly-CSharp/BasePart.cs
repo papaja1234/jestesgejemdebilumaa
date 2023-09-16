@@ -1,7 +1,11 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.Jobs;
+using Unity.Burst;
+using Unity.Collections;
 
+[BurstCompile(CompileSynchronously = true)]
 public class BasePart : WPFMonoBehaviour
 {
 	public enum JointType
@@ -71,7 +75,7 @@ public class BasePart : WPFMonoBehaviour
 		SpotLight = 47,
 		TimeBomb = 48,
 		ElectricalPart = 49,
-		Irrational = 50,
+		NeuralPart = 50,
 		MAX = 51
 	}
 
@@ -176,10 +180,8 @@ public class BasePart : WPFMonoBehaviour
 			case PartType.TimeBomb: 
 				return 48f; 
 			case PartType.ElectricalPart: 
-				return 2000f; 
-			case PartType.Irrational: 
-				return 50f;  
-			default: // MAX
+				return 2000f;
+		    default: // MAX
 				return 51f;  
 		}
 	}
@@ -960,7 +962,7 @@ public class BasePart : WPFMonoBehaviour
 	public virtual void OnCollisionEnter(Collision c)
 	{
 		var target = c.collider.gameObject.GetComponent<BasePart>();
-		if ((bool)target)
+		if (target && target.rigidbody != null)
 		{target.Hurt((0.1f * (MathF.Abs(lateSpeed.x - target.lateSpeed.x) + MathF.Abs(lateSpeed.y - target.lateSpeed.y)) * ((MathF.Abs(lateSpeed.x - target.lateSpeed.x) + MathF.Abs(lateSpeed.y - target.lateSpeed.y)) * rigidbody.mass / 2)));}
 		//from homewool^^}
 		Collider collider = c.collider;
@@ -1214,6 +1216,7 @@ public class BasePart : WPFMonoBehaviour
 /// </summary>
 	public virtual void EnsureRigidbody()
 	{
+		
 		if (base.rigidbody == null)
 		{
 			base.rigidbody = base.gameObject.AddComponent<Rigidbody>();

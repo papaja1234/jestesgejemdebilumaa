@@ -2,11 +2,11 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!1 &1359452902979012
 GameObject:
-  serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
   m_Component:
   - component: {fileID: 4197986968717061}
   - component: {fileID: 114120905831018256}
@@ -42,14 +42,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ea355b4a54daf25a03cb16df8aca5c27, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   m_name: SandboxLevelSelection
   m_label: S
   m_flurryID: SB
-  m_clearAchievement:
-  m_3starAchievement:
-  m_special3StarAchievement:
+  m_clearAchievement: 
+  m_3starAchievement: 
+  m_special3StarAchievement: 
   m_levels:
   - m_identifier: S-1
     m_starBoxCount: 20
@@ -97,7 +97,8 @@ MonoBehaviour:
     m_levelLoaderGUID: 31a66bc03a93e4681b4dfc5aa82b94bd
   - m_identifier: S-9
     m_starBoxCount: 20
-    m_levelLoaderPath: Assets/Resources/Levels/Episode_6_Sandbox/Episode_6_Tower Sandbox_loader.prefab
+    m_levelLoaderPath: Assets/Resources/Levels/Episode_6_Sandbox/Episode_6_Tower
+      Sandbox_loader.prefab
     m_levelLoaderGUID: bb939352c13b04ca4a224c64e8459790
   - m_identifier: S-D
     m_starBoxCount: 20

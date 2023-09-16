@@ -57,10 +57,7 @@ public class AnimatedButton : Widget
 
 	private void OnAnimationEvent(Spine.AnimationState state, int trackIndex, Spine.Event e)
 	{
-		if (OnOpenAnimationEvent != null)
-		{
-			OnOpenAnimationEvent(e);
-		}
+		OnOpenAnimationEvent?.Invoke(e);
 	}
 
 	private void OnDestroy()

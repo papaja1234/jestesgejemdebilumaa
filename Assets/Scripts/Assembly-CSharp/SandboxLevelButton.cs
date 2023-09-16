@@ -258,10 +258,7 @@ public class SandboxLevelButton : MonoBehaviour
 
 	public void OpenSandboxUnlockDialog()
 	{
-		if (onOpenUnlockDialog != null)
-		{
-			onOpenUnlockDialog();
-		}
+		onOpenUnlockDialog?.Invoke();
 		if (sandboxUnlockDialog != null)
 		{
 			sandboxUnlockDialog.Open();

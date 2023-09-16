@@ -2,11 +2,11 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!1 &1725668386296079
 GameObject:
-  serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
   m_Component:
   - component: {fileID: 4830573470890789}
   - component: {fileID: 111084055963312407}
@@ -37,13 +37,13 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: -0, z: 10.000001}
 --- !u!111 &111084055963312407
 Animation:
-  serializedVersion: 3
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1725668386296079}
   m_Enabled: 1
+  serializedVersion: 3
   m_Animation: {fileID: 7400000, guid: 33d3d8b214cd6064197ecd8a73305446, type: 2}
   m_Animations:
   - {fileID: 7400000, guid: 33d3d8b214cd6064197ecd8a73305446, type: 2}
@@ -111,8 +111,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 04a340c55c247513cbdc1b4d88bbdbae, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   m_id: 63763efd-beb1-4406-8b21-839830af4b3d
   m_scaleX: 0.8
   m_scaleY: 0.8

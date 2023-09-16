@@ -2,11 +2,11 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!1 &1485786132340432
 GameObject:
-  serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
   m_Component:
   - component: {fileID: 4213234110245994}
   - component: {fileID: 114155906682876128}
@@ -42,12 +42,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 181879337b08b99718c8fb4d545d6d21, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   m_icons:
   - position: {x: 0.1, y: 0.1, z: -1.1}
     scale: 1
-    icon: {fileID: 1974087750740014, guid: 4bc5aa06a19887c4095f5dc36a73a1d3, type: 2}
-  m_tutorialBookPage: {fileID: 1153744640615956, guid: e19471884a011ac418902c2c328a84ba, type: 2}
+    icon: {fileID: 1974087750740014, guid: 4bc5aa06a19887c4095f5dc36a73a1d3, type: 3}
+  m_tutorialBookPage: {fileID: 1153744640615956, guid: e19471884a011ac418902c2c328a84ba, type: 3}
   m_challengeNumber: 0
   partToTransport: 32

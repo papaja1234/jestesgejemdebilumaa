@@ -64,10 +64,7 @@ namespace Ionic.Zlib
 
 		internal int End()
 		{
-			if (blocks != null)
-			{
-				blocks.Free();
-			}
+			blocks?.Free();
 			blocks = null;
 			return 0;
 		}

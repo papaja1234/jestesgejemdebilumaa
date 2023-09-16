@@ -192,24 +192,18 @@ public class LootCrateButton : Widget
 			tutorialRunning = false;
 			canBeHit = false;
 			collider.enabled = false;
-			if (onOpeningStart != null)
-			{
-				onOpeningStart();
-			}
+			onOpeningStart?.Invoke();
 		}
-		else if (onOpeningDone != null)
+		else
 		{
-			onOpeningDone();
+			onOpeningDone?.Invoke();
 		}
 	}
 
 	private void OnOpenEnd(Spine.AnimationState state, int trackIndex)
 	{
 		skeletonAnimation.state.End -= OnOpenEnd;
-		if (onOpeningDone != null)
-		{
-			onOpeningDone();
-		}
+		onOpeningDone?.Invoke();
 		StartCoroutine(ScrapDuplicateParts());
 	}
 

@@ -259,6 +259,7 @@ MonoBehaviour:
   lateSpeed: {x: 0, y: 0, z: 0}
   m_hp: 2000
   m_maxHp: 2000
+  m_minDamage: 31.4
   m_enabled: 0
 --- !u!65 &65720551809313576
 BoxCollider:

@@ -52,10 +52,7 @@ public class PageScroller : MonoBehaviour
 	{
 		if (newPage >= 0 && newPage < m_pageCount && newPage != CurrentPage)
 		{
-			if (this.OnPageChanged != null)
-			{
-				this.OnPageChanged(CurrentPage, newPage);
-			}
+			this.OnPageChanged?.Invoke(CurrentPage, newPage);
 			CurrentPage = newPage;
 		}
 	}
@@ -64,10 +61,7 @@ public class PageScroller : MonoBehaviour
 	{
 		if (newPage >= 0 && newPage < m_pageCount && newPage != CurrentPage)
 		{
-			if (this.OnPageChanged != null)
-			{
-				this.OnPageChanged(CurrentPage, newPage);
-			}
+			this.OnPageChanged?.Invoke(CurrentPage, newPage);
 			CurrentPage = newPage;
 			m_scrollPivot.localPosition = GetTargetPosition(CurrentPage);
 		}

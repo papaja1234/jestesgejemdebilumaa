@@ -10,11 +10,7 @@ namespace Spine.Unity
 
 		public static Bone GetBone(string boneName, SkeletonRenderer renderer)
 		{
-			if (renderer.skeleton == null)
-			{
-				return null;
-			}
-			return renderer.skeleton.FindBone(boneName);
+			return renderer.skeleton?.FindBone(boneName);
 		}
 
 		public static BoneData GetBoneData(string boneName, SkeletonDataAsset skeletonDataAsset)

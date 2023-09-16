@@ -58,17 +58,12 @@ public class PlayFabMatchMaking : MonoBehaviour
 					CakeRaceMenu.UseDefaultReplay = true;
 				}
 			}
-			if (callback != null)
-			{
-				callback(obj);
-			}
+
+			callback?.Invoke(obj);
 		}, delegate
 		{
 			CakeRaceMenu.UseDefaultReplay = true;
-			if (callback != null)
-			{
-				callback(string.Empty);
-			}
+			callback?.Invoke(string.Empty);
 		});
 	}
 
@@ -116,16 +111,11 @@ public class PlayFabMatchMaking : MonoBehaviour
 					arg2 = jsonObject["daysleft"].ToString();
 				}
 			}
-			if (callback != null)
-			{
-				callback(arg, arg2);
-			}
+
+			callback?.Invoke(arg, arg2);
 		}, delegate
 		{
-			if (callback != null)
-			{
-				callback(string.Empty, string.Empty);
-			}
+			callback?.Invoke(string.Empty, string.Empty);
 		});
 	}
 }

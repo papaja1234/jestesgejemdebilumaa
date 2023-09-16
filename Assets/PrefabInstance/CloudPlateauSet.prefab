@@ -2,11 +2,11 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!1 &1974684194555899
 GameObject:
-  serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
   m_Component:
   - component: {fileID: 4237480936235380}
   - component: {fileID: 114077178001399219}
@@ -42,12 +42,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 143dc5208aaea5f5b68e024ccf43a524, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   m_cloudSet:
-  - {fileID: 4809312222668939, guid: 0fdbf6337fa3e9646b6ad7bf8130bdba, type: 2}
-  - {fileID: 4046147020762065, guid: dcc04325580aa9b47b3607903f49e89b, type: 2}
-  - {fileID: 4426766722495878, guid: e8bb1c527c7134549bd069ff1244a995, type: 2}
+  - {fileID: 4809312222668939, guid: 0fdbf6337fa3e9646b6ad7bf8130bdba, type: 3}
+  - {fileID: 4046147020762065, guid: dcc04325580aa9b47b3607903f49e89b, type: 3}
+  - {fileID: 4426766722495878, guid: e8bb1c527c7134549bd069ff1244a995, type: 3}
   m_maxClouds: 8
   m_cloudVelocity: 0.2
   m_cloudLimits: 93.24

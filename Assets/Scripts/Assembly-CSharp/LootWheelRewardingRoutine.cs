@@ -175,10 +175,7 @@ public class LootWheelRewardingRoutine : WPFMonoBehaviour
 		{
 			base.gameObject.SetActive(value: false);
 			BackgroundMask.Show(show: false, this, string.Empty);
-			if (OnClosed != null)
-			{
-				OnClosed();
-			}
+			OnClosed?.Invoke();
 		}
 	}
 

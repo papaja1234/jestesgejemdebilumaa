@@ -74,10 +74,7 @@ public class EntityLight : MonoBehaviour
 
 	public bool Enabled
 	{
-		get
-		{
-			return m_enabled;
-		}
+		get => m_enabled;
 		set
 		{
 			m_enabled = value;
@@ -90,50 +87,26 @@ public class EntityLight : MonoBehaviour
 
 	public int Type
 	{
-		get
-		{
-			return m_type;
-		}
-		set
-		{
-			m_type = value;
-		}
+		get => m_type;
+		set => m_type = value;
 	}
 
 	public float Length
 	{
-		get
-		{
-			return m_length;
-		}
-		set
-		{
-			m_length = value;
-		}
+		get => m_length;
+		set => m_length = value;
 	}
 
 	public float HalfWidth
 	{
-		get
-		{
-			return m_halfWidth;
-		}
-		set
-		{
-			m_halfWidth = value;
-		}
+		get => m_halfWidth;
+		set => m_halfWidth = value;
 	}
 
 	public float Angle
 	{
-		get
-		{
-			return m_angle;
-		}
-		set
-		{
-			m_angle = value;
-		}
+		get => m_angle;
+		set => m_angle = value;
 	}
 
 	public float Cos { get; private set; }

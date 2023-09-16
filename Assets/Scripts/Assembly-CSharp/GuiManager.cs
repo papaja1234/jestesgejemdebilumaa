@@ -1,7 +1,8 @@
 using System.Collections.Generic;
+using Unity.Burst;
 using UnityEngine;
 using UnityEngine.EventSystems;
-
+[BurstCompile(CompileSynchronously = true)]
 public class GuiManager : Singleton<GuiManager>
 {
 	public class Pointer

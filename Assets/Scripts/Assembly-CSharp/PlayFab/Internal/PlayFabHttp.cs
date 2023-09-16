@@ -135,10 +135,7 @@ namespace PlayFab.Internal
 			};
 			reqContainer.InvokeSuccessCallback = delegate
 			{
-				if (resultCallback != null)
-				{
-					resultCallback((TResult)reqContainer.ApiResult);
-				}
+				resultCallback?.Invoke((TResult)reqContainer.ApiResult);
 			};
 			if (allowQueueing && _apiCallQueue != null && !_internalHttp.SessionStarted)
 			{
@@ -177,30 +174,18 @@ namespace PlayFab.Internal
 
 		private void OnEnable()
 		{
-			if (_logger != null)
-			{
-				_logger.OnEnable();
-			}
+			_logger?.OnEnable();
 		}
 
 		private void OnDisable()
 		{
-			if (_logger != null)
-			{
-				_logger.OnDisable();
-			}
+			_logger?.OnDisable();
 		}
 
 		private void OnDestroy()
 		{
-			if (_internalHttp != null)
-			{
-				_internalHttp.OnDestroy();
-			}
-			if (_logger != null)
-			{
-				_logger.OnDestroy();
-			}
+			_internalHttp?.OnDestroy();
+			_logger?.OnDestroy();
 		}
 
 		private void Update()

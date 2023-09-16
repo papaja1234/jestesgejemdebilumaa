@@ -129,10 +129,7 @@ namespace Ionic.Zlib
 
 		public override void Write(byte[] buffer, int offset, int count)
 		{
-			if (crc != null)
-			{
-				crc.SlurpBlock(buffer, offset, count);
-			}
+			crc?.SlurpBlock(buffer, offset, count);
 			if (_streamMode == StreamMode.Undefined)
 			{
 				_streamMode = StreamMode.Writer;
@@ -483,10 +480,7 @@ namespace Ionic.Zlib
 				}
 			}
 			num = count - _z.AvailableBytesOut;
-			if (crc != null)
-			{
-				crc.SlurpBlock(buffer, offset, num);
-			}
+			crc?.SlurpBlock(buffer, offset, num);
 			return num;
 		}
 

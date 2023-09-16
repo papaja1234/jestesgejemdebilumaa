@@ -73,10 +73,7 @@ public class FreeCrateAdReward : WPFMonoBehaviour
 
 	private void OnDestroy()
 	{
-		if (adReward != null)
-		{
-			adReward.Dispose();
-		}
+		adReward?.Dispose();
 	}
 
 	private void Activate(bool activate)

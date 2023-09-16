@@ -200,6 +200,7 @@ MonoBehaviour:
   lateSpeed: {x: 0, y: 0, z: 0}
   m_hp: 300
   m_maxHp: 300
+  m_minDamage: 31.4
   m_running: 0
   smokeEmitter: {fileID: 0}
   flameEmitter: {fileID: 0}

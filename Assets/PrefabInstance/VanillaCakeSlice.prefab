@@ -2,11 +2,11 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!1 &1756448679784930
 GameObject:
-  serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
   m_Component:
   - component: {fileID: 4857128255435867}
   - component: {fileID: 23025908846812124}
@@ -89,7 +89,6 @@ MeshFilter:
   m_Mesh: {fileID: 0}
 --- !u!65 &65765687665496722
 BoxCollider:
-  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -98,6 +97,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
+  serializedVersion: 2
   m_Size: {x: 1.09375, y: 0.9635417, z: 5}
   m_Center: {x: 0, y: 0.46875, z: 0}
 --- !u!114 &114257677436250769
@@ -110,13 +110,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0ea827dcd4fbce8ef9b42a75abcf7d7f, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
-  collectedEffect: {fileID: 198911294371946608, guid: de6a9113b85cac5488bcb638ba1ad300, type: 2}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collectedEffect: {fileID: 198911294371946608, guid: de6a9113b85cac5488bcb638ba1ad300, type: 3}
   xpParticles: {fileID: 0}
   collected: 0
   prefabGlow: {fileID: 0}
-  prefabIcon: {fileID: 1880201701480893, guid: 5cca0ba979b4bd0499ec03565e4049e1, type: 2}
+  prefabIcon: {fileID: 1880201701480893, guid: 5cca0ba979b4bd0499ec03565e4049e1, type: 3}
   saveId: VanillaCakeSlice
 --- !u!114 &114919756258848698
 MonoBehaviour:
@@ -128,8 +128,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 04a340c55c247513cbdc1b4d88bbdbae, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   m_id: e9c29b71-34ee-41a0-b9af-9431fd9a086f
   m_scaleX: 0.5
   m_scaleY: 0.5
@@ -138,12 +138,12 @@ MonoBehaviour:
   m_updateCollider: 1
 --- !u!54 &54093683868271711
 Rigidbody:
-  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1756448679784930}
+  serializedVersion: 2
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05

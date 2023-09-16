@@ -316,10 +316,7 @@ public class IapManager : Singleton<IapManager>
 
 	private void OnLevelLoadedEvent(LevelLoadedEvent data)
 	{
-		if (m_iap != null)
-		{
-			m_iap.OnLevelWasLoaded();
-		}
+		m_iap?.OnLevelWasLoaded();
 		if (data.currentGameState != GameManager.GameState.MainMenu)
 		{
 			return;
@@ -345,10 +342,7 @@ public class IapManager : Singleton<IapManager>
 
 	private void OnDestroy()
 	{
-		if (m_iap != null)
-		{
-			m_iap.deInit();
-		}
+		m_iap?.deInit();
 		EventManager.Disconnect<PlayerChangedEvent>(OnPlayerChanged);
 		EventManager.Disconnect<LevelLoadedEvent>(OnLevelLoadedEvent);
 	}

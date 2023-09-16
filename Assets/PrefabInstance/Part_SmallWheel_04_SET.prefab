@@ -343,6 +343,7 @@ MonoBehaviour:
   lateSpeed: {x: 0, y: 0, z: 0}
   m_hp: 900
   m_maxHp: 900
+  m_minDamage: 31.4
 --- !u!114 &114368718898257494
 MonoBehaviour:
   m_ObjectHideFlags: 0

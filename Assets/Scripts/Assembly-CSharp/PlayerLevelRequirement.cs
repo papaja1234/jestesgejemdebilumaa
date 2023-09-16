@@ -80,9 +80,7 @@ public class PlayerLevelRequirement : MonoBehaviour
 		{
 			TextMeshHelper.UpdateTextMeshes(levelLabel, levelRequirement.ToString());
 		}
-		if (OnUnlock != null)
-		{
-			OnUnlock(!doLock);
-		}
+
+		OnUnlock?.Invoke(!doLock);
 	}
 }

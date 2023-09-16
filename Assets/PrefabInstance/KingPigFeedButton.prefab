@@ -2,11 +2,11 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!1 &1269816650166918
 GameObject:
-  serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
   m_Component:
   - component: {fileID: 4911674332844369}
   - component: {fileID: 23480868568813458}
@@ -91,7 +91,6 @@ MeshFilter:
   m_Mesh: {fileID: 0}
 --- !u!65 &65298343081157898
 BoxCollider:
-  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -100,6 +99,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
+  serializedVersion: 2
   m_Size: {x: 3.177083, y: 3.177083, z: 0}
   m_Center: {x: -0.02604163, y: 0, z: 0}
 --- !u!114 &114029892427729404
@@ -112,8 +112,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f10c166b40fca068dc263d3b305cb4c8, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   m_anchor: 1
   relativePosition: -89.59999
 --- !u!114 &114242244538645149
@@ -126,8 +126,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 04a340c55c247513cbdc1b4d88bbdbae, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   m_id: 2253487e-8194-4356-8618-9fd665a4bceb
   m_scaleX: 1
   m_scaleY: 1
@@ -136,13 +136,13 @@ MonoBehaviour:
   m_updateCollider: 1
 --- !u!111 &111375748068825355
 Animation:
-  serializedVersion: 3
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1269816650166918}
   m_Enabled: 1
+  serializedVersion: 3
   m_Animation: {fileID: 7400000, guid: 33d3d8b214cd6064197ecd8a73305446, type: 2}
   m_Animations:
   - {fileID: 7400000, guid: 33d3d8b214cd6064197ecd8a73305446, type: 2}
@@ -160,8 +160,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ea76d13d1a7d88c86ddac7dd9cf1c22f, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   m_animationName: ButtonPulse
   m_playAutomatically: 0
 --- !u!114 &114395533348139099
@@ -174,17 +174,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6c34a0321e3be5ad6b5e5667590abe1c, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   methodToCall:
     m_targetObject: {fileID: 0}
-    m_targetComponent:
-    m_methodToInvoke:
+    m_targetComponent: 
+    m_methodToInvoke: 
     m_parameters: []
   messageTargetObject: {fileID: 0}
-  targetComponent:
-  methodToInvoke:
-  messageParameter:
+  targetComponent: 
+  methodToInvoke: 
+  messageParameter: 
   eventToSend:
     m_event:
       m_eventTypeName: None

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 114249723248274557}
   - component: {fileID: 114244460009756737}
   m_Layer: 10
-  m_Name: Icon_MetalFrame_133
+  m_Name: Icon_Irrational_133
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

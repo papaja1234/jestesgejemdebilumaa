@@ -200,6 +200,7 @@ MonoBehaviour:
   lateSpeed: {x: 0, y: 0, z: 0}
   m_hp: 1300
   m_maxHp: 1000
+  m_minDamage: 31.4
   liftConstant: 3
   dragConstant: 0.4
 --- !u!114 &114158677877512996

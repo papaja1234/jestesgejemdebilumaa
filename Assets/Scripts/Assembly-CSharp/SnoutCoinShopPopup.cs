@@ -183,10 +183,7 @@ public class SnoutCoinShopPopup : MonoBehaviour
 		Singleton<GuiManager>.Instance.ReleasePointer(this);
 		Singleton<KeyListener>.Instance.ReleaseFocus(this);
 		KeyListener.keyReleased -= HandleKeyReleased;
-		if (OnClose != null)
-		{
-			OnClose();
-		}
+		OnClose?.Invoke();
 		base.gameObject.SetActive(value: false);
 		if (SnoutButton.Instance != null)
 		{

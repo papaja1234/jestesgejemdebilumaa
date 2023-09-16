@@ -83,10 +83,7 @@ public class PurchaseInfo : MonoBehaviour
 	{
 		IapManager.onProductListParsed -= UpdatePurchaseCount;
 		VirtualCatalogManager.onVirtualProductListParsed -= UpdatePurchaseCount;
-		if (offerTimeLocalizer != null)
-		{
-			offerTimeLocalizer.Dispose();
-		}
+		offerTimeLocalizer?.Dispose();
 		IapManager.onPurchaseSucceeded -= OnPurchaseSucceeded;
 	}
 

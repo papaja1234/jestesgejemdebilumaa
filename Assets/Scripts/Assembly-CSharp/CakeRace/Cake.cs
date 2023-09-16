@@ -55,10 +55,7 @@ namespace CakeRace
 
 		public override void OnCollected()
 		{
-			if (this.OnCakeCollected != null)
-			{
-				this.OnCakeCollected(this);
-			}
+			this.OnCakeCollected?.Invoke(this);
 		}
 
 		public void Reset()

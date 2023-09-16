@@ -86,11 +86,9 @@ namespace AssetBundleBrowser
                     m_Parent.Repaint();
                 }
 
-                if (m_DetailsList != null)
-                    m_DetailsList.Update();
+                m_DetailsList?.Update();
 
-                if (m_AssetList != null)
-                    m_AssetList.Update();
+                m_AssetList?.Update();
 
             }
         }

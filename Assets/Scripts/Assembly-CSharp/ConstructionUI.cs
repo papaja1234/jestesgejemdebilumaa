@@ -674,10 +674,8 @@ public class ConstructionUI : WPFMonoBehaviour
 			m_partDescs = list2;
 			RefreshButtons();
 		}
-		if (OnPartsUnlocked != null)
-		{
-			OnPartsUnlocked();
-		}
+
+		OnPartsUnlocked?.Invoke();
 	}
 
 	public void RefreshButtons()

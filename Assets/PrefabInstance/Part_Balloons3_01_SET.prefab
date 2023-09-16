@@ -116,6 +116,7 @@ MonoBehaviour:
   lateSpeed: {x: 0, y: 0, z: 0}
   m_hp: 39
   m_maxHp: 39
+  m_minDamage: 31.4
   m_force: 11.5
   m_maximumSpeed: 10
   m_inWorldCoordinates: 1

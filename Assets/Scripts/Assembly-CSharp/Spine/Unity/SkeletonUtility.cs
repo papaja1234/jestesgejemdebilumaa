@@ -44,11 +44,7 @@ namespace Spine.Unity
 				skinName = skeleton.Data.DefaultSkin.Name;
 			}
 			Skin skin = skeleton.Data.FindSkin(skinName);
-			if (skin == null)
-			{
-				return null;
-			}
-			Attachment attachment = skin.GetAttachment(skeleton.FindSlotIndex(slotName), attachmentName);
+			Attachment attachment = skin?.GetAttachment(skeleton.FindSlotIndex(slotName), attachmentName);
 			if (attachment is BoundingBoxAttachment)
 			{
 				GameObject obj = new GameObject("[BoundingBox]" + attachmentName);
@@ -177,10 +173,7 @@ namespace Spine.Unity
 
 		private void HandleRendererReset(SkeletonRenderer r)
 		{
-			if (this.OnReset != null)
-			{
-				this.OnReset();
-			}
+			this.OnReset?.Invoke();
 			CollectBones();
 		}
 

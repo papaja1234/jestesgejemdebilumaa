@@ -82,6 +82,7 @@ MonoBehaviour:
   lateSpeed: {x: 0, y: 0, z: 0}
   m_hp: 700
   m_maxHp: 700
+  m_minDamage: 31.4
   m_segment: {fileID: 1232497828351170, guid: 446fe508b205b474e9214b0efecdb883, type: 3}
   m_material: {fileID: 2100000, guid: ed4636905939b1645a08bf243bc4995c, type: 2}
   m_gridVisualizationNode: {fileID: 1072274907106764}

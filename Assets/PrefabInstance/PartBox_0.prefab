@@ -2,11 +2,11 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!1 &1268149148591448
 GameObject:
-  serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
   m_Component:
   - component: {fileID: 4316186011617653}
   - component: {fileID: 23236545301373524}
@@ -96,8 +96,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 04a340c55c247513cbdc1b4d88bbdbae, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   m_id: 3e32e94d-3fc2-4a62-8f68-bc5f3d26894f
   m_scaleX: 1
   m_scaleY: 1
@@ -106,7 +106,6 @@ MonoBehaviour:
   m_updateCollider: 1
 --- !u!65 &65601662453393391
 BoxCollider:
-  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -115,6 +114,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
+  serializedVersion: 2
   m_Size: {x: 2.734375, y: 2.760417, z: 0}
   m_Center: {x: -0.02604163, y: 0.02604163, z: 0}
 --- !u!114 &114647579960067615
@@ -127,10 +127,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b274684f5eb7a2f7814ef4a13a805513, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
-  collectedEffect: {fileID: 198832865772445076, guid: c90468e89467fe545adae912f79fca43, type: 2}
-  xpParticles: {fileID: 1167281330788787, guid: fb3481bbce8b7894cb52a9342ae1c041, type: 2}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collectedEffect: {fileID: 198832865772445076, guid: c90468e89467fe545adae912f79fca43, type: 3}
+  xpParticles: {fileID: 1167281330788787, guid: fb3481bbce8b7894cb52a9342ae1c041, type: 3}
   collected: 0
   partType: 1
   count: 0

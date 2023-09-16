@@ -356,6 +356,111 @@
 				"en-US": "Battery Status",
 				"zh-Hans": "设备电池状态"
 			}
+		},
+		{
+			"id": "ConsoleInterface_TextArea",
+			"text": {
+				"en-US": "// Enter C# Program Code here\n// You must have one class named BPProgram\n// You must have a public static int method named BPMain()\n// BPMain() must returns int success/failure code\n// BPMain() must also take no arguments\n// Honestly, you would better off be using an external text editor\n// Have a good time programming!\n\nusing System;\nusing UnityEngine;\n\nclass BPProgram : MonoBehaviour\n{\n\tpublic static int BPMain()\n\t{\n\t\tConsole.WriteLine(\"Hello, Bad Piggies!\");\n\t\treturn 0;\n\t}\n}",
+				"zh-Hans": "// Enter C# Program Code here\n// You must have one class named BPProgram\n// You must have a public static int method named BPMain()\n// BPMain() must returns int success/failure code\n// BPMain() must also take no arguments\n// Honestly, you would better off be using an external text editor\n// Have a good time programming!\n\nusing System;\nusing UnityEngine;\n\nclass BPProgram : MonoBehaviour\n{\n\tpublic static int BPMain()\n\t{\n\t\tConsole.WriteLine(\"Hello, Bad Piggies!\");\n\t\treturn 0;\n\t}\n}"
+			}
+		},
+		{
+			"id": "ConsoleInterface_OutputArea",
+			"text": {
+				"en-US": "Console Output:\n",
+				"zh-Hans": "控制台输出:\n"
+			}
+		},
+		{
+			"id": "ConsoleInterface_Compile",
+			"text": {
+				"en-US": "Compile\n",
+				"zh-Hans": "编译\n"
+			}
+		},
+		{
+			"id": "ConsoleInterface_Run",
+			"text": {
+				"en-US": "Run\n",
+				"zh-Hans": "运行\n"
+			}
+		},
+		{
+			"id": "ConsoleInterface_PreCompileErrorMetadataReference",
+			"text": {
+				"en-US": "Unable to get metadata references: ",
+				"zh-Hans": ""
+			}
+		},
+		{
+			"id": "ConsoleInterface_CompileFailed",
+			"text": {
+				"en-US": "Compilation failed, generated errors list:",
+				"zh-Hans": "编译失败，错误如下:"
+			}
+		},
+		{
+			"id": "ConsoleInterface_CompileSuccess",
+			"text": {
+				"en-US": "Compilation success! You can now press the Run button.",
+				"zh-Hans": "编译成功! 现在可以按下运行按钮"
+			}
+		},
+		{
+			"id": "ConsoleInterface_PostCompileErrorGetType",
+			"text": {
+				"en-US": "Post compile error: Error getting class BPProgram",
+				"zh-Hans": "后编译错误: 在获取类BPProgram时产生错误"
+			}
+		},
+		{
+			"id": "ConsoleInterface_PostCompileErrorInitType",
+			"text": {
+				"en-US": "Post compile error: Error initializing class BPProgram",
+				"zh-Hans": "后编译错误: 在初始化类BPProgram时产生错误"
+			}
+		},
+		{
+			"id": "ConsoleInterface_PostCompileErrorGetMethod",
+			"text": {
+				"en-US": "Post compile error: Error getting method BPProgram.BPMain()",
+				"zh-Hans": "后编译错误: 在获取方法BPProgram.BPMain()时产生错误"
+			}
+		},
+		{
+			"id": "ConsoleInterface_RuntimeErrorInvokeMethod",
+			"text": {
+				"en-US": "Error getting return value of BPProgram.BPMain()",
+				"zh-Hans": "在获取方法BPProgram.BPMain()的返回值时产生错误"
+			}
+		},
+		{
+			"id": "ConsoleInterface_RuntimeErrorReturnConvert",
+			"text": {
+				"en-US": "Failed to convert return value of BPProgram.BPMain() . Make sure it is an int type. Exception Message:\n",
+				"zh-Hans": "无法转换BPProgram.BPMain()的返回值, 请确保其为int类型. 异常信息:\n"
+			}
+		},
+		{
+			"id": "ConsoleInterface_RuntimeException",
+			"text": {
+				"en-US": "Runtime exception was thrown in the compiled code: \n",
+				"zh-Hans": "运行时异常在已编译代码中抛出:\n"
+			}
+		},
+		{
+			"id": "ConsoleInterface_InvalidCompile",
+			"text": {
+				"en-US": "The program was either not compiled or was not successful on compilation, please successfully compile the program before running.",
+				"zh-Hans": "程序并未成功编译, 请在运行之前重新编译."
+			}
+		},
+		{
+			"id": "ConsoleInterface_ReturnValue",
+			"text": {
+				"en-US": "Program exited with return value: ",
+				"zh-Hans": "程序以如下返回值退出:"
+			}
 		}
 	]
 }

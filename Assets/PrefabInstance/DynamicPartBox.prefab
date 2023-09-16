@@ -2,11 +2,11 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!1 &1649116352480812
 GameObject:
-  serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
   m_Component:
   - component: {fileID: 4230836851812844}
   - component: {fileID: 23886673768076475}
@@ -99,8 +99,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 04a340c55c247513cbdc1b4d88bbdbae, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   m_id: 3e32e94d-3fc2-4a62-8f68-bc5f3d26894f
   m_scaleX: 1
   m_scaleY: 1
@@ -109,7 +109,6 @@ MonoBehaviour:
   m_updateCollider: 1
 --- !u!65 &65269726687608380
 BoxCollider:
-  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -118,6 +117,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
+  serializedVersion: 2
   m_Size: {x: 2.734375, y: 2.760417, z: 0}
   m_Center: {x: -0.02604163, y: 0.02604163, z: 0}
 --- !u!114 &114138092431797132
@@ -130,10 +130,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b274684f5eb7a2f7814ef4a13a805513, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
-  collectedEffect: {fileID: 198832865772445076, guid: c90468e89467fe545adae912f79fca43, type: 2}
-  xpParticles: {fileID: 1167281330788787, guid: fb3481bbce8b7894cb52a9342ae1c041, type: 2}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collectedEffect: {fileID: 198832865772445076, guid: c90468e89467fe545adae912f79fca43, type: 3}
+  xpParticles: {fileID: 1167281330788787, guid: fb3481bbce8b7894cb52a9342ae1c041, type: 3}
   collected: 0
   partType: 1
   count: 0
@@ -141,12 +141,12 @@ MonoBehaviour:
   collectAnimation: {fileID: 7400000, guid: cfdf9ce7ce5fe1045b64d7dcb3d4d8a3, type: 2}
 --- !u!54 &54600618974003064
 Rigidbody:
-  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1649116352480812}
+  serializedVersion: 2
   m_Mass: 10
   m_Drag: 0
   m_AngularDrag: 0.05
@@ -165,8 +165,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f5e286ed300b013e0b923bec20582e5a, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   breakForce: Infinity
   breakOnlyByGoldenPig: 0
   breakOnlyByBird: 0
@@ -180,7 +180,6 @@ MonoBehaviour:
   m_createIceColliders: 1
 --- !u!65 &65934019649720244
 BoxCollider:
-  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -189,5 +188,6 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
+  serializedVersion: 2
   m_Size: {x: 2.5, y: 2.5, z: 2.5}
   m_Center: {x: -0.02, y: -0.02, z: 0}

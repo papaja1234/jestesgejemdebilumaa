@@ -144,10 +144,8 @@ public class HatchManager : Singleton<HatchManager>
 		{
 			GameProgress.ChangePlayer(PlayerPrefs.GetString("offline_game_progress", string.Empty));
 		}
-		if (onLoginFailed != null)
-		{
-			onLoginFailed();
-		}
+
+		onLoginFailed?.Invoke();
 		m_hasLoginError = true;
 	}
 
@@ -174,10 +172,7 @@ public class HatchManager : Singleton<HatchManager>
 		GameProgress.ChangePlayer(string.Empty);
 		PlayerPrefs.SetString("offline_game_progress", string.Empty);
 		m_isLoggedIn = true;
-		if (onLoginSuccess != null)
-		{
-			onLoginSuccess();
-		}
+		onLoginSuccess?.Invoke();
 	}
 
 	private void LoginToPlayFab()
@@ -193,10 +188,7 @@ public class HatchManager : Singleton<HatchManager>
 		playFabManager.OnLogin = (Action<string, string>)Delegate.Remove(playFabManager.OnLogin, new Action<string, string>(OnPlayFabLogin));
 		if (!string.IsNullOrEmpty(playFabId))
 		{
-			if (onPlayFabLoginSuccess != null)
-			{
-				onPlayFabLoginSuccess();
-			}
+			onPlayFabLoginSuccess?.Invoke();
 			CurrentPlayer.AddPlayFabID(playFabId);
 			PlayerIsReady();
 		}

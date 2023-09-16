@@ -188,10 +188,7 @@ public class PlayFabManager : Singleton<PlayFabManager>
 		stringBuilder.AppendLine("result.Request: " + result.Request.ToString());
 		SessionTicket = result.SessionTicket;
 		Initialized = true;
-		if (OnLogin != null)
-		{
-			OnLogin(result.PlayFabId, arg);
-		}
+		OnLogin?.Invoke(result.PlayFabId, arg);
 		OnFacebookNameCallback(string.Empty, string.Empty);
 	}
 
@@ -215,10 +212,7 @@ public class PlayFabManager : Singleton<PlayFabManager>
 
 	private void OnLoginError(PlayFabError error)
 	{
-		if (OnLogin != null)
-		{
-			OnLogin(string.Empty, string.Empty);
-		}
+		OnLogin?.Invoke(string.Empty, string.Empty);
 	}
 
 	public void Logout()

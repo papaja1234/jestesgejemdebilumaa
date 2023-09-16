@@ -84,6 +84,7 @@ MonoBehaviour:
   lateSpeed: {x: 0, y: 0, z: 0}
   m_hp: 1200
   m_maxHp: 1200
+  m_minDamage: 31.4
   m_inWorldCoordinates: 1
   m_direction: {x: 0, y: 1, z: 0}
   m_numberOfBalloons: 1

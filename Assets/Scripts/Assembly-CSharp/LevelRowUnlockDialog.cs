@@ -51,17 +51,11 @@ public class LevelRowUnlockDialog : TextDialog
 		adReward.Load();
 		base.onOpen += delegate
 		{
-			if (adReward != null)
-			{
-				adReward.Load();
-			}
+			adReward?.Load();
 		};
 		base.onClose += delegate
 		{
-			if (adReward != null)
-			{
-				adReward.Stall();
-			}
+			adReward?.Stall();
 		};
 		GameObject gameObject = UnityEngine.Object.Instantiate(WPFMonoBehaviour.gameData.m_videoNotFoundDialog);
 		gameObject.transform.position = WPFMonoBehaviour.hudCamera.transform.position + new Vector3(0f, 0f, 1f);
@@ -127,10 +121,7 @@ public class LevelRowUnlockDialog : TextDialog
 
 	private void OnAdFinished()
 	{
-		if (OnAdFinishedSuccesfully != null)
-		{
-			OnAdFinishedSuccesfully();
-		}
+		OnAdFinishedSuccesfully?.Invoke();
 		loading = false;
 	}
 

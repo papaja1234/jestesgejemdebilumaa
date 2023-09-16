@@ -59,11 +59,7 @@ public class ObjectDeserializer
 
 		public UnityEngine.Object GetReferencedObject(int index)
 		{
-			if (m_references != null)
-			{
-				return m_references[index];
-			}
-			return null;
+			return m_references?[index];
 		}
 
 		private string ReadLine()

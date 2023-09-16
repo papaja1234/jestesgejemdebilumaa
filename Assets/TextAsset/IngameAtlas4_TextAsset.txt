@@ -211,3 +211,24 @@ AlienRapidGunExtended_IconSprite			768		384		210		105		0.4		0.4		768
 AlienRapidGunExtended_Sprite				768		384		210		105		0.4		0.4		768
 AlienExplodingBullet					768		512		105		105		0.4		0.4		768
 AlienExplodingBulletParticle				896		512		105		105		0.4		0.4		768
+
+NeuralPart_IconSprite					788		768		106		118		0.4		0.4		768
+NeuralPart_BodySprite					640		768		106		118		0.4		0.4		768
+NeuralPart_EyeSprite					746		800		42		40		0.4		0.4		768
+NeuralPart_ShineSprite					746		768		34		32		0.4		0.4		768
+NeuralNetwork_Sprite					1536	1152	100		100		0.4		0.4		768
+NeuralNetworkSingle_Sprite	    		1664	1152	100		100		0.4		0.4		768
+
+AlienHyperPropeller_IconSprite			512		0		54		100		0.4		0.4		768
+AlienHyperPropeller_Sprite				512		0		54		100		0.4		0.4		768
+AlienGlassFrame_IconSprite				640		0		110		110		0.4		0.4		768
+AlienGlassFrame_Sprite					640		0		110		110		0.4		0.4		768
+AlienEngineNormal_IconSprite			640		128		90		94		0.4		0.4		768
+AlienEngineNormal_Sprite				640		128		90		94		0.4		0.4		768
+AlienEngineBig_IconSprite				768		128		114		90		0.4		0.4		768
+AlienEngineBig_Sprite					768		128		114		90		0.4		0.4		768
+
+AlienOffRoadStickyWheel_IconSprite		0		1288		142		152		0.4		0.4		768
+AlienOffRoadStickyWheel_WheelSprite		142		1288		142		140		0.4		0.4		768
+AlienOffRoadStickyWheel_SpokeSprite		284		1288		66		64		0.4		0.4		768
+AlienOffRoadStickyWheel_SupportSprite	384		0		66		65		0.4		0.4		768

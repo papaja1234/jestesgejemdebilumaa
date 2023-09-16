@@ -12,9 +12,13 @@ public class PartListing : Widget
 
 		public Dictionary<BasePart.PartTier, List<GameObject>> partInstances;
 
-		public BasePart.PartType PartType { get; }
+		private Transform selectedIcon;
 
-		public Transform SelectedIcon { get; private set; }
+		private BasePart.PartType type;
+
+		public BasePart.PartType PartType => type;
+
+		public Transform SelectedIcon => selectedIcon;
 
 		public PartData(BasePart part, PartListing partListInstance)
 		{
@@ -22,11 +26,11 @@ public class PartListing : Widget
 			parts = new Dictionary<BasePart.PartTier, List<BasePart>>();
 			parts.Add(part.m_partTier, new List<BasePart>());
 			parts[part.m_partTier].Add(part);
-			PartType = part.m_partType;
+			type = part.m_partType;
 			CustomPartInfo customPart = WPFMonoBehaviour.gameData.GetCustomPart(part.m_partType);
 			partInstances = new Dictionary<BasePart.PartTier, List<GameObject>>();
 			partInstances.Add(part.m_partTier, new List<GameObject>());
-			SelectedIcon = null;
+			selectedIcon = null;
 			if (customPart == null)
 			{
 				return;
@@ -91,9 +95,9 @@ public class PartListing : Widget
 
 		public void AddSelectedIcon(Transform icon)
 		{
-			SelectedIcon = icon;
-			int lastUsedPartIndex = CustomizationManager.GetLastUsedPartIndex(PartType);
-			UpdateSelectionIcon(WPFMonoBehaviour.gameData.GetCustomPart(PartType, lastUsedPartIndex).name);
+			selectedIcon = icon;
+			int lastUsedPartIndex = CustomizationManager.GetLastUsedPartIndex(type);
+			UpdateSelectionIcon(WPFMonoBehaviour.gameData.GetCustomPart(type, lastUsedPartIndex).name);
 		}
 
 		public void UpdateSelectionIcon(string partName)
@@ -319,6 +323,8 @@ public class PartListing : Widget
 
 	private float targetPosition;
 
+	private float lastMovement;
+
 	private bool interacting;
 
 	private bool targeting;
@@ -395,7 +401,7 @@ public class PartListing : Widget
 		}
 	}
 
-	public float LastMovement { get; private set; }
+	public float LastMovement => lastMovement;
 
 	private void Awake()
 	{
@@ -483,7 +489,8 @@ public class PartListing : Widget
 	{
 		foreach (KeyValuePair<BasePart.PartType, PartData> part in parts)
 		{
-			GameObject gameObject = UnityEngine.Object.Instantiate(selectedIcon, scrollPivot, true);
+			GameObject gameObject = UnityEngine.Object.Instantiate(selectedIcon);
+			gameObject.transform.parent = scrollPivot;
 			gameObject.name = part.Key.ToString();
 			SetSortingLayer(gameObject, sortingLayer);
 		}
@@ -677,7 +684,7 @@ public class PartListing : Widget
 	private void ReadPartOrder()
 	{
 		partOrder = new List<BasePart.PartType>();
-		for (int i = 0; i < 48; i++)
+		for (int i = 0; i < (int)SortedPartType.MAX; i++)
 		{
 			SortedPartType sortedPartType = (SortedPartType)i;
 			if (sortedPartType.IsValid())
@@ -786,13 +793,15 @@ public class PartListing : Widget
 				{
 					continue;
 				}
-				GameObject bg = UnityEngine.Object.Instantiate(GetIconBackground(tier), parent, true);
+				GameObject bg = UnityEngine.Object.Instantiate(GetIconBackground(tier));
+				bg.transform.parent = parent;
 				bg.transform.localPosition = localPosition;
 				Sprite icon2 = data.GetIcon(tier, index);
 				GameObject icon = null;
 				if (icon2 != null)
 				{
-					icon = UnityEngine.Object.Instantiate(icon2.gameObject, bg.transform, true);
+					icon = UnityEngine.Object.Instantiate(icon2.gameObject);
+					icon.transform.parent = bg.transform;
 					icon.transform.localPosition = new Vector3(0f, 0f, -0.1f);
 					icon.transform.localScale = Vector3.one * iconScale;
 				}
@@ -802,9 +811,9 @@ public class PartListing : Widget
 				}
 				if (IsKingsFavorite(data.parts[tier][index]))
 				{
-					AddKingsFavoriteTag(bg, out GameObject _);
+					AddKingsFavoriteTag(bg, out var _);
 				}
-				if (CustomizationManager.IsPartNew(data.parts[tier][index]) && AddNewContentTag(bg, out GameObject item))
+				if (CustomizationManager.IsPartNew(data.parts[tier][index]) && AddNewContentTag(bg, out var item))
 				{
 					newButtons.Add(item);
 				}
@@ -817,7 +826,7 @@ public class PartListing : Widget
 					{
 						if (IsKingsFavorite(data.parts[tier][index]))
 						{
-							AddKingsFavoriteTag(bg, out GameObject _);
+							AddKingsFavoriteTag(bg, out var _);
 						}
 						else
 						{
@@ -841,7 +850,7 @@ public class PartListing : Widget
 							data.UpdateSelectionIcon(gameData.GetCustomPart(data.PartType, lastUsedPartIndex).name);
 							if (CustomizationManager.IsPartNew(data.parts[tier][index]))
 							{
-								if (AddNewContentTag(bg, out GameObject item2))
+								if (AddNewContentTag(bg, out var item2))
 								{
 									newButtons.Add(item2);
 								}
@@ -910,7 +919,7 @@ public class PartListing : Widget
 					continue;
 				}
 				PartData data_ = data;
-				if (!AddNewContentTag(data.partInstances[tier][index], out GameObject gameObject))
+				if (!AddNewContentTag(data.partInstances[tier][index], out var gameObject))
 				{
 					continue;
 				}
@@ -965,7 +974,7 @@ public class PartListing : Widget
 					continue;
 				}
 				PartData data_ = data;
-				if (!AddNewContentTag(data.partInstances[tier][index], out GameObject gameObject))
+				if (!AddNewContentTag(data.partInstances[tier][index], out var gameObject))
 				{
 					continue;
 				}
@@ -1102,7 +1111,7 @@ public class PartListing : Widget
 	private Material GetDarkMaterial(Material mat)
 	{
 		string key = mat.name;
-		if (darkMaterials.TryGetValue(key, out Material value))
+		if (darkMaterials.TryGetValue(key, out var value))
 		{
 			return value;
 		}
@@ -1120,7 +1129,7 @@ public class PartListing : Widget
 	private Material GetNormalMaterial(Material mat)
 	{
 		string key = mat.name;
-		if (normalMaterials.TryGetValue(key, out Material value))
+		if (normalMaterials.TryGetValue(key, out var value))
 		{
 			return value;
 		}
@@ -1132,7 +1141,8 @@ public class PartListing : Widget
 		Transform transform = parent.transform.Find("NewContentTag");
 		if (transform != null && transform.childCount <= 0)
 		{
-			GameObject gameObject = UnityEngine.Object.Instantiate(newContentTag, transform, true);
+			GameObject gameObject = UnityEngine.Object.Instantiate(newContentTag);
+			gameObject.transform.parent = transform;
 			gameObject.transform.localPosition = Vector3.zero;
 			gameObject.name = "NewTag";
 			SetSortingLayer(gameObject, sortingLayer);
@@ -1146,7 +1156,8 @@ public class PartListing : Widget
 		Transform transform = parent.transform.Find("NewContentTag");
 		if (transform != null && transform.childCount <= 0)
 		{
-			tag = UnityEngine.Object.Instantiate(newContentTag, transform, true);
+			tag = UnityEngine.Object.Instantiate(newContentTag);
+			tag.transform.parent = transform;
 			tag.transform.localPosition = Vector3.zero;
 			tag.name = "NewTag";
 			SetSortingLayer(tag, sortingLayer);
@@ -1161,7 +1172,8 @@ public class PartListing : Widget
 		Transform transform = parent.transform.Find("NewContentTag");
 		if (transform != null && transform.childCount <= 0)
 		{
-			tag = UnityEngine.Object.Instantiate(kingsFavoriteTag, transform, true);
+			tag = UnityEngine.Object.Instantiate(kingsFavoriteTag);
+			tag.transform.parent = transform;
 			tag.transform.localPosition = Vector3.zero;
 			tag.name = "KingsFavorite";
 			SetSortingLayer(tag, sortingLayer);
@@ -1237,7 +1249,7 @@ public class PartListing : Widget
 			Vector3 vector2 = WPFMonoBehaviour.hudCamera.ScreenToWorldPoint(pointer.position);
 			lastInputPos = pointer.position;
 			deltaX = vector2.x - vector.x;
-			LastMovement += Mathf.Abs(deltaX);
+			lastMovement += Mathf.Abs(deltaX);
 			if (Mathf.Abs(deltaX) > 0f)
 			{
 				Move(deltaX);
@@ -1246,7 +1258,7 @@ public class PartListing : Widget
 		if (pointer.up && interacting)
 		{
 			interacting = false;
-			LastMovement = 0f;
+			lastMovement = 0f;
 		}
 		if (!interacting)
 		{

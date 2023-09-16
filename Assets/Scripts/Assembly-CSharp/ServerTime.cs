@@ -50,10 +50,7 @@ public class ServerTime
 		int obj = (int)currentTime;
 		mPendingRequest = false;
 		mStatus = Status.STATUS_OK;
-		if (this.StatusChanged != null)
-		{
-			this.StatusChanged(obj);
-		}
+		this.StatusChanged?.Invoke(obj);
 	}
 
 	private void ServerTimeErrorCallback(int errorCode, string message)

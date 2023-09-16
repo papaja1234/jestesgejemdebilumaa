@@ -202,10 +202,8 @@ public class ExtendedScrollList : Widget, WidgetListener
 				component.Deselect();
 			}
 		}
-		if (m_listener != null)
-		{
-			m_listener.Select(widget, targetObject);
-		}
+
+		m_listener?.Select(widget, targetObject);
 		if (targetObject is ConstructionUI.PartDesc)
 		{
 			EventManager.Send(new PartSelectedEvent((targetObject as ConstructionUI.PartDesc).part.m_partType));
@@ -226,26 +224,17 @@ public class ExtendedScrollList : Widget, WidgetListener
 
 	public void StartDrag(Widget widget, object targetObject)
 	{
-		if (m_listener != null)
-		{
-			m_listener.StartDrag(widget, targetObject);
-		}
+		m_listener?.StartDrag(widget, targetObject);
 	}
 
 	public void CancelDrag(Widget widget, object targetObject)
 	{
-		if (m_listener != null)
-		{
-			m_listener.CancelDrag(widget, targetObject);
-		}
+		m_listener?.CancelDrag(widget, targetObject);
 	}
 
 	public void Drop(Widget widget, Vector3 dropPosition, object targetObject)
 	{
-		if (m_listener != null)
-		{
-			m_listener.Drop(widget, dropPosition, targetObject);
-		}
+		m_listener?.Drop(widget, dropPosition, targetObject);
 	}
 
 	public void AddButton(Widget button)

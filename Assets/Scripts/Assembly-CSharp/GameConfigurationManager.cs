@@ -40,10 +40,7 @@ public class GameConfigurationManager : Singleton<GameConfigurationManager>
 			}
 		}
 		HasData = true;
-		if (OnHasData != null)
-		{
-			OnHasData();
-		}
+		OnHasData?.Invoke();
 	}
 
 	public Hashtable GetValues(string itemKey)

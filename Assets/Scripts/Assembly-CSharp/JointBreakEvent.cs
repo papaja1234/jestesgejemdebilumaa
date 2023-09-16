@@ -8,9 +8,6 @@ public class JointBreakEvent : MonoBehaviour
 
 	private void OnJointBreak(float breakForce)
 	{
-		if (onJointBreak != null)
-		{
-			onJointBreak(this);
-		}
+		onJointBreak?.Invoke(this);
 	}
 }

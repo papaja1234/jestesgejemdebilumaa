@@ -1,98 +1,12 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1735379674143278
-GameObject:
-  serializedVersion: 6
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Component:
-  - component: {fileID: 4224833988526473}
-  - component: {fileID: 114131404710459939}
-  m_Layer: 10
-  m_Name: InGameGUI
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &4224833988526473
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1735379674143278}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -100}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 4954696820392147}
-  m_Father: {fileID: 0}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: -0, z: -0}
---- !u!114 &114131404710459939
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1735379674143278}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d1e43376e036cf763bb6722437a4cfa, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
-  buildMenuPrefab: {fileID: 1757009478086698, guid: 4360dbd3465edbd48a5e5aa3be52238d, type: 2}
-  flightMenuPrefab: {fileID: 1799718652050036, guid: 74c0aafe80a0ee64caea1ae54995c33e, type: 2}
-  previewMenuPrefab: {fileID: 1197470416644413, guid: c2e9a03b207b2f04c97c3ebc675e9a1b, type: 2}
-  pauseMenuPrefab: {fileID: 1302035673873097, guid: e97d3f37d211f514d8f08a77f9df39a8, type: 2}
-  levelCompleteMenuPrefab: {fileID: 1168609797812041, guid: 860df4e3d9ccf7c45bb9204d90764a57, type: 2}
-  tutorialBookMenuPrefab: {fileID: 1815404031212516, guid: fc2b8a80e3d77e549aed8d86a1cb2efc, type: 2}
-  mechanicGiftScreenPrefab: {fileID: 1405420492160331, guid: 0e410c81477e9bf45a1450aa725f87b9, type: 2}
-  cakeRaceCompleteMenuPrefab: {fileID: 1094599035705721, guid: 0ca8e4479f4116a4495be2666ad15ad3, type: 2}
---- !u!1 &1287341093995960
-GameObject:
-  serializedVersion: 6
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Component:
-  - component: {fileID: 4954696820392147}
-  m_Layer: 0
-  m_Name: RewardVideoLoadingDialog
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &4954696820392147
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1287341093995960}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -2}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 4137807926020437}
-  - {fileID: 4408443434946971}
-  m_Father: {fileID: 4224833988526473}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: -0, z: -0}
 --- !u!1 &1167901206666205
 GameObject:
-  serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
   m_Component:
   - component: {fileID: 4137807926020437}
   - component: {fileID: 23136670034536026}
@@ -174,7 +88,6 @@ MeshFilter:
   m_Mesh: {fileID: 0}
 --- !u!65 &65055677964826305
 BoxCollider:
-  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -183,6 +96,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
+  serializedVersion: 2
   m_Size: {x: 37.78646, y: 26.97917, z: 0}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &114019989807000040
@@ -195,8 +109,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d1c532f8e405408698d131822fca7f7c, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114302381872275179
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -207,21 +121,54 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 04a340c55c247513cbdc1b4d88bbdbae, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   m_id: 15188308-cd33-4130-9b88-3e943726a22d
   m_scaleX: 23.41
   m_scaleY: 16.72
   m_pivotX: 0
   m_pivotY: 0
   m_updateCollider: 1
---- !u!1 &1561104610046204
+--- !u!1 &1287341093995960
 GameObject:
-  serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4954696820392147}
+  m_Layer: 0
+  m_Name: RewardVideoLoadingDialog
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &4954696820392147
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1287341093995960}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 4137807926020437}
+  - {fileID: 4408443434946971}
+  m_Father: {fileID: 4224833988526473}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: -0, z: -0}
+--- !u!1 &1561104610046204
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
   m_Component:
   - component: {fileID: 4408443434946971}
   - component: {fileID: 102361757661846971}
@@ -323,5 +270,58 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3d6137677e61850bf31956a6c9546656, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &1735379674143278
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4224833988526473}
+  - component: {fileID: 114131404710459939}
+  m_Layer: 10
+  m_Name: InGameGUI
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4224833988526473
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1735379674143278}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -100}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 4954696820392147}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: -0, z: -0}
+--- !u!114 &114131404710459939
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1735379674143278}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d1e43376e036cf763bb6722437a4cfa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buildMenuPrefab: {fileID: 1757009478086698, guid: 4360dbd3465edbd48a5e5aa3be52238d, type: 3}
+  flightMenuPrefab: {fileID: 1799718652050036, guid: 74c0aafe80a0ee64caea1ae54995c33e, type: 3}
+  previewMenuPrefab: {fileID: 1197470416644413, guid: c2e9a03b207b2f04c97c3ebc675e9a1b, type: 3}
+  pauseMenuPrefab: {fileID: 1302035673873097, guid: e97d3f37d211f514d8f08a77f9df39a8, type: 3}
+  levelCompleteMenuPrefab: {fileID: 1168609797812041, guid: 860df4e3d9ccf7c45bb9204d90764a57, type: 3}
+  tutorialBookMenuPrefab: {fileID: 1815404031212516, guid: fc2b8a80e3d77e549aed8d86a1cb2efc, type: 3}
+  mechanicGiftScreenPrefab: {fileID: 1405420492160331, guid: 0e410c81477e9bf45a1450aa725f87b9, type: 3}
+  cakeRaceCompleteMenuPrefab: {fileID: 1094599035705721, guid: 0ca8e4479f4116a4495be2666ad15ad3, type: 3}

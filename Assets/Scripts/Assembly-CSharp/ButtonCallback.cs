@@ -9,17 +9,11 @@ public class ButtonCallback : MonoBehaviour
 
 	public void OkButtonPressed()
 	{
-		if (onOkCallback != null)
-		{
-			onOkCallback();
-		}
+		onOkCallback?.Invoke();
 	}
 
 	public void CancelButtonPressed()
 	{
-		if (onCancelCallback != null)
-		{
-			onCancelCallback();
-		}
+		onCancelCallback?.Invoke();
 	}
 }

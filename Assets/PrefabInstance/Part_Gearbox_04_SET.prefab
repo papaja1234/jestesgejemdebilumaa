@@ -309,6 +309,7 @@ MonoBehaviour:
   lateSpeed: {x: 0, y: 0, z: 0}
   m_hp: 700
   m_maxHp: 700
+  m_minDamage: 31.4
   activeSprite: {fileID: 1033799218445495}
   inactiveSprite: {fileID: 1348074763371464}
 --- !u!1 &1348074763371464

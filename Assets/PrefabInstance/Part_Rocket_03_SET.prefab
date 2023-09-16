@@ -104,6 +104,7 @@ MonoBehaviour:
   lateSpeed: {x: 0, y: 0, z: 0}
   m_hp: 3000
   m_maxHp: 3000
+  m_minDamage: 31.4
   m_direction: {x: 1, y: 0, z: 0}
   m_enabled: 1
   m_explodes: 1

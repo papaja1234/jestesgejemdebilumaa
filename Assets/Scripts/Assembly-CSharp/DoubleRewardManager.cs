@@ -118,14 +118,8 @@ public class DoubleRewardManager : Singleton<DoubleRewardManager>
 
 	private void OnDestroy()
 	{
-		if (adReward != null)
-		{
-			adReward.Dispose();
-		}
-		if (serverTime != null)
-		{
-			serverTime.Destroy();
-		}
+		adReward?.Dispose();
+		serverTime?.Destroy();
 	}
 
 	private void OnAdReady()
@@ -203,10 +197,7 @@ public class DoubleRewardManager : Singleton<DoubleRewardManager>
 		if (CurrentStatus == Status.Uninitialized)
 		{
 			CurrentStatus = Status.Initialized;
-			if (OnInitialize != null)
-			{
-				OnInitialize();
-			}
+			OnInitialize?.Invoke();
 		}
 	}
 

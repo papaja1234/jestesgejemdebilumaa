@@ -120,7 +120,7 @@ MonoBehaviour:
   tags: []
   audioMaterial: 0
   m_jointType: 0
-  m_partTier: 0
+  m_partTier: 1
   m_partType: 18
   m_autoAlign: 0
   m_flipped: 0
@@ -140,6 +140,7 @@ MonoBehaviour:
   lateSpeed: {x: 0, y: 0, z: 0}
   m_hp: 4000
   m_maxHp: 4000
+  m_minDamage: 31.4
   m_material: 1
   m_brokenTextures: []
 --- !u!114 &1791194212841921897

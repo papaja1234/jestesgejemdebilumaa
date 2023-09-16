@@ -291,6 +291,7 @@ MonoBehaviour:
   lateSpeed: {x: 0, y: 0, z: 0}
   m_hp: 2000
   m_maxHp: 2000
+  m_minDamage: 31.4
   m_BoxingGlovePrefab: {fileID: 1458017101564840, guid: cdeac82f9ad7533428d3792c9c343778, type: 3}
   m_targetDistanceY: 1
   m_targetDeviationX: 0

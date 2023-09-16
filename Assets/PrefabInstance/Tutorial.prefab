@@ -2,11 +2,11 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!1 &1214499701173906
 GameObject:
-  serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
   m_Component:
   - component: {fileID: 4674968979684868}
   - component: {fileID: 114509055722365103}
@@ -42,10 +42,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 150161c4cf3b151d963e45c9682bfff0, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
-  m_pointerPrefab: {fileID: 1720554591326562, guid: 61605644128e51a4bace13603b4c8d77, type: 2}
-  m_clickIndicatorPrefab: {fileID: 1126762422958435, guid: 7c724db13417c6b4a8235decbdaa80d2, type: 2}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_pointerPrefab: {fileID: 1720554591326562, guid: 61605644128e51a4bace13603b4c8d77, type: 3}
+  m_clickIndicatorPrefab: {fileID: 1126762422958435, guid: 7c724db13417c6b4a8235decbdaa80d2, type: 3}
   m_dragTargetX: 0
   m_dragTargetY: 1
   m_pigTargetX: 0

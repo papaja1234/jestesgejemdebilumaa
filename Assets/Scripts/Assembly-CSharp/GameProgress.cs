@@ -615,10 +615,7 @@ public class GameProgress : MonoBehaviour
 	public static void SetScrapCount(int count)
 	{
 		m_data.SetInt("Scrap", count);
-		if (OnScrapAmountChanged != null)
-		{
-			OnScrapAmountChanged();
-		}
+		OnScrapAmountChanged?.Invoke();
 	}
 
 	public static void AddScrap(int count)
@@ -626,10 +623,7 @@ public class GameProgress : MonoBehaviour
 		int @int = m_data.GetInt("Scrap", 0);
 		@int += count;
 		m_data.SetInt("Scrap", @int);
-		if (OnScrapAmountChanged != null)
-		{
-			OnScrapAmountChanged();
-		}
+		OnScrapAmountChanged?.Invoke();
 	}
 
 	public static bool UseScrap(int amount)
@@ -639,10 +633,7 @@ public class GameProgress : MonoBehaviour
 		{
 			@int -= amount;
 			m_data.SetInt("Scrap", @int);
-			if (OnScrapAmountChanged != null)
-			{
-				OnScrapAmountChanged();
-			}
+			OnScrapAmountChanged?.Invoke();
 			return true;
 		}
 		return false;

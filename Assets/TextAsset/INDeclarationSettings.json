@@ -1015,9 +1015,14 @@
 			"value": false
 		},
 		{
-			"name": "Irrational",
+			"name": "AlienExtras",
 			"type": "Boolean",
-			"value": false
+			"value": true
+		},
+		{
+			"name": "NeuralPart",
+			"type": "Boolean",
+			"value": true
 		}
 	]
 }

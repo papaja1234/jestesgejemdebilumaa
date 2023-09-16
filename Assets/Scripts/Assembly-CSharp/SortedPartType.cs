@@ -48,7 +48,7 @@ public enum SortedPartType
 	SpotLight = 45,
 	JetEngine = 46,
 	ElectricalPart = 47,
-	Irrational = 48,
+	NeuralPart = 48,
 	MAX = 49,
 	All = -1
 }

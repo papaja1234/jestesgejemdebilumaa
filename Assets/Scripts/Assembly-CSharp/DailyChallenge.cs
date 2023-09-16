@@ -483,10 +483,7 @@ public class DailyChallenge : Singleton<DailyChallenge>
 	private void OnDailyRewardEnded(int secondsAgo)
 	{
 		CreateNewChallenges();
-		if (OnDailyChallengeChanged != null)
-		{
-			OnDailyChallengeChanged();
-		}
+		OnDailyChallengeChanged?.Invoke();
 	}
 
 	private void OnDailyRewardCollected(int index)

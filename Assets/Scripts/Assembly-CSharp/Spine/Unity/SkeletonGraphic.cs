@@ -50,11 +50,7 @@ namespace Spine.Unity
 		{
 			get
 			{
-				if (skeleton == null)
-				{
-					return null;
-				}
-				return skeleton.data;
+				return skeleton?.data;
 			}
 		}
 
@@ -105,20 +101,15 @@ namespace Spine.Unity
 				skeleton.Update(deltaTime);
 				state.Update(deltaTime);
 				state.Apply(skeleton);
-				if (this.UpdateLocal != null)
-				{
-					this.UpdateLocal(this);
-				}
+				this.UpdateLocal?.Invoke(this);
 				skeleton.UpdateWorldTransform();
 				if (this.UpdateWorld != null)
 				{
 					this.UpdateWorld(this);
 					skeleton.UpdateWorldTransform();
 				}
-				if (this.UpdateComplete != null)
-				{
-					this.UpdateComplete(this);
-				}
+
+				this.UpdateComplete?.Invoke(this);
 			}
 		}
 

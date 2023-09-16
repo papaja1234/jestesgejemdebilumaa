@@ -30,10 +30,7 @@ public class CustomizationManager
 			SetPartNew(part, isNew: true);
 			SetPartUsed(part, used: false);
 			CheckUnlockPartAchievements();
-			if (OnPartUnlocked != null)
-			{
-				OnPartUnlocked(part);
-			}
+			OnPartUnlocked?.Invoke(part);
 		}
 	}
 

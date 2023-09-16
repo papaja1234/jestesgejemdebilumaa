@@ -22,10 +22,7 @@ public class AdvertisementHandler
 		{
 			if (!placement.Equals(m_placementName) || content == null)
 			{
-				if (onRenderableReady != null)
-				{
-					onRenderableReady(obj: false);
-				}
+				onRenderableReady?.Invoke(obj: false);
 				return false;
 			}
 			if (contentType.StartsWith("image/"))
@@ -34,17 +31,12 @@ public class AdvertisementHandler
 				if (texture2D.LoadImage(content.ToArray()))
 				{
 					m_texture = texture2D;
-					if (onRenderableReady != null)
-					{
-						onRenderableReady(obj: true);
-					}
+					onRenderableReady?.Invoke(obj: true);
 					return true;
 				}
 			}
-			if (onRenderableReady != null)
-			{
-				onRenderableReady(obj: false);
-			}
+
+			onRenderableReady?.Invoke(obj: false);
 			return false;
 		}
 	}
@@ -85,38 +77,22 @@ public class AdvertisementHandler
 
 	public static Texture2D GetRewardNativeTexture()
 	{
-		if (rewardNativeRenderable != null)
-		{
-			return rewardNativeRenderable.m_texture;
-		}
-		return null;
+		return rewardNativeRenderable?.m_texture;
 	}
 
 	public static Texture2D GetMainMenuPopupTexture()
 	{
-		if (MainMenuPromoRenderable != null)
-		{
-			return MainMenuPromoRenderable.m_texture;
-		}
-		return null;
+		return MainMenuPromoRenderable?.m_texture;
 	}
 
 	public static Texture2D GetCrossPromoMainTexture()
 	{
-		if (CrossPromoMainRenderable != null)
-		{
-			return CrossPromoMainRenderable.m_texture;
-		}
-		return null;
+		return CrossPromoMainRenderable?.m_texture;
 	}
 
 	public static Texture2D GetCrossPromoEpisodeTexture()
 	{
-		if (CrossPromoEpisodeRenderable != null)
-		{
-			return CrossPromoEpisodeRenderable.m_texture;
-		}
-		return null;
+		return CrossPromoEpisodeRenderable?.m_texture;
 	}
 
 	public static bool IsAdvertisementReady(string placement)

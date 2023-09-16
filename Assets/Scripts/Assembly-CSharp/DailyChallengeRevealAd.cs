@@ -65,10 +65,7 @@ public class DailyChallengeRevealAd : MonoBehaviour
 
 	private void OnDestroy()
 	{
-		if (adReward != null)
-		{
-			adReward.Dispose();
-		}
+		adReward?.Dispose();
 		if (Singleton<DailyChallenge>.IsInstantiated())
 		{
 			DailyChallenge instance = Singleton<DailyChallenge>.Instance;

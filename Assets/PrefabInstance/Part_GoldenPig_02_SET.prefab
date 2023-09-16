@@ -82,6 +82,7 @@ MonoBehaviour:
   lateSpeed: {x: 0, y: 0, z: 0}
   m_hp: 9999
   m_maxHp: 9999
+  m_minDamage: 31.4
 --- !u!135 &135435848001572947
 SphereCollider:
   m_ObjectHideFlags: 0

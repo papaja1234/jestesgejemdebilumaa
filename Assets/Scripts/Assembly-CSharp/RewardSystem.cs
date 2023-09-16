@@ -73,10 +73,8 @@ public class RewardSystem : Singleton<RewardSystem>
 		{
 			HatchManager.onLoginSuccess = (Action)Delegate.Remove(HatchManager.onLoginSuccess, new Action(HandleServerTime));
 		}
-		if (mServerTime != null)
-		{
-			mServerTime.Destroy();
-		}
+
+		mServerTime?.Destroy();
 	}
 
 	public void HandleServerTime()
@@ -322,11 +320,7 @@ public class RewardSystem : Singleton<RewardSystem>
 
 	private void GiveReward(DailyRewardBundle rewardBundle)
 	{
-		if (rewardBundle == null)
-		{
-			return;
-		}
-		List<DailyReward> list = rewardBundle.GetRewards(CurrentRewardStatus.PendingRewardLevel);
+		List<DailyReward> list = rewardBundle?.GetRewards(CurrentRewardStatus.PendingRewardLevel);
 		if (list == null)
 		{
 			return;

@@ -98,6 +98,7 @@ MonoBehaviour:
   lateSpeed: {x: 0, y: 0, z: 0}
   m_hp: 2000
   m_maxHp: 2000
+  m_minDamage: 31.4
   m_isTriple: 1
 --- !u!23 &23136110483250912
 MeshRenderer:

@@ -59,10 +59,7 @@ public class WorkshopIntro : MonoBehaviour
 		int num = Mathf.Clamp(reward, 0, 200);
 		ScrapButton.Instance.AddParticles(base.gameObject, num, 0f, num);
 		GameProgress.AddScrap(reward);
-		if (OnPressedOk != null)
-		{
-			OnPressedOk();
-		}
+		OnPressedOk?.Invoke();
 	}
 
 	private void ChangeButtonText()

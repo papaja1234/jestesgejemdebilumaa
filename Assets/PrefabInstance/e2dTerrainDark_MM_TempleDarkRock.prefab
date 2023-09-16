@@ -2,11 +2,11 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!1 &1273290605235426
 GameObject:
-  serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
   m_Component:
   - component: {fileID: 4972173164533396}
   - component: {fileID: 114056881860118605}
@@ -46,8 +46,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d365bfc9c924110e861c842a241cbf33, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   TerrainCurve:
   - position: {x: 1.624634, y: -6.476196}
     texture: 1
@@ -95,32 +95,32 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f9b722bfc17b8b4e1698abe0ba8329cd, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   FullRebuild: 1
   NodeStepSize: 0.5
   TargetPosition: {x: 50, y: 50}
   TargetSize: {x: 100, y: 100}
   TargetAngle: 0
   Perlin:
-    name:
+    name: 
     octaves: 3
     frequencyPerUnit: 0.02
     persistence: 0.3
   Voronoi:
-    name:
+    name: 
     peakType: 1
     frequencyPerUnit: 0.025
     peakRatio: 0.755
     peakWidth: 0.21
     usePeaks: 0
   Midpoint:
-    name:
+    name: 
     frequencyPerUnit: 0.025
     roughness: 0.082
     usePeaks: 0
   Walk:
-    name:
+    name: 
     angleChangePerUnit: 56
     frequencyPerUnit: 0.5
     cohesionPerUnit: 0.855
@@ -136,11 +136,11 @@ MonoBehaviour:
   TextureHeights: []
 --- !u!1 &1335060616371118
 GameObject:
-  serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
   m_Component:
   - component: {fileID: 4088391204898631}
   - component: {fileID: 64722235036317487}
@@ -169,7 +169,6 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: -0, z: -0}
 --- !u!64 &64722235036317487
 MeshCollider:
-  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -178,6 +177,7 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
+  serializedVersion: 4
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
@@ -191,15 +191,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6319125ac361a75a1d426e3644abfd8a, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1717803519059460
 GameObject:
-  serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
   m_Component:
   - component: {fileID: 4301515671149594}
   - component: {fileID: 33247854296245488}
@@ -287,15 +287,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6319125ac361a75a1d426e3644abfd8a, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1736243941452994
 GameObject:
-  serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
   m_Component:
   - component: {fileID: 4007453117321448}
   - component: {fileID: 33079423185205930}
@@ -383,5 +383,5 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6319125ac361a75a1d426e3644abfd8a, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 

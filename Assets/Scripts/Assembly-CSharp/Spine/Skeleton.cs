@@ -571,19 +571,14 @@ namespace Spine
 			{
 				throw new ArgumentNullException("attachmentName", "attachmentName cannot be null.");
 			}
-			if (skin != null)
+
+			Attachment attachment = skin?.GetAttachment(slotIndex, attachmentName);
+			if (attachment != null)
 			{
-				Attachment attachment = skin.GetAttachment(slotIndex, attachmentName);
-				if (attachment != null)
-				{
-					return attachment;
-				}
+				return attachment;
 			}
-			if (data.defaultSkin != null)
-			{
-				return data.defaultSkin.GetAttachment(slotIndex, attachmentName);
-			}
-			return null;
+
+			return data.defaultSkin?.GetAttachment(slotIndex, attachmentName);
 		}
 
 		public void SetAttachment(string slotName, string attachmentName)

@@ -2,11 +2,11 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!1 &1656729368007131
 GameObject:
-  serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
   m_Component:
   - component: {fileID: 4016465142782243}
   - component: {fileID: 23264533027191270}
@@ -30,7 +30,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1656729368007131}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.716446, y: -5.936623E-05, z: 0}
+  m_LocalPosition: {x: 1.716446, y: -0.00005936623, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -89,7 +89,6 @@ MeshFilter:
   m_Mesh: {fileID: 0}
 --- !u!65 &65248519687585207
 BoxCollider:
-  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -98,6 +97,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
+  serializedVersion: 2
   m_Size: {x: 1.40625, y: 1.380208, z: 5}
   m_Center: {x: 0, y: 0.6770833, z: 0}
 --- !u!114 &114655056799482752
@@ -110,13 +110,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0ea827dcd4fbce8ef9b42a75abcf7d7f, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
-  collectedEffect: {fileID: 198911294371946608, guid: de6a9113b85cac5488bcb638ba1ad300, type: 2}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collectedEffect: {fileID: 198911294371946608, guid: de6a9113b85cac5488bcb638ba1ad300, type: 3}
   xpParticles: {fileID: 0}
   collected: 0
   prefabGlow: {fileID: 0}
-  prefabIcon: {fileID: 1890510969836404, guid: c4703ece767f0b74889da753b01ebc7c, type: 2}
+  prefabIcon: {fileID: 1890510969836404, guid: c4703ece767f0b74889da753b01ebc7c, type: 3}
   saveId: IcecreamBalls
 --- !u!114 &114190460061044931
 MonoBehaviour:
@@ -128,8 +128,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 04a340c55c247513cbdc1b4d88bbdbae, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   m_id: 73b29c6e-d5ee-4f22-b088-1709d597a9a0
   m_scaleX: 0.5
   m_scaleY: 0.5
@@ -138,12 +138,12 @@ MonoBehaviour:
   m_updateCollider: 1
 --- !u!54 &54399801385284744
 Rigidbody:
-  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1656729368007131}
+  serializedVersion: 2
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05

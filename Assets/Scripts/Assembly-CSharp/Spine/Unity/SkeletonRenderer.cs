@@ -227,10 +227,7 @@ namespace Spine.Unity
 					separatorSlots.Add(skeleton.FindSlot(separatorSlotNames[i]));
 				}
 				LateUpdate();
-				if (OnRebuild != null)
-				{
-					OnRebuild(this);
-				}
+				OnRebuild?.Invoke(this);
 			}
 		}
 

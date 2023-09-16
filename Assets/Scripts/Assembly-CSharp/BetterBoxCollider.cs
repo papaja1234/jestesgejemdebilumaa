@@ -1,7 +1,10 @@
+//#define USEBETTERCOLLIDER
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Burst;
 using UnityEngine;
+
 
 public class BetterBoxCollider : MonoBehaviour
 {
@@ -37,7 +40,10 @@ public class BetterBoxCollider : MonoBehaviour
     {
         
     }
+#if USEBETTERCOLLIDER
+    
 
+    [BurstCompile(CompileSynchronously = true)]
     private void OnCollisionStay(Collision collisionInfo)
     {
         if (Time.time - time < 0.02f) return;
@@ -59,7 +65,7 @@ public class BetterBoxCollider : MonoBehaviour
         }
         else
         {
-            //average.x = 0;
+            average.x = 0;
         }
 
         Vector3 force = -(average.normalized * ForceCoefficient);
@@ -68,7 +74,7 @@ public class BetterBoxCollider : MonoBehaviour
                   force);
         if (hitRigidbody)
         {
-            force *= (hitRigidbody.velocity.magnitude+1.223f);
+            force *= (hitRigidbody.velocity.magnitude+1f);
             hitRigidbody.AddForce(force,ForceMode);
             Parent.rigidbody.AddForce(-force,ForceMode);
         }
@@ -77,7 +83,7 @@ public class BetterBoxCollider : MonoBehaviour
             Parent.rigidbody.AddForce(-force,ForceMode);
         }
     }
-
+#endif
     private bool IsInside(Vector3 worldPosition)
     {
         Vector3 a = transform.InverseTransformDirection(worldPosition);

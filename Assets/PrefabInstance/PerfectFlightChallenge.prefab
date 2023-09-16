@@ -2,11 +2,11 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!1 &1460348305697439
 GameObject:
-  serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
   m_Component:
   - component: {fileID: 4621661895042720}
   - component: {fileID: 114177618742676863}
@@ -42,14 +42,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6222a4160e82e066da3f7f5e2db54982, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   m_icons:
   - position: {x: 0.1, y: 0.1, z: -1.1}
     scale: 1
-    icon: {fileID: 1912546583394570, guid: a7fc3f3aa670afa4581f69fcfdc721de, type: 2}
+    icon: {fileID: 1912546583394570, guid: a7fc3f3aa670afa4581f69fcfdc721de, type: 3}
   - position: {x: -0.4, y: -0.3, z: -1.2}
     scale: 1
-    icon: {fileID: 1188035700241572, guid: 4b9f262f787940546ba1a4e0c18edddc, type: 2}
-  m_tutorialBookPage: {fileID: 1534022579759597, guid: 1c8bd98e2f5bc0340b83fbb8522d0bbc, type: 2}
+    icon: {fileID: 1188035700241572, guid: 4b9f262f787940546ba1a4e0c18edddc, type: 3}
+  m_tutorialBookPage: {fileID: 1534022579759597, guid: 1c8bd98e2f5bc0340b83fbb8522d0bbc, type: 3}
   m_challengeNumber: 0

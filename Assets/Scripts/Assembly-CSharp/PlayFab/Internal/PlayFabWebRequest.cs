@@ -315,10 +315,7 @@ namespace PlayFab.Internal
 				ResultQueue.Enqueue(delegate
 				{
 					PlayFabHttp.SendErrorEvent(reqContainer.ApiRequest, reqContainer.Error);
-					if (reqContainer.ErrorCallback != null)
-					{
-						reqContainer.ErrorCallback(reqContainer.Error);
-					}
+					reqContainer.ErrorCallback?.Invoke(reqContainer.Error);
 				});
 			}
 		}

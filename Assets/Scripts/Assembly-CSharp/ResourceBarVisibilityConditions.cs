@@ -21,10 +21,7 @@ public class ResourceBarVisibilityConditions : MonoBehaviour
 
 		public void OnStateChanged(bool newState)
 		{
-			if (OnStateChangedEvent != null)
-			{
-				OnStateChangedEvent(newState);
-			}
+			OnStateChangedEvent?.Invoke(newState);
 		}
 	}
 

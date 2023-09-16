@@ -135,10 +135,8 @@ public class PartBox : OneTimeCollectable
 		{
 			PartBox.onCollected();
 		}
-		if (this.onCollect != null)
-		{
-			this.onCollect(this);
-		}
+
+		this.onCollect?.Invoke(this);
 	}
 
 	protected override void OnUIEvent(UIEvent data)

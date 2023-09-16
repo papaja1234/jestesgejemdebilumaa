@@ -2,11 +2,11 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!1 &1092218083598150
 GameObject:
-  serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
   m_Component:
   - component: {fileID: 4606886543956915}
   - component: {fileID: 23595160418892803}
@@ -97,8 +97,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 04a340c55c247513cbdc1b4d88bbdbae, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   m_id: 0e9fdeca-5974-4064-8bc3-e2851924bc59
   m_scaleX: 0.6
   m_scaleY: 0.6
@@ -107,7 +107,6 @@ MonoBehaviour:
   m_updateCollider: 1
 --- !u!65 &65010955872244110
 BoxCollider:
-  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -116,6 +115,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 0
+  serializedVersion: 2
   m_Size: {x: 2.838542, y: 2.96875, z: 0}
   m_Center: {x: 0, y: -0.02604163, z: 0}
 --- !u!114 &114897363251967013
@@ -128,17 +128,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 592a4f4281d4a97a9440d67f0f1016e1, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   methodToCall:
     m_targetObject: {fileID: 0}
-    m_targetComponent:
-    m_methodToInvoke:
+    m_targetComponent: 
+    m_methodToInvoke: 
     m_parameters: []
   messageTargetObject: {fileID: 0}
-  targetComponent:
-  methodToInvoke:
-  messageParameter:
+  targetComponent: 
+  methodToInvoke: 
+  messageParameter: 
   eventToSend:
     m_event:
       m_eventTypeName: None
@@ -151,11 +151,11 @@ MonoBehaviour:
   disableSound: 0
 --- !u!1 &1794544411253375
 GameObject:
-  serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
   m_Component:
   - component: {fileID: 4192004629708348}
   m_Layer: 10

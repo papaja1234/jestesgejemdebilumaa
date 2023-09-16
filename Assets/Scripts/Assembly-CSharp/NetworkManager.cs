@@ -145,10 +145,7 @@ public class NetworkManager : Singleton<NetworkManager>
 		}
 		else if (waitingCheck && !HasAddress && !resolvingConnectivity && resolvingAddrFailed)
 		{
-			if (OnCheckResponse != null)
-			{
-				OnCheckResponse(hasNetwork: false);
-			}
+			OnCheckResponse?.Invoke(hasNetwork: false);
 			OnCheckResponse = null;
 			waitingCheck = false;
 		}
@@ -206,10 +203,8 @@ public class NetworkManager : Singleton<NetworkManager>
 			{
 				OnNetworkChange(hasNetwork: true);
 			}
-			if (OnCheckResponse != null)
-			{
-				OnCheckResponse(hasNetwork: true);
-			}
+
+			OnCheckResponse?.Invoke(hasNetwork: true);
 			HasNetworkAccess = true;
 			OnCheckResponse = null;
 			resolvingConnectivity = false;
@@ -244,10 +239,7 @@ public class NetworkManager : Singleton<NetworkManager>
 		resolvingConnectivity = false;
 		waitingCheck = false;
 		HasNetworkAccess = fallbackCheck;
-		if (OnCheckResponse != null)
-		{
-			OnCheckResponse(fallbackCheck);
-		}
+		OnCheckResponse?.Invoke(fallbackCheck);
 		if (fallbackCheck != HasNetworkAccess && OnNetworkChange != null)
 		{
 			OnNetworkChange(fallbackCheck);

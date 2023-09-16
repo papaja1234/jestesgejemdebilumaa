@@ -66,18 +66,12 @@ public class UnlockLevelRowPanel : MonoBehaviour
 
 	public void AdButtonPressed()
 	{
-		if (this.WatchAd != null)
-		{
-			this.WatchAd();
-		}
+		this.WatchAd?.Invoke();
 	}
 
 	public void PayButtonPressed()
 	{
-		if (this.Pay != null)
-		{
-			this.Pay();
-		}
+		this.Pay?.Invoke();
 	}
 
 	public void OpenUnlockDialog()

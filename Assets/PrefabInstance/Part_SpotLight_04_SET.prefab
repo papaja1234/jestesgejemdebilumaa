@@ -986,6 +986,7 @@ MonoBehaviour:
   lateSpeed: {x: 0, y: 0, z: 0}
   m_hp: 1500
   m_maxHp: 1500
+  m_minDamage: 31.4
   m_lightConeContainer: {fileID: 1510262051403273}
 --- !u!114 &114567605203936548
 MonoBehaviour:

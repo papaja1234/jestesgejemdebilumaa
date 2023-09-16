@@ -176,10 +176,7 @@ public class TimeManager : Singleton<TimeManager>
 			}
 		}
 		Initialized = true;
-		if (this.OnInitialize != null)
-		{
-			this.OnInitialize();
-		}
+		this.OnInitialize?.Invoke();
 	}
 
 	private void Update()

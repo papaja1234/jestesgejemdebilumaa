@@ -68,8 +68,7 @@ namespace AssetBundleBrowser
                         if (!possibleFolderData.ignoredFiles.Contains(currentPath))
                             possibleFolderData.ignoredFiles.Add(currentPath);
 
-                        if(m_assetBundleInspectTab != null)
-                            m_assetBundleInspectTab.RefreshBundles();
+                        m_assetBundleInspectTab?.RefreshBundles();
                     }
                 } 
             }

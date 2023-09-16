@@ -1,146 +1,12 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1923144209822735
-GameObject:
-  serializedVersion: 6
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Component:
-  - component: {fileID: 4483755223242305}
-  - component: {fileID: 114311193159633681}
-  - component: {fileID: 114645578042425870}
-  m_Layer: 8
-  m_Name: e2dTerrainBase_morning
-  m_TagString: Ground
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &4483755223242305
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1923144209822735}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 4982184888797077}
-  - {fileID: 4299273085988979}
-  - {fileID: 4036692079468011}
-  m_Father: {fileID: 0}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: -0, z: -0}
---- !u!114 &114311193159633681
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1923144209822735}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d365bfc9c924110e861c842a241cbf33, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
-  TerrainCurve:
-  - position: {x: 1.624631, y: -6.476197}
-    texture: 1
-    grassRatio: 0
-  - position: {x: 1.612573, y: 6.329424}
-    texture: 1
-    grassRatio: 0
-  - position: {x: 7.807658, y: 6.330128}
-    texture: 1
-    grassRatio: 0
-  - position: {x: 7.835477, y: -6.460931}
-    texture: 1
-    grassRatio: 0
-  TerrainBoundary:
-    serializedVersion: 2
-    x: 1.612573
-    y: -6.476197
-    width: 6.222904
-    height: 12.80632
-  FillTexture: {fileID: 2800000, guid: 0d21e8862d418244cb1324e450777883, type: 3}
-  FillTextureTileWidth: 5
-  FillTextureTileHeight: 5
-  FillTextureTileOffsetX: 0
-  FillTextureTileOffsetY: 6.2
-  CurveClosed: 0
-  NoCollider: 0
-  CurveTextures:
-  - texture: {fileID: 2800000, guid: d924ad085e550fd43a849c49586636dd, type: 3}
-    size: {x: 0.1, y: 0.5}
-    fixedAngle: 0
-    fadeThreshold: 0.5
-  - texture: {fileID: 2800000, guid: 7b54ae7679888e7468d0877ff7b53f48, type: 3}
-    size: {x: 0.1, y: 0.1}
-    fixedAngle: 0
-    fadeThreshold: 0
-  PlasticEdges: 0
-  AllowRebuildMaterial: 1
---- !u!114 &114645578042425870
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1923144209822735}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9b722bfc17b8b4e1698abe0ba8329cd, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
-  FullRebuild: 1
-  NodeStepSize: 0.5
-  TargetPosition: {x: 50, y: 50}
-  TargetSize: {x: 100, y: 100}
-  TargetAngle: 0
-  Perlin:
-    name:
-    octaves: 3
-    frequencyPerUnit: 0.02
-    persistence: 0.3
-  Voronoi:
-    name:
-    peakType: 1
-    frequencyPerUnit: 0.025
-    peakRatio: 0.755
-    peakWidth: 0.21
-    usePeaks: 0
-  Midpoint:
-    name:
-    frequencyPerUnit: 0.025
-    roughness: 0.082
-    usePeaks: 0
-  Walk:
-    name:
-    angleChangePerUnit: 56
-    frequencyPerUnit: 0.5
-    cohesionPerUnit: 0.855
-  Peaks: []
-  CurveBlendingWeights:
-  - 0
-  - 0
-  - 0
-  - 0
-  SmoothIterations: 0
-  CliffTextureIndex: 0
-  CliffStartAngle: 0
-  TextureHeights: []
 --- !u!1 &1090728059848811
 GameObject:
-  serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
   m_Component:
   - component: {fileID: 4982184888797077}
   - component: {fileID: 64421252102655583}
@@ -169,7 +35,6 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: -0, z: -0}
 --- !u!64 &64421252102655583
 MeshCollider:
-  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -178,6 +43,7 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
+  serializedVersion: 4
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
@@ -191,15 +57,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6319125ac361a75a1d426e3644abfd8a, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1612452085047507
 GameObject:
-  serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
   m_Component:
   - component: {fileID: 4299273085988979}
   - component: {fileID: 33628055952393470}
@@ -287,15 +153,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6319125ac361a75a1d426e3644abfd8a, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1922735069142318
 GameObject:
-  serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
   m_Component:
   - component: {fileID: 4036692079468011}
   - component: {fileID: 33615552622051198}
@@ -383,5 +249,139 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6319125ac361a75a1d426e3644abfd8a, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &1923144209822735
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4483755223242305}
+  - component: {fileID: 114311193159633681}
+  - component: {fileID: 114645578042425870}
+  m_Layer: 8
+  m_Name: e2dTerrainBase_morning
+  m_TagString: Ground
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4483755223242305
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1923144209822735}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 4982184888797077}
+  - {fileID: 4299273085988979}
+  - {fileID: 4036692079468011}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: -0, z: -0}
+--- !u!114 &114311193159633681
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1923144209822735}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d365bfc9c924110e861c842a241cbf33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TerrainCurve:
+  - position: {x: 1.624631, y: -6.476197}
+    texture: 1
+    grassRatio: 0
+  - position: {x: 1.612573, y: 6.329424}
+    texture: 1
+    grassRatio: 0
+  - position: {x: 7.807658, y: 6.330128}
+    texture: 1
+    grassRatio: 0
+  - position: {x: 7.835477, y: -6.460931}
+    texture: 1
+    grassRatio: 0
+  TerrainBoundary:
+    serializedVersion: 2
+    x: 1.612573
+    y: -6.476197
+    width: 6.222904
+    height: 12.80632
+  FillTexture: {fileID: 2800000, guid: 0d21e8862d418244cb1324e450777883, type: 3}
+  FillTextureTileWidth: 5
+  FillTextureTileHeight: 5
+  FillTextureTileOffsetX: 0
+  FillTextureTileOffsetY: 6.2
+  CurveClosed: 0
+  NoCollider: 0
+  CurveTextures:
+  - texture: {fileID: 2800000, guid: d924ad085e550fd43a849c49586636dd, type: 3}
+    size: {x: 0.1, y: 0.5}
+    fixedAngle: 0
+    fadeThreshold: 0.5
+  - texture: {fileID: 2800000, guid: 7b54ae7679888e7468d0877ff7b53f48, type: 3}
+    size: {x: 0.1, y: 0.1}
+    fixedAngle: 0
+    fadeThreshold: 0
+  PlasticEdges: 0
+  AllowRebuildMaterial: 1
+--- !u!114 &114645578042425870
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1923144209822735}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9b722bfc17b8b4e1698abe0ba8329cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FullRebuild: 1
+  NodeStepSize: 0.5
+  TargetPosition: {x: 50, y: 50}
+  TargetSize: {x: 100, y: 100}
+  TargetAngle: 0
+  Perlin:
+    name: 
+    octaves: 3
+    frequencyPerUnit: 0.02
+    persistence: 0.3
+  Voronoi:
+    name: 
+    peakType: 1
+    frequencyPerUnit: 0.025
+    peakRatio: 0.755
+    peakWidth: 0.21
+    usePeaks: 0
+  Midpoint:
+    name: 
+    frequencyPerUnit: 0.025
+    roughness: 0.082
+    usePeaks: 0
+  Walk:
+    name: 
+    angleChangePerUnit: 56
+    frequencyPerUnit: 0.5
+    cohesionPerUnit: 0.855
+  Peaks: []
+  CurveBlendingWeights:
+  - 0
+  - 0
+  - 0
+  - 0
+  SmoothIterations: 0
+  CliffTextureIndex: 0
+  CliffStartAngle: 0
+  TextureHeights: []

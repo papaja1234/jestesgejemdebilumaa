@@ -72,9 +72,7 @@ public class StarBox : OneTimeCollectable
 		{
 			StarBox.onCollected();
 		}
-		if (this.onCollect != null)
-		{
-			this.onCollect();
-		}
+
+		this.onCollect?.Invoke();
 	}
 }

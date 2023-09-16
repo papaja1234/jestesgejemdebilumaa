@@ -4718,7 +4718,7 @@ GameObject:
   - component: {fileID: 198570529856964999}
   - component: {fileID: 199743662933801240}
   m_Layer: 0
-  m_Name: TNT_SmokeCloud
+  m_Name: TNT_SmokeCloudSmall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

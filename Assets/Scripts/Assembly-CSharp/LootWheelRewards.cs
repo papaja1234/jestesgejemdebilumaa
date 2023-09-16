@@ -169,10 +169,7 @@ public class LootWheelRewards
 			SpinPriceMultiplier = float.Parse(config["price_multiplier"]);
 		}
 		Initialized = true;
-		if (OnInitialized != null)
-		{
-			OnInitialized();
-		}
+		OnInitialized?.Invoke();
 	}
 
 	public LootWheelReward GetReward(WheelReward slot)

@@ -377,10 +377,7 @@ public class LootCrateOpenDialog : WPFMonoBehaviour
 		}
 		levelLootcrateOpened = false;
 		base.gameObject.SetActive(value: false);
-		if (this.onClose != null)
-		{
-			this.onClose();
-		}
+		this.onClose?.Invoke();
 	}
 
 	private void OnEnable()

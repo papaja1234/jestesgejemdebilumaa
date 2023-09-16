@@ -212,6 +212,7 @@ MonoBehaviour:
   lateSpeed: {x: 0, y: 0, z: 0}
   m_hp: 10000
   m_maxHp: 10000
+  m_minDamage: 31.4
   m_explosionImpulse: 500
   m_explosionRadius: 100
   m_triggerSpeed: 12

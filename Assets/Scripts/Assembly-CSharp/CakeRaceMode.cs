@@ -565,10 +565,7 @@ public class CakeRaceMode : GameMode
 		IsRaceOn = true;
 		CurrentReplay = new CakeRaceReplay(cakeRaceInfo.Value.UniqueIdentifier, HatchManager.CurrentPlayer.PlayFabDisplayName, Singleton<PlayerProgress>.Instance.Level, HasKingsFavoritePart(), null);
 		CurrentScore = 0;
-		if (ScoreUpdated != null)
-		{
-			ScoreUpdated(CurrentScore);
-		}
+		ScoreUpdated?.Invoke(CurrentScore);
 		RaceTimeLeft = cakeRaceInfo.Value.TimeLimit;
 		CollectedCakes = 0;
 		EventManager.Connect<TimeBombExplodeEvent>(OnTimeBombExplode);
@@ -789,10 +786,7 @@ public class CakeRaceMode : GameMode
 	private void AddScore(int amount)
 	{
 		CurrentScore += amount;
-		if (ScoreUpdated != null)
-		{
-			ScoreUpdated(CurrentScore);
-		}
+		ScoreUpdated?.Invoke(CurrentScore);
 	}
 
 	private void CreateCakes()
@@ -924,10 +918,7 @@ public class CakeRaceMode : GameMode
 
 	private void OnCakeCollected(Cake cake)
 	{
-		if (CakeCollected != null)
-		{
-			CakeCollected(0);
-		}
+		CakeCollected?.Invoke(0);
 		if (!cake.CollectedByOtherPlayer)
 		{
 			CollectedCakes++;

@@ -230,3 +230,4 @@ MonoBehaviour:
   lateSpeed: {x: 0, y: 0, z: 0}
   m_hp: 3e+38
   m_maxHp: 3e+38
+  m_minDamage: 31.4

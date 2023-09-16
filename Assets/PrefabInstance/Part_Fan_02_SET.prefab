@@ -2745,6 +2745,7 @@ MonoBehaviour:
   lateSpeed: {x: 0, y: 0, z: 0}
   m_hp: 500
   m_maxHp: 500
+  m_minDamage: 31.4
   m_force: 7
   m_forceDirection: 2
   m_isRotor: 0

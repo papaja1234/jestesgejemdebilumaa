@@ -230,17 +230,7 @@ public sealed class LevelManager : WPFMonoBehaviour
 
 	public static int GameModeIndex { get; set; }
 
-	public int LevelDessertsCount
-	{
-		get
-		{
-			if (m_DessertsCount >= 0)
-			{
-				return m_DessertsCount;
-			}
-			return WPFMonoBehaviour.gameData.m_LevelDessertsCount;
-		}
-	}
+	public int LevelDessertsCount => m_DessertsCount >= 0 ? m_DessertsCount : WPFMonoBehaviour.gameData.m_LevelDessertsCount;
 
 	public GameState gameState { get; private set; }
 
@@ -344,17 +334,7 @@ public sealed class LevelManager : WPFMonoBehaviour
 
 	public Vector3 ConstructionOffset => CurrentGameMode.ConstructionOffset;
 
-	public CameraLimits CurrentCameraLimits
-	{
-		get
-		{
-			if (CurrentGameMode.CameraLimits == null)
-			{
-				return m_cameraLimits;
-			}
-			return CurrentGameMode.CameraLimits;
-		}
-	}
+	public CameraLimits CurrentCameraLimits => CurrentGameMode.CameraLimits ?? m_cameraLimits;
 
 	public GameObject GridCellPrefab
 	{
@@ -422,7 +402,7 @@ public sealed class LevelManager : WPFMonoBehaviour
 		{
 			if ((Singleton<GameManager>.Instance.CurrentEpisodeIndex != 0 || Singleton<GameManager>.Instance.CurrentLevel != 0) && Singleton<GameManager>.Instance.CurrentEpisodeIndex != -1 && !m_sandbox)
 			{
-				return !(CurrentGameMode is CakeRaceMode);
+				return CurrentGameMode is not CakeRaceMode;
 			}
 			return false;
 		}
@@ -445,11 +425,7 @@ public sealed class LevelManager : WPFMonoBehaviour
 	{
 		get
 		{
-			if (CurrentGameMode == null)
-			{
-				return null;
-			}
-			return CurrentGameMode.Preview;
+			return CurrentGameMode?.Preview;
 		}
 	}
 
@@ -491,10 +467,7 @@ public sealed class LevelManager : WPFMonoBehaviour
 	private void OnDestroy()
 	{
 		SetGameState(GameState.Undefined);
-		if (CurrentGameMode != null)
-		{
-			CurrentGameMode.CleanUp();
-		}
+		CurrentGameMode?.CleanUp();
 	}
 
 	public static void IncentiveVideoShown()

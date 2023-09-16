@@ -127,10 +127,7 @@ public class AlienCraftingMachineConverter : WPFMonoBehaviour
 	private IEnumerator Show()
 	{
 		ShowingRoutine = true;
-		if (OnBeginUpgrade != null)
-		{
-			OnBeginUpgrade();
-		}
+		OnBeginUpgrade?.Invoke();
 		m_curtainAnimation.state.End += OnIntroEnd;
 		m_curtainAnimation.state.SetAnimation(0, m_curtainIntroAnimationName, loop: false);
 		yield return null;
@@ -147,10 +144,7 @@ public class AlienCraftingMachineConverter : WPFMonoBehaviour
 		Singleton<AudioManager>.Instance.Spawn2dOneShotEffect(craftPart);
 		dustParticles.Play();
 		ConvertToAlien();
-		if (OnMachineBehindCurtain != null)
-		{
-			OnMachineBehindCurtain();
-		}
+		OnMachineBehindCurtain?.Invoke();
 		CoroutineRunner.Instance.DelayAction(delegate
 		{
 			dustParticles.Stop();
@@ -179,9 +173,6 @@ public class AlienCraftingMachineConverter : WPFMonoBehaviour
 		m_isAlienMachine = true;
 		RoutineShown = true;
 		ShowingRoutine = false;
-		if (OnEndUpgrade != null)
-		{
-			OnEndUpgrade();
-		}
+		OnEndUpgrade?.Invoke();
 	}
 }

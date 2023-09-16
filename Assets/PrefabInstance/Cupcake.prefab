@@ -2,11 +2,11 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!1 &1413634233996878
 GameObject:
-  serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
   m_Component:
   - component: {fileID: 4371285389768322}
   - component: {fileID: 23179537732743566}
@@ -30,7 +30,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1413634233996878}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.232334, y: -9.074807E-06, z: 0}
+  m_LocalPosition: {x: -3.232334, y: -0.000009074807, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -89,7 +89,6 @@ MeshFilter:
   m_Mesh: {fileID: 0}
 --- !u!65 &65049158793459892
 BoxCollider:
-  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -98,6 +97,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
+  serializedVersion: 2
   m_Size: {x: 0.6510417, y: 0.8333333, z: 5}
   m_Center: {x: 0, y: 0.4166667, z: 0}
 --- !u!114 &114846247341994720
@@ -110,13 +110,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0ea827dcd4fbce8ef9b42a75abcf7d7f, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
-  collectedEffect: {fileID: 198911294371946608, guid: de6a9113b85cac5488bcb638ba1ad300, type: 2}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collectedEffect: {fileID: 198911294371946608, guid: de6a9113b85cac5488bcb638ba1ad300, type: 3}
   xpParticles: {fileID: 0}
   collected: 0
   prefabGlow: {fileID: 0}
-  prefabIcon: {fileID: 1765663306082197, guid: 40485e33581a9b04bba15e94c6928bb8, type: 2}
+  prefabIcon: {fileID: 1765663306082197, guid: 40485e33581a9b04bba15e94c6928bb8, type: 3}
   saveId: Cupcake
 --- !u!114 &114727650082261957
 MonoBehaviour:
@@ -128,8 +128,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 04a340c55c247513cbdc1b4d88bbdbae, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   m_id: 5e4a4082-0494-4b38-9ed5-b89769cf06dd
   m_scaleX: 0.5
   m_scaleY: 0.5
@@ -138,12 +138,12 @@ MonoBehaviour:
   m_updateCollider: 1
 --- !u!54 &54216311581750404
 Rigidbody:
-  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1413634233996878}
+  serializedVersion: 2
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05

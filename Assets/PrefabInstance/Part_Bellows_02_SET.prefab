@@ -98,6 +98,7 @@ MonoBehaviour:
   lateSpeed: {x: 0, y: 0, z: 0}
   m_hp: 200
   m_maxHp: 200
+  m_minDamage: 31.4
   m_direction: {x: 1, y: 0, z: 0}
   m_enabled: 1
   m_alienBellow: 0

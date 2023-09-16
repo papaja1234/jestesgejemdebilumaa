@@ -952,10 +952,8 @@ public class Shop : WPFMonoBehaviour
 			EventManager.Send(new UIEvent(UIEvent.Type.CloseIapMenu));
 			base.gameObject.SetActive(value: false);
 		}
-		if (m_onClose != null)
-		{
-			m_onClose();
-		}
+
+		m_onClose?.Invoke();
 		m_onClose = null;
 	}
 
@@ -1098,10 +1096,7 @@ public class Shop : WPFMonoBehaviour
 		});
 		confirmDialog.onClose += delegate
 		{
-			if (onClose != null)
-			{
-				onClose();
-			}
+			onClose?.Invoke();
 			if (SnoutCoinShop == null || !SnoutCoinShop.gameObject.activeInHierarchy)
 			{
 				UnityEngine.Object.Destroy(confirmDialog.gameObject);

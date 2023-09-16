@@ -47,10 +47,8 @@ public class CakeRaceKingsFavorite : Singleton<CakeRaceKingsFavorite>
 			int index = UnityEngine.Random.Range(0, allTierParts.Count);
 			CurrentFavorite = allTierParts[index];
 		}
-		if (OnPartAcquired != null)
-		{
-			OnPartAcquired();
-		}
+
+		OnPartAcquired?.Invoke();
 		UnityEngine.Random.state = state;
 	}
 

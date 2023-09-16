@@ -10,6 +10,8 @@ public class INRuntimeGameData : Singleton<INRuntimeGameData>
 	[SerializeField]
 	private GameObject m_partIconContainer;
 
+	private GameData m_gameData;
+
 	private PartListData m_partListData;
 
 	private PartListBuilder m_partListBuilder;
@@ -20,13 +22,13 @@ public class INRuntimeGameData : Singleton<INRuntimeGameData>
 		{
 			if (Singleton<INRuntimeGameData>.instance != null)
 			{
-				return Singleton<INRuntimeGameData>.instance.GameData != null;
+				return Singleton<INRuntimeGameData>.instance.m_gameData != null;
 			}
 			return false;
 		}
 	}
 
-	public GameData GameData { get; private set; }
+	public GameData GameData => m_gameData;
 
 	public GameObject PartContainer => m_partContainer;
 
@@ -37,7 +39,7 @@ public class INRuntimeGameData : Singleton<INRuntimeGameData>
 		SetAsPersistant();
 		m_partListData = INUnity.LoadScriptableObject<PartListData>("PartListData");
 		m_partListBuilder = new PartListBuilder(m_partListData);
-		GameData = CreateGameData();
+		m_gameData = CreateGameData();
 		InitializeSettings();
 	}
 
@@ -55,7 +57,8 @@ public class INRuntimeGameData : Singleton<INRuntimeGameData>
 		InitializePart(INFeature.DecelerationLight, SetDecelerationLight);
 		InitializePart(INFeature.AutoControlLight, SetAutoControlLight);
 		InitializePart(INFeature.ElectricalSystem, SetElectricalSystem);
-		InitializePart(INFeature.Irrational, SetIrrational);
+		InitializePart(INFeature.AlienExtras, SetAlienExtras);
+		InitializePart(INFeature.NeuralPart, SetNeuralPart);
 	}
 
 	private void InitializePart(INFeature feature, Action action)
@@ -71,12 +74,12 @@ public class INRuntimeGameData : Singleton<INRuntimeGameData>
 	{
 		if (INSettings.GetBool(INFeature.ColoredFrame))
 		{
-			List<BasePart> partList = GameData.GetCustomPart(BasePart.PartType.MetalFrame).PartList;
+			List<BasePart> partList = m_gameData.GetCustomPart(BasePart.PartType.MetalFrame).PartList;
 			BasePart part = m_partListBuilder.GetPart(new PartTypeInfo(BasePart.PartType.MetalFrame, 12));
 			float num = INSettings.GetFloat(INFeature.ColoredFrameAlpha);
 			float num2 = INSettings.GetFloat(INFeature.ColoredFrameForegroundAlpha);
 			float num3 = INSettings.GetFloat(INFeature.ColoredFrameBackgroundAlpha);
-			Shader shader = INUnity.LoadShader("PreAlpha_Unlit_ColorTransparent_Geometry" /* "Unlit_ColorTransparent_SolidColor" */);
+			Shader shader = INUnity.LoadShader("PreAlpha_Unlit_ColorTransparent_Geometry");
 			for (int i = 0; i < 120; i++)
 			{
 				int num4 = i - 118;
@@ -335,28 +338,72 @@ public class INRuntimeGameData : Singleton<INRuntimeGameData>
 			}
 		}
 	}
+	
+	private void SetAlienExtras()
+	{/*
+		if (INSettings.GetBool(INFeature.AlienExtras))
+		{
+			AddCustomPart(CreatePartAndSetParent(BasePart.PartType.WoodenFrame, 11));
+			AddCustomPart(CreatePartAndSetParent(BasePart.PartType.Spring, 4));
+			AddCustomPart(CreatePartAndSetParent(BasePart.PartType.GrapplingHook, 11));
+			AddCustomPart(CreatePartAndSetParent(BasePart.PartType.TNT, 6));
+			AddCustomPart(CreatePartAndSetParent(BasePart.PartType.GrapplingHook, 12));
+			AddCustomPart(CreatePartAndSetParent(BasePart.PartType.Propeller, 10));
+			AddCustomPart(CreatePartAndSetParent(BasePart.PartType.WoodenFrame, 12));
+			AddCustomPart(CreatePartAndSetParent(BasePart.PartType.Engine, 7));
+			AddCustomPart(CreatePartAndSetParent(BasePart.PartType.EngineBig, 7));
+			AddCustomPart(CreatePartAndSetParent(BasePart.PartType.StickyWheel, 4));
+		}
+		else
+		{
+			RemoveCustomPart(BasePart.PartType.WoodenFrame, 11);
+			RemoveCustomPart(BasePart.PartType.Spring, 4);
+			RemoveCustomPart(BasePart.PartType.GrapplingHook, 11);
+			RemoveCustomPart(BasePart.PartType.TNT, 7);
+			RemoveCustomPart(BasePart.PartType.GrapplingHook, 12);
+			RemoveCustomPart(BasePart.PartType.Propeller, 10);
+			RemoveCustomPart(BasePart.PartType.WoodenFrame, 12);
+			RemoveCustomPart(BasePart.PartType.Engine, 7);
+			RemoveCustomPart(BasePart.PartType.EngineBig, 7);
+			RemoveCustomPart(BasePart.PartType.StickyWheel, 4);
+		}*/
+	}
 
-	private void SetIrrational()
+	private void SetNeuralPart()
 	{
-		if (!INSettings.GetBool(INFeature.Irrational)) return;
-
-		foreach (BasePart part in m_partListBuilder.GetParts(BasePart.PartType.Irrational))
+		if (!INSettings.GetBool(INFeature.NeuralPart))
+		{
+			return;
+		}
+		foreach (BasePart part in m_partListBuilder.GetParts(BasePart.PartType.NeuralPart))
 		{
 			BasePart basePart = CreatePartAndSetParent(part);
-			if (basePart.customPartIndex == 0) AddPart(basePart);
-			else AddCustomPart(basePart);
+			if (basePart.customPartIndex == 0)
+			{
+				AddPart(basePart);
+			}
+			else
+			{
+				AddCustomPart(basePart);
+			}
 		}
-
-		foreach (PartListBuilder.PartRangeValue partRange in m_partListBuilder.GetPartRanges(BasePart.PartType.Irrational))
+		foreach (PartListBuilder.PartRangeValue partRange in m_partListBuilder.GetPartRanges(BasePart.PartType.NeuralPart))
 		{
 			foreach (BasePart item in m_partListBuilder.CreatePartRange(partRange))
 			{
 				SetParent(item);
-				if (item.customPartIndex == 0) AddPart(item);
-				else AddCustomPart(item);
+				if (item.customPartIndex == 0)
+				{
+					AddPart(item);
+				}
+				else
+				{
+					AddCustomPart(item);
+				}
 			}
 		}
 	}
+
 	private GameData CreateGameData()
 	{
 		GameData gameData = UnityEngine.Object.Instantiate(Singleton<GameManager>.Instance.gameData);
@@ -404,23 +451,23 @@ public class INRuntimeGameData : Singleton<INRuntimeGameData>
 
 	private void AddPart(BasePart newPart)
 	{
-		GameData.m_parts.Add(newPart.gameObject);
+		m_gameData.m_parts.Add(newPart.gameObject);
 	}
 
 	private void AddCustomPart(BasePart newPart)
 	{
-		CustomPartInfo customPartInfo = GameData.GetCustomPart(newPart.m_partType);
+		CustomPartInfo customPartInfo = m_gameData.GetCustomPart(newPart.m_partType);
 		if (customPartInfo == null)
 		{
 			customPartInfo = new CustomPartInfo(newPart.m_partType, new List<BasePart>());
-			GameData.m_customParts.Add(customPartInfo);
+			m_gameData.m_customParts.Add(customPartInfo);
 		}
 		customPartInfo.PartList.Add(newPart);
 	}
 
 	private void ReplaceCustomPart(BasePart newPart)
 	{
-		List<BasePart> partList = GameData.GetCustomPart(newPart.m_partType).PartList;
+		List<BasePart> partList = m_gameData.GetCustomPart(newPart.m_partType).PartList;
 		for (int i = 0; i < partList.Count; i++)
 		{
 			BasePart basePart = partList[i];
@@ -439,7 +486,7 @@ public class INRuntimeGameData : Singleton<INRuntimeGameData>
 
 	private void RemoveCustomPart(BasePart.PartType type, int customIndex)
 	{
-		List<BasePart> partList = GameData.GetCustomPart(type).PartList;
+		List<BasePart> partList = m_gameData.GetCustomPart(type).PartList;
 		for (int i = 0; i < partList.Count; i++)
 		{
 			BasePart basePart = partList[i];
@@ -460,14 +507,14 @@ public class INRuntimeGameData : Singleton<INRuntimeGameData>
 	{
 		if (customIndex <= 0)
 		{
-			GameObject part = GameData.GetPart(type);
+			GameObject part = m_gameData.GetPart(type);
 			if (!(part != null))
 			{
 				return null;
 			}
 			return part.GetComponent<BasePart>();
 		}
-		CustomPartInfo customPart = GameData.GetCustomPart(type);
+		CustomPartInfo customPart = m_gameData.GetCustomPart(type);
 		if (customPart != null)
 		{
 			foreach (BasePart part2 in customPart.PartList)
@@ -483,14 +530,14 @@ public class INRuntimeGameData : Singleton<INRuntimeGameData>
 
 	public int GetCustomPartIndex(BasePart.PartType type, string partName)
 	{
-		GameObject part = GameData.GetPart(type);
+		GameObject part = m_gameData.GetPart(type);
 		if (part != null && part.name.Equals(partName))
 		{
 			return 0;
 		}
-		if (GameData.GetCustomPart(type) != null)
+		if (m_gameData.GetCustomPart(type) != null)
 		{
-			foreach (BasePart part2 in GameData.GetCustomPart(type).PartList)
+			foreach (BasePart part2 in m_gameData.GetCustomPart(type).PartList)
 			{
 				if (part2.name.Equals(partName))
 				{

@@ -389,6 +389,7 @@ MonoBehaviour:
   lateSpeed: {x: 0, y: 0, z: 0}
   m_hp: 700
   m_maxHp: 700
+  m_minDamage: 31.4
   m_smokeCloud: {fileID: 1752403835404102, guid: 4843a10c2e1635e438139d833da8ec1f, type: 3}
 --- !u!114 &114167162180803594
 MonoBehaviour:

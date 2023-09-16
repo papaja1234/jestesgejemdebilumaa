@@ -2,11 +2,11 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!1 &1985558018133181
 GameObject:
-  serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
   m_Component:
   - component: {fileID: 4134834769832943}
   - component: {fileID: 114535322800913820}
@@ -42,11 +42,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 780c78d4af376959b095359d8460246f, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   m_constructionUiRows: 1
   m_constructionGridRows: ff030000ff030000ff030000ff030000ff030000ff030000ff030000
-  m_secondStarConstructionGridRows:
+  m_secondStarConstructionGridRows: 
   m_partTypeCounts:
   - type: 10
     count: 5
@@ -123,7 +123,7 @@ MonoBehaviour:
   m_gridForSecondStar: 0
   m_totalAvailableParts: 0
   m_totalDestroyedParts: 0
-  m_inGameGuiPrefab: {fileID: 1735379674143278, guid: 44d7bbc22720f614d942cc1b038c1427, type: 2}
+  m_inGameGuiPrefab: {fileID: 1735379674143278, guid: 44d7bbc22720f614d942cc1b038c1427, type: 3}
   m_cameraOffset: {x: 0, y: 0, z: -10}
   m_constructionOffset: {x: -1, y: 3.5, z: 6.5}
   m_previewOffset: {x: 0, y: 0.8, z: 12}
@@ -147,7 +147,7 @@ MonoBehaviour:
   m_tutorialDelayAfterHint: 1.5
   m_gameData: {fileID: 11400000, guid: 9c337fba49933104395decfc4a4c004b, type: 2}
   m_buttonStyle:
-    m_Name:
+    m_Name: 
     m_Normal:
       m_Background: {fileID: 0}
       m_ScaledBackgrounds: []

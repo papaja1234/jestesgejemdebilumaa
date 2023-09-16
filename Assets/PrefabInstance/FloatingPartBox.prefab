@@ -2,11 +2,11 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!1 &1170952484979668
 GameObject:
-  serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
   m_Component:
   - component: {fileID: 4002429756908812}
   - component: {fileID: 23514826502720087}
@@ -100,8 +100,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 04a340c55c247513cbdc1b4d88bbdbae, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   m_id: 3e32e94d-3fc2-4a62-8f68-bc5f3d26894f
   m_scaleX: 1
   m_scaleY: 1
@@ -110,7 +110,6 @@ MonoBehaviour:
   m_updateCollider: 1
 --- !u!65 &65091192501403865
 BoxCollider:
-  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -119,6 +118,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
+  serializedVersion: 2
   m_Size: {x: 2.734375, y: 2.760417, z: 0}
   m_Center: {x: -0.02604163, y: 0.02604163, z: 0}
 --- !u!114 &114208595630362188
@@ -131,10 +131,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b274684f5eb7a2f7814ef4a13a805513, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
-  collectedEffect: {fileID: 198832865772445076, guid: c90468e89467fe545adae912f79fca43, type: 2}
-  xpParticles: {fileID: 1167281330788787, guid: fb3481bbce8b7894cb52a9342ae1c041, type: 2}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collectedEffect: {fileID: 198832865772445076, guid: c90468e89467fe545adae912f79fca43, type: 3}
+  xpParticles: {fileID: 1167281330788787, guid: fb3481bbce8b7894cb52a9342ae1c041, type: 3}
   collected: 0
   partType: 14
   count: 5
@@ -142,12 +142,12 @@ MonoBehaviour:
   collectAnimation: {fileID: 7400000, guid: cfdf9ce7ce5fe1045b64d7dcb3d4d8a3, type: 2}
 --- !u!54 &54963265131179574
 Rigidbody:
-  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1170952484979668}
+  serializedVersion: 2
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
@@ -166,8 +166,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f5e286ed300b013e0b923bec20582e5a, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   breakForce: 10000
   breakOnlyByGoldenPig: 0
   breakOnlyByBird: 0
@@ -181,11 +181,11 @@ MonoBehaviour:
   m_createIceColliders: 1
 --- !u!1 &1362287562005548
 GameObject:
-  serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
   m_Component:
   - component: {fileID: 4298510668856786}
   - component: {fileID: 65318588510860381}
@@ -213,7 +213,6 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: -0, z: -0}
 --- !u!65 &65318588510860381
 BoxCollider:
-  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -222,15 +221,16 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
+  serializedVersion: 2
   m_Size: {x: 2.5, y: 2.5, z: 2.5}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1833393750731665
 GameObject:
-  serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
   m_Component:
   - component: {fileID: 4361955555721763}
   - component: {fileID: 114672672640707531}
@@ -272,20 +272,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cc2946075f059709510081fcd2a311e6, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   m_stringMaterial: {fileID: 2100000, guid: 7b709d399bab97d48ab078be9dc11222, type: 2}
   m_pos1Anchor: {x: 0, y: -1, z: 0}
   m_pos2Anchor: {x: 1.25, y: 1.25, z: 0}
   m_pos2Transform: {fileID: 4002429756908812}
 --- !u!54 &54358715883505951
 Rigidbody:
-  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1833393750731665}
+  serializedVersion: 2
   m_Mass: 1
   m_Drag: 0.25
   m_AngularDrag: 0.05
@@ -296,7 +296,6 @@ Rigidbody:
   m_CollisionDetection: 0
 --- !u!145 &145613175879351065
 SpringJoint:
-  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -307,6 +306,7 @@ SpringJoint:
   m_Anchor: {x: 0, y: -1, z: 0}
   m_AutoConfigureConnectedAnchor: 0
   m_ConnectedAnchor: {x: 1.25, y: 1.25, z: 0}
+  serializedVersion: 2
   m_Spring: 100
   m_Damper: 10
   m_MinDistance: 0
@@ -320,7 +320,6 @@ SpringJoint:
   m_ConnectedMassScale: 1
 --- !u!135 &135194172923018415
 SphereCollider:
-  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -329,6 +328,7 @@ SphereCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
+  serializedVersion: 2
   m_Radius: 1.15
   m_Center: {x: 0, y: 0.125, z: 0}
 --- !u!114 &114140269534458340
@@ -341,8 +341,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5d9cdaf1dddc3fe3b68db2facd3a0646, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   popOnCollect: 0
   useTargetAltitude: 0
   targetAltitude: -1.430726
@@ -359,8 +359,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f5e286ed300b013e0b923bec20582e5a, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   breakForce: 10
   breakOnlyByGoldenPig: 0
   breakOnlyByBird: 0
@@ -374,11 +374,11 @@ MonoBehaviour:
   m_createIceColliders: 0
 --- !u!1 &1928337792059845
 GameObject:
-  serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
   m_Component:
   - component: {fileID: 4608167704665986}
   - component: {fileID: 33595750268102289}
@@ -466,8 +466,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 04a340c55c247513cbdc1b4d88bbdbae, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   m_id: cf97eb0f-0de7-46fe-ac2c-5bb436581d51
   m_scaleX: 1
   m_scaleY: 1

@@ -3368,10 +3368,7 @@ namespace PlayFab.Events
 
 		private void OnProcessingErrorEvent(PlayFabRequestCommon request, PlayFabError error)
 		{
-			if (_instance.OnGlobalErrorEvent != null)
-			{
-				_instance.OnGlobalErrorEvent(request, error);
-			}
+			_instance.OnGlobalErrorEvent?.Invoke(request, error);
 		}
 
 		private void OnProcessingEvent(ApiProcessingEventArgs e)

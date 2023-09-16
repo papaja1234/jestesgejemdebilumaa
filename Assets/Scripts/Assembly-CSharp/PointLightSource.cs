@@ -296,10 +296,8 @@ public class PointLightSource : MonoBehaviour
 			{
 				baseLightTransform.localPosition = new Vector3(baseLightTransform.localPosition.x, baseLightTransform.localPosition.y, 100f);
 			}
-			if (onLightTurnOff != null)
-			{
-				onLightTurnOff();
-			}
+
+			onLightTurnOff?.Invoke();
 		}
 		else if (isEnabled && onLightTurnOn != null)
 		{

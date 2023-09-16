@@ -292,10 +292,7 @@ public class Bundle : MonoBehaviour
 		if (num == num2)
 		{
 			initialized = true;
-			if (AssetBundlesLoaded != null)
-			{
-				AssetBundlesLoaded();
-			}
+			AssetBundlesLoaded?.Invoke();
 		}
 	}
 

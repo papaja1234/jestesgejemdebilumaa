@@ -161,13 +161,11 @@ public class Localizer : Singleton<Localizer>
 				break;
 			}
 		}
-		if (xElement != null)
+
+		XElement xElement2 = xElement?.Element("font");
+		if (xElement2 != null)
 		{
-			XElement xElement2 = xElement.Element("font");
-			if (xElement2 != null)
-			{
-				LoadFont(xElement2.Value);
-			}
+			LoadFont(xElement2.Value);
 		}
 		if (EnglishFont == null)
 		{
@@ -180,13 +178,11 @@ public class Localizer : Singleton<Localizer>
 					break;
 				}
 			}
-			if (xElement3 != null)
+
+			XElement xElement4 = xElement3?.Element("font");
+			if (xElement4 != null)
 			{
-				XElement xElement4 = xElement3.Element("font");
-				if (xElement4 != null)
-				{
-					EnglishFont = (Font)Resources.Load("Localization/Fonts/" + xElement4.Value, typeof(Font));
-				}
+				EnglishFont = (Font)Resources.Load("Localization/Fonts/" + xElement4.Value, typeof(Font));
 			}
 		}
 		foreach (XElement item3 in xDocument.Element("texts").Elements("text"))

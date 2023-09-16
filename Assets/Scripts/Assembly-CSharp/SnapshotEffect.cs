@@ -35,10 +35,7 @@ internal class SnapshotEffect : MonoBehaviour
 
 	private void OnDisable()
 	{
-		if (this.SnapshotFinished != null)
-		{
-			this.SnapshotFinished();
-		}
+		this.SnapshotFinished?.Invoke();
 	}
 
 	private void OnDestroy()

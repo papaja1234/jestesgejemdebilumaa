@@ -2830,6 +2830,7 @@ MonoBehaviour:
   lateSpeed: {x: 0, y: 0, z: 0}
   m_hp: 1000
   m_maxHp: 1000
+  m_minDamage: 31.4
   m_projectilePrefab: {fileID: 1155311346533028, guid: ce2c6a92f2f72f1459be3e91a2a0511a, type: 3}
   m_particleEffect: {fileID: 198749085496206227}
   m_rapidCooldownTime: 0.05

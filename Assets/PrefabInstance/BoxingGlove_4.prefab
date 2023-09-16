@@ -2,11 +2,11 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!1 &1429549599475492
 GameObject:
-  serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
   m_Component:
   - component: {fileID: 4229513417351478}
   - component: {fileID: 54067875948721805}
@@ -39,12 +39,12 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: -0, z: 45.000008}
 --- !u!54 &54067875948721805
 Rigidbody:
-  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1429549599475492}
+  serializedVersion: 2
   m_Mass: 0.5
   m_Drag: 0
   m_AngularDrag: 0
@@ -55,7 +55,6 @@ Rigidbody:
   m_CollisionDetection: 1
 --- !u!135 &135181342520132171
 SphereCollider:
-  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -64,6 +63,7 @@ SphereCollider:
   m_Material: {fileID: 13400000, guid: 311204ed2ca4ee742b797be2c616ce5d, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
+  serializedVersion: 2
   m_Radius: 0.3
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &114457708893669314
@@ -76,11 +76,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 33a1b5e66eb6b40ce55bd114fe9159c9, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   m_ActionList: 0000000004000000
-  m_ParticlesPrefab: {fileID: 1218782357865996, guid: 5c0cb70a034e34744b0d5b04769b9bfe, type: 2}
-  m_AudioOneShotEffect: {fileID: 82283257157438922, guid: a08c2e38a587f574d87b27ac2877ee67, type: 2}
+  m_ParticlesPrefab: {fileID: 1218782357865996, guid: 5c0cb70a034e34744b0d5b04769b9bfe, type: 3}
+  m_AudioOneShotEffect: {fileID: 82283257157438922, guid: a08c2e38a587f574d87b27ac2877ee67, type: 3}
   m_CollisionLayerMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -99,10 +99,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 33a1b5e66eb6b40ce55bd114fe9159c9, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   m_ActionList: 01000000
-  m_ParticlesPrefab: {fileID: 1746357776285786, guid: d606924825dae954c8d3070fa8deda01, type: 2}
+  m_ParticlesPrefab: {fileID: 1746357776285786, guid: d606924825dae954c8d3070fa8deda01, type: 3}
   m_AudioOneShotEffect: {fileID: 0}
   m_CollisionLayerMask:
     serializedVersion: 2
@@ -122,15 +122,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 37fec35ec64902d3ca8246482fff55c8, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1842577745737246
 GameObject:
-  serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
   m_Component:
   - component: {fileID: 4039530615200901}
   - component: {fileID: 33410880737623208}
@@ -218,8 +218,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 04a340c55c247513cbdc1b4d88bbdbae, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   m_id: 96cdf950-8856-4ce6-a332-0f67e85a21dc
   m_scaleX: 0.4
   m_scaleY: 0.4

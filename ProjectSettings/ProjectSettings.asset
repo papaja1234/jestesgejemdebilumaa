@@ -134,7 +134,7 @@ PlayerSettings:
     16:10: 0
     16:9: 1
     Others: 0
-  bundleVersion: pre.Tension
+  bundleVersion: OverTheHorizon
   preloadedAssets: []
   metroInputSource: 0
   wsaTransparentSwapchain: 0
@@ -737,7 +737,8 @@ PlayerSettings:
   webGLThreadsSupport: 0
   webGLDecompressionFallback: 0
   webGLPowerPreference: 2
-  scriptingDefineSymbols: {}
+  scriptingDefineSymbols:
+    Standalone: DOTS_ADD_PARTIAL_KEYWORD
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend:

@@ -62,8 +62,7 @@ namespace AssetBundleBrowser
         List<AssetBundleDataSource.ABDataSource> m_DataSourceList = null;
         public virtual void AddItemsToMenu(GenericMenu menu)
         {
-            if(menu != null)
-               menu.AddItem(new GUIContent("Custom Sources"), multiDataSource, FlipDataSource);
+            menu?.AddItem(new GUIContent("Custom Sources"), multiDataSource, FlipDataSource);
         }
         internal void FlipDataSource()
         {
@@ -108,10 +107,8 @@ namespace AssetBundleBrowser
         }
         private void OnDisable()
         {
-            if (m_BuildTab != null)
-                m_BuildTab.OnDisable();
-            if (m_InspectTab != null)
-                m_InspectTab.OnDisable();
+            m_BuildTab?.OnDisable();
+            m_InspectTab?.OnDisable();
         }
 
         public void OnBeforeSerialize()

@@ -94,6 +94,7 @@ MonoBehaviour:
   lateSpeed: {x: 0, y: 0, z: 0}
   m_hp: 2000
   m_maxHp: 2000
+  m_minDamage: 31.4
   m_GrapplingHookPrefab: {fileID: 1538012804962678, guid: 04bc285112cc2a44a88aecd566a2a3ff, type: 3}
   m_rewindingTime: 1
   m_ShootTime: 0.4

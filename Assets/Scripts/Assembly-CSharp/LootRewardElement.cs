@@ -53,10 +53,8 @@ public class LootRewardElement : MonoBehaviour
 		{
 			yield return null;
 		}
-		if (onRewardOpened != null)
-		{
-			onRewardOpened();
-		}
+
+		onRewardOpened?.Invoke();
 		if (openingEffect != null)
 		{
 			waitTimeLeft2 = 0.5f;

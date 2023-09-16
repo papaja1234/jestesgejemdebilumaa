@@ -434,10 +434,7 @@ namespace AssetBundleBrowser.AssetBundleModel
             if (System.String.IsNullOrEmpty(parentBundle))
                 parentBundle = asset.bundleName;
 
-            if (asset == null)
-                return;
-
-            var deps = asset.GetDependencies();
+            var deps = asset?.GetDependencies();
             if (deps == null)
                 return;
 

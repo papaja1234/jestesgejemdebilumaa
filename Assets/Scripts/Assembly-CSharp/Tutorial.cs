@@ -67,10 +67,7 @@ public class Tutorial : WPFMonoBehaviour
 				m_clickIndicator.transform.position = m_pointer.transform.position;
 			}
 			m_pointer.transform.localScale = 0.85f * Vector3.one;
-			if (onPress != null)
-			{
-				onPress();
-			}
+			onPress?.Invoke();
 		}
 
 		public void Release()

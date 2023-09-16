@@ -117,20 +117,15 @@ namespace Spine.Unity
 				skeleton.Update(deltaTime);
 				state.Update(deltaTime);
 				state.Apply(skeleton);
-				if (this._UpdateLocal != null)
-				{
-					this._UpdateLocal(this);
-				}
+				this._UpdateLocal?.Invoke(this);
 				skeleton.UpdateWorldTransform();
 				if (this._UpdateWorld != null)
 				{
 					this._UpdateWorld(this);
 					skeleton.UpdateWorldTransform();
 				}
-				if (this._UpdateComplete != null)
-				{
-					this._UpdateComplete(this);
-				}
+
+				this._UpdateComplete?.Invoke(this);
 			}
 		}
 	}

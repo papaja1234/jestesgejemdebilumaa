@@ -80,10 +80,7 @@ namespace AssetBundleBrowser.AssetBundleDataSource
 
             foreach(var assetBundleName in buildManifest.GetAllAssetBundles())
             {
-                if (info.onBuild != null)
-                {
-                    info.onBuild(assetBundleName);
-                }
+                info.onBuild?.Invoke(assetBundleName);
             }
             return true;
         }

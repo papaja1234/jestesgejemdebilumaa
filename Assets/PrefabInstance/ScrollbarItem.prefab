@@ -2,11 +2,11 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!1 &1465644442960641
 GameObject:
-  serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
   m_Component:
   - component: {fileID: 4888158044819500}
   - component: {fileID: 23051777576207901}
@@ -96,8 +96,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 04a340c55c247513cbdc1b4d88bbdbae, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   m_id: b32f690a-9a89-4eb4-aa0e-fb413060ba74
   m_scaleX: 1
   m_scaleY: 1
@@ -106,7 +106,6 @@ MonoBehaviour:
   m_updateCollider: 0
 --- !u!65 &65238864890253252
 BoxCollider:
-  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -115,6 +114,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
+  serializedVersion: 2
   m_Size: {x: 1.25, y: 1.25, z: 1}
   m_Center: {x: -0.02604166, y: 0, z: 0}
 --- !u!114 &114576455149514474
@@ -127,17 +127,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 592a4f4281d4a97a9440d67f0f1016e1, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   methodToCall:
     m_targetObject: {fileID: 0}
-    m_targetComponent:
-    m_methodToInvoke:
+    m_targetComponent: 
+    m_methodToInvoke: 
     m_parameters: []
   messageTargetObject: {fileID: 0}
-  targetComponent:
-  methodToInvoke:
-  messageParameter:
+  targetComponent: 
+  methodToInvoke: 
+  messageParameter: 
   eventToSend:
     m_event:
       m_eventTypeName: None

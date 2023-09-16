@@ -207,6 +207,7 @@ MonoBehaviour:
   lateSpeed: {x: 0, y: 0, z: 0}
   m_hp: 3000
   m_maxHp: 3000
+  m_minDamage: 31.4
   activeSprite: {fileID: 1633241513102640}
   inactiveSprite: {fileID: 1498811109052415}
   m_HealingRadius: 5

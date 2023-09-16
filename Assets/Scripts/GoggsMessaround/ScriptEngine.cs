@@ -185,8 +185,15 @@ namespace GoggsMessaround.CSharpScriptEngine
 				assemblyBinaryData: l_compiledScriptAsmBinDat,
 				entryPoint: l_EntryPointMethodSymbol,
 				scriptEntryMethod: l_ScriptAssemblyEntryPointMethod,
-				scriptEntryMethodDelegate: () => {
-					Func<object?[], Task<object?>> l_submission = (Func<object?[], Task<object?>>)l_ScriptAssemblyEntryPointMethod.CreateDelegate(typeof(Func<object?[], Task<object?>>));
+				scriptEntryMethodDelegate: () => 
+				{
+					Func<object?[], Task<object?>> l_submission =
+						(Func<object?[], Task<object?>>)
+						l_ScriptAssemblyEntryPointMethod
+							.CreateDelegate
+							(
+							typeof(Func<object?[], Task<object?>>)
+							);
 					return l_submission(this.m_submissionStates).GetAwaiter().GetResult();
 				});
 			//Enlist the compiled script's information into the compiled script pool.
@@ -195,7 +202,7 @@ namespace GoggsMessaround.CSharpScriptEngine
 			Debug.Log("WOW HE WROTE A SUCCESSFUL CODE");
 			//and finally, we return the compiled script's information.
 			return l_Result;
-
+            //----------------------------------------------------------------
 			//get metadata references..
 			IEnumerable<MetadataReference> GetMdReferences() => from AssemblyReference lit_AsmRef in this.m_config.AssemblyReferences select lit_AsmRef.MetadataReference;
 

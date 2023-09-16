@@ -2,11 +2,11 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!1 &1687360304461419
 GameObject:
-  serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
   m_Component:
   - component: {fileID: 4602159059593526}
   - component: {fileID: 23453680230848684}
@@ -88,7 +88,6 @@ MeshFilter:
   m_Mesh: {fileID: 0}
 --- !u!65 &65980806116381523
 BoxCollider:
-  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -97,6 +96,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
+  serializedVersion: 2
   m_Size: {x: 3.1510417, y: 3.1510417, z: 0}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &114907456367640548
@@ -109,17 +109,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 592a4f4281d4a97a9440d67f0f1016e1, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   methodToCall:
     m_targetObject: {fileID: 0}
-    m_targetComponent:
-    m_methodToInvoke:
+    m_targetComponent: 
+    m_methodToInvoke: 
     m_parameters: []
   messageTargetObject: {fileID: 0}
-  targetComponent:
+  targetComponent: 
   methodToInvoke: GoToMainMenu
-  messageParameter:
+  messageParameter: 
   eventToSend:
     m_event:
       m_eventTypeName: UIEvent
@@ -133,7 +133,7 @@ MonoBehaviour:
   mouseOverScale: 1.2
   activateOnHold: 0
   activateOnPress: 0
-  soundEffect: {fileID: 82229309917877826, guid: 4378463a0b526be4e87262df9a9f4259, type: 2}
+  soundEffect: {fileID: 82229309917877826, guid: 4378463a0b526be4e87262df9a9f4259, type: 3}
   disableSound: 0
 --- !u!114 &114037040165822904
 MonoBehaviour:
@@ -145,6 +145,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e17d54ebdf3b8977649d5e41205b8918, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   m_name: Save_Button_Sprite

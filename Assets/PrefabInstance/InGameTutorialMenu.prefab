@@ -1,60 +1,57 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1815404031212516
+--- !u!1 &1446471631831120
 GameObject:
-  serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
   m_Component:
-  - component: {fileID: 4451736065362265}
-  - component: {fileID: 114896338858019335}
-  m_Layer: 0
-  m_Name: InGameTutorialMenu
+  - component: {fileID: 4642589110580393}
+  - component: {fileID: 65458013617322633}
+  m_Layer: 10
+  m_Name: CloseAreaBlocker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4451736065362265
+--- !u!4 &4642589110580393
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1815404031212516}
+  m_GameObject: {fileID: 1446471631831120}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.9}
+  m_LocalScale: {x: 27, y: 5, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 4190966336470504}
-  - {fileID: 4642589110580393}
-  m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_Children: []
+  m_Father: {fileID: 4451736065362265}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: -0, z: -0}
---- !u!114 &114896338858019335
-MonoBehaviour:
+--- !u!65 &65458013617322633
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1815404031212516}
+  m_GameObject: {fileID: 1446471631831120}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35ef2565684edb833568c2b3533501fa, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
-  m_tutorialBookPrefab: {fileID: 1020345025922793, guid: a63290ca4827ddd4fa0e288237c32be6, type: 2}
-  m_cakeRaceTutorialBookPrefab: {fileID: 1536028068777768, guid: d633d4d1415bf7741861abc4b7e8f2b0, type: 2}
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 0}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1607131349203273
 GameObject:
-  serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
   m_Component:
   - component: {fileID: 4190966336470504}
   - component: {fileID: 23686569399575643}
@@ -145,11 +142,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d1c532f8e405408698d131822fca7f7c, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!65 &65182771578234065
 BoxCollider:
-  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -158,6 +154,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
+  serializedVersion: 2
   m_Size: {x: 26.74479, y: 20.3125, z: 0}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &114669491175703187
@@ -170,17 +167,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 592a4f4281d4a97a9440d67f0f1016e1, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   methodToCall:
     m_targetObject: {fileID: 0}
-    m_targetComponent:
-    m_methodToInvoke:
+    m_targetComponent: 
+    m_methodToInvoke: 
     m_parameters: []
   messageTargetObject: {fileID: 0}
-  targetComponent:
-  methodToInvoke:
-  messageParameter:
+  targetComponent: 
+  methodToInvoke: 
+  messageParameter: 
   eventToSend:
     m_event:
       m_eventTypeName: UIEvent
@@ -206,56 +203,59 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 04a340c55c247513cbdc1b4d88bbdbae, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   m_id: 1603a846-93ed-4784-8799-05b7b01c1b50
   m_scaleX: 16.06
   m_scaleY: 12.19
   m_pivotX: 0
   m_pivotY: 0
   m_updateCollider: 1
---- !u!1 &1446471631831120
+--- !u!1 &1815404031212516
 GameObject:
-  serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
   m_Component:
-  - component: {fileID: 4642589110580393}
-  - component: {fileID: 65458013617322633}
-  m_Layer: 10
-  m_Name: CloseAreaBlocker
+  - component: {fileID: 4451736065362265}
+  - component: {fileID: 114896338858019335}
+  m_Layer: 0
+  m_Name: InGameTutorialMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4642589110580393
+--- !u!4 &4451736065362265
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1446471631831120}
+  m_GameObject: {fileID: 1815404031212516}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.9}
-  m_LocalScale: {x: 27, y: 5, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 4451736065362265}
-  m_RootOrder: 1
+  m_Children:
+  - {fileID: 4190966336470504}
+  - {fileID: 4642589110580393}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: -0, z: -0}
---- !u!65 &65458013617322633
-BoxCollider:
-  serializedVersion: 2
+--- !u!114 &114896338858019335
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1446471631831120}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_GameObject: {fileID: 1815404031212516}
   m_Enabled: 1
-  m_Size: {x: 1, y: 1, z: 0}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35ef2565684edb833568c2b3533501fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_tutorialBookPrefab: {fileID: 1020345025922793, guid: a63290ca4827ddd4fa0e288237c32be6, type: 3}
+  m_cakeRaceTutorialBookPrefab: {fileID: 1536028068777768, guid: d633d4d1415bf7741861abc4b7e8f2b0, type: 3}

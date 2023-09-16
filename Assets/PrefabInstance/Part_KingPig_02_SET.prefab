@@ -547,6 +547,7 @@ MonoBehaviour:
   lateSpeed: {x: 0, y: 0, z: 0}
   m_hp: 3e+38
   m_maxHp: 3e+38
+  m_minDamage: 31.4
   collisionStars: {fileID: 198699061220126669}
   collisionSweat: {fileID: 198168385480950309}
   sweatLoop: {fileID: 198418635084509191}
