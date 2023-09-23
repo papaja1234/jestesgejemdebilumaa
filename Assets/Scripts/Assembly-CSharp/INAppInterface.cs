@@ -83,7 +83,7 @@ public class INAppInterface : MonoBehaviour
 
 	private void HidePropertyPanel()
 	{
-		INSettings.HidePropertyPanel = !INSettings.HidePropertyPanel;
+		GameRules.ShowPropertyPanel = !GameRules.ShowPropertyPanel;
 	}
 
 	public GameObject FindElement(string name)

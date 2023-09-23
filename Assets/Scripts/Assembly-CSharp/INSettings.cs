@@ -20,23 +20,10 @@ public static class INSettings
 		Int32 = 2,
 		Single = 3,
 		String = 4,
-		Array = 5
+		Array = 5,
+		RandomElementForDifferentHash = 87654649
 	}
-
-	public static int PartHPStatus = 2;
-	public static bool HidePropertyPanel = false;
-	public static string SetPartHPMode(int mode)
-	{
-		PartHPStatus = mode;
-		return mode switch
-		{
-			0=> "Disabled",
-			1=> "Disappear only",
-			_=> "Debris and No function"
-		};
-
-	}
-
+	
 	private class SettingType
 	{
 		public SettingTypeCode MainType { get; }
@@ -341,8 +328,8 @@ public static class INSettings
 	{
 		VersionSelected = true;
 		Load(version);
-		PartHPStatus = 2;
 		InitializeSettings();
+		GameRules.SetPartHPMode(2);
 	}
 
 	private static void Load(int version)

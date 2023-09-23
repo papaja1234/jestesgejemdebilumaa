@@ -360,7 +360,7 @@ public class BasePart : WPFMonoBehaviour
 
 	public void Hurt(float damage)
 	{
-		if (INSettings.PartHPStatus == 0) return;
+		if (GameRules.PartHPStatus == 0) return;
         if(damage < m_minDamage)
         {
             return;
@@ -375,7 +375,7 @@ public class BasePart : WPFMonoBehaviour
 
 	public virtual void LowHpDestruction(float passDamage)
 	{
-		switch (INSettings.PartHPStatus)
+		switch (GameRules.PartHPStatus)
 		{
 			case 0:
 				return;

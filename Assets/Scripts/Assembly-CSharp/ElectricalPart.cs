@@ -107,7 +107,7 @@ public class ElectricalPart : BasePart
 				t.material.shader = shader;
 			}
 		}
-		switch (INSettings.PartHPStatus)
+		switch (GameRules.PartHPStatus)
 		{
 			case 0:
 				return;

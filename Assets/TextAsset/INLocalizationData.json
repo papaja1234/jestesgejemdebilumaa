@@ -389,7 +389,7 @@
 			"id": "ConsoleInterface_PreCompileErrorMetadataReference",
 			"text": {
 				"en-US": "Unable to get metadata references: ",
-				"zh-Hans": ""
+				"zh-Hans": "无法得到元信息引用:"
 			}
 		},
 		{
@@ -460,6 +460,20 @@
 			"text": {
 				"en-US": "Program exited with return value: ",
 				"zh-Hans": "程序以如下返回值退出:"
+			}
+		},
+		{
+			"id": "CommandInterface_Help",
+			"text": {
+				"en-US": "Help",
+				"zh-Hans": "帮助"
+			}
+		},
+		{
+			"id": "CommandInterface_Execute",
+			"text": {
+				"en-US": "Execute",
+				"zh-Hans": "执行"
 			}
 		}
 	]

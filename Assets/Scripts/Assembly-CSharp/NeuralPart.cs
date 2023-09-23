@@ -4,5 +4,6 @@ using UnityEngine;
 
 public class NeuralPart : BasePart
 {
-    
+    [SerializeField]
+    public GameObject PreventSameHash { get; set; }
 }

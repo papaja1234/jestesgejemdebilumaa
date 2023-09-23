@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.IO;
 using System.Reflection;
 using System.Linq;
@@ -71,8 +72,12 @@ public class REConsoleInterface : MonoBehaviour
 	private void Compile()
 	{
 		SyntaxTree syntaxTree = CSharpSyntaxTree.ParseText(m_consoleCode.text);
-
+		
 		List<MetadataReference> m_metadatareferences = new List<MetadataReference>();
+#if PLATFORM_ANDROID
+		Console.WriteLine("Can't Find MetadataReferences on Android!!!!!!!!!!!!!! Roslyn won't work");
+#endif
+		Console.WriteLine("Compiling...");
 		foreach (Assembly assembly in AppDomain.CurrentDomain.GetAssemblies().Where(assembly => !assembly.IsDynamic))
 		{
 			if (assembly.Location.Length != 0)
@@ -92,7 +97,7 @@ public class REConsoleInterface : MonoBehaviour
 			assemblyName: m_assemblyName,
 			syntaxTrees: new[] { syntaxTree },
 			references: m_metadatareferences,
-			options: new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary)
+			options: new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary).WithAssemblyIdentityComparer(DesktopAssemblyIdentityComparer.Default).WithAllowUnsafe(true).WithOptimizationLevel(OptimizationLevel.Debug)
 		);
 
 		MemoryStream memoryStream = new MemoryStream();
@@ -101,10 +106,11 @@ public class REConsoleInterface : MonoBehaviour
 		if (!result.Success)
 		{
 			m_consoleOutput.text = INLocalization.Instance.GetText("ConsoleInterface_CompileFailed");
-			foreach (Diagnostic diagnostic in result.Diagnostics)
+			foreach (Diagnostic diagnostic in from d in result.Diagnostics where d.Severity == DiagnosticSeverity.Error select d)
 			{
 				m_consoleOutput.text += '\n' + diagnostic.ValueToString();
 			}
+
 			return;
 		}
 

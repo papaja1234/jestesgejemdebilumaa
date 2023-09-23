@@ -44,7 +44,7 @@ public class PropertyPanelBuilding : PropertyPanel
 		
 		LevelManager.GameState gameState = WPFMonoBehaviour.levelManager.gameState;
 		RectTransform component = m_textMesh.GetComponent<RectTransform>();
-		if (!INSettings.HidePropertyPanel) {m_textMesh.text = string.Empty;return;}
+		if (!GameRules.ShowPropertyPanel) {m_textMesh.text = string.Empty;return;}
 		switch (gameState)
 		{
 		case LevelManager.GameState.Building:
