@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 23452028037407186}
   - component: {fileID: 114244690709250098}
   m_Layer: 9
-  m_Name: Part_WoodenFrame_13_SET
+  m_Name: Part_GlassFrame_13_SET
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -97,7 +97,7 @@ MonoBehaviour:
   lateSpeed: {x: 0, y: 0, z: 0}
   m_hp: 42
   m_maxHp: 0
-  m_minDamage: 1
+  m_minDamage: 0
   m_material: 0
   m_brokenTextures: []
 --- !u!33 &33333774051940575

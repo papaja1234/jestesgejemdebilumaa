@@ -198,11 +198,15 @@ public class RECommandInterface : MonoBehaviour
         m_helpButton.onClick.AddListener(Help);
         m_logBuilder = new StringBuilder();
         ReCommandHandler = new RECommandHandler();
-        ReCommandHandler.RegisterCommand("gamerule", "Gets or Sets a gamerule", new []{new RECommandArgDef("Mode", "String", "Select mode (Get or Set)")},
+        ReCommandHandler.RegisterCommand("gamerule", "Gets or Sets a gamerule", new []
+            {
+                new RECommandArgDef("Mode", "String", "Select mode (Get or Set)"),
+                new RECommandArgDef("Gamerule", "String", "Select a gamerule"),
+                new RECommandArgDef("Value","String","(only for set mode)The value to be set")
+            },
            (args) =>
            {
                //we're starting from 0 since we skip the first part in execution
-               Console.SetOut(m_commandOut);
                string mode = args.GetLowNormString(0);
                string gamerule = args.GetLowNormString(1);
                if (mode == "get")
@@ -215,22 +219,50 @@ public class RECommandInterface : MonoBehaviour
                    GameRules.SetGameRule(gamerule, args.GetLowNormString(2));
                }
            });
+        ReCommandHandler.RegisterCommand("shift", "Shifts your contraption on grid", new []
+            {
+                new RECommandArgDef("X-Shift", "Integer", "Shift amount on X-Axis"),
+                new RECommandArgDef("Y-Shift", "Integer", "Shift amount on Y-Axis")
+            },
+            (args) =>
+            {
+                int dx = args.GetInt(0);
+                int dy = args.GetInt(1);
+                if (BPManual.Contraption)
+                {
+                    BPManual.Contraption.MoveOnGrid(dx,dy);
+                    Console.WriteLine(INLocalization.Instance.GetText("CommandInterface_Shift"), dx, dy);
+                }
+                else
+                {
+                    Console.WriteLine(INLocalization.Instance.GetText("CommandInterface_ContraptionNotFound"));
+                }
+            });
     }
 
     private void Execute()
     {
         m_commandOut = Console.Out;
         m_logBuilder.Clear();
-        StringWriter stringWriter = new StringWriter(m_logBuilder);
-        Console.SetOut(stringWriter);
+        Console.SetOut(new StringWriter(m_logBuilder));
+        
         ReCommandHandler.RunCommand(m_commandInput.text);
-        m_commandOutput.text += stringWriter.ToString();
+        
+        m_commandOutput.text += m_logBuilder.ToString();
         Console.SetOut(m_commandOut);
     }
 
     private void Help()
     {
-        m_commandOutput.text += BPManual.GetHelpPage("0");
+        m_commandOut = Console.Out;
+        m_logBuilder.Clear();
+        Console.SetOut(new StringWriter(m_logBuilder));
+        
+        Console.WriteLine(BPManual.GetHelpPage("0"));
+        
+        m_commandOutput.text += m_logBuilder.ToString();    
+        Console.SetOut(m_commandOut);
+        
     }
 
     private void DebugLogReader(string logMessage, string stackTrace, LogType logType)

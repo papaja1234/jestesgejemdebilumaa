@@ -27,14 +27,15 @@ namespace RECmd
             StringBuilder sb = new StringBuilder();
 
             //command name & description
-            sb.Append($"Help for {Name}: ");
+            sb.Append($"Help for {Name}:\n");
             sb.Append($"   {Description}");
 
             //add all argument definitions
-            sb.Append("Arguments:");
+            sb.Append("Arguments:\n");
             foreach (RECommandArgDef argDef in ArgDefs)
-                sb.Append($"   {argDef.ToString()}");
-
+            {
+                sb.Append($"   {argDef}\n");
+            }
             return sb.ToString();
         }
     }

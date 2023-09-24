@@ -50,10 +50,17 @@ namespace RECmd
         /// <exception cref="RECommandException"></exception>
         public void RunCommand(string text)
         {
-            string[] textParts = text.Normalize().Split(" "); //Dart: maybe use "　" (U+3000) instead of " " for chinese? //Goggs: i guess i'll just use string.Normalize()
-
+            if (text.Normalize()[0] != '/')
+            {
+                Console.Write($"<{GameRules.GetGameRuleString("playername")}>: {text}\n");
+                return;
+            }
+            string[] textParts = text.Normalize().TrimStart('/').Split(" "); //Dart: maybe use "　" (U+3000) instead of " " for chinese? //Goggs: i guess i'll just use string.Normalize(). also we don't use U+3000
             if (!commands.TryGetValue(textParts[0].ToLower().Trim(), out RECommand command)) //we lower & trim since we ignore case (and trailing spaces etc)
+            {
+                Console.WriteLine($"Command {textParts[0]} not found!");
                 throw new RECommandException($"Command {textParts[0]} not found!");
+            }
 
             command.Execute(new RECommandArgs(textParts.Skip(1).ToArray())); //skip first part since that's the command name
         }

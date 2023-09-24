@@ -8,10 +8,11 @@ using UnityEngine;
 
 public static class GameRules
 {
-    public static int PartHPStatus { get; private set; } = 0;
+    public static int PartHPStatus { get; private set; } = 2;
     public static bool ShowPropertyPanel { get; set; } = false;
     public static float TerrainScale { get; set; } = 1f;
-
+    
+    public static string PlayerName { get; set; } = "Player";
     private static string SetPartHPMode(int mode)
     {
         PartHPStatus = mode;
@@ -37,7 +38,11 @@ public static class GameRules
             case "terrrainscale":
                 TerrainScale = Convert.ToSingle(value);
                 break;
+            case "playername":
+                PlayerName = value;
+                break;
             default:
+                Console.WriteLine(INLocalization.Instance.GetText("Gamerule_NotFound"));
                 break;
         }
     }
@@ -48,7 +53,8 @@ public static class GameRules
             "parthpstatus" => PartHPStatus.ToString(),
             "showpropertypanel" => ShowPropertyPanel.ToString(),
             "terrainscale" => TerrainScale.ToString(CultureInfo.InvariantCulture),
-            _ => "Gamerule Not found!"
+            "playername" => PlayerName,
+            _ => INLocalization.Instance.GetText("Gamerule_NotFound")
         };
     }
 }

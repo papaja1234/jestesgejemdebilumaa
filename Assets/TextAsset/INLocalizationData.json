@@ -496,6 +496,27 @@
 				"en-US": "/help gamerule",
 				"zh-Hans": "/help gamerule"
 			}
+		},
+		{
+			"id": "CommandInterface_ContraptionNotFound",
+			"text": {
+				"en-US": "Contraption Not Found. Make sure you're in a level",
+				"zh-Hans": "未找到载具, 请确保已经进入关卡"
+			}
+		},
+		{
+			"id": "CommandInterface_Shift",
+			"text": {
+				"en-US": "Shifted {0} blocks on X-axis, {1} blocks on Y-axis",
+				"zh-Hans": "在X轴上平移了{0}格, 在Y轴上平移了{1}格"
+			}
+		},
+		{
+			"id": "Gamerule_NotFound",
+			"text": {
+				"en-US": "Gamerule Not found!",
+				"zh-Hans": "未找到此游戏规则"
+			}
 		}
 	]
 }

@@ -22,7 +22,7 @@
         //   Page to get help from.
         public override string ToString()
         {
-            return $"{Name}:{Type}, {Description}";
+            return $"({Name}:{Type})=>[{Description}]";
         }
     }
 }

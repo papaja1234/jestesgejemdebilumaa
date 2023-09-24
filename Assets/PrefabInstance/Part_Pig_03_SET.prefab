@@ -227,7 +227,7 @@ ParticleSystem:
         m_RotationOrder: 4
     startRotationX:
       serializedVersion: 2
-      minMaxState: 0
+      minMaxState: 3
       scalar: 1
       minScalar: 0
       maxCurve:
@@ -244,7 +244,7 @@ ParticleSystem:
         m_RotationOrder: 4
     startRotationY:
       serializedVersion: 2
-      minMaxState: 0
+      minMaxState: 3
       scalar: 1
       minScalar: 0
       maxCurve:
@@ -8071,6 +8071,7 @@ GameObject:
   - component: {fileID: 4532458117099281}
   - component: {fileID: 135284302793247702}
   - component: {fileID: 114029115734459713}
+  - component: {fileID: 2496105398147620533}
   m_Layer: 9
   m_Name: Part_Pig_03_SET
   m_TagString: Player
@@ -8234,6 +8235,19 @@ MonoBehaviour:
   starsLoop: {fileID: 198369285108970445}
   m_isSilent: 0
   m_pitch: 1
+--- !u!65 &2496105398147620533
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1845517117007378}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.5, y: 0.3, z: 1}
+  m_Center: {x: 0.02, y: 0.28, z: 0}
 --- !u!1 &1875813447860751
 GameObject:
   m_ObjectHideFlags: 0
