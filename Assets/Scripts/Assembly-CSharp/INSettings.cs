@@ -329,7 +329,7 @@ public static class INSettings
 		VersionSelected = true;
 		Load(version);
 		InitializeSettings();
-		GameRules.SetPartHPMode(2);
+		//GameRules.SetPartHPMode(2);
 	}
 
 	private static void Load(int version)

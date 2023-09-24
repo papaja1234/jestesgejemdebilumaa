@@ -131,19 +131,13 @@ public class LeaderboardPlayerInfo : MonoBehaviour
 	{
 		for (int i = 0; i < 3; i++)
 		{
-			int num = 0;
-			switch (i)
+			int num = i switch
 			{
-			case 2:
-				num = GameProgress.GetInt("cake_race_bronze_trophies_won");
-				break;
-			case 1:
-				num = GameProgress.GetInt("cake_race_silver_trophies_won");
-				break;
-			case 0:
-				num = GameProgress.GetInt("cake_race_gold_trophies_won");
-				break;
-			}
+				2 => GameProgress.GetInt("cake_race_bronze_trophies_won"),
+				1 => GameProgress.GetInt("cake_race_silver_trophies_won"),
+				0 => GameProgress.GetInt("cake_race_gold_trophies_won"),
+				_ => 0
+			};
 			trophyIcons[i].gameObject.SetActive(num > 0);
 			TextMeshHelper.UpdateTextMeshes(trophyAmountLabels[i], (num <= 0) ? string.Empty : num.ToString());
 		}

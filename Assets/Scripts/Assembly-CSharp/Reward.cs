@@ -83,25 +83,16 @@ public class Reward : MonoBehaviour
 		{
 			return rewardPrefabs[prizeType];
 		}
-		GameObject gameObject = null;
-		switch (prizeType)
+
+		GameObject gameObject = prizeType switch
 		{
-		case PrizeType.SuperGlue:
-			gameObject = Resources.Load("UI/Amazon/RewardSuperGlue") as GameObject;
-			break;
-		case PrizeType.SuperMagnet:
-			gameObject = Resources.Load("UI/Amazon/RewardSuperMagnet") as GameObject;
-			break;
-		case PrizeType.TurboCharge:
-			gameObject = Resources.Load("UI/Amazon/RewardTurboCharger") as GameObject;
-			break;
-		case PrizeType.SuperMechanic:
-			gameObject = Resources.Load("UI/Amazon/RewardSuperMechanic") as GameObject;
-			break;
-		case PrizeType.NightVision:
-			gameObject = Resources.Load("UI/Amazon/RewardNightVision") as GameObject;
-			break;
-		}
+			PrizeType.SuperGlue => Resources.Load("UI/Amazon/RewardSuperGlue") as GameObject,
+			PrizeType.SuperMagnet => Resources.Load("UI/Amazon/RewardSuperMagnet") as GameObject,
+			PrizeType.TurboCharge => Resources.Load("UI/Amazon/RewardTurboCharger") as GameObject,
+			PrizeType.SuperMechanic => Resources.Load("UI/Amazon/RewardSuperMechanic") as GameObject,
+			PrizeType.NightVision => Resources.Load("UI/Amazon/RewardNightVision") as GameObject,
+			_ => null
+		};
 		rewardPrefabs.Add(prizeType, gameObject);
 		return gameObject;
 	}

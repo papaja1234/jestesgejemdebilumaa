@@ -9,19 +9,13 @@ public class PowerSourcePart : ElectricalPart
 	public override void CreateElectricalElements()
 	{
 		int num = customPartIndex - 12;
-		float electromotance = 0f;
-		switch (num)
+		float electromotance = num switch
 		{
-		case 0:
-			electromotance = 1f;
-			break;
-		case 1:
-			electromotance = 5f;
-			break;
-		case 2:
-			electromotance = 50f;
-			break;
-		}
+			0 => 1f,
+			1 => 5f,
+			2 => 50f,
+			_ => 0f
+		};
 		m_powerSource = new PowerSource(electromotance, 0.05f);
 	}
 

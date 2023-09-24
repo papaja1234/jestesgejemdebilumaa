@@ -55,21 +55,26 @@ public class CartWheel : BasePart
 
 	private void SpawnSound()
 	{
-		switch (m_partType)
+		loopingWheelSound = m_partType switch
 		{
-		case PartType.ObsoleteWheel:
-			loopingWheelSound = Singleton<AudioManager>.Instance.SpawnCombinedLoopingEffect(WPFMonoBehaviour.gameData.commonAudioCollection.woodenWheelLoop, base.transform).GetComponent<AudioSource>();
-			break;
-		case PartType.NormalWheel:
-			loopingWheelSound = Singleton<AudioManager>.Instance.SpawnCombinedLoopingEffect(WPFMonoBehaviour.gameData.commonAudioCollection.normalWheelLoop, base.transform).GetComponent<AudioSource>();
-			break;
-		case PartType.SmallWheel:
-			loopingWheelSound = Singleton<AudioManager>.Instance.SpawnCombinedLoopingEffect(WPFMonoBehaviour.gameData.commonAudioCollection.smallWheelLoop, base.transform).GetComponent<AudioSource>();
-			break;
-		case PartType.CartWheel:
-			loopingWheelSound = Singleton<AudioManager>.Instance.SpawnCombinedLoopingEffect(WPFMonoBehaviour.gameData.commonAudioCollection.woodenWheelLoop, base.transform).GetComponent<AudioSource>();
-			break;
-		}
+			PartType.ObsoleteWheel => Singleton<AudioManager>.Instance
+				.SpawnCombinedLoopingEffect(WPFMonoBehaviour.gameData.commonAudioCollection.woodenWheelLoop,
+					base.transform)
+				.GetComponent<AudioSource>(),
+			PartType.NormalWheel => Singleton<AudioManager>.Instance
+				.SpawnCombinedLoopingEffect(WPFMonoBehaviour.gameData.commonAudioCollection.normalWheelLoop,
+					base.transform)
+				.GetComponent<AudioSource>(),
+			PartType.SmallWheel => Singleton<AudioManager>.Instance
+				.SpawnCombinedLoopingEffect(WPFMonoBehaviour.gameData.commonAudioCollection.smallWheelLoop,
+					base.transform)
+				.GetComponent<AudioSource>(),
+			PartType.CartWheel => Singleton<AudioManager>.Instance
+				.SpawnCombinedLoopingEffect(WPFMonoBehaviour.gameData.commonAudioCollection.woodenWheelLoop,
+					base.transform)
+				.GetComponent<AudioSource>(),
+			_ => loopingWheelSound
+		};
 		loopingWheelSound.volume = 0f;
 	}
 

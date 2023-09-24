@@ -38,16 +38,12 @@ public class IndicatorPart : ElectricalPart
 
 	public override void CreateElectricalElements()
 	{
-		Resistor resistor = null;
-		switch (m_type)
+		Resistor resistor = m_type switch
 		{
-		case IndicatorType.Ammeter:
-			resistor = new Resistor(0f);
-			break;
-		case IndicatorType.Voltmeter:
-			resistor = new Resistor(10000f);
-			break;
-		}
+			IndicatorType.Ammeter => new Resistor(0f),
+			IndicatorType.Voltmeter => new Resistor(10000f),
+			_ => null
+		};
 		resistor.ElementUpdatedEvent += OnElementUpdated;
 		m_indicator = resistor;
 	}
@@ -94,16 +90,12 @@ public class IndicatorPart : ElectricalPart
 
 	public override void PostUpdateElements()
 	{
-		float num = 0f;
-		switch (m_type)
+		float num = m_type switch
 		{
-		case IndicatorType.Ammeter:
-			num = m_I;
-			break;
-		case IndicatorType.Voltmeter:
-			num = m_U1 - m_U2;
-			break;
-		}
+			IndicatorType.Ammeter => m_I,
+			IndicatorType.Voltmeter => m_U1 - m_U2,
+			_ => 0f
+		};
 		if (float.IsNaN(num))
 		{
 			num = 0f;

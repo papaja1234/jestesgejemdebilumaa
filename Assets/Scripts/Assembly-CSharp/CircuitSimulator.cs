@@ -680,21 +680,18 @@ public class CircuitSimulator
 		float potential = start.Potential;
 		bool isGrounded = start.IsGrounded;
 		int additionalVariableIndex = branch.AdditionalVariableIndex;
-		switch (branch.Type)
+		num = branch.Type switch
 		{
-		case BranchType.Common:
-			num = ((additionalVariableIndex == -1) ? ((potential - end.Potential + branch.U) * branch.InvR) : m_equationSolver.GetAdditionalVariable(additionalVariableIndex).Value);
-			break;
-		case BranchType.Cyclic:
-			num = (branch.IsShortCircuit ? 0f : (branch.U * branch.InvR));
-			break;
-		case BranchType.Grounded:
-			num = ((additionalVariableIndex == -1) ? ((potential + branch.U) * branch.InvR) : m_equationSolver.GetAdditionalVariable(additionalVariableIndex).Value);
-			break;
-		case BranchType.Floating:
-			num = 0f;
-			break;
-		}
+			BranchType.Common => ((additionalVariableIndex == -1)
+				? ((potential - end.Potential + branch.U) * branch.InvR)
+				: m_equationSolver.GetAdditionalVariable(additionalVariableIndex).Value),
+			BranchType.Cyclic => (branch.IsShortCircuit ? 0f : (branch.U * branch.InvR)),
+			BranchType.Grounded => ((additionalVariableIndex == -1)
+				? ((potential + branch.U) * branch.InvR)
+				: m_equationSolver.GetAdditionalVariable(additionalVariableIndex).Value),
+			BranchType.Floating => 0f,
+			_ => num
+		};
 		ElectricalElement element = start.Element;
 		ElectricalElement last = null;
 		int startElectrode = branch.StartElectrode;

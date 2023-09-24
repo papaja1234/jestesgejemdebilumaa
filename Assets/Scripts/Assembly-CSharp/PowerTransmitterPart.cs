@@ -28,15 +28,12 @@ public class PowerTransmitterPart : ElectricalPart
 
 	public override void CreateElectricalElements()
 	{
-		switch (TransmitterType)
+		m_element = TransmitterType switch
 		{
-		case PowerTransmitterType.Sender:
-			m_element = new Wire();
-			break;
-		case PowerTransmitterType.Receiver:
-			m_element = new Resistor(0f);
-			break;
-		}
+			PowerTransmitterType.Sender => new Wire(),
+			PowerTransmitterType.Receiver => new Resistor(0f),
+			_ => m_element
+		};
 	}
 
 	protected override BitDirection GetConnectionDirection()

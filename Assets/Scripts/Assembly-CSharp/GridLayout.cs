@@ -57,16 +57,13 @@ public class GridLayout : MonoBehaviour
 				num++;
 			}
 		}
-		float num2 = 0f;
-		switch (gridAlign)
+
+		float num2 = gridAlign switch
 		{
-		case GridAlign.Right:
-			num2 = (float)Mathf.Clamp(num - 1, 0, items - 1) * horizontalGap;
-			break;
-		case GridAlign.Center:
-			num2 = (float)Mathf.Clamp(num - 1, 0, items - 1) * horizontalGap * 0.5f;
-			break;
-		}
+			GridAlign.Right => (float)Mathf.Clamp(num - 1, 0, items - 1) * horizontalGap,
+			GridAlign.Center => (float)Mathf.Clamp(num - 1, 0, items - 1) * horizontalGap * 0.5f,
+			_ => 0f
+		};
 		int num3 = 0;
 		int num4 = 0;
 		int num5 = 0;
@@ -80,15 +77,15 @@ public class GridLayout : MonoBehaviour
 					num3++;
 					num4 = 0;
 				}
-				switch (gridType)
+
+				child.localPosition = gridType switch
 				{
-				case GridType.Vertical:
-					child.localPosition = -Vector3.up * (verticalGap * (float)num4) + Vector3.right * (horizontalGap * (float)num3);
-					break;
-				case GridType.Horizontal:
-					child.localPosition = Vector3.right * (horizontalGap * (float)num4 - num2) - Vector3.up * (verticalGap * (float)num3);
-					break;
-				}
+					GridType.Vertical => -Vector3.up * (verticalGap * (float)num4) +
+					                     Vector3.right * (horizontalGap * (float)num3),
+					GridType.Horizontal => Vector3.right * (horizontalGap * (float)num4 - num2) -
+					                       Vector3.up * (verticalGap * (float)num3),
+					_ => child.localPosition
+				};
 				num4++;
 				num5++;
 			}

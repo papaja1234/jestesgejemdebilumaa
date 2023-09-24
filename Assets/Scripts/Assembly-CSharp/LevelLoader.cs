@@ -191,7 +191,7 @@ public class LevelLoader : MonoBehaviour
 			ReadPrefabOverrides(obj, reader);
 			break;
 		}
-		float @float = INSettings.GetFloat(INFeature.TerrainScale);
+		float @float = INSettings.GetFloat(INFeature.TerrainScale)*GameRules.TerrainScale;
 		Vector3 position = obj.transform.position;
 		Vector3 localScale = obj.transform.localScale;
 		obj.transform.position = new Vector3(position.x * @float, position.y * @float, position.z);

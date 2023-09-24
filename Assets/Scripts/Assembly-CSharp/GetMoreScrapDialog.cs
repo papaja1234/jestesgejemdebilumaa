@@ -39,22 +39,14 @@ public class GetMoreScrapDialog : TextDialog
 			string text = texts[i].textMesh.text;
 			if (texts[i].textMesh.name.Equals("ScrapLabel") && text.Contains("{0}") && text.Contains("{1}"))
 			{
-				string arg = string.Empty;
-				switch (partTier)
+				string arg = partTier switch
 				{
-				case BasePart.PartTier.Common:
-					arg = "[common_star]";
-					break;
-				case BasePart.PartTier.Rare:
-					arg = "[rare_star][rare_star]";
-					break;
-				case BasePart.PartTier.Epic:
-					arg = "[epic_star][epic_star][epic_star]";
-					break;
-				case BasePart.PartTier.Legendary:
-					arg = "[legendary_icon]";
-					break;
-				}
+					BasePart.PartTier.Common => "[common_star]",
+					BasePart.PartTier.Rare => "[rare_star][rare_star]",
+					BasePart.PartTier.Epic => "[epic_star][epic_star][epic_star]",
+					BasePart.PartTier.Legendary => "[legendary_icon]",
+					_ => string.Empty
+				};
 				texts[i].textMesh.text = string.Format(text, buyScrapAmount, arg);
 			}
 			component.enabled = false;

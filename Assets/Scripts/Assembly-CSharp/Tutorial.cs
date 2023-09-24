@@ -334,15 +334,12 @@ public class Tutorial : WPFMonoBehaviour
 
 	public void ReceiveUIEvent(UIEvent data)
 	{
-		switch (data.type)
+		m_shopIsOpen = data.type switch
 		{
-		case UIEvent.Type.CloseIapMenu:
-			m_shopIsOpen = false;
-			break;
-		case UIEvent.Type.OpenIapMenu:
-			m_shopIsOpen = true;
-			break;
-		}
+			UIEvent.Type.CloseIapMenu => false,
+			UIEvent.Type.OpenIapMenu => true,
+			_ => m_shopIsOpen
+		};
 	}
 
 	public static void SetRenderQueue(GameObject parent, int queue)

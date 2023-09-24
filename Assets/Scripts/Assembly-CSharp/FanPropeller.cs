@@ -303,18 +303,18 @@ public class FanPropeller : BasePropulsion
 	public void PlayPropellerSound()
 	{
 		AudioManager instance = Singleton<AudioManager>.Instance;
-		switch (m_partType)
+		loopingSoundPrefab = m_partType switch
 		{
-		default:
-			loopingSoundPrefab = ((m_partTier != PartTier.Legendary) ? WPFMonoBehaviour.gameData.commonAudioCollection.propeller : WPFMonoBehaviour.gameData.commonAudioCollection.alienFan);
-			break;
-		case PartType.Rotor:
-			loopingSoundPrefab = ((m_partTier != PartTier.Legendary) ? WPFMonoBehaviour.gameData.commonAudioCollection.rotorLoop : WPFMonoBehaviour.gameData.commonAudioCollection.alienRotor);
-			break;
-		case PartType.Fan:
-			loopingSoundPrefab = ((m_partTier != PartTier.Legendary) ? WPFMonoBehaviour.gameData.commonAudioCollection.fan : WPFMonoBehaviour.gameData.commonAudioCollection.alienFan);
-			break;
-		}
+			PartType.Rotor => ((m_partTier != PartTier.Legendary)
+				? WPFMonoBehaviour.gameData.commonAudioCollection.rotorLoop
+				: WPFMonoBehaviour.gameData.commonAudioCollection.alienRotor),
+			PartType.Fan => ((m_partTier != PartTier.Legendary)
+				? WPFMonoBehaviour.gameData.commonAudioCollection.fan
+				: WPFMonoBehaviour.gameData.commonAudioCollection.alienFan),
+			_ => ((m_partTier != PartTier.Legendary)
+				? WPFMonoBehaviour.gameData.commonAudioCollection.propeller
+				: WPFMonoBehaviour.gameData.commonAudioCollection.alienFan)
+		};
 		loopingSound = instance.SpawnCombinedLoopingEffect(loopingSoundPrefab, base.gameObject.transform);
 	}
 

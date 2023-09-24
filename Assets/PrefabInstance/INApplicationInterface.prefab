@@ -92,8 +92,10 @@ MonoBehaviour:
     RelatedObject: {fileID: 1569305748891797, guid: 7f31e7dcf1a82ad4aba70878df38a023, type: 3}
   - Name: AppInterface_DataPanel
     RelatedObject: {fileID: 1206246748191444, guid: 5d44bbb12325ed04ab34a2c4dd17b95d, type: 3}
-  - Name: AppInterface_CommandPanel
+  - Name: CommandInterface_Title
     RelatedObject: {fileID: 1206246748191444, guid: 23322e122a6064c4299688c207d14cce, type: 3}
+  - Name: AppInterface_CommandPanel
+    RelatedObject: {fileID: 1206246748191444, guid: 6e748a3cb8cafb24792c7df835c6349a, type: 3}
   m_sidebarElementPrefab: {fileID: 1949559044659767}
 --- !u!1 &1030137069343375
 GameObject:
@@ -923,6 +925,7 @@ MonoBehaviour:
   - {fileID: 1569305748891797, guid: 7f31e7dcf1a82ad4aba70878df38a023, type: 3}
   - {fileID: 1206246748191444, guid: 5d44bbb12325ed04ab34a2c4dd17b95d, type: 3}
   - {fileID: 1206246748191444, guid: 23322e122a6064c4299688c207d14cce, type: 3}
+  - {fileID: 1206246748191444, guid: 6e748a3cb8cafb24792c7df835c6349a, type: 3}
 --- !u!1 &1704517954724006
 GameObject:
   m_ObjectHideFlags: 0

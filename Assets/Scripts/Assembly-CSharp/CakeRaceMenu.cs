@@ -495,19 +495,14 @@ public class CakeRaceMenu : WPFMonoBehaviour
 		{
 			GameProgress.SetInt("cake_race_highest_rank", num);
 		}
-		string text = string.Empty;
-		switch (num)
+
+		string text = num switch
 		{
-		case 3:
-			text = "cake_race_bronze_trophies_won";
-			break;
-		case 2:
-			text = "cake_race_silver_trophies_won";
-			break;
-		case 1:
-			text = "cake_race_gold_trophies_won";
-			break;
-		}
+			3 => "cake_race_bronze_trophies_won",
+			2 => "cake_race_silver_trophies_won",
+			1 => "cake_race_gold_trophies_won",
+			_ => string.Empty
+		};
 		if (!string.IsNullOrEmpty(text))
 		{
 			int int2 = GameProgress.GetInt(text);

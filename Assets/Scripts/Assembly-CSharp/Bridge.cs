@@ -127,7 +127,7 @@ public class Bridge : ExportAction
 			HingeJoint component2 = stepParent.GetChild(m).GetComponent<HingeJoint>();
 			if ((bool)component2 && stepBreakForces.Count > m)
 			{
-				component2.breakForce = stepBreakForces[m] * INSettings.GetFloat(INFeature.TerrainScale);
+				component2.breakForce = stepBreakForces[m] * INSettings.GetFloat(INFeature.TerrainScale)*GameRules.TerrainScale;
 				if (stepBreakForces[m] < 0.1f)
 				{
 					isBroken = true;
@@ -137,7 +137,7 @@ public class Bridge : ExportAction
 		Transform transform2 = steps[steps.Count - 1];
 		HingeJoint component3 = endPoint.GetComponent<HingeJoint>();
 		component3.connectedBody = transform2.GetComponent<Rigidbody>();
-		component3.breakForce *= INSettings.GetFloat(INFeature.TerrainScale);
+		component3.breakForce *= INSettings.GetFloat(INFeature.TerrainScale)*GameRules.TerrainScale;
 		float num3 = Mathf.Atan2(vector.y, vector.x) * 57.29578f;
 		stepParent.localEulerAngles = Vector3.forward * num3;
 		endPoint.position = transform2.position + transform2.right * (stepLength * 0.5f + stepGap);

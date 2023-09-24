@@ -40,18 +40,13 @@ public class EpisodeButton : WPFMonoBehaviour
 	{
 		if (string.IsNullOrEmpty(m_episodeBundleName))
 		{
-			switch (m_type)
+			m_episodeBundleName = m_type switch
 			{
-			case GameManager.EpisodeType.Sandbox:
-				m_episodeBundleName = "Episode_Sandbox_Levels";
-				break;
-			case GameManager.EpisodeType.Race:
-				m_episodeBundleName = "Episode_Race_Levels";
-				break;
-			case GameManager.EpisodeType.Normal:
-				m_episodeBundleName = Bundle.GetAssetBundleID(m_episodeLevelsGameDataIndex);
-				break;
-			}
+				GameManager.EpisodeType.Sandbox => "Episode_Sandbox_Levels",
+				GameManager.EpisodeType.Race => "Episode_Race_Levels",
+				GameManager.EpisodeType.Normal => Bundle.GetAssetBundleID(m_episodeLevelsGameDataIndex),
+				_ => m_episodeBundleName
+			};
 		}
 		if ((bool)m_contentLock)
 		{

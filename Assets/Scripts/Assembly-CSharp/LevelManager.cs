@@ -528,7 +528,7 @@ public sealed class LevelManager : WPFMonoBehaviour
 
 	public void OnDataLoaded()
 	{
-		float @float = INSettings.GetFloat(INFeature.TerrainScale);
+		float @float = INSettings.GetFloat(INFeature.TerrainScale)*GameRules.TerrainScale;
 		m_cameraLimits.topLeft *= @float;
 		m_cameraLimits.size *= @float;
 		CurrentGameMode = SetupGameMode();
@@ -790,25 +790,15 @@ public sealed class LevelManager : WPFMonoBehaviour
 	{
 		if (!Singleton<BuildCustomizationLoader>.Instance.IsOdyssey)
 		{
-			string spriteID = string.Empty;
-			switch (iapType)
+			string spriteID = iapType switch
 			{
-			case IapManager.InAppPurchaseItemType.BlueprintSingle:
-				spriteID = "ce80c724-b7f4-4df0-9f5b-46c4bc5a8599";
-				break;
-			case IapManager.InAppPurchaseItemType.SuperGlueSingle:
-				spriteID = "5a3b2e58-b8c9-444e-a315-e7d76c5bbac0";
-				break;
-			case IapManager.InAppPurchaseItemType.SuperMagnetSingle:
-				spriteID = "ac695667-b01a-4f46-b346-9225a78f6baf";
-				break;
-			case IapManager.InAppPurchaseItemType.TurboChargeSingle:
-				spriteID = "67151809-a646-4a30-9a4e-5241ab0da385";
-				break;
-			case IapManager.InAppPurchaseItemType.NightVisionSingle:
-				spriteID = "33e4b4c2-4626-4e65-8b5e-a1e9b0df563d";
-				break;
-			}
+				IapManager.InAppPurchaseItemType.BlueprintSingle => "ce80c724-b7f4-4df0-9f5b-46c4bc5a8599",
+				IapManager.InAppPurchaseItemType.SuperGlueSingle => "5a3b2e58-b8c9-444e-a315-e7d76c5bbac0",
+				IapManager.InAppPurchaseItemType.SuperMagnetSingle => "ac695667-b01a-4f46-b346-9225a78f6baf",
+				IapManager.InAppPurchaseItemType.TurboChargeSingle => "67151809-a646-4a30-9a4e-5241ab0da385",
+				IapManager.InAppPurchaseItemType.NightVisionSingle => "33e4b4c2-4626-4e65-8b5e-a1e9b0df563d",
+				_ => string.Empty
+			};
 			InGameGUI.Hide();
 			Singleton<IapManager>.Instance.GetShop().ConfirmSinglePurchase(iapType.ToString(), spriteID, string.Empty, 1, delegate
 			{

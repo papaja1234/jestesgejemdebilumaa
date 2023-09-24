@@ -125,19 +125,14 @@ public class SchematicButton : SliderButton
 		{
 			return;
 		}
-		int num = -1;
-		switch (data.type)
+
+		int num = data.type switch
 		{
-		case UIEvent.Type.LoadContraptionSlot3:
-			num = 2;
-			break;
-		case UIEvent.Type.LoadContraptionSlot2:
-			num = 1;
-			break;
-		case UIEvent.Type.LoadContraptionSlot1:
-			num = 0;
-			break;
-		}
+			UIEvent.Type.LoadContraptionSlot3 => 2,
+			UIEvent.Type.LoadContraptionSlot2 => 1,
+			UIEvent.Type.LoadContraptionSlot1 => 0,
+			_ => -1
+		};
 		if (num >= 0)
 		{
 			GameProgress.SetInt(LastLoadedSlotKey, num);

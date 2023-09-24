@@ -191,7 +191,6 @@ public class REConsoleInterface : MonoBehaviour
 		}
 		Application.logMessageReceived -= DebugLogReader;
 		Console.SetOut(m_consoleOut);
-		return;
 	}
 
 	private void DebugLogReader(string logMessage, string stackTrace, LogType logType)

@@ -91,15 +91,12 @@ public class SpecialSandboxUnlockDialog : TextDialog
 	{
 		string arg = string.Empty;
 		string text = $"[snout] {Cost}";
-		switch (Type)
+		arg = Type switch
 		{
-		case UnlockType.Statue:
-			arg = "[statue]";
-			break;
-		case UnlockType.Skull:
-			arg = "[skull]";
-			break;
-		}
+			UnlockType.Statue => "[statue]",
+			UnlockType.Skull => "[skull]",
+			_ => arg
+		};
 		string text2 = $"{arg} {Collected}/{Required}";
 		for (int i = 0; i < collectedTexts.Length; i++)
 		{

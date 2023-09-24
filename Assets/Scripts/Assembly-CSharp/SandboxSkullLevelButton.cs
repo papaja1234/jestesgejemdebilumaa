@@ -74,16 +74,13 @@ public class SandboxSkullLevelButton : MonoBehaviour
 		{
 			starSet.gameObject.SetActive(value: false);
 		}
-		int num = 0;
-		switch (collectableType)
+
+		int num = collectableType switch
 		{
-		case CollectableType.Statue:
-			num = GameProgress.SecretStatueCount();
-			break;
-		case CollectableType.Skull:
-			num = GameProgress.SecretSkullCount();
-			break;
-		}
+			CollectableType.Statue => GameProgress.SecretStatueCount(),
+			CollectableType.Skull => GameProgress.SecretSkullCount(),
+			_ => 0
+		};
 		m_Text.text = $"{arg} {num}/{m_Limit}";
 		m_Text.SendMessage("TextUpdated", SendMessageOptions.DontRequireReceiver);
 		if (isOdyssey)

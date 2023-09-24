@@ -81,109 +81,59 @@ public class BasePart : WPFMonoBehaviour
 
 	public float GetMaxHp( BasePart basePart)//this is still WIP
 	{
-		switch (basePart.m_partType)
+		return basePart.m_partType switch
 		{
-		    case PartType.Balloon:
-		        return 13f;
-		    case PartType.Balloons2:
-		        return 26f;
-		    case PartType.Balloons3:
-		        return 39f;
-		    case PartType.Fan:
-		        return 4f;
-		    case PartType.WoodenFrame:
-		        return 5f;
-		    case PartType.Bellows:
-		        return 6f;
-		    case PartType.CartWheel:
-		        return 7f;
-		    case PartType.Basket:
-		        return 8f;
-		    case PartType.Sandbag:
-		        return 9f;
-		    case PartType.Pig:
-		        return 3e+38f;
-		    case PartType.Sandbag2:
-		        return 11f;
-		    case PartType.Sandbag3:
-		        return 12f;
-		    case PartType.Propeller:
-		        return 13f;
-		    case PartType.Wings:
-		        return 14f;
-		    case PartType.Tailplane:
-		        return 15f;
-		    case PartType.Engine:
-		        return 16f;
-		    case PartType.Rocket:
-		        return 17f;
-		    case PartType.MetalFrame:
-		        return 18f;
-		    case PartType.SmallWheel:
-		        return 19f;
-		    case PartType.MetalWing:
-		        return 20f;
-		    case PartType.MetalTail:
-		        return 21f;
-		    case PartType.Rotor:
-		        return 22f;
-		    case PartType.MotorWheel:
-		        return 23f;
-		    case PartType.TNT:
-		        return 24f;
-		    case PartType.EngineSmall:
-		        return 25f;
-		    case PartType.EngineBig:
-		        return 26f;
-		    case PartType.NormalWheel:
-		        return 27f;
-		    case PartType.Spring:
-		        return 28f;
-		    case PartType.Umbrella:
-		        return 29f;
-		    case PartType.Rope:
-		        return 30f;
-		    case PartType.CokeBottle:
-		        return 31f;
-		    case PartType.KingPig:
-		        return 3e+38f;
-		    case PartType.RedRocket:
-		        return 33f;
-		    case PartType.SodaBottle:
-		        return 34f;
-		    case PartType.PoweredUmbrella:
-		        return 35f;
-		    case PartType.Egg:
-		        return 3e+38f;
-		    case PartType.JetEngine:
-		        return 37f;
-		    case PartType.ObsoleteWheel:
-		        return 38f;
-		    case PartType.SpringBoxingGlove:
-		        return 39f;
-		    case PartType.StickyWheel:
-		        return 40f; 
-			case PartType.GrapplingHook: 
-				return 41f; 
-			case PartType.Pumpkin: 
-				return float.PositiveInfinity; 
-			case PartType.Kicker: 
-				return 2000f; 
-			case PartType.Gearbox: 
-				return 44f; 
-			case PartType.GoldenPig: 
-				return 45f; 
-			case PartType.PointLight: 
-				return 46f; 
-			case PartType.SpotLight: 
-				return 47f; 
-			case PartType.TimeBomb: 
-				return 48f; 
-			case PartType.ElectricalPart: 
-				return 2000f;
-		    default: // MAX
-				return 51f;  
-		}
+			PartType.Balloon => 13f,
+			PartType.Balloons2 => 26f,
+			PartType.Balloons3 => 39f,
+			PartType.Fan => 4f,
+			PartType.WoodenFrame => 5f,
+			PartType.Bellows => 6f,
+			PartType.CartWheel => 7f,
+			PartType.Basket => 8f,
+			PartType.Sandbag => 9f,
+			PartType.Pig => 3e+38f,
+			PartType.Sandbag2 => 11f,
+			PartType.Sandbag3 => 12f,
+			PartType.Propeller => 13f,
+			PartType.Wings => 14f,
+			PartType.Tailplane => 15f,
+			PartType.Engine => 16f,
+			PartType.Rocket => 17f,
+			PartType.MetalFrame => 18f,
+			PartType.SmallWheel => 19f,
+			PartType.MetalWing => 20f,
+			PartType.MetalTail => 21f,
+			PartType.Rotor => 22f,
+			PartType.MotorWheel => 23f,
+			PartType.TNT => 24f,
+			PartType.EngineSmall => 25f,
+			PartType.EngineBig => 26f,
+			PartType.NormalWheel => 27f,
+			PartType.Spring => 28f,
+			PartType.Umbrella => 29f,
+			PartType.Rope => 30f,
+			PartType.CokeBottle => 31f,
+			PartType.KingPig => 3e+38f,
+			PartType.RedRocket => 33f,
+			PartType.SodaBottle => 34f,
+			PartType.PoweredUmbrella => 35f,
+			PartType.Egg => 3e+38f,
+			PartType.JetEngine => 37f,
+			PartType.ObsoleteWheel => 38f,
+			PartType.SpringBoxingGlove => 39f,
+			PartType.StickyWheel => 40f,
+			PartType.GrapplingHook => 41f,
+			PartType.Pumpkin => float.PositiveInfinity,
+			PartType.Kicker => 2000f,
+			PartType.Gearbox => 44f,
+			PartType.GoldenPig => 45f,
+			PartType.PointLight => 46f,
+			PartType.SpotLight => 47f,
+			PartType.TimeBomb => 48f,
+			PartType.ElectricalPart => 2000f,
+			_ => 51f
+		};
 	}
 
 	public enum AutoAlignType

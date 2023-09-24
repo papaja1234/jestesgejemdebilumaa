@@ -18,15 +18,12 @@ public class CurrencyParticleBurst : WPFMonoBehaviour
 
 	private void Start()
 	{
-		switch (currencyType)
+		parentButton = currencyType switch
 		{
-		case IapManager.CurrencyType.Scrap:
-			parentButton = ScrapButton.Instance;
-			break;
-		case IapManager.CurrencyType.SnoutCoin:
-			parentButton = SnoutButton.Instance;
-			break;
-		}
+			IapManager.CurrencyType.Scrap => ScrapButton.Instance,
+			IapManager.CurrencyType.SnoutCoin => SnoutButton.Instance,
+			_ => parentButton
+		};
 		if (burstAmount <= 0 || parentButton == null || parentButton.CurrencyEffect == null)
 		{
 			CheckDestroy();

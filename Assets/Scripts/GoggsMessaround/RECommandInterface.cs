@@ -1,4 +1,5 @@
 using System;
+using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.IO;
@@ -9,9 +10,12 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Emit;
 using System.Text;
+using RECmd;
+using UnityEngine.Serialization;
 
 public class RECommandInterface : MonoBehaviour
 {
+#if LEGACY_COMMAND_SYSTEM
     /// <summary>
     /// String tuple of Name and Description
     /// </summary>
@@ -132,39 +136,19 @@ public class RECommandInterface : MonoBehaviour
             Console.WriteLine();
         }
     }
-
+#endif
     [SerializeField] private GameObject m_content;
 
-    [SerializeField] private UnityEngine.UI.InputField m_commandOutput;
+    [SerializeField] private UnityEngine.UI.Text m_commandOutput;
 
     [SerializeField] private UnityEngine.UI.InputField m_commandInput;
 
     [SerializeField] private UnityEngine.UI.Button m_executeButton;
 
-    [SerializeField] private UnityEngine.UI.Button m_runButton;
+    [FormerlySerializedAs("m_runButton")] [SerializeField] private UnityEngine.UI.Button m_helpButton;
 
-    public CommandManager commandManager { get; set; }//yeah you can add commands using the c# command Interface
-
-    public bool IsChanged { get; private set; }
-    public static RECommandInterface Instance { get; private set; }
-
-    private TextWriter m_commandOut;
-
-    private StringBuilder m_logBuilder;
-
-
-    private void Awake()
-    {
-        Instance = this;
-        //m_commandOut.text = INLocalization.Instance.GetText("ConsoleInterface_TextArea");
-        m_executeButton.onClick.AddListener(Execute);
-        m_runButton.onClick.AddListener(Help);
-        m_logBuilder = new StringBuilder();
-        m_commandOut = Console.Out;
-        m_logBuilder.Clear();
-        Console.SetOut(new StringWriter(m_logBuilder));
-        Console.SetOut(m_commandOut);
-        commandManager = 
+#if LEGACY_COMMAND_SYSTEM
+    public CommandManager commandManager { get; set; } = commandManager = 
             new CommandManager(new List<Command>
                 {
                     //Help Command
@@ -195,16 +179,58 @@ public class RECommandInterface : MonoBehaviour
                         }
                         )
                 }
-        );
+        );//yeah you can add commands using the c# command Interface
+#endif
+
+    public RECommandHandler ReCommandHandler;
+    public bool IsChanged { get; private set; }
+    public static RECommandInterface Instance { get; private set; }
+
+    private TextWriter m_commandOut;
+
+    private StringBuilder m_logBuilder;
+
+
+    private void Awake()
+    {
+        Instance = this;
+        m_executeButton.onClick.AddListener(Execute);
+        m_helpButton.onClick.AddListener(Help);
+        m_logBuilder = new StringBuilder();
+        ReCommandHandler = new RECommandHandler();
+        ReCommandHandler.RegisterCommand("gamerule", "Gets or Sets a gamerule", new []{new RECommandArgDef("Mode", "String", "Select mode (Get or Set)")},
+           (args) =>
+           {
+               //we're starting from 0 since we skip the first part in execution
+               Console.SetOut(m_commandOut);
+               string mode = args.GetLowNormString(0);
+               string gamerule = args.GetLowNormString(1);
+               if (mode == "get")
+               {
+                   Console.WriteLine($"Value of gamerule {args.GetString(1)} is {GameRules.GetGameRuleString(gamerule)}.");
+               }
+               else if (mode == "set")
+               {
+                   Console.WriteLine($"Set gamerule {args.GetString(1)} to {args.GetString(2)}.");
+                   GameRules.SetGameRule(gamerule, args.GetLowNormString(2));
+               }
+           });
     }
 
     private void Execute()
     {
-        
+        m_commandOut = Console.Out;
+        m_logBuilder.Clear();
+        StringWriter stringWriter = new StringWriter(m_logBuilder);
+        Console.SetOut(stringWriter);
+        ReCommandHandler.RunCommand(m_commandInput.text);
+        m_commandOutput.text += stringWriter.ToString();
+        Console.SetOut(m_commandOut);
     }
 
     private void Help()
     {
+        m_commandOutput.text += BPManual.GetHelpPage("0");
     }
 
     private void DebugLogReader(string logMessage, string stackTrace, LogType logType)

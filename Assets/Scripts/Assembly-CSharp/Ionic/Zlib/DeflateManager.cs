@@ -1152,18 +1152,13 @@ namespace Ionic.Zlib
 
 		private void SetDeflater()
 		{
-			switch (config.Flavor)
+			DeflateFunction = config.Flavor switch
 			{
-			case DeflateFlavor.Slow:
-				DeflateFunction = DeflateSlow;
-				break;
-			case DeflateFlavor.Fast:
-				DeflateFunction = DeflateFast;
-				break;
-			case DeflateFlavor.Store:
-				DeflateFunction = DeflateNone;
-				break;
-			}
+				DeflateFlavor.Slow => DeflateSlow,
+				DeflateFlavor.Fast => DeflateFast,
+				DeflateFlavor.Store => DeflateNone,
+				_ => DeflateFunction
+			};
 		}
 
 		internal int SetParams(CompressionLevel level, CompressionStrategy strategy)

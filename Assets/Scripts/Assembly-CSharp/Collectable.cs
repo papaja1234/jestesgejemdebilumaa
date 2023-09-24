@@ -30,7 +30,7 @@ public class Collectable : Goal
 		m_childRenderers = GetComponentsOnlyInChildren<Renderer>();
 		m_collider = GetComponent<Collider>();
 		m_childColliders = GetComponentsOnlyInChildren<Collider>();
-		float @float = INSettings.GetFloat(INFeature.TerrainScale);
+		float @float = INSettings.GetFloat(INFeature.TerrainScale)*GameRules.TerrainScale;
 		originalPosition = new Vector3(originalPosition.x * @float, originalPosition.y * @float, originalPosition.z);
 	}
 

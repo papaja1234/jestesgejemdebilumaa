@@ -22,16 +22,12 @@ public class SkullPopup : MonoBehaviour
 		m_skull = base.transform.Find("Skull");
 		m_skull.localPosition = -Vector3.up * 17f;
 		m_bgColor = base.transform.Find("BackgroundBox").GetComponent<Renderer>().material;
-		int num = 0;
-		switch (type)
+		int num = type switch
 		{
-		case CollectableType.Statue:
-			num = GameProgress.SecretStatueCount();
-			break;
-		case CollectableType.Skull:
-			num = GameProgress.SecretSkullCount();
-			break;
-		}
+			CollectableType.Statue => GameProgress.SecretStatueCount(),
+			CollectableType.Skull => GameProgress.SecretSkullCount(),
+			_ => 0
+		};
 		base.transform.Find("Skull/SkullText").GetComponent<TextMesh>().text = ((num >= 10) ? (num + "/" + maxCount) : ("0" + num + "/" + maxCount));
 		StartCoroutine(PlayAnimation());
 	}

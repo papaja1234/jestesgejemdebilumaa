@@ -510,16 +510,13 @@ public class DailyChallenge : Singleton<DailyChallenge>
 				num++;
 			}
 		}
-		PlayerProgress.ExperienceType experienceType = PlayerProgress.ExperienceType.DailyLootCrateCollected1st;
-		switch (num)
+
+		PlayerProgress.ExperienceType experienceType = num switch
 		{
-		case 2:
-			experienceType = PlayerProgress.ExperienceType.DailyLootCrateCollected2nd;
-			break;
-		case 3:
-			experienceType = PlayerProgress.ExperienceType.DailyLootCrateCollected3rd;
-			break;
-		}
+			2 => PlayerProgress.ExperienceType.DailyLootCrateCollected2nd,
+			3 => PlayerProgress.ExperienceType.DailyLootCrateCollected3rd,
+			_ => PlayerProgress.ExperienceType.DailyLootCrateCollected1st
+		};
 		return Singleton<PlayerProgress>.Instance.AddExperience(experienceType);
 	}
 

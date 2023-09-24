@@ -78,35 +78,40 @@ public class LootWheel : WPFMonoBehaviour
 		public LootWheelRewards.LootWheelReward[] InitReward(LootWheelRewards rewards)
 		{
 			RewardIndex = 0;
-			switch (m_slotType)
+			m_rewards = m_slotType switch
 			{
-			case WheelSlotType.Part:
-				m_rewards = new LootWheelRewards.LootWheelReward[3]
+				WheelSlotType.Part => new LootWheelRewards.LootWheelReward[3]
 				{
 					rewards.GetReward(LootWheelRewards.WheelReward.CommonPart),
 					rewards.GetReward(LootWheelRewards.WheelReward.RarePart),
 					rewards.GetReward(LootWheelRewards.WheelReward.EpicPart)
-				};
-				break;
-			case WheelSlotType.Scrap1:
-				m_rewards = new LootWheelRewards.LootWheelReward[1] { rewards.GetReward(LootWheelRewards.WheelReward.Scrap1) };
-				break;
-			case WheelSlotType.Scrap2:
-				m_rewards = new LootWheelRewards.LootWheelReward[1] { rewards.GetReward(LootWheelRewards.WheelReward.Scrap2) };
-				break;
-			case WheelSlotType.Dessert1:
-				m_rewards = new LootWheelRewards.LootWheelReward[1] { rewards.GetReward(LootWheelRewards.WheelReward.Dessert1) };
-				break;
-			case WheelSlotType.Dessert2:
-				m_rewards = new LootWheelRewards.LootWheelReward[1] { rewards.GetReward(LootWheelRewards.WheelReward.Dessert2) };
-				break;
-			case WheelSlotType.Dessert3:
-				m_rewards = new LootWheelRewards.LootWheelReward[1] { rewards.GetReward(LootWheelRewards.WheelReward.Dessert3) };
-				break;
-			case WheelSlotType.Powerup:
-				m_rewards = new LootWheelRewards.LootWheelReward[1] { rewards.GetReward(LootWheelRewards.WheelReward.Powerup) };
-				break;
-			}
+				},
+				WheelSlotType.Scrap1 => new LootWheelRewards.LootWheelReward[1]
+				{
+					rewards.GetReward(LootWheelRewards.WheelReward.Scrap1)
+				},
+				WheelSlotType.Scrap2 => new LootWheelRewards.LootWheelReward[1]
+				{
+					rewards.GetReward(LootWheelRewards.WheelReward.Scrap2)
+				},
+				WheelSlotType.Dessert1 => new LootWheelRewards.LootWheelReward[1]
+				{
+					rewards.GetReward(LootWheelRewards.WheelReward.Dessert1)
+				},
+				WheelSlotType.Dessert2 => new LootWheelRewards.LootWheelReward[1]
+				{
+					rewards.GetReward(LootWheelRewards.WheelReward.Dessert2)
+				},
+				WheelSlotType.Dessert3 => new LootWheelRewards.LootWheelReward[1]
+				{
+					rewards.GetReward(LootWheelRewards.WheelReward.Dessert3)
+				},
+				WheelSlotType.Powerup => new LootWheelRewards.LootWheelReward[1]
+				{
+					rewards.GetReward(LootWheelRewards.WheelReward.Powerup)
+				},
+				_ => m_rewards
+			};
 			m_probabilities = new float[m_rewards.Length];
 			for (int i = 0; i < m_probabilities.Length; i++)
 			{
@@ -182,25 +187,24 @@ public class LootWheel : WPFMonoBehaviour
 			Sprite component = m_collectableIcon.GetComponent<Sprite>();
 			if (!(component == null))
 			{
-				string text = string.Empty;
-				switch (m_rewards[0].PowerupReward)
+				string text = m_rewards[0].PowerupReward switch
 				{
-				case LootCrateRewards.Powerup.Magnet:
-					text = WPFMonoBehaviour.gameData.m_superMagnetIcon.GetComponent<Sprite>().Id;
-					break;
-				case LootCrateRewards.Powerup.Superglue:
-					text = WPFMonoBehaviour.gameData.m_superGlueIcon.GetComponent<Sprite>().Id;
-					break;
-				case LootCrateRewards.Powerup.Turbo:
-					text = WPFMonoBehaviour.gameData.m_turboChargeIcon.GetComponent<Sprite>().Id;
-					break;
-				case LootCrateRewards.Powerup.Supermechanic:
-					text = WPFMonoBehaviour.gameData.m_superMechanicIcon.GetComponent<Sprite>().Id;
-					break;
-				case LootCrateRewards.Powerup.NightVision:
-					text = WPFMonoBehaviour.gameData.m_nightVisionIcon.GetComponent<Sprite>().Id;
-					break;
-				}
+					LootCrateRewards.Powerup.Magnet => WPFMonoBehaviour.gameData.m_superMagnetIcon
+						.GetComponent<Sprite>()
+						.Id,
+					LootCrateRewards.Powerup.Superglue => WPFMonoBehaviour.gameData.m_superGlueIcon
+						.GetComponent<Sprite>()
+						.Id,
+					LootCrateRewards.Powerup.Turbo => WPFMonoBehaviour.gameData.m_turboChargeIcon.GetComponent<Sprite>()
+						.Id,
+					LootCrateRewards.Powerup.Supermechanic => WPFMonoBehaviour.gameData.m_superMechanicIcon
+						.GetComponent<Sprite>()
+						.Id,
+					LootCrateRewards.Powerup.NightVision => WPFMonoBehaviour.gameData.m_nightVisionIcon
+						.GetComponent<Sprite>()
+						.Id,
+					_ => string.Empty
+				};
 				if (!string.IsNullOrEmpty(text))
 				{
 					RuntimeSpriteDatabase instance = Singleton<RuntimeSpriteDatabase>.Instance;

@@ -39,7 +39,7 @@
 			"id": "AppInterface_CommandPanel",
 			"text": {
 				"en-US": "Command Panel (C# Runtime Compilation)",
-				"zh-Hans": "指令界面(C#运行时编译)"
+				"zh-Hans": "C#运行时编译"
 			}
 		},
 		{
@@ -463,6 +463,13 @@
 			}
 		},
 		{
+			"id": "CommandInterface_Title",
+			"text": {
+				"en-US": "Command Panel",
+				"zh-Hans": "指令界面"
+			}
+		},
+		{
 			"id": "CommandInterface_Help",
 			"text": {
 				"en-US": "Help",
@@ -474,6 +481,20 @@
 			"text": {
 				"en-US": "Execute",
 				"zh-Hans": "执行"
+			}
+		},
+		{
+			"id": "CommandInterface_OutputPlaceHolder",
+			"text": {
+				"en-US": "This is the place for your command output",
+				"zh-Hans": "这是你的命令输出栏"
+			}
+		},
+		{
+			"id": "CommandInterface_InputPlaceHolder",
+			"text": {
+				"en-US": "/help gamerule",
+				"zh-Hans": "/help gamerule"
 			}
 		}
 	]

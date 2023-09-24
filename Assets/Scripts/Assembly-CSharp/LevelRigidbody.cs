@@ -112,7 +112,7 @@ public class LevelRigidbody : WPFMonoBehaviour
 			SaveState();
 			LoadState();
 			base.rigidbody.isKinematic = freezeOnEnd;
-			float @float = INSettings.GetFloat(INFeature.TerrainScale);
+			float @float = INSettings.GetFloat(INFeature.TerrainScale)*GameRules.TerrainScale;
 			Vector3 vector = m_originalPosition * @float;
 			if (base.transform.parent != null)
 			{

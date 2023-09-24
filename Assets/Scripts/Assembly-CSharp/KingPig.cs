@@ -234,16 +234,13 @@ public class KingPig : BasePart
 		{
 			return;
 		}
-		AudioSource[] array = null;
-		switch (exp)
+
+		AudioSource[] array = exp switch
 		{
-		case Pig.Expressions.Fear:
-			array = FearAudio;
-			break;
-		case Pig.Expressions.Hit:
-			array = HitAudio;
-			break;
-		}
+			Pig.Expressions.Fear => FearAudio,
+			Pig.Expressions.Hit => HitAudio,
+			_ => null
+		};
 		string value = ExpressionToAnimationName(exp);
 		if (!string.IsNullOrEmpty(value))
 		{

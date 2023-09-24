@@ -1039,31 +1039,26 @@ public class IapManager : Singleton<IapManager>
 				break;
 			}
 			string gainType = "shop";
-			string price = "0";
-			switch (product)
+			string price = product switch
 			{
-			case InAppPurchaseItemType.WoodenLootCrate:
-				price = Singleton<VirtualCatalogManager>.Instance.GetProductPrice("lootcrate_wooden").ToString();
-				break;
-			case InAppPurchaseItemType.MetalLootCrate:
-				price = CentsToDecimal(Singleton<VirtualCatalogManager>.Instance.GetProductPrice("lootcrate_metal"));
-				break;
-			case InAppPurchaseItemType.GoldenLootCrate:
-				price = CentsToDecimal(Singleton<VirtualCatalogManager>.Instance.GetProductPrice("lootcrate_gold"));
-				break;
-			case InAppPurchaseItemType.WoodenLootCrateSale:
-				price = Singleton<VirtualCatalogManager>.Instance.GetProductPrice("lootcrate_wooden_sale").ToString();
-				break;
-			case InAppPurchaseItemType.MetalLootCrateSale:
-				price = CentsToDecimal(Singleton<VirtualCatalogManager>.Instance.GetProductPrice("lootcrate_metal_sale"));
-				break;
-			case InAppPurchaseItemType.GoldenLootCrateSale:
-				price = CentsToDecimal(Singleton<VirtualCatalogManager>.Instance.GetProductPrice("lootcrate_gold_sale"));
-				break;
-			case InAppPurchaseItemType.GoldenLootCratePack:
-				price = CentsToDecimal(Singleton<VirtualCatalogManager>.Instance.GetProductPrice("lootcrate_gold_pack"));
-				break;
-			}
+				InAppPurchaseItemType.WoodenLootCrate => Singleton<VirtualCatalogManager>.Instance
+					.GetProductPrice("lootcrate_wooden")
+					.ToString(),
+				InAppPurchaseItemType.MetalLootCrate => CentsToDecimal(
+					Singleton<VirtualCatalogManager>.Instance.GetProductPrice("lootcrate_metal")),
+				InAppPurchaseItemType.GoldenLootCrate => CentsToDecimal(
+					Singleton<VirtualCatalogManager>.Instance.GetProductPrice("lootcrate_gold")),
+				InAppPurchaseItemType.WoodenLootCrateSale => Singleton<VirtualCatalogManager>.Instance
+					.GetProductPrice("lootcrate_wooden_sale")
+					.ToString(),
+				InAppPurchaseItemType.MetalLootCrateSale => CentsToDecimal(
+					Singleton<VirtualCatalogManager>.Instance.GetProductPrice("lootcrate_metal_sale")),
+				InAppPurchaseItemType.GoldenLootCrateSale => CentsToDecimal(
+					Singleton<VirtualCatalogManager>.Instance.GetProductPrice("lootcrate_gold_sale")),
+				InAppPurchaseItemType.GoldenLootCratePack => CentsToDecimal(
+					Singleton<VirtualCatalogManager>.Instance.GetProductPrice("lootcrate_gold_pack")),
+				_ => "0"
+			};
 			int amount = 1;
 			if (product == InAppPurchaseItemType.GoldenLootCratePack)
 			{

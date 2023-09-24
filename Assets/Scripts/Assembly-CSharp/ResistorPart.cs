@@ -48,28 +48,16 @@ public class ResistorPart : ElectricalPart
 
 	public override void CreateElectricalElements()
 	{
-		float resistance = 0f;
-		switch (CurrentResistorType)
+		float resistance = CurrentResistorType switch
 		{
-		case 0:
-			resistance = 0.01f;
-			break;
-		case 1:
-			resistance = 0.1f;
-			break;
-		case 2:
-			resistance = 1f;
-			break;
-		case 3:
-			resistance = 10f;
-			break;
-		case 4:
-			resistance = 100f;
-			break;
-		case 5:
-			resistance = 1f;
-			break;
-		}
+			0 => 0.01f,
+			1 => 0.1f,
+			2 => 1f,
+			3 => 10f,
+			4 => 100f,
+			5 => 1f,
+			_ => 0f
+		};
 		m_resistor = new Resistor(resistance);
 	}
 
