@@ -1,7 +1,11 @@
 # Custom ignores
+# ...
+
+# VS Code files
+/.vscode
 
 # IDEA files
-.idea
+/.idea
 
 # MonoDevelop crash report blobs
 /*.blob
