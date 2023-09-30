@@ -7,6 +7,9 @@ public class INContraptionDataManager
 {
 	public class ContraptionData
 	{
+		/// <summary>
+		/// Basically a line in csv, refer to basepart
+		/// </summary>
 		public struct Unit
 		{
 			public int Type;
@@ -71,7 +74,7 @@ public class INContraptionDataManager
 			for (int i = 0; i < array.Length; i++)
 			{
 				Unit unit = array[i];
-				contraptionDataset.AddPart(unit.X, unit.Y, (int)((SortedPartType)unit.Type).ToPartType(), unit.Index, (BasePart.GridRotation)unit.Rotation, System.Convert.ToBoolean(unit.Flipped));
+				contraptionDataset.AddPart(unit.X, unit.Y, (int)((SortedPartType)unit.Type).ToPartType(), unit.Index, (BasePart.GridRotation)unit.Rotation, System.Convert.ToBoolean(unit.Flipped));//IMPORTANT PART
 			}
 			return contraptionDataset;
 		}
@@ -295,17 +298,17 @@ public class INContraptionDataManager
 		for (int i = 0; i < items.Length; i++)
 		{
 			ContraptionData.Unit unit = items[i];
-			string value = ",";
+			const string separator = ",";
 			builder.Append(unit.Type.ToString());
-			builder.Append(value);
+			builder.Append(separator);
 			builder.Append(unit.Index.ToString());
-			builder.Append(value);
+			builder.Append(separator);
 			builder.Append(unit.X);
-			builder.Append(value);
+			builder.Append(separator);
 			builder.Append(unit.Y.ToString());
-			builder.Append(value);
+			builder.Append(separator);
 			builder.Append(unit.Rotation.ToString());
-			builder.Append(value);
+			builder.Append(separator);
 			builder.Append(unit.Flipped.ToString());
 			builder.AppendLine();
 		}
@@ -334,6 +337,7 @@ public class INContraptionDataManager
 		}
 		catch
 		{
+			// ignored
 		}
 	}
 }
