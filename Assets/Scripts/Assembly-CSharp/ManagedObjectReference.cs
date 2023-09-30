@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ManagedObjectReference
+public class ManagedObjectInfo
 {
     //https://www.jacksondunstan.com/articles/5397
     public struct ManagedObjectRef<T>
