@@ -363,15 +363,8 @@ public class BasePart : WPFMonoBehaviour
 	{
 		get
 		{
-			if (!CustomizationManager.IsPartUnlocked(this))
-			{
-				if (craftable)
-				{
-					return lootCrateReward;
-				}
-				return false;
-			}
-			return true;
+			if (CustomizationManager.IsPartUnlocked(this)) return true;
+			return craftable && lootCrateReward;
 		}
 	}
 
@@ -460,7 +453,7 @@ public class BasePart : WPFMonoBehaviour
 		set
 		{
 			PartTypeInfo partTypeInfo = value;
-			(m_partType, customPartIndex) = (PartTypeInfo)(partTypeInfo);
+			(m_partType, customPartIndex) = partTypeInfo;
 		}
 	}
 
