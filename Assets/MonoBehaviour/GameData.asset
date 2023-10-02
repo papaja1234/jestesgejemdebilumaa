@@ -444,6 +444,7 @@ MonoBehaviour:
     - {fileID: 8110573671980163799, guid: c2a1611f0562b2b49bfab04c80a8630b, type: 3}
     - {fileID: 114764878340195004, guid: 34368e6d8791e2040acf326c310d241e, type: 3}
     - {fileID: 114764878340195004, guid: f2aace5d6d313ef48b5a3ae11b37d44b, type: 3}
+    - {fileID: -7783995915829798709, guid: 5bec5a348732fa64b8cda6ff659b747c, type: 3}
   - partType: 43
     customParts:
     - {fileID: 114195981052248438, guid: c47d4b68795956c48bd29c91c44e2b94, type: 3}
