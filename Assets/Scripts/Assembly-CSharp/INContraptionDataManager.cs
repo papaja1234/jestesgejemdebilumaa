@@ -8,7 +8,7 @@ public class INContraptionDataManager
 	public class ContraptionData
 	{
 		/// <summary>
-		/// Basically a line in csv, refer to basepart
+		/// Basically a line in csv, refers to basepart
 		/// </summary>
 		public struct Unit
 		{

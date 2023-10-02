@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class ExplodingGrapplingHookProjectile : WPFMonoBehaviour
 {
@@ -31,7 +32,7 @@ public class ExplodingGrapplingHookProjectile : WPFMonoBehaviour
 
 	public bool m_isAP = false;
 
-	public bool m_ignoreSelfCollusion = false;
+	[FormerlySerializedAs("m_ignoreSelfCollusion")] public bool m_ignoreSelfCollision = false;//fix typo
 
 	private void Start()
 	{
@@ -51,7 +52,7 @@ public class ExplodingGrapplingHookProjectile : WPFMonoBehaviour
 
 	private void OnCollisionEnter(Collision collision)
 	{
-		if (m_ignoreSelfCollusion)
+		if (m_ignoreSelfCollision)
 		{
 			if (!(bool)collision.gameObject.GetComponent<ExplodingGrapplingHookProjectile>())
 			{
@@ -60,14 +61,15 @@ public class ExplodingGrapplingHookProjectile : WPFMonoBehaviour
 		}
 		else
 		{
-			if (m_isAP)
+			switch (m_isAP)
 			{
-				Invoke("Delay2", 0.02f);
-				Invoke("Delay", 0.02f);
-			}
-			else if (!m_isAP)
-			{
-				Explode();
+				case true:
+					Invoke(nameof(Delay2), 0.02f);//avoid raw strings
+					Invoke(nameof(Delay), 0.02f);
+					break;
+				case false:
+					Explode();
+					break;
 			}
 		}
 	}
