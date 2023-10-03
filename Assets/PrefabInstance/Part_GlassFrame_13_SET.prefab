@@ -87,7 +87,7 @@ MonoBehaviour:
   m_gridYmin: 0
   m_gridYmax: 0
   m_static: 0
-  m_jointConnectionStrength: 1
+  m_jointConnectionStrength: 0
   m_jointConnectionType: 1
   m_jointConnectionDirection: 0
   m_customJointConnectionDirection: 7
@@ -95,9 +95,9 @@ MonoBehaviour:
   m_enclosedInto: {fileID: 0}
   m_constructionIconSprite: {fileID: 114411771606543456, guid: b786376a0cc6532499c5d650d531a4fb, type: 3}
   lateSpeed: {x: 0, y: 0, z: 0}
-  m_hp: 42
-  m_maxHp: 0
-  m_minDamage: 0
+  m_hp: 32
+  m_maxHp: -1
+  m_minDamage: -1
   m_material: 0
   m_brokenTextures: []
 --- !u!33 &33333774051940575

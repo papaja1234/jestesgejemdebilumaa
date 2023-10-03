@@ -49,7 +49,7 @@ public class RECommandInterface : MonoBehaviour
                 new RECommandArgDef("Value","String","(only for set mode)The value to be set")
             },
            (args) =>
-           {
+            {
                //we're starting from 0 since we skip the first part in execution
                string mode = args.GetLowNormString(0);
                string gamerule = args.GetLowNormString(1);
@@ -62,7 +62,8 @@ public class RECommandInterface : MonoBehaviour
                    Console.WriteLine($"Set gamerule {args.GetString(1)} to {args.GetString(2)}.");
                    GameRules.SetGameRule(gamerule, args.GetLowNormString(2));
                }
-           });
+            }
+        );
         ReCommandHandler.RegisterCommand("shift", "Shifts your contraption on grid", new []
             {
                 new RECommandArgDef("X-Shift", "Integer", "Shift amount on X-Axis"),
@@ -81,7 +82,30 @@ public class RECommandInterface : MonoBehaviour
                 {
                     Console.WriteLine(INLocalization.Instance.GetText("CommandInterface_ContraptionNotFound"));
                 }
-            });
+            }
+        );
+        ReCommandHandler.RegisterCommand("setpart", "sets a new part at certain location", new []
+            {
+                new RECommandArgDef("x", "Integer", "x Coordinate of new part"),
+                new RECommandArgDef("y", "Integer", "y Coordinate of new part"),
+                new RECommandArgDef("type", "Integer", "part type of new part"),
+                new RECommandArgDef("custom index", "Integer", "skin value of new part"),
+                new RECommandArgDef("grid rotation", "Integer[0..8]", "grid rotation value of new part"),
+                new RECommandArgDef("is it flipped", "Boolean as Integer", "determine if new part is flipped")
+            },
+            (args) =>
+            {
+                if (BPManual.Contraption)
+                {
+                    BPManual.Contraption.DataSet.AddPart(args.GetInt(0),args.GetInt(1),args.GetInt(2),args.GetInt(3),args.GetInt(4),args.GetBool(5));
+                    Console.WriteLine(INLocalization.Instance.GetText("CommandInterface_SetPart"), args.GetInt(0),args.GetInt(1),args.GetInt(2),args.GetInt(3),args.GetInt(4),args.GetBool(5));
+                }
+                else
+                {
+                    Console.WriteLine(INLocalization.Instance.GetText("CommandInterface_ContraptionNotFound"));
+                }
+            }
+        );
     }
 
     private void Execute()

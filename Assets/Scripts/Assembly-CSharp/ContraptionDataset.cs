@@ -47,13 +47,28 @@ public class ContraptionDataset
 
 	public void AddPart(int x, int y, int partType, int customPartIndex, BasePart.GridRotation rotation, bool flipped)
 	{
-		ContraptionDatasetUnit contraptionDatasetUnit = new ContraptionDatasetUnit();
-		contraptionDatasetUnit.x = x;
-		contraptionDatasetUnit.y = y;
-		contraptionDatasetUnit.partType = partType;
-		contraptionDatasetUnit.customPartIndex = customPartIndex;
-		contraptionDatasetUnit.rot = (int)rotation;
-		contraptionDatasetUnit.flipped = flipped;
+		ContraptionDatasetUnit contraptionDatasetUnit = new ContraptionDatasetUnit
+		{
+			x = x,
+			y = y,
+			partType = partType,
+			customPartIndex = customPartIndex,
+			rot = (int)rotation,
+			flipped = flipped
+		};
+		m_contraptionDataSet.Add(contraptionDatasetUnit);
+	}
+	public void AddPart(int x, int y, int partType, int customPartIndex, int rotation, bool flipped)
+	{
+		ContraptionDatasetUnit contraptionDatasetUnit = new ContraptionDatasetUnit
+		{
+			x = x,
+			y = y,
+			partType = partType,
+			customPartIndex = customPartIndex,
+			rot = rotation,
+			flipped = flipped
+		};
 		m_contraptionDataSet.Add(contraptionDatasetUnit);
 	}
 }

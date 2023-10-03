@@ -1,9 +1,20 @@
 using System;
 using System.Collections.Generic;
+using Unity.Burst;
+using Unity.Collections;
+using Unity.Jobs;
 using UnityEngine;
 
 public class EntityLightManager : PartManager
 {
+	private NativeArray<bool> nativeBooleans = new NativeArray<bool>(length: 8, allocator: Allocator.Persistent);
+
+	public override void OnDestroy()
+	{
+		nativeBooleans.Dispose();
+		base.OnDestroy();
+	}
+
 	public struct RigidbodyData
 	{
 		public Rigidbody Rigidbody;
@@ -310,45 +321,84 @@ public class EntityLightManager : PartManager
 
 	private bool BroadPhaseDetect(EntityLight light, ref CCDData data)
 	{
-		int type = light.Type;
 		EntityLight.LightData data2 = light.Data;
-		if (type is 0 or 1)
+		BroadPhaseDetectJob broadPhaseDetectJob = new BroadPhaseDetectJob()
 		{
-			float valueX = data.Position0.x - data2.Position0.x;
-			float valueY = data.Position0.y - data2.Position0.y;
-			float valueX2 = data.Position1.x - data2.Position1.x;
-			float valueY2 = data.Position1.y - data2.Position1.y;
-			float x = data2.Direction0.x;
-			float y = data2.Direction0.y;
-			float x2 = data2.Direction1.x;
-			float y2 = data2.Direction1.y;
-			Vector.InvTransform(valueX, valueY, x, y, out var resultX, out var resultY);
-			Vector.InvTransform(valueX2, valueY2, x2, y2, out var resultX2, out var resultY2);
-			float maxDetectionDistance = m_maxDetectionDistance;
-			float length = light.Length;
-			float halfWidth = light.HalfWidth;
-			if ((resultX < 0f - maxDetectionDistance || resultX > length + maxDetectionDistance) && (resultX2 < 0f - maxDetectionDistance || resultX2 > length + maxDetectionDistance))
-			{
-				return false;
-			}
-			if (Math.Abs(resultY) > halfWidth + maxDetectionDistance && Math.Abs(resultY2) > halfWidth + maxDetectionDistance)
-			{
-				return false;
-			}
-			return true;
-		}
-		float num = data.Position0.x - data2.Position0.x;
-		float num2 = data.Position1.x - data2.Position1.x;
-		float num3 = data.Position1.y - data2.Position1.y;
-		float num4 = num * num + num * num;
-		float num5 = num2 * num2 + num3 * num3;
-		float num6 = light.Length + m_maxDetectionDistance;
-		float num7 = num6 * num6;
-		if (num4 > num7 && num5 > num7)
+			type = light.Type,
+			dataPosition0x = data.Position0.x,
+			dataPosition0y = data.Position0.y,
+			dataPosition1x = data.Position1.x,
+			dataPosition1y = data.Position1.y,
+			data2Position0x = data2.Position0.x,
+			data2Position0y = data2.Position0.y,
+			data2Position1x = data2.Position1.x,
+			data2Position1y = data2.Position1.y,
+			data2Direction0x = data2.Direction0.x,
+			data2Direction0y = data2.Direction0.y,
+			data2Direction1x = data2.Direction1.x,
+			data2Direction1y = data2.Direction1.y,
+			maxDetectionDistance = m_maxDetectionDistance,
+			Length = light.Length,
+			HalfWidth = light.HalfWidth,
+			
+			NativeBooleans = nativeBooleans
+		};
+		JobHandle jobHandle = broadPhaseDetectJob.Schedule(8, 8);
+		jobHandle.Complete();
+		return nativeBooleans[0];
+	}
+	[BurstCompile]
+	private struct BroadPhaseDetectJob : IJobParallelFor
+	{ 
+		[ReadOnly] public int type;
+		[ReadOnly] public float dataPosition0x;
+		[ReadOnly] public float dataPosition0y;
+		[ReadOnly] public float dataPosition1x;
+		[ReadOnly] public float dataPosition1y;
+		[ReadOnly] public float data2Position0x;
+		[ReadOnly] public float data2Position0y;
+		[ReadOnly] public float data2Position1x;
+		[ReadOnly] public float data2Position1y;
+		[ReadOnly] public float data2Direction0x;
+		[ReadOnly] public float data2Direction0y;
+		[ReadOnly] public float data2Direction1x;
+		[ReadOnly] public float data2Direction1y;
+		[ReadOnly] public float maxDetectionDistance;
+		[ReadOnly] public float Length;
+		[ReadOnly] public float HalfWidth;
+
+		[WriteOnly] public NativeArray<bool> NativeBooleans;
+		public void Execute(int index)
 		{
-			return false;
+			if (type is 0 or 1)
+			{
+				float valueX = dataPosition0x - data2Position0x;
+				float valueY = dataPosition0y - data2Position0y;
+				float valueX2 = dataPosition1x - data2Position1x;
+				float valueY2 = dataPosition1y - data2Position1y;
+				 float x = data2Direction0x;
+				 float y = data2Direction0y;
+				float x2 = data2Direction1x;
+				float y2 = data2Direction1y;
+				Vector.InvTransform(valueX, valueY, x, y, out var resultX, out var resultY);
+				Vector.InvTransform(valueX2, valueY2, x2, y2, out var resultX2, out var resultY2);
+				float length = Length;
+				float halfWidth = HalfWidth;
+				if ((resultX < 0f - maxDetectionDistance || resultX > length + maxDetectionDistance) && (resultX2 < 0f - maxDetectionDistance || resultX2 > length + maxDetectionDistance))
+				{
+					NativeBooleans[0] = false;
+				}
+				NativeBooleans[0] = !(Math.Abs(resultY) > halfWidth + maxDetectionDistance) || !(Math.Abs(resultY2) > halfWidth + maxDetectionDistance);
+			}
+			float num = dataPosition0x - data2Position0x;
+			float num2 = dataPosition1x - data2Position1x;
+			float num3 = dataPosition1y - data2Position1y;
+			float num4 = num * num + num * num;
+			float num5 = num2 * num2 + num3 * num3;
+			float num6 = Length + maxDetectionDistance;
+			float num7 = num6 * num6;
+			NativeBooleans[0] = !(num4 > num7) || !(num5 > num7);
 		}
-		return true;
 	}
 
 	private bool ComputeTimeOfImpact(EntityLight light, ref CCDData data, out TOIResult result)

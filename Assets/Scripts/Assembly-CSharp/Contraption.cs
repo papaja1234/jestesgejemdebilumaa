@@ -851,7 +851,10 @@ public class Contraption : WPFMonoBehaviour
 			BasePart.JointConnectionDirection customJointConnectionDirection = part3.GetCustomJointConnectionDirection();
 			if (part3.m_jointConnectionType != BasePart.JointConnectionType.None)//THIS PART CONNECTS!
 			{
-				//BLOODY HELL OF CONNECTION CALCULATION
+				#region BLOODY HELL OF CONNECTION CALCULATION
+
+
+
 				BasePart basePart = FindPartAt(coordX2 + 1, coordY2, part3);
 				BasePart basePart2 = FindPartAt(coordX2, coordY2 - 1, part3);
 				if (CanConnectTo(part3, basePart, BasePart.Direction.Right))
@@ -1015,6 +1018,7 @@ public class Contraption : WPFMonoBehaviour
 				}
 			}
 		}
+		#endregion
 		//-----------------------THIRD LOOP|SEASON TWO-----------------------
 		//START POST-INITIALIZATION
 		INContraption.Instance.IsRunning = true;

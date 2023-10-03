@@ -69,6 +69,16 @@ namespace RECmd
             return (T)(object)intVal;
         }
 
+        public bool GetBool(int at)
+        {
+            return bool.TryParse(args[at],out bool stasis);
+        }
+
+        public T GetAs<T>(int at)
+        {
+            return (T)Convert.ChangeType(args[at], typeof(T));
+        }
+
         //private unsafe static T Int2Enum<T>(int val) where T : Enum
         //{
         //    return *(T*)&val;

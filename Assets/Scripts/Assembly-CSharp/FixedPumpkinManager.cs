@@ -99,7 +99,7 @@ public class FixedPumpkinManager : PartManager
 						{
 							rigidbody.isKinematic = true;
 						}
-						item2.m_hp = 3e+38f;
+						//item2.m_hp = 3e+38f;
 						item2.lateSpeed = Vector3.zero;
 						rigidbody.constraints = RigidbodyConstraints.FreezeAll;
 						rigidbody.gameObject.layer = layer;

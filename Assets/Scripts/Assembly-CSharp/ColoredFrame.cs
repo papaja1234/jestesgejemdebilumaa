@@ -89,7 +89,7 @@ public class ColoredFrame : Frame
 				{
 					MeshRenderer[] componentsInChildren = basePart.GetComponentsInChildren<MeshRenderer>(includeInactive: true);
 					m_coloredPartMaterials = new(MeshRenderer, Material)[componentsInChildren.Length];
-					INUnity.LoadShader("PreAlpha_Unlit_ColorTransparent_Geometry");
+					INUnity.LoadShader("Unlit_Color");
 					for (int i = 0; i < componentsInChildren.Length; i++)
 					{
 						MeshRenderer meshRenderer = componentsInChildren[i];
@@ -98,7 +98,7 @@ public class ColoredFrame : Frame
 							m_coloredPartMaterials[i] = (meshRenderer, meshRenderer.sharedMaterial);
 							float num2 = ((m_color.a > 0.5f) ? m_color.a : 0.5f);
 							Material material;
-							(material = meshRenderer.material).shader = INUnity.LoadShader("PreAlpha_Unlit_ColorTransparent_Geometry");
+							(material = meshRenderer.material).shader = INUnity.CustomTransparentShader;//fixed weird color frame
 							material.color = new Color(m_color.r, m_color.g, m_color.b, num2 * material.color.a);
 							meshRenderer.material.SetFloat(Blend, @float);
 						}
@@ -153,9 +153,8 @@ public class ColoredFrame : Frame
 			return;
 		}
 		(MeshRenderer, Material)[] coloredPartMaterials = m_coloredPartMaterials;
-		for (int i = 0; i < coloredPartMaterials.Length; i++)
+		foreach ((MeshRenderer, Material) tuple in coloredPartMaterials)//converted to foreach
 		{
-			(MeshRenderer, Material) tuple = coloredPartMaterials[i];
 			if (tuple.Item1 != null)
 			{
 				tuple.Item1.material = tuple.Item2;

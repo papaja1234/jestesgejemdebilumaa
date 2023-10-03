@@ -145,7 +145,7 @@ public class TNT : BasePart
 				AddExplosionForce(gameObject, INSettings.GetFloat(INFeature.TNTExplosionForce) / (float)num);
 			}
 			TNT component = collider.GetComponent<TNT>();
-			if ((bool)component && !(component is AlienTNT) && !component.HasGeneratorRef)
+			if ((bool)component && component is not AlienTNT && !component.HasGeneratorRef)//speak english lmao
 			{
 				component.Explode();
 			}

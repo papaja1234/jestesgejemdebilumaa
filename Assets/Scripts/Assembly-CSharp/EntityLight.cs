@@ -7,8 +7,8 @@ using UnityEngine;
 
 public class EntityLight : MonoBehaviour
 {
-	NativeArray<float> physicFloats = new NativeArray<float>(length: 2, Allocator.Persistent);
-	NativeArray<Vector2> deltaVectors = new NativeArray<Vector2>(length: 2, Allocator.Persistent);
+	NativeArray<float> physicFloats = new NativeArray<float>(length: 4, Allocator.Persistent);
+	NativeArray<Vector2> deltaVectors = new NativeArray<Vector2>(length: 4, Allocator.Persistent);
 	public void OnDestroy()
 	{
 		physicFloats.Dispose();
@@ -448,11 +448,13 @@ public class EntityLight : MonoBehaviour
 		}
 	}
 
-	private void HandleShieldAndBoxCollision(ref EntityLightManager.CCDData data, ref EntityLightManager.TOIResult result)
+	private void HandleShieldAndBoxCollision(ref EntityLightManager.CCDData data,
+		ref EntityLightManager.TOIResult result)
 	{
 		BasePart component = data.Rigidbody.GetComponent<BasePart>();
 		if (!m_ignoreCollision || !(component != null) || component.ConnectedComponent != Part.ConnectedComponent)
 		{
+			INPhysicMaterial material = INContraption.GetMaterial(data.Rigidbody);
 			LightData data2 = m_data;
 			Vector2 vector = data.Position0 - data2.Position0;
 			Vector2 vector2 = data.Position1 - data2.Position1;
@@ -460,42 +462,104 @@ public class EntityLight : MonoBehaviour
 			Vector.Transform(result.ContactPoint, data.Direction1);
 			float timeOfImpact = result.TimeOfImpact;
 			float num = Vector.Dot(vector2 - vector, vector3);
-			float num2 = 0f - Vector.Cross(vector2 - vector, vector3);
-			float num3 = num * (1f - timeOfImpact);
-			bool flag = result.ContactCount == 2;
-			float z = data.Rigidbody.angularVelocity.z;
-			Vector2 vector4 = Vector.Transform(data.Direction1, result.ContactPoint);
-			if (data.Bounds.IsCircle)
-			{
-				vector4 = new Vector2(0f, 0f - data.Bounds.R);
-			}
-			float x = vector4.x;
-			float y = vector4.y;
-			_ = num2 / data.DeltaTime;
 			float num4 = num / data.DeltaTime;
-			float num5 = num4 + z * x;
-			float electricity = 0f - GetPowerConsumption(num4, data.Rigidbody.mass);
-			INPhysicMaterial material = INContraption.GetMaterial(data.Rigidbody);
-			float num6 = m_physicMaterial.CombineBounce(material);
-			float num7 = 0f - result.ContactSeparation;
-			Vector2 vector5 = num7 * vector3;
-			float num8 = (0f - num3) * (num6 + 1f) + num7;
-			float num9 = (0f - num4) * (num6 + 1f);
-			if (m_type == 3)
+			float electricity = -GetPowerConsumption(num4, data.Rigidbody.mass);
+			//job section end
+			float mass;
+			ShieldAndBoxCollision shieldAndBoxCollision = new ShieldAndBoxCollision()
 			{
-				float num10 = 0.5f * num2 * num2 / (m_length - m_halfWidth);
-				num8 += (1f - timeOfImpact) * num10;
-				num9 += num10 / data.DeltaTime;
-			}
-			Vector2 vector6 = vector3 * num8;
-			Vector2 deltaVelocity = vector3 * num9;
-			float torque = (0f - x) * ((!flag) ? num5 : (2f * z * x)) * (num6 + 1f);
-			data.Position0 = data.Position0 * (1f - timeOfImpact) + data.Position1 * timeOfImpact + vector5;
-			data.Position1 += vector6;
+				timeOfImpact = result.TimeOfImpact,
+				deltaTime = data.DeltaTime,
+				vector = data.Position0 - data2.Position0,
+				vector2 = data.Position1 - data2.Position1,
+				ContactNormal = result.ContactNormal,
+				ContactPoint = result.ContactPoint,
+				Direction1 = data.Direction1,
+				boundsIsCircle = data.Bounds.IsCircle,
+				boundsR = data.Bounds.R,
+				determinator = result.ContactCount == 2,
+				zAngularVelocity = data.Rigidbody.angularVelocity.z,
+				bounce = m_physicMaterial.CombineBounce(material),
+				ContactSeparation = result.ContactSeparation,
+				type = m_type,
+				length = m_length,
+				halfWidth = m_halfWidth,
+
+				physicFloats = physicFloats,
+				deltaVectors = deltaVectors
+			};
+			JobHandle jobHandle = shieldAndBoxCollision.Schedule(4, 4);
+			jobHandle.Complete();
+			data.Position0 = data.Position0 * (1f - timeOfImpact) + data.Position1 * timeOfImpact + deltaVectors[0];
+			data.Position1 += deltaVectors[1];
 			data.DeltaTime *= 1f - timeOfImpact;
 			data.Time += (1f - data.Time) * timeOfImpact;
-			m_manager.AddImpulse(this, new EntityLightManager.ImpulseData(this, data.Rigidbody, data.Position0, vector6, deltaVelocity, torque, electricity));
-			SendLightEvent(data.Rigidbody, new EntityLightCollision(data.Position1, vector6, deltaVelocity));
+			m_manager.AddImpulse(this,
+				new EntityLightManager.ImpulseData(this, data.Rigidbody, data.Position0, deltaVectors[1],
+					deltaVectors[2], physicFloats[0], electricity));
+			SendLightEvent(data.Rigidbody, new EntityLightCollision(data.Position1, deltaVectors[1], deltaVectors[2]));
+		}
+	}
+
+	[BurstCompile]
+	private struct ShieldAndBoxCollision : IJobParallelFor
+	{
+		[ReadOnly] public float timeOfImpact;
+		[ReadOnly] public float deltaTime;
+		[ReadOnly] public Vector2 vector;
+		[ReadOnly] public Vector2 vector2;
+		[ReadOnly] public Vector2 ContactNormal;
+		[ReadOnly] public Vector2 ContactPoint;
+		[ReadOnly] public Vector2 Direction1;
+		[ReadOnly] public bool boundsIsCircle;
+		[ReadOnly] public float boundsR;
+		[ReadOnly] public bool determinator;
+		[ReadOnly] public float zAngularVelocity;
+		[ReadOnly] public float bounce;
+		[ReadOnly] public float ContactSeparation;
+		[ReadOnly] public int type;
+		[ReadOnly] public float length;
+		[ReadOnly] public float halfWidth;
+
+		//out
+		[WriteOnly] public NativeArray<float> physicFloats;
+		[WriteOnly] public NativeArray<Vector2> deltaVectors;
+
+		public void Execute(int index)
+		{
+			Vector2 vector3 = Vector.Transform(ContactNormal, Direction1);
+			float num = Vector.Dot(vector2 - vector, vector3);
+			float num2 = 0f - Vector.Cross(vector2 - vector, vector3);
+			float num3 = num * (1f - timeOfImpact);
+			Vector2 vector4 = Vector.Transform(Direction1, ContactPoint);
+			if (boundsIsCircle)
+			{
+				vector4 = new Vector2(0f, 0f - boundsR);
+			}
+
+			float x = vector4.x;
+			float y = vector4.y;
+			_ = num2 / deltaTime;
+			float num4 = num / deltaTime;
+			float num5 = num4 + zAngularVelocity * x;
+			float num7 = -ContactSeparation;
+			Vector2 vector5 = num7 * vector3;
+			float num8 = (0f - num3) * (bounce + 1f) + num7;
+			float num9 = (0f - num4) * (bounce + 1f);
+			if (type == 3)
+			{
+				float num10 = 0.5f * num2 * num2 / (length - halfWidth);
+				num8 += (1f - timeOfImpact) * num10;
+				num9 += num10 / deltaTime;
+			}
+
+			Vector2 vector6 = vector3 * num8;
+			Vector2 deltaVelocity = vector3 * num9;
+			float torque = (0f - x) * ((!determinator) ? num5 : (2f * zAngularVelocity * x)) * (bounce + 1f);
+			deltaVectors[0] = vector5;
+			deltaVectors[1] = vector6;
+			deltaVectors[2] = deltaVelocity;
+			physicFloats[0] = torque;
 		}
 	}
 

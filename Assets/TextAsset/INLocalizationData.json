@@ -517,6 +517,13 @@
 				"en-US": "Gamerule Not found!",
 				"zh-Hans": "未找到此游戏规则"
 			}
+		},
+		{
+			"id": "CommandInterface_SetPart",
+			"text": {
+				"en-US": "Set part on ({0},{1}) to (type:{2}, skin:{3}, rotation:{4}, flip:{5})",
+				"zh-Hans": "将位于({0},{1})的部件设置为(类型:{2}, 皮肤:{3}, 旋转:{4}, 翻转:{5})"
+			}
 		}
 	]
 }
