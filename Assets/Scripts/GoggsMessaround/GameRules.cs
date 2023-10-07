@@ -35,7 +35,7 @@ public static class GameRules
             case "showpropertypanel":
                 ShowPropertyPanel = value.ToLower() == "true";
                 break;
-            case "terrrainscale":
+            case "terrainscale":
                 TerrainScale = Convert.ToSingle(value);
                 break;
             case "playername":
