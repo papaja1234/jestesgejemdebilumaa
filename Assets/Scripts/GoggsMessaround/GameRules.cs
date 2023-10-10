@@ -34,7 +34,7 @@ public static class GameRules
                 SetPartHPMode(Convert.ToInt32(value));
                 break;
             case "showpropertypanel":
-                ShowPropertyPanel = value.ToLower() == "true";
+                ShowPropertyPanel = Convert.ToBoolean(value);
                 break;
             case "terrainscale":
                 TerrainScale = Convert.ToSingle(value);
