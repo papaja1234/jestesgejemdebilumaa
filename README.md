@@ -9,13 +9,20 @@ Thanks to Miuna for all the prior work from the mod called BPLE, we really hope 
 + Part will bug when connected to π/3 triangle (most likely physics issue, meshcollider maybe?)
 + Triangles prevents rotation
 + Script Engine fails to load assembly on android
++ Command /fill & /setpart will temporaryily fail grid menu and sometimes disable crafting entirely
++ /gamerule set terrainscale does not work immediately (&& while it works it potentially removing your contraption?)
++ Neural Part slot is overflowed with triangles
+
 
 ## Changes:
 ###### Work in Progress, too, 
 #### Quality Of Life
 + Mute music button (still weird icon)
++ Mute starbox sound
 + Remove (almost) zoom limits
 + C# Runtime Compilation Engine and it's User Interface
++ Command System
++ Job system used with Burst @ entitylight physics
 + More Types of ExplodingGrapplingHookProjectile, More expandability 
 #### Changes that doesn't effect gameplay
 + Change version selector background
@@ -24,7 +31,7 @@ Thanks to Miuna for all the prior work from the mod called BPLE, we really hope 
 + Higher Jet Engine thrust limits (6000)
 + FULLY COMPLETED Part HP system, with selectable modes (mode 0 is off)
 + Explosions, Collsions now deals damage to parts
-+ Part is destroyed and removed when hp<0 in mode 1, turn into debris in mode 2
++ Part is destroyed and removed when hp<0 in mode 1, turned into debris in mode 2
 #### New Parts
 + Alien Wooden Frame, much flexible with engine power
 + Alien Santa Spring (3*mass, high connect strength)
