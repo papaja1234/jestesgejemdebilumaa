@@ -12,7 +12,9 @@ Thanks to Miuna for all the prior work from the mod called BPLE, we really hope 
 + Command /fill & /setpart will temporaryily fail grid menu and sometimes disable crafting entirely
 + /gamerule set terrainscale does not work immediately (&& while it works it potentially removing your contraption?)
 + Neural Part slot is overflowed with triangles
-
+##### Possible Improvements
++ Add AddPart method instead of using new fields in RECommandInterface.cs
++ Add metadata to savefile, currently // comments are available. and # will be used for meta settings (maybe add a corresponding command to do this)
 
 ## Changes:
 ###### Work in Progress, too, 
