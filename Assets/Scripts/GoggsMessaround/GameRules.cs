@@ -11,6 +11,7 @@ public static class GameRules
     public static int PartHPStatus { get; private set; } = 2;
     public static bool ShowPropertyPanel { get; set; } = false;
     public static float TerrainScale { get; set; } = 1f;
+    public static bool PlayStarboxSound { get; private set; } = false;
     
     public static string PlayerName { get; set; } = "Player";
     private static string SetPartHPMode(int mode)
@@ -40,6 +41,9 @@ public static class GameRules
                 break;
             case "playername":
                 PlayerName = value;
+                break;
+            case "starboxsound":
+                PlayStarboxSound = Convert.ToBoolean(value);
                 break;
             default:
                 Console.WriteLine(INLocalization.Instance.GetText("Gamerule_NotFound"));
