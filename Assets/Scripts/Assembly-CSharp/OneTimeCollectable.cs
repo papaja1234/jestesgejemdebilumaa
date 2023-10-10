@@ -180,6 +180,9 @@ public abstract class OneTimeCollectable : WPFMonoBehaviour
 			{
 				Object.Instantiate(collectedEffect, base.transform.position, base.transform.rotation);
 			}
+                        if (GameRules.PlayStarboxSound) {
+			    Singleton<AudioManager>.Instance.Play2dEffect(WPFMonoBehaviour.gameData.commonAudioCollection.bonusBoxCollected);
+			}
                         //disable starbox sound, maybe revert later?
 			//Singleton<AudioManager>.Instance.Play2dEffect(WPFMonoBehaviour.gameData.commonAudioCollection.bonusBoxCollected);
 			collected = true;
