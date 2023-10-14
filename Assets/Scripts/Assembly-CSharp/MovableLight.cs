@@ -3,7 +3,7 @@ using UnityEngine;
 public class MovableLight : BasePart
 {
 	public float m_maxLength;
-
+	[Range(0.0001f,1)]
 	public float m_rateOfGrowth;
 
 	public bool activated;

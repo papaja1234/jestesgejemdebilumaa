@@ -58,7 +58,7 @@ public class ContraptionDataset
 		};
 		m_contraptionDataSet.Add(contraptionDatasetUnit);
 	}
-	public void AddPart(int x, int y, int partType, int customPartIndex, int rotation, bool flipped)
+	public void AddPart(int x, int y, int partType, int customPartIndex, int rotation, bool flipped, out ContraptionDatasetUnit unit)
 	{
 		ContraptionDatasetUnit contraptionDatasetUnit = new ContraptionDatasetUnit
 		{
@@ -70,5 +70,6 @@ public class ContraptionDataset
 			flipped = flipped
 		};
 		m_contraptionDataSet.Add(contraptionDatasetUnit);
+		unit = contraptionDatasetUnit;
 	}
 }

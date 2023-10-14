@@ -1,17 +1,10 @@
 using System;
-using System.CodeDom.Compiler;
-using System.Collections.Generic;
-using System.Collections.Immutable;
 using System.IO;
-using System.Reflection;
-using System.Linq;
 using UnityEngine;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp;
-using Microsoft.CodeAnalysis.Emit;
 using System.Text;
-using RECmd;
+using Unity.Mathematics;
 using UnityEngine.Serialization;
+using Object = UnityEngine.Object;
 
 public class RECommandInterface : MonoBehaviour
 {
@@ -33,11 +26,11 @@ public class RECommandInterface : MonoBehaviour
     private TextWriter m_commandOut;
 
     private StringBuilder m_logBuilder;
-
-
+    
     private void Awake()
     {
         Instance = this;
+        DontDestroyOnLoad(this);
         m_executeButton.onClick.AddListener(Execute);
         m_helpButton.onClick.AddListener(Help);
         m_logBuilder = new StringBuilder();
@@ -90,15 +83,66 @@ public class RECommandInterface : MonoBehaviour
                 new RECommandArgDef("y", "Integer", "y Coordinate of new part"),
                 new RECommandArgDef("type", "Integer", "part type of new part"),
                 new RECommandArgDef("custom index", "Integer", "skin value of new part"),
-                new RECommandArgDef("grid rotation", "Integer[0..8]", "grid rotation value of new part"),
+                new RECommandArgDef("grid rotation", "Integer[..7]", "grid rotation value of new part"),
                 new RECommandArgDef("is it flipped", "Boolean as Integer", "determine if new part is flipped")
             },
             (args) =>
             {
-                if (BPManual.Contraption)
+                Debug.Log(WPFMonoBehaviour.levelManager.gameState);
+                Debug.Log(nameof(WPFMonoBehaviour.levelManager.gameState));
+                if (Contraption.Instance && WPFMonoBehaviour.levelManager && WPFMonoBehaviour.levelManager.ConstructionUI)
                 {
-                    BPManual.Contraption.DataSet.AddPart(args.GetInt(0),args.GetInt(1),args.GetInt(2),args.GetInt(3),args.GetInt(4),args.GetBool(5));
-                    Console.WriteLine(INLocalization.Instance.GetText("CommandInterface_SetPart"), args.GetInt(0),args.GetInt(1),args.GetInt(2),args.GetInt(3),args.GetInt(4),args.GetBool(5));
+                    if (WPFMonoBehaviour.levelManager.gameState is LevelManager.GameState.Running or LevelManager.GameState.PausedWhileRunning or LevelManager.GameState.PreviewWhileRunning)
+                    {
+                        ContraptionDataset.ContraptionDatasetUnit unit = new ContraptionDataset.ContraptionDatasetUnit
+                        {
+                            x = args.GetInt(0),
+                            y = args.GetInt(1),
+                            partType = args.GetInt(2),
+                            customPartIndex = args.GetInt(3),
+                            rot = args.GetInt(4),
+                            flipped = args.GetBool(5)
+                        };
+                        BasePart customPart = WPFMonoBehaviour.gameData.GetCustomPart(((SortedPartType)args.GetInt(2)).ToPartType(),
+                            unit.customPartIndex);
+                    
+                        if (customPart != null)
+                        {
+                            Contraption.Instance.Parts.Add(customPart);
+                            customPart.contraption = Contraption.Instance;
+                            customPart.enabled = true;
+                            customPart.Initialize();
+                            customPart.PostInitialize();
+                            GameObject obj = Object.Instantiate(customPart.gameObject);
+                            obj.SetActive(value: true);
+                            customPart.EnsureRigidbody();
+                        }
+                        Console.WriteLine(INLocalization.Instance.GetText("CommandInterface_SetPart"), args.GetInt(0),
+                            args.GetInt(1), args.GetInt(2), args.GetInt(3), args.GetInt(4), args.GetBool(5));
+                        return;
+                    }else if (WPFMonoBehaviour.levelManager.gameState is LevelManager.GameState.Building
+                              or LevelManager.GameState.PausedWhileBuilding
+                              or LevelManager.GameState.PreviewWhileBuilding)
+                    {
+                        Contraption.Instance.DataSet.AddPart(args.GetInt(0), args.GetInt(1), args.GetInt(2),
+                            args.GetInt(3),
+                            args.GetInt(4), args.GetBool(5), out ContraptionDataset.ContraptionDatasetUnit unit);
+                        ConstructionUI.PartDesc partDesc =
+                            WPFMonoBehaviour.levelManager.ConstructionUI.FindPartDesc(((SortedPartType)args.GetInt(2))
+                                .ToPartType());
+                        BasePart customPart = WPFMonoBehaviour.gameData.GetCustomPart(
+                            ((SortedPartType)args.GetInt(2)).ToPartType(),
+                            unit.customPartIndex);
+
+                        if (customPart != null)
+                        {
+                            WPFMonoBehaviour.levelManager.BuildPart(unit, customPart);
+                            partDesc.useCount++;
+                        }
+
+                        Console.WriteLine(INLocalization.Instance.GetText("CommandInterface_SetPart"), args.GetInt(0),
+                            args.GetInt(1), args.GetInt(2), args.GetInt(3), args.GetInt(4), args.GetBool(5));
+                    }
                 }
                 else
                 {
@@ -106,16 +150,107 @@ public class RECommandInterface : MonoBehaviour
                 }
             }
         );
+        ReCommandHandler.RegisterCommand("#multiline", "execute following lines of code line-by-line", new []
+            {
+                new RECommandArgDef("commands", "Command[]", "Multiple Lines of Command")
+            },
+            (args) =>
+            {
+                ReCommandHandler.HandleMultiLineCommand(args.GetRawString());
+            }
+        );
+        ReCommandHandler.RegisterCommand("delay", "delay for a Time Span (seconds), only used with #multiline", new []
+            {
+                new RECommandArgDef("delay amount", "Float", "How long to delay in seconds")
+            },
+            (args) =>
+            {
+                
+            }
+        );
+        ReCommandHandler.RegisterCommand("fill", "fills an rectangular area with a new part", new []
+            {
+                new RECommandArgDef("x1", "Integer", "x Coordinate of rectangle vertex1"),
+                new RECommandArgDef("y1", "Integer", "y Coordinate of rectangle vertex1"),
+                new RECommandArgDef("x2", "Integer", "x Coordinate of rectangle vertex2"),
+                new RECommandArgDef("y2", "Integer", "y Coordinate of rectangle vertex2"),
+                new RECommandArgDef("type", "Integer", "part type of new part"),
+                new RECommandArgDef("custom index", "Integer", "skin value of new part"),
+                new RECommandArgDef("grid rotation", "Integer[..7]", "grid rotation value of new part"),
+                new RECommandArgDef("is it flipped", "Boolean as Integer", "determine if new part is flipped")
+            },
+            (args) =>
+            {
+                if (Contraption.Instance && WPFMonoBehaviour.levelManager && WPFMonoBehaviour.levelManager.ConstructionUI)
+                {
+                    int x, y;
+                    ConstructionUI.PartDesc partDesc;
+                    try
+                    {
+                        if (WPFMonoBehaviour.levelManager.ConstructionUI)
+                        {
+                            partDesc =
+                                WPFMonoBehaviour.levelManager.ConstructionUI.FindPartDesc(((SortedPartType)args.GetInt(4)).ToPartType());
+                            partDesc.useCount +=
+                                (Math.Max(args.GetInt(0), args.GetInt(2)) - Math.Min(args.GetInt(0), args.GetInt(2))) *
+                                (Math.Max(args.GetInt(1), args.GetInt(3)) - Math.Min(args.GetInt(1), args.GetInt(3)));
+                        }
+                    }
+                    catch (NullReferenceException e)
+                    {
+                        //ignored
+                    }
+                    
+                    ContraptionDataset.ContraptionDatasetUnit unit = new ContraptionDataset.ContraptionDatasetUnit
+                    {
+                        partType = args.GetInt(4),
+                        customPartIndex = args.GetInt(5),
+                        rot = args.GetInt(6),
+                        flipped = args.GetBool(7)
+                    };
+                    for (x = Math.Min(args.GetInt(0),args.GetInt(2)); x <= Math.Max(args.GetInt(0),args.GetInt(2)); x++)
+                    {
+                        for (y = Math.Min(args.GetInt(1),args.GetInt(3)); y <= Math.Max(args.GetInt(1),args.GetInt(3)); y++)
+                        {
+                            unit.x = x;
+                            unit.y = y;
+                            BPManual.Contraption.DataSet.AddPart(x, y, args.GetInt(2), args.GetInt(3),
+                                args.GetInt(4), args.GetBool(5), out ContraptionDataset.ContraptionDatasetUnit _);
+                            BasePart customPart = WPFMonoBehaviour.gameData.GetCustomPart(((SortedPartType)unit.partType).ToPartType(),unit.customPartIndex);
+                            if (customPart != null)
+                            {
+                                WPFMonoBehaviour.levelManager.BuildPart(unit, customPart);
+                            }
+
+                            if (WPFMonoBehaviour.levelManager.gameState == LevelManager.GameState.Running)
+                            {
+                                customPart.EnsureRigidbody();
+                            }
+                        }
+                    }
+                    Console.WriteLine(INLocalization.Instance.GetText("CommandInterface_FillPart"), args.GetInt(0),
+                        args.GetInt(1), args.GetInt(2), args.GetInt(3), args.GetInt(4), args.GetInt(5),args.GetInt(6),args.GetBool(7));
+                }
+                else
+                {
+                    Console.WriteLine(INLocalization.Instance.GetText("CommandInterface_ContraptionNotFound"));
+                }
+            }
+        );
+        
     }
+    
 
     private void Execute()
     {
-        m_commandOut = Console.Out;
-        m_logBuilder.Clear();
-        Console.SetOut(new StringWriter(m_logBuilder));
-        
+        if (GameRules.ShowCommandLog)
+        {
+            m_commandOut = Console.Out;
+            m_logBuilder.Clear();
+            Console.SetOut(new StringWriter(m_logBuilder));
+        }
         ReCommandHandler.RunCommand(m_commandInput.text);
-        
+        if (!GameRules.ShowCommandLog) return;
         m_commandOutput.text += m_logBuilder.ToString();
         Console.SetOut(m_commandOut);
     }

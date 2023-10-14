@@ -50,6 +50,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f55869509ec3324890f1205f61c5a27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levelManager: {fileID: 114535322800913820, guid: b048c01190d5a82498dc11ac7c4bf0d4, type: 3}
   m_content: {fileID: 5283007433594105721}
   m_commandOutput: {fileID: 320961200626178395}
   m_commandInput: {fileID: 6376358433555370383}

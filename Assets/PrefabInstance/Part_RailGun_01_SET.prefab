@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 33894412711176476}
   - component: {fileID: 114032985854992638}
   - component: {fileID: 4795500937488807907}
-  - component: {fileID: -7106201596930054574}
+  - component: {fileID: 3459332925066421153}
   m_Layer: 9
   m_Name: Part_RailGun_01_SET
   m_TagString: Untagged
@@ -166,7 +166,7 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &-7106201596930054574
+--- !u!114 &3459332925066421153
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -175,9 +175,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1119343771257975}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2ac9e180769c4e749aa9d96d2f996aee, type: 3}
+  m_Script: {fileID: 11500000, guid: ea7d7495833204790ba1d3a8755397f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ConversionMode: 1
 --- !u!1 &167370742711155072
 GameObject:
   m_ObjectHideFlags: 0

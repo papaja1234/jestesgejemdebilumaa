@@ -212,7 +212,7 @@ public class Contraption : WPFMonoBehaviour
 	public ContraptionDataset DataSet { get; private set; }
 
 	/// <summary>
-	/// List of every part, This Field is Read-only
+	/// List of every part
 	/// </summary>
 	public List<BasePart> Parts => m_parts;
 

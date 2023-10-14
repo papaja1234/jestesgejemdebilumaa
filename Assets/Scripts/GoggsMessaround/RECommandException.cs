@@ -1,7 +1,6 @@
 ﻿using System;
 
-namespace RECmd
-{
+
     /// <summary>
     /// Exception thrown when issues occur while parsing commands.
     /// </summary>
@@ -15,4 +14,4 @@ namespace RECmd
 		  System.Runtime.Serialization.SerializationInfo info,
 		  System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
 	}
-}
+

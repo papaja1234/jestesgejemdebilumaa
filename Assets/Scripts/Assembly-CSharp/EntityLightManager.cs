@@ -3,16 +3,35 @@ using System.Collections.Generic;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Jobs;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class EntityLightManager : PartManager
 {
-	private NativeArray<bool> nativeBooleans = new NativeArray<bool>(length: 8, allocator: Allocator.Persistent);
+	/// <summary>
+	/// <code>Fixed Memory Allocator with certain usage</code>
+	/// <example>nativeBooleans[0] is reserved for <see cref="BroadPhaseDetectJob"/></example>
+	/// </summary>
+	private static NativeArray<bool> nativeBooleans;
 
+	/// <summary>
+	/// <code>Fixed Memory Allocator with certain usage</code>
+	/// <example>nativeFloats[0] is reserved for <see cref="LineAndCircleIntersectionJob"/>  out float result1</example>
+	/// <example> nativeFloats[1] is reserved for <see cref="LineAndCircleIntersectionJob"/>  out float result2</example>
+	/// 
+	/// </summary>
+	private static NativeArray<float> nativeFloats;
+
+	/// <summary>
+	/// <code>Fixed Memory Allocator with certain usage</code>
+	/// <example>nativeInts[0] is reserved for <see cref="LineAndCircleIntersectionJob"/>  out int resultCount</example>
+	/// </summary>
+	private static NativeArray<int> nativeInts;
 	public override void OnDestroy()
 	{
 		nativeBooleans.Dispose();
-		base.OnDestroy();
+		nativeFloats.Dispose();
+		nativeInts.Dispose();
 	}
 
 	public struct RigidbodyData
@@ -52,12 +71,7 @@ public class EntityLightManager : PartManager
 
 		public static TOIResult Default => default(TOIResult);
 
-		public TOIResult(float timeOfImpact)
-			: this(timeOfImpact, 0, default(Vector2), default(Vector2), 0f, default(Vector2))
-		{
-		}
-
-		public TOIResult(float timeOfImpact, int contactCount, Vector2 contactPoint, Vector2 contactNormal, float contactSeparation, Vector2 relativeVelocity)
+		public TOIResult(float timeOfImpact, int contactCount = 0, Vector2 contactPoint = default(Vector2), Vector2 contactNormal = default(Vector2), float contactSeparation = 0f, Vector2 relativeVelocity = default(Vector2))
 		{
 			TimeOfImpact = timeOfImpact;
 			ContactCount = contactCount;
@@ -65,7 +79,7 @@ public class EntityLightManager : PartManager
 			ContactNormal = contactNormal;
 			ContactSeparation = contactSeparation;
 			RelativeVelocity = relativeVelocity;
-		}
+		}//fix ugly code
 	}
 
 	public struct CCDData
@@ -182,6 +196,14 @@ public class EntityLightManager : PartManager
 		m_lightImpulses = Array.Empty<List<ImpulseData>>();
 		m_maxDetectionDistance = 40f;
 		m_maxTorque = 1f;
+		InitNativeArrays();
+	}
+
+	public void InitNativeArrays()
+	{
+		nativeBooleans = new NativeArray<bool>(length: 8, allocator: Allocator.Persistent);
+		nativeFloats = new NativeArray<float>(length: 8, allocator: Allocator.Persistent);
+		nativeInts = new NativeArray<int>(length: 8, allocator: Allocator.Persistent);
 	}
 
 	public override void FixedUpdate()
@@ -246,10 +268,9 @@ public class EntityLightManager : PartManager
 			int num = 4;
 			int count = list.Count;
 			int num2 = -1;
-			int num3 = -1;
 			for (int j = 0; j < num; j++)
 			{
-				num3 = -1;
+				int num3 = -1;
 				TOIResult result = TOIResult.Default;
 				for (int k = 0; k < count; k++)
 				{
@@ -754,14 +775,14 @@ public class EntityLightManager : PartManager
 			int num12 = ((num6 > 0f) ? 1 : (-1));
 			if (num7 > num11)
 			{
-				float num13 = (float)num12 * ((float)Math.Sqrt(num9 - num11 * num11) - bounds.B);
+				float num13 = num12 * ((float)Math.Sqrt(num9 - num11 * num11) - bounds.B);
 				resultCount = 2;
 				result2 = (0f - num13 - num2) / num6;
 				result3 = (num13 - num2) / num6;
 			}
 			if (num8 > num11)
 			{
-				float num14 = (float)num12 * ((float)Math.Sqrt(num10 - num11 * num11) - bounds.B);
+				float num14 = num12 * ((float)Math.Sqrt(num10 - num11 * num11) - bounds.B);
 				resultCount2 = 2;
 				result4 = (0f - num14 - num2) / num6;
 				result5 = (num14 - num2) / num6;
@@ -773,14 +794,14 @@ public class EntityLightManager : PartManager
 			int num16 = ((num5 > 0f) ? 1 : (-1));
 			if (num7 > num15)
 			{
-				float num17 = (float)num16 * ((float)Math.Sqrt(num9 - num15 * num15) - bounds.A);
+				float num17 = num16 * ((float)Math.Sqrt(num9 - num15 * num15) - bounds.A);
 				resultCount = 2;
 				result2 = (0f - num17 - num) / num5;
 				result3 = (num17 - num) / num5;
 			}
 			if (num8 > num15)
 			{
-				float num18 = (float)num16 * ((float)Math.Sqrt(num10 - num15 * num15) - bounds.A);
+				float num18 = num16 * ((float)Math.Sqrt(num10 - num15 * num15) - bounds.A);
 				resultCount2 = 2;
 				result4 = (0f - num18 - num) / num5;
 				result5 = (num18 - num) / num5;
@@ -794,7 +815,7 @@ public class EntityLightManager : PartManager
 			(float, int) tuple2 = (item2, 1);
 			if (tuple.CompareTo(tuple2) > 0)
 			{
-				(tuple, tuple2) = (tuple2, tuple);//swsap
+				(tuple, tuple2) = (tuple2, tuple);//swap
 			}
 			int num19 = -1;
 			int num20 = -1;
@@ -814,10 +835,10 @@ public class EntityLightManager : PartManager
 				float num23 = num22;
 				int num24 = ((num5 > 0f) ? num19 : (-num19));
 				int num25 = ((num6 > 0f) ? num20 : (-num20));
-				float num26 = (float)num24 * num5;
-				float num27 = (float)num24 * num + bounds.A;
-				float num28 = (float)num25 * num6;
-				float num29 = (float)num25 * num2 + bounds.B;
+				float num26 = num24 * num5;
+				float num27 = num24 * num + bounds.A;
+				float num28 = num25 * num6;
+				float num29 = num25 * num2 + bounds.B;
 				QuadraticFunction quadraticFunction = new QuadraticFunction(num26 * num26 + num28 * num28, 2f * (num26 * num27 + num28 * num29), num27 * num27 + num29 * num29);
 				QuadraticFunction.IntersectResult intersections = quadraticFunction.GetIntersections(num9);
 				QuadraticFunction.IntersectResult intersections2 = quadraticFunction.GetIntersections(num10);
@@ -869,7 +890,7 @@ public class EntityLightManager : PartManager
 			{
 				int num36 = ((!(num33 < 0f)) ? 1 : (-1));
 				int num37 = ((!(num34 < 0f)) ? 1 : (-1));
-				num35 = Vector.Length(num33 + (float)num36 * bounds.A, num34 + (float)num37 * bounds.B);
+				num35 = Vector.Length(num33 + num36 * bounds.A, num34 + num37 * bounds.B);
 				if (Math.Abs(num33) / num7 < 0.02f)
 				{
 					contactCount = 2;
@@ -880,11 +901,11 @@ public class EntityLightManager : PartManager
 					contactCount = 2;
 					num37 = 0;
 				}
-				vector4 = new Vector2((float)(-num36) * bounds.A, (float)(-num37) * bounds.B);
+				vector4 = new Vector2(-num36 * bounds.A, -num37 * bounds.B);
 				vector5 = vector3 - vector4;
 				vector5 /= Vector.Length(vector5);
 			}
-			result = new TOIResult(num32, contactCount, vector4, vector5, num7 - num35, default(Vector2));
+			result = new TOIResult(num32, contactCount, vector4, vector5, num7 - num35);
 			return true;
 		}
 		return false;
@@ -911,33 +932,67 @@ public class EntityLightManager : PartManager
 		}
 	}
 
-	private static void LineAndCircleIntersection(float pX, float pY, float dX, float dY, float cX, float cY, float r, out int resultCount, out float result1, out float result2)
+	private static void LineAndCircleIntersection(float pX, float pY, float dX, float dY, float cX, float cY, float r,
+		out int resultCount, out float result1, out float result2)
 	{
-		float num = pX - cX;
-		float num2 = pY - cY;
-		float num3 = dX * num + dY * num2;
-		float num4 = dX * num2 - dY * num;
-		float num5 = dX * dX + dY * dY;
-		float num6 = r * r * num5 - num4 * num4;
-		float num7 = 1E-10f;
-		if (num6 < 0f - num7)
+		LineAndCircleIntersectionJob lineAndCircleIntersectionJob = new LineAndCircleIntersectionJob()
 		{
-			resultCount = 0;
-			result1 = float.NaN;
-			result2 = float.NaN;
-		}
-		else if (num6 < num7)
+			pX = pX,
+			pY = pY,
+			dX = dX,
+			dY = dY,
+			cX = cX,
+			cY = cY,
+			r = r,
+			nativeInts = nativeInts,
+			nativeFloats = nativeFloats
+		};
+		JobHandle jobHandle = lineAndCircleIntersectionJob.Schedule(8, 8);
+		jobHandle.Complete();
+		resultCount = nativeInts[0];
+		result1 = nativeFloats[0];
+		result2 = nativeFloats[1];
+	}
+	[BurstCompile]
+	private struct LineAndCircleIntersectionJob : IJobParallelFor
+	{
+		[ReadOnly] public float pX;
+		[ReadOnly] public float pY;
+		[ReadOnly] public float dX;
+		[ReadOnly] public float dY;
+		[ReadOnly] public float cX;
+		[ReadOnly] public float cY;
+		[ReadOnly] public float r;
+		[WriteOnly] public NativeArray<int> nativeInts;
+		[WriteOnly] public NativeArray<float> nativeFloats;
+		public void Execute(int index)
 		{
-			resultCount = 1;
-			result1 = (0f - num3) / num5;
-			result2 = (0f - num3) / num5;
-		}
-		else
-		{
-			float num8 = (float)Math.Sqrt(num6);
-			resultCount = 2;
-			result1 = (0f - num3 - num8) / num5;
-			result2 = (0f - num3 + num8) / num5;
+			float num = pX - cX;
+			float num2 = pY - cY;
+			float num3 = dX * num + dY * num2;
+			float num4 = dX * num2 - dY * num;
+			float num5 = dX * dX + dY * dY;
+			float num6 = r * r * num5 - num4 * num4;
+			float num7 = 1E-10f;
+			if (num6 < 0f - num7)
+			{
+				nativeInts[0] = 0;
+				nativeFloats[0] = float.NaN;
+				nativeFloats[1] = float.NaN;
+			}
+			else if (num6 < num7)
+			{
+				nativeInts[0] = 1;
+				nativeFloats[0] = (0f - num3) / num5;
+				nativeFloats[1] = (0f - num3) / num5;
+			}
+			else
+			{
+				float num8 = (float)math.sqrt(num6);
+				nativeInts[0] = 2;
+				nativeFloats[0] = (0f - num3 - num8) / num5;
+				nativeFloats[1] = (0f - num3 + num8) / num5;
+			}
 		}
 	}
 

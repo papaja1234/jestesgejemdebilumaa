@@ -524,6 +524,35 @@
 				"en-US": "Set part on ({0},{1}) to (type:{2}, skin:{3}, rotation:{4}, flip:{5})",
 				"zh-Hans": "将位于({0},{1})的部件设置为(类型:{2}, 皮肤:{3}, 旋转:{4}, 翻转:{5})"
 			}
+		},
+		{
+			"id": "CommandInterface_FillPart",
+			"text": {
+				"en-US":  "Filled part from ({0},{1}) to ({2},{3}), filled part info: (type:{4}, skin:{5}, rotation:{6}, flip:{7})",
+				"zh-Hans": "将({0},{1})到({2},{3})的矩形部分填充为(类型: {4}, 皮肤: {5}, 旋转: {6}, 翻转: {7})"
+			}
+		},
+		{
+			"id": "CommandInterface_CameraZoom",
+			"text": {
+				"en-US":  "Set Camera zoom scale to: {0}",
+				"zh-Hans": "画面缩放大小设置为: {0}"
+			}
+		},
+		{
+			"id": "BPManual_Help",
+			"text": {
+				"en-US": "Basic command List: \n/help {command name} - Output usage of a command\n/gamerule get {gamerule name} - Get the value of a game rule\n/gamerule set {gamerule name} {new value} - Set the value of a game rule to a new one\n/shift {dx} {dy} - Shift your contraption on grid\n/setpart {x} {y} {part type} {custom index} {grid rotation} {flip value} sets a new part at certain location\n/fill {x1} {y1} {x2} {y2} {part type} {custom index} {grid rotation} {flip value} fills a rectangular area with part\nAdditional arguments: \n#multiline - Execute commands on multiple lines",
+				"zh-Hans": "基本命令列表：\n/help {命令名称} - 输出命令的用法\n/gamerule get {gamerule name} - 获取游戏规则的值\n/gamerule set {gamerule name} {new value} - 设置游戏规则的值\n/shift {dx} {dy} - 在网格上移动载具\n/setpart {横坐标} {纵坐标} {部件类型} {皮肤值} {网格旋转值} {翻转值} 在特定位置设置新零件\n/fill {横坐标1} {纵坐标1} {横坐标2} {纵坐标2} {部件类型} {皮肤值} {网格旋转值} {翻转值} 在矩形区域内设置新零件\n附加参数：\n#multiline - 在多行上执行命令"
+			}
+		},
+		{
+			"id": "BPManual_Header",
+			"text": {
+				"en-US": "Bad Piggies :: Rebooted || Command Help Page {0}\n",
+				"zh-Hans": "Bad Piggies :: Rebooted || 指令帮助页面 {0}\n"
+			}
 		}
+		
 	]
 }

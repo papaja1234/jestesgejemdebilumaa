@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 public class INContraptionDataManager
@@ -225,12 +226,13 @@ public class INContraptionDataManager
 	private ContraptionData LoadCSVFile(string path)
 	{
 		using StreamReader streamReader = new StreamReader(path);
-		string[] array = streamReader.ReadToEnd().Split(new char[2] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
-		int num = array.Length;
+		string[] lines = streamReader.ReadToEnd().Split(new char[2] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
+		lines = (from s in lines where s[0] != '#' || s[..1] != "//" select s) as string[];
+		int num = lines.Length;
 		ContraptionData contraptionData = new ContraptionData(num);
 		for (int i = 0; i < num; i++)
 		{
-			string[] array2 = array[i].Split(new char[2] { ',', '\t' }, StringSplitOptions.RemoveEmptyEntries);
+			string[] array2 = lines[i].Split(new char[2] { ',', '\t' }, StringSplitOptions.RemoveEmptyEntries);
 			ContraptionData.Unit unit = default(ContraptionData.Unit);
 			unit.Type = int.Parse(array2[0]);
 			unit.Index = int.Parse(array2[1]);
@@ -247,18 +249,19 @@ public class INContraptionDataManager
 	{
 		result = null;
 		using StreamReader streamReader = new StreamReader(path);
-		string[] array = streamReader.ReadToEnd().Split(new char[2] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
-		int num = array.Length;
+		string[] lines = streamReader.ReadToEnd().Split(new char[2] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
+		lines = (from s in lines where s[0] != '#' || s[..1] != "//" select s) as string[];
+		int num = lines.Length;
 		ContraptionData contraptionData = new ContraptionData(num);
 		for (int i = 0; i < num; i++)
 		{
-			string[] array2 = array[i].Split(new char[2] { ',', '\t' }, StringSplitOptions.RemoveEmptyEntries);
-			if (array2.Length != 6)
+			string[] args = lines[i].Split(new char[2] { ',', '\t' }, StringSplitOptions.RemoveEmptyEntries);
+			if (args.Length != 6)
 			{
 				return false;
 			}
 			ContraptionData.Unit unit = default(ContraptionData.Unit);
-			if (int.TryParse(array2[0], out unit.Type) && int.TryParse(array2[1], out unit.Index) && int.TryParse(array2[2], out unit.X) && int.TryParse(array2[3], out unit.Y) && int.TryParse(array2[4], out unit.Rotation) && int.TryParse(array2[5], out unit.Flipped))
+			if (int.TryParse(args[0], out unit.Type) && int.TryParse(args[1], out unit.Index) && int.TryParse(args[2], out unit.X) && int.TryParse(args[3], out unit.Y) && int.TryParse(args[4], out unit.Rotation) && int.TryParse(args[5], out unit.Flipped))
 			{
 				contraptionData.items[i] = unit;
 				continue;

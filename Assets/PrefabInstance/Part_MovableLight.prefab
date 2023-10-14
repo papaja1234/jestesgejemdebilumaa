@@ -150,7 +150,7 @@ MonoBehaviour:
   m_maxHp: 2000
   m_minDamage: 31.4
   m_maxLength: 2.1
-  m_rateOfGrowth: 0.1
+  m_rateOfGrowth: 0.18
   activated: 0
   m_deltaX: -0.1
 --- !u!114 &1791194212841924572
