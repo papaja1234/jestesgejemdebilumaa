@@ -93,7 +93,7 @@ public class RECommandInterface : MonoBehaviour
                 if (Contraption.Instance && WPFMonoBehaviour.levelManager && WPFMonoBehaviour.levelManager.ConstructionUI)
                 {
                     if (WPFMonoBehaviour.levelManager.gameState is LevelManager.GameState.Running or LevelManager.GameState.PausedWhileRunning or LevelManager.GameState.PreviewWhileRunning)
-                    {
+                    {/*
                         ContraptionDataset.ContraptionDatasetUnit unit = new ContraptionDataset.ContraptionDatasetUnit
                         {
                             x = args.GetInt(0),
@@ -118,7 +118,7 @@ public class RECommandInterface : MonoBehaviour
                             customPart.EnsureRigidbody();
                         }
                         Console.WriteLine(INLocalization.Instance.GetText("CommandInterface_SetPart"), args.GetInt(0),
-                            args.GetInt(1), args.GetInt(2), args.GetInt(3), args.GetInt(4), args.GetBool(5));
+                            args.GetInt(1), args.GetInt(2), args.GetInt(3), args.GetInt(4), args.GetBool(5));*/
                         return;
                     }else if (WPFMonoBehaviour.levelManager.gameState is LevelManager.GameState.Building
                               or LevelManager.GameState.PausedWhileBuilding
@@ -185,22 +185,21 @@ public class RECommandInterface : MonoBehaviour
                 {
                     int x, y;
                     ConstructionUI.PartDesc partDesc;
-                    try
-                    {
-                        if (WPFMonoBehaviour.levelManager.ConstructionUI)
-                        {
-                            partDesc =
-                                WPFMonoBehaviour.levelManager.ConstructionUI.FindPartDesc(((SortedPartType)args.GetInt(4)).ToPartType());
-                            partDesc.useCount +=
-                                (Math.Max(args.GetInt(0), args.GetInt(2)) - Math.Min(args.GetInt(0), args.GetInt(2))) *
-                                (Math.Max(args.GetInt(1), args.GetInt(3)) - Math.Min(args.GetInt(1), args.GetInt(3)));
-                        }
-                    }
-                    catch (NullReferenceException e)
-                    {
-                        //ignored
-                    }
+
+                    if (!(WPFMonoBehaviour.levelManager.gameState is LevelManager.GameState.Building
+                            or LevelManager.GameState.PausedWhileBuilding
+                            or LevelManager.GameState.PreviewWhileBuilding)) return;
+
+                    partDesc =
+                        WPFMonoBehaviour.levelManager.ConstructionUI.FindPartDesc(((SortedPartType)args.GetInt(4))
+                            .ToPartType());
+                    partDesc.useCount += (Math.Max(args.GetInt(0), args.GetInt(2)) -
+                                          Math.Min(args.GetInt(0), args.GetInt(2))) *
+                                         (Math.Max(args.GetInt(1), args.GetInt(3)) -
+                                          Math.Min(args.GetInt(1), args.GetInt(3)));
                     
+                    
+
                     ContraptionDataset.ContraptionDatasetUnit unit = new ContraptionDataset.ContraptionDatasetUnit
                     {
                         partType = args.GetInt(4),
