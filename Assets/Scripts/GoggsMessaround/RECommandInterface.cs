@@ -124,15 +124,38 @@ public class RECommandInterface : MonoBehaviour
                               or LevelManager.GameState.PausedWhileBuilding
                               or LevelManager.GameState.PreviewWhileBuilding)
                     {
-                        Contraption.Instance.DataSet.AddPart(args.GetInt(0), args.GetInt(1), args.GetInt(2),
-                            args.GetInt(3),
-                            args.GetInt(4), args.GetBool(5), out ContraptionDataset.ContraptionDatasetUnit unit);
-                        ConstructionUI.PartDesc partDesc =
-                            WPFMonoBehaviour.levelManager.ConstructionUI.FindPartDesc(((SortedPartType)args.GetInt(2))
-                                .ToPartType());
-                        BasePart customPart = WPFMonoBehaviour.gameData.GetCustomPart(
-                            ((SortedPartType)args.GetInt(2)).ToPartType(),
-                            unit.customPartIndex);
+                        int x = args.GetInt(0);
+                        int y = args.GetInt(1);
+                        int intPartType = args.GetInt(2);
+                        int customPartIndex = args.GetInt(3);
+                        int rotation = args.GetInt(4);
+                        bool isFlipped = args.GetBool(5);
+                        BasePart.PartType partType = ((SortedPartType)intPartType).ToPartType();
+                        Contraption.Instance.DataSet.AddPart
+                        (
+                            x,
+                            y,
+                            intPartType,
+                            customPartIndex,
+                            rotation, isFlipped, 
+                            out ContraptionDataset.ContraptionDatasetUnit unit
+                        );
+                        ConstructionUI.PartDesc partDesc = 
+                        WPFMonoBehaviour.
+                            levelManager.
+                                ConstructionUI.
+                                    FindPartDesc
+                                    (
+                                        partType
+                                    );
+                        BasePart customPart = 
+                            WPFMonoBehaviour.
+                                gameData.
+                                    GetCustomPart
+                                    (
+                                        partType,
+                                        unit.customPartIndex
+                                    );
 
                         if (customPart != null)
                         {
@@ -140,8 +163,8 @@ public class RECommandInterface : MonoBehaviour
                             partDesc.useCount++;
                         }
 
-                        Console.WriteLine(INLocalization.Instance.GetText("CommandInterface_SetPart"), args.GetInt(0),
-                            args.GetInt(1), args.GetInt(2), args.GetInt(3), args.GetInt(4), args.GetBool(5));
+                        Console.WriteLine(INLocalization.Instance.GetText("CommandInterface_SetPart"), x,
+                            y, intPartType, customPartIndex, rotation, isFlipped);
                     }
                 }
                 else
