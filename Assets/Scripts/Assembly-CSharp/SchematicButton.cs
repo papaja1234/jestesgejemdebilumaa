@@ -25,8 +25,8 @@ public class SchematicButton : SliderButton
 	private List<Transform> selectedSlotSprites = new List<Transform>();
 
 	private static LevelManager levelManager;
-
-	private readonly int SLOT_COUNT = 3;
+	
+	private int SLOT_COUNT = 6;
 
 	private bool m_openList;
 
@@ -128,6 +128,9 @@ public class SchematicButton : SliderButton
 
 		int num = data.type switch
 		{
+			UIEvent.Type.LoadContraptionSlot6 => 5,
+			UIEvent.Type.LoadContraptionSlot5 => 4,
+			UIEvent.Type.LoadContraptionSlot4 => 3,
 			UIEvent.Type.LoadContraptionSlot3 => 2,
 			UIEvent.Type.LoadContraptionSlot2 => 1,
 			UIEvent.Type.LoadContraptionSlot1 => 0,

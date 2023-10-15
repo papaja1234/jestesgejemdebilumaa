@@ -295,6 +295,15 @@ public abstract class GameMode
 		case UIEvent.Type.LoadContraptionSlot3:
 			LoadContraptionFromSlot(2);
 			break;
+		case UIEvent.Type.LoadContraptionSlot4:
+			LoadContraptionFromSlot(3);
+			break;
+		case UIEvent.Type.LoadContraptionSlot5:
+			LoadContraptionFromSlot(4);
+			break;
+		case UIEvent.Type.LoadContraptionSlot6:
+			LoadContraptionFromSlot(5);
+			break;
 		case UIEvent.Type.ApplyNightVision:
 			if (levelManager.m_darkLevel && levelManager.LightManager != null)
 			{

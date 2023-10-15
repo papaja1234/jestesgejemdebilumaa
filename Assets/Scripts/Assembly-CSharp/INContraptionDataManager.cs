@@ -227,7 +227,7 @@ public class INContraptionDataManager
 	{
 		using StreamReader streamReader = new StreamReader(path);
 		string[] lines = streamReader.ReadToEnd().Split(new char[2] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
-		lines = (from s in lines where s[0] != '#' || s[..1] != "//" select s) as string[];
+		lines = (from s in lines where s[0] != '#' || s[..1] != "//" select s).ToArray();//just don't use casting, use .ToArray();
 		int num = lines.Length;
 		ContraptionData contraptionData = new ContraptionData(num);
 		for (int i = 0; i < num; i++)
@@ -250,7 +250,7 @@ public class INContraptionDataManager
 		result = null;
 		using StreamReader streamReader = new StreamReader(path);
 		string[] lines = streamReader.ReadToEnd().Split(new char[2] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
-		lines = (from s in lines where s[0] != '#' || s[..1] != "//" select s) as string[];
+		lines = (from s in lines where s[0] != '#' || s[..1] != "//" select s).ToArray();
 		int num = lines.Length;
 		ContraptionData contraptionData = new ContraptionData(num);
 		for (int i = 0; i < num; i++)

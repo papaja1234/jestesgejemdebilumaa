@@ -213,32 +213,47 @@ public class RECommandInterface : MonoBehaviour
                             or LevelManager.GameState.PausedWhileBuilding
                             or LevelManager.GameState.PreviewWhileBuilding)) return;
 
+                    int intPartType = args.GetInt(4);
+                    int x1 = args.GetInt(0);
+                    int x2 = args.GetInt(2);
+                    int y1 = args.GetInt(1);
+                    int y2 = args.GetInt(3);
+                    int customPartIndex = args.GetInt(5);
+                    int rotation = args.GetInt(6);
+                    bool isFlipped = args.GetBool(7);
+                    BasePart.PartType partType = ((SortedPartType)intPartType).ToPartType();
                     partDesc =
-                        WPFMonoBehaviour.levelManager.ConstructionUI.FindPartDesc(((SortedPartType)args.GetInt(4))
+                        WPFMonoBehaviour.levelManager.ConstructionUI.FindPartDesc(((SortedPartType)intPartType)
                             .ToPartType());
-                    partDesc.useCount += (Math.Max(args.GetInt(0), args.GetInt(2)) -
-                                          Math.Min(args.GetInt(0), args.GetInt(2))) *
-                                         (Math.Max(args.GetInt(1), args.GetInt(3)) -
-                                          Math.Min(args.GetInt(1), args.GetInt(3)));
-                    
-                    
-
+                    partDesc.useCount +=         (
+                                          Math.Max(x1, x2) 
+                                                 -
+                                          Math.Min(x1, x2)
+                                                 ) 
+                                                 *
+                                                 (
+                                          Math.Max(y1, y2)
+                                                 -
+                                          Math.Min(y1, y2)
+                                                 )
+                                                 ;
+                    //artistic code editing
                     ContraptionDataset.ContraptionDatasetUnit unit = new ContraptionDataset.ContraptionDatasetUnit
                     {
-                        partType = args.GetInt(4),
-                        customPartIndex = args.GetInt(5),
-                        rot = args.GetInt(6),
-                        flipped = args.GetBool(7)
+                        partType = intPartType,
+                        customPartIndex = customPartIndex,
+                        rot = rotation,
+                        flipped = isFlipped
                     };
-                    for (x = Math.Min(args.GetInt(0),args.GetInt(2)); x <= Math.Max(args.GetInt(0),args.GetInt(2)); x++)
+                    for (x = Math.Min(x1,x2); x <= Math.Max(x1,x2); x++)
                     {
-                        for (y = Math.Min(args.GetInt(1),args.GetInt(3)); y <= Math.Max(args.GetInt(1),args.GetInt(3)); y++)
+                        for (y = Math.Min(y1,y2); y <= Math.Max(y1,y2); y++)
                         {
                             unit.x = x;
                             unit.y = y;
-                            BPManual.Contraption.DataSet.AddPart(x, y, args.GetInt(2), args.GetInt(3),
-                                args.GetInt(4), args.GetBool(5), out ContraptionDataset.ContraptionDatasetUnit _);
-                            BasePart customPart = WPFMonoBehaviour.gameData.GetCustomPart(((SortedPartType)unit.partType).ToPartType(),unit.customPartIndex);
+                            Contraption.Instance.DataSet.AddPart(x, y, x2, y2,
+                                intPartType, isFlipped, out ContraptionDataset.ContraptionDatasetUnit _);
+                            BasePart customPart = WPFMonoBehaviour.gameData.GetCustomPart(partType,unit.customPartIndex);
                             if (customPart != null)
                             {
                                 WPFMonoBehaviour.levelManager.BuildPart(unit, customPart);
@@ -250,8 +265,8 @@ public class RECommandInterface : MonoBehaviour
                             }
                         }
                     }
-                    Console.WriteLine(INLocalization.Instance.GetText("CommandInterface_FillPart"), args.GetInt(0),
-                        args.GetInt(1), args.GetInt(2), args.GetInt(3), args.GetInt(4), args.GetInt(5),args.GetInt(6),args.GetBool(7));
+                    Console.WriteLine(INLocalization.Instance.GetText("CommandInterface_FillPart"), x1,
+                        y1, x2, y2, intPartType, customPartIndex, rotation, isFlipped);
                 }
                 else
                 {

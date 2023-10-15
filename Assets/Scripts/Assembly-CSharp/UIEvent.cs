@@ -70,7 +70,10 @@ public struct UIEvent : EventManager.Event
 		ClosedWorkshopIntroduction = 65,
 		OpenedPurchaseRoadHogsParts = 66,
 		ClosedPurchaseRoadHogsParts = 67,
-		SaveContraption = 68
+		SaveContraption = 68,
+		LoadContraptionSlot4 = 69,
+		LoadContraptionSlot5 = 70,
+		LoadContraptionSlot6 = 71,
 	}
 
 	public Type type;
