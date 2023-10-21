@@ -88,8 +88,7 @@ public class RECommandInterface : MonoBehaviour
             },
             (args) =>
             {
-                Debug.Log(WPFMonoBehaviour.levelManager.gameState);
-                Debug.Log(nameof(WPFMonoBehaviour.levelManager.gameState));
+                
                 if (Contraption.Instance && WPFMonoBehaviour.levelManager && WPFMonoBehaviour.levelManager.ConstructionUI)
                 {
                     if (WPFMonoBehaviour.levelManager.gameState is LevelManager.GameState.Running or LevelManager.GameState.PausedWhileRunning or LevelManager.GameState.PreviewWhileRunning)
@@ -119,13 +118,18 @@ public class RECommandInterface : MonoBehaviour
                         }
                         Console.WriteLine(INLocalization.Instance.GetText("CommandInterface_SetPart"), args.GetInt(0),
                             args.GetInt(1), args.GetInt(2), args.GetInt(3), args.GetInt(4), args.GetBool(5));*/
+                        Console.WriteLine(INLocalization.Instance.GetText("CommandInterface_SetPartFailed"));
                         return;
                     }else if (WPFMonoBehaviour.levelManager.gameState is LevelManager.GameState.Building
                               or LevelManager.GameState.PausedWhileBuilding
                               or LevelManager.GameState.PreviewWhileBuilding)
                     {
-                        int x = args.GetInt(0);
-                        int y = args.GetInt(1);
+                        float x = args.GetFloat(0);
+                        float y = args.GetFloat(1);
+                        int gridX = (int)math.floor(x);
+                        int gridY = (int)math.floor(y);
+                        float offsetX = x - math.floor(x);
+                        float offsetY = y - math.floor(y);
                         int intPartType = args.GetInt(2);
                         int customPartIndex = args.GetInt(3);
                         int rotation = args.GetInt(4);
@@ -133,12 +137,14 @@ public class RECommandInterface : MonoBehaviour
                         BasePart.PartType partType = ((SortedPartType)intPartType).ToPartType();
                         Contraption.Instance.DataSet.AddPart
                         (
-                            x,
-                            y,
+                            gridX,
+                            gridY,
                             intPartType,
                             customPartIndex,
                             rotation, isFlipped, 
-                            out ContraptionDataset.ContraptionDatasetUnit unit
+                            out ContraptionDataset.ContraptionDatasetUnit unit,
+                            offsetX,
+                            offsetY
                         );
                         ConstructionUI.PartDesc partDesc = 
                         WPFMonoBehaviour.
@@ -211,7 +217,10 @@ public class RECommandInterface : MonoBehaviour
 
                     if (!(WPFMonoBehaviour.levelManager.gameState is LevelManager.GameState.Building
                             or LevelManager.GameState.PausedWhileBuilding
-                            or LevelManager.GameState.PreviewWhileBuilding)) return;
+                            or LevelManager.GameState.PreviewWhileBuilding))
+                    {
+                        Console.WriteLine(INLocalization.Instance.GetText("CommandInterface_SetPartFailed"));return;
+                    }
 
                     int intPartType = args.GetInt(4);
                     int x1 = args.GetInt(0);
@@ -274,7 +283,10 @@ public class RECommandInterface : MonoBehaviour
                 }
             }
         );
-        
+        ReCommandHandler.RegisterCommand("clear", "Clears command display",
+            Array.Empty<RECommandArgDef>(),
+            (args) => {Clear();}
+        );
     }
     
 
@@ -286,8 +298,11 @@ public class RECommandInterface : MonoBehaviour
             m_logBuilder.Clear();
             Console.SetOut(new StringWriter(m_logBuilder));
         }
+
+        Application.logMessageReceived += DebugLogReader;
         ReCommandHandler.RunCommand(m_commandInput.text);
         if (!GameRules.ShowCommandLog) return;
+        Application.logMessageReceived -= DebugLogReader;
         m_commandOutput.text += m_logBuilder.ToString();
         Console.SetOut(m_commandOut);
     }
@@ -303,6 +318,11 @@ public class RECommandInterface : MonoBehaviour
         m_commandOutput.text += m_logBuilder.ToString();    
         Console.SetOut(m_commandOut);
         
+    }
+
+    private void Clear()
+    {
+        m_commandOutput.text = "";
     }
 
     private void DebugLogReader(string logMessage, string stackTrace, LogType logType)

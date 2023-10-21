@@ -278,6 +278,10 @@ public class BasePart : WPFMonoBehaviour
 	public int m_gridYmin;
 
 	public int m_gridYmax;
+	
+	public float offsetX = 0f;
+	
+	public float offsetY = 0f;
 
 	public bool m_static;
 
@@ -1070,7 +1074,7 @@ public class BasePart : WPFMonoBehaviour
 				if (tags[i] == "Alien_part")
 				{
 					GameObject obj = UnityEngine.Object.Instantiate(WPFMonoBehaviour.gameData.m_alienPartParticles, base.transform, true);
-					obj.transform.localPosition = Vector3.back * 0.1f;
+					obj.transform.localPosition = Vector3.back * 0.1f + new Vector3(offsetX,offsetY);
 					obj.transform.localRotation = Quaternion.identity;
 					obj.GetComponent<ParticleSystem>().startDelay = UnityEngine.Random.Range(0f, 2f);
 				}
@@ -1079,7 +1083,7 @@ public class BasePart : WPFMonoBehaviour
 		if (WPFMonoBehaviour.levelManager != null && WPFMonoBehaviour.levelManager.CurrentGameMode is CakeRaceMode && Singleton<CakeRaceKingsFavorite>.Instance.CurrentFavorite.m_partType == m_partType && Singleton<CakeRaceKingsFavorite>.Instance.CurrentFavorite.m_partTier == m_partTier)
 		{
 			GameObject obj2 = UnityEngine.Object.Instantiate(WPFMonoBehaviour.gameData.m_heartParticles, base.transform, true);
-			obj2.transform.localPosition = Vector3.back;
+			obj2.transform.localPosition = Vector3.back + new Vector3(offsetX,offsetY);
 			obj2.transform.localRotation = Quaternion.identity;
 		}
 	}

@@ -23,12 +23,18 @@ public class ContraptionDataset
 
 		[XmlAttribute("flipped")]
 		public bool flipped;
+		
+		[XmlAttribute("offsetX")]
+		public float offsetX;
+		
+		[XmlAttribute("offsetY")]
+		public float offsetY;
 
 		public ContraptionDatasetUnit()
 		{
 		}
 
-		public ContraptionDatasetUnit(int x, int y, int partType, int customPartIndex, int rot, bool flipped)
+		public ContraptionDatasetUnit(int x, int y, int partType, int customPartIndex, int rot, bool flipped, float offsetx = 0f, float offsety = 0f)
 		{
 			this.x = x;
 			this.y = y;
@@ -36,6 +42,8 @@ public class ContraptionDataset
 			this.customPartIndex = customPartIndex;
 			this.rot = rot;
 			this.flipped = flipped;
+			this.offsetX = offsetX;
+			this.offsetY = offsetY;
 		}
 	}
 
@@ -45,7 +53,7 @@ public class ContraptionDataset
 
 	public List<ContraptionDatasetUnit> ContraptionDatasetList => m_contraptionDataSet;
 
-	public void AddPart(int x, int y, int partType, int customPartIndex, BasePart.GridRotation rotation, bool flipped)
+	public void AddPart(int x, int y, int partType, int customPartIndex, BasePart.GridRotation rotation, bool flipped, float offsetx = 0f, float offsety = 0f)
 	{
 		ContraptionDatasetUnit contraptionDatasetUnit = new ContraptionDatasetUnit
 		{
@@ -54,11 +62,13 @@ public class ContraptionDataset
 			partType = partType,
 			customPartIndex = customPartIndex,
 			rot = (int)rotation,
-			flipped = flipped
+			flipped = flipped,
+			offsetX = offsetx,
+			offsetY = offsety
 		};
 		m_contraptionDataSet.Add(contraptionDatasetUnit);
 	}
-	public void AddPart(int x, int y, int partType, int customPartIndex, int rotation, bool flipped, out ContraptionDatasetUnit unit)
+	public void AddPart(int x, int y, int partType, int customPartIndex, int rotation, bool flipped, out ContraptionDatasetUnit unit, float offsetx = 0f, float offsety = 0f)
 	{
 		ContraptionDatasetUnit contraptionDatasetUnit = new ContraptionDatasetUnit
 		{
@@ -67,7 +77,9 @@ public class ContraptionDataset
 			partType = partType,
 			customPartIndex = customPartIndex,
 			rot = rotation,
-			flipped = flipped
+			flipped = flipped,
+			offsetX = offsetx,
+			offsetY = offsety
 		};
 		m_contraptionDataSet.Add(contraptionDatasetUnit);
 		unit = contraptionDatasetUnit;

@@ -533,6 +533,20 @@
 			}
 		},
 		{
+			"id": "CommandInterface_FillFailed",
+			"text": {
+				"en-US":  "Cannot fill parts right now.",
+				"zh-Hans": "现在不能填充部件."
+			}
+		},
+		{
+			"id": "CommandInterface_SetPartFailed",
+			"text": {
+				"en-US":  "Cannot set parts right now.",
+				"zh-Hans": "现在不能设置部件."
+			}
+		},
+		{
 			"id": "CommandInterface_CameraZoom",
 			"text": {
 				"en-US":  "Set Camera zoom scale to: {0}",

@@ -1491,6 +1491,52 @@ public class ConstructionUI : WPFMonoBehaviour
 		}
 		return component;
 	}
+	public BasePart SetPartAt(ContraptionDataset.ContraptionDatasetUnit cdu, BasePart part, bool autoalign = true)
+	{
+		int coordX = cdu.x;
+		int coordY = cdu.y;
+		GameObject obj = UnityEngine.Object.Instantiate(part.gameObject);
+		obj.SetActive(value: true);
+		BasePart component = obj.GetComponent<BasePart>();
+		BasePart basePart = m_contraption.FindPartAt(coordX, coordY);
+		if (component.m_partType == BasePart.PartType.Pig && (bool)basePart && basePart.m_partType == BasePart.PartType.WoodenFrame && Singleton<SocialGameManager>.IsInstantiated())
+		{
+			Singleton<SocialGameManager>.Instance.ReportAchievementProgress("grp.THINK_INSIDE_THE_BOX", 100.0);
+		}
+		ClearCollidingParts(coordX, coordY, component);
+		component.PrePlaced();
+		BasePart basePart2 = m_contraption.SetPartAt(coordX, coordY, component, autoalign);
+		if (autoalign)
+		{
+			m_contraption.AutoAlign(component);
+		}
+		if ((bool)basePart2)
+		{
+			EventManager.Send(new PartRemovedEvent(basePart2.m_partType, basePart2.transform.position));
+			CollectPart(basePart2);
+		}
+		if (INSettings.GetBool(INFeature.AutoSetPartBuildingRotation))
+		{
+			BasePart basePart3 = component;
+			ContraptionExtensionData extensionData = INContraption.Instance.ExtensionData;
+			if (extensionData != null)
+			{
+				(int, int) key = ((int)basePart3.m_partType, basePart3.customPartIndex);
+				if (extensionData.PartRotations != null && extensionData.PartRotations.TryGetValue(key, out (int, bool) value))
+				{
+					if (value.Item2)
+					{
+						basePart3.SetFlipped(value.Item2);
+					}
+					basePart3.SetRotation((BasePart.GridRotation)value.Item1);
+					basePart3.OnChangeConnections();
+					m_contraption.RefreshNeighboursVisual(basePart3.m_coordX, basePart3.m_coordY);
+				}
+			}
+		}
+		obj.transform.position += new Vector3(cdu.offsetX, cdu.offsetY);
+		return component;
+	}
 
 	protected void CollectPart(BasePart part)
 	{

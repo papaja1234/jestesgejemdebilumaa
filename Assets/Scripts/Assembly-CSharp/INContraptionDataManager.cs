@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -25,7 +26,10 @@ public class INContraptionDataManager
 
 			public int Flipped;
 
-			public Unit(int type, int index, int x, int y, int rotation, int flipped)
+			public float offsetX;
+			
+			public float offsetY;
+			public Unit(int type, int index, int x, int y, int rotation, int flipped, float offsetx = 0f, float offsety = 0f)
 			{
 				Type = type;
 				Index = index;
@@ -33,11 +37,13 @@ public class INContraptionDataManager
 				Y = y;
 				Rotation = rotation;
 				Flipped = flipped;
+				offsetX = offsetx;
+				offsetY = offsety;
 			}
 		}
 
 		public Unit[] items;
-
+		public string metadata;
 		public ContraptionData()
 			: this(0)
 		{
@@ -63,7 +69,15 @@ public class INContraptionDataManager
 			for (int i = 0; i < count; i++)
 			{
 				ContraptionDataset.ContraptionDatasetUnit contraptionDatasetUnit = contraptionDatasetList[i];
-				contraptionData.items[i] = new Unit((int)((BasePart.PartType)contraptionDatasetUnit.partType).ToSortedPartType(), contraptionDatasetUnit.customPartIndex, contraptionDatasetUnit.x, contraptionDatasetUnit.y, contraptionDatasetUnit.rot, System.Convert.ToInt32(contraptionDatasetUnit.flipped));
+				contraptionData.items[i] = new Unit(
+					(int)((BasePart.PartType)contraptionDatasetUnit.partType).ToSortedPartType(),
+					contraptionDatasetUnit.customPartIndex,
+					contraptionDatasetUnit.x,
+					contraptionDatasetUnit.y,
+					contraptionDatasetUnit.rot,
+					System.Convert.ToInt32(contraptionDatasetUnit.flipped)
+					
+					);
 			}
 			return contraptionData;
 		}
@@ -227,12 +241,25 @@ public class INContraptionDataManager
 	{
 		using StreamReader streamReader = new StreamReader(path);
 		string[] lines = streamReader.ReadToEnd().Split(new char[2] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
-		lines = (from s in lines where s[0] != '#' || s[..1] != "//" select s).ToArray();//just don't use casting, use .ToArray();
-		int num = lines.Length;
+		List<string> datas = new List<string>{};
+		List<string> metadatas = new List<string>{};
+		foreach (string s in lines)
+		{
+			if (s[0] != '#' || s[..1] != "//")
+			{
+				datas.Add(s);
+			}
+			if (s[0] == '#')
+			{
+				metadatas.Add(s);
+			}
+		}
+		int num = datas.Count();
 		ContraptionData contraptionData = new ContraptionData(num);
+		contraptionData.metadata += from s in metadatas select s;
 		for (int i = 0; i < num; i++)
 		{
-			string[] array2 = lines[i].Split(new char[2] { ',', '\t' }, StringSplitOptions.RemoveEmptyEntries);
+			string[] array2 =datas[i].Split(new char[2] { ',', '\t' }, StringSplitOptions.RemoveEmptyEntries);
 			ContraptionData.Unit unit = default(ContraptionData.Unit);
 			unit.Type = int.Parse(array2[0]);
 			unit.Index = int.Parse(array2[1]);
@@ -240,6 +267,8 @@ public class INContraptionDataManager
 			unit.Y = int.Parse(array2[3]);
 			unit.Rotation = int.Parse(array2[4]);
 			unit.Flipped = int.Parse(array2[5]);
+			unit.offsetX = !float.TryParse(array2[6], NumberStyles.Float, CultureInfo.InvariantCulture, out unit.offsetX) ? unit.offsetX = 0f:unit.offsetY *= 1f;
+			unit.offsetY = !float.TryParse(array2[7], NumberStyles.Float, CultureInfo.InvariantCulture, out unit.offsetY) ? unit.offsetY = 0f:unit.offsetY *= 1f;
 			contraptionData.items[i] = unit;
 		}
 		return contraptionData;
@@ -250,13 +279,26 @@ public class INContraptionDataManager
 		result = null;
 		using StreamReader streamReader = new StreamReader(path);
 		string[] lines = streamReader.ReadToEnd().Split(new char[2] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
-		lines = (from s in lines where s[0] != '#' || s[..1] != "//" select s).ToArray();
-		int num = lines.Length;
+		List<string> datas = new List<string>{};
+		List<string> metadatas = new List<string>{};
+		foreach (string s in lines)
+		{
+			if (s[0] != '#' || s[..1] != "//")
+			{
+				datas.Add(s);
+			}
+			if (s[0] == '#')
+			{
+				metadatas.Add(s);
+			}
+		}
+		int num = datas.Count;
 		ContraptionData contraptionData = new ContraptionData(num);
+		contraptionData.metadata += from s in metadatas select s;
 		for (int i = 0; i < num; i++)
 		{
 			string[] args = lines[i].Split(new char[2] { ',', '\t' }, StringSplitOptions.RemoveEmptyEntries);
-			if (args.Length != 6)
+			if (args.Length is not 6 and 8 )
 			{
 				return false;
 			}
@@ -298,9 +340,10 @@ public class INContraptionDataManager
 		StringBuilder builder = m_builder;
 		builder.Clear();
 		ContraptionData.Unit[] items = data.items;
-		for (int i = 0; i < items.Length; i++)
+		builder.Append(data.metadata);
+		builder.AppendLine();
+		foreach (ContraptionData.Unit unit in items)
 		{
-			ContraptionData.Unit unit = items[i];
 			const string separator = ",";
 			builder.Append(unit.Type.ToString());
 			builder.Append(separator);
@@ -308,11 +351,15 @@ public class INContraptionDataManager
 			builder.Append(separator);
 			builder.Append(unit.X);
 			builder.Append(separator);
-			builder.Append(unit.Y.ToString());
+			builder.Append(unit.Y);
 			builder.Append(separator);
 			builder.Append(unit.Rotation.ToString());
 			builder.Append(separator);
 			builder.Append(unit.Flipped.ToString());
+			builder.Append(separator);
+			builder.Append(unit.offsetX.ToString(CultureInfo.InvariantCulture));
+			builder.Append(separator);
+			builder.Append(unit.offsetY.ToString(CultureInfo.InvariantCulture));
 			builder.AppendLine();
 		}
 		streamWriter.Write(builder.ToString());

@@ -1047,7 +1047,7 @@ public sealed class LevelManager : WPFMonoBehaviour
 
 	public BasePart BuildPart(ContraptionDataset.ContraptionDatasetUnit cdu, BasePart partPrefab)
 	{
-		BasePart basePart = WPFMonoBehaviour.levelManager.ConstructionUI.SetPartAt(cdu.x, cdu.y, partPrefab, autoalign: false);
+		BasePart basePart = WPFMonoBehaviour.levelManager.ConstructionUI.SetPartAt(cdu, partPrefab, autoalign: false);
 		if (cdu.flipped)
 		{
 			basePart.SetFlipped(flipped: true);
@@ -1057,6 +1057,8 @@ public sealed class LevelManager : WPFMonoBehaviour
 		{
 			basePart.SetRotation((BasePart.GridRotation)cdu.rot);
 		}
+		basePart.offsetX = cdu.offsetX;
+		basePart.offsetY = cdu.offsetY;
 		return basePart;
 	}
 	
@@ -1087,14 +1089,13 @@ public sealed class LevelManager : WPFMonoBehaviour
 				}
 			}
 		}
-		if (m_sandbox && !(CurrentGameMode is CakeRaceMode))
+
+		if (!m_sandbox || CurrentGameMode is CakeRaceMode) return num;
+		if (!m_collectPartBoxesSandbox)
 		{
-			if (!m_collectPartBoxesSandbox)
-			{
-				num += GameProgress.GetSandboxPartCount(type);
-			}
-			num += GameProgress.GetSandboxPartCount(Singleton<GameManager>.Instance.CurrentSceneName, type);
+			num += GameProgress.GetSandboxPartCount(type);
 		}
+		num += GameProgress.GetSandboxPartCount(Singleton<GameManager>.Instance.CurrentSceneName, type);
 		return num;
 	}
 
