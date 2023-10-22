@@ -102,7 +102,7 @@ public class RailGun : BasePart
 			currentProjectile.transform.parent = base.transform;
 			currentProjectile.transform.localPosition = base.transform.right*2;
 			currentProjectile.transform.rotation = base.transform.rotation;
-			currentProjectile.m_Acceleration = base.transform.right + base.transform.right * (math.pow(e,0.6f));
+			currentProjectile.m_Acceleration = base.transform.right + base.transform.right * (0.5f*math.pow(e,0.42f));
 			currentProjectile.m_AccelerationMod = base.transform.right * 0.01f;
 			Vector3 right = base.transform.right;
 			currentProjectile.transform.position = base.rigidbody.position + right;

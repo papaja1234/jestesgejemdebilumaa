@@ -70,7 +70,7 @@ MonoBehaviour:
   m_interactiveRadius: 0.5
   m_breakVelocity: 2
   m_powerConsumption: 0
-  m_enginePower: 25000
+  m_enginePower: 10000
   m_ZOffset: -0.01
   customPartIndex: 7
   craftable: 1
@@ -87,6 +87,8 @@ MonoBehaviour:
   m_gridXmax: 0
   m_gridYmin: 0
   m_gridYmax: 0
+  offsetX: 0
+  offsetY: 0
   m_static: 0
   m_jointConnectionStrength: 2
   m_jointConnectionType: 0
