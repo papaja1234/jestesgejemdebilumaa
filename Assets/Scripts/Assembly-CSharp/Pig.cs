@@ -456,7 +456,7 @@ public class Pig : BasePart
 				m_funLevel = Mathf.Clamp(m_funLevel, 0f, 100f);
 				m_fearLevel = Mathf.Clamp(m_fearLevel, 0f, 100f);
 			}
-			if (m_fearLevel < 50f || partReaction2.fear == 0f)
+			if (partReaction2 != null && (m_fearLevel < 50f || partReaction2.fear == 0f))
 			{
 				if (UnityEngine.Random.Range(0f, 100f) < m_funLevel && m_expressionSetTime < Time.time - 3f)
 				{
