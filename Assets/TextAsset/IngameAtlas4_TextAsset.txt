@@ -218,7 +218,7 @@ NeuralPart_EyeSprite					746		800		42		40		0.4		0.4		768
 NeuralPart_ShineSprite					746		768		34		32		0.4		0.4		768
 NeuralNetwork_Sprite					1536	1152	100		100		0.4		0.4		768
 NeuralNetworkSingle_Sprite	    		1664	1152	100		100		0.4		0.4		768
-RailGun_Sprite	    					1792	1152	100		100		0.4		0.4		768
+RailGun_Sprite	    					1792	1152	228		100		0.4		0.4		768
 
 AlienHyperPropeller_IconSprite			512		0		54		100		0.4		0.4		768
 AlienHyperPropeller_Sprite				512		0		54		100		0.4		0.4		768

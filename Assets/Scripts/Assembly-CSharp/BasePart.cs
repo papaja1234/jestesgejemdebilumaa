@@ -278,9 +278,9 @@ public class BasePart : WPFMonoBehaviour
 	public int m_gridYmin;
 
 	public int m_gridYmax;
-	
+	[Range(-0.499999f,0.499999f)]
 	public float offsetX = 0f;
-	
+	[Range(-0.499999f,0.499999f)]
 	public float offsetY = 0f;
 
 	public bool m_static;

@@ -53,7 +53,7 @@ public class ContraptionDataset
 
 	public List<ContraptionDatasetUnit> ContraptionDatasetList => m_contraptionDataSet;
 
-	public void AddPart(int x, int y, int partType, int customPartIndex, BasePart.GridRotation rotation, bool flipped, float offsetx = 0f, float offsety = 0f)
+	public void AddPart(int x, int y, int partType, int customPartIndex, BasePart.GridRotation rotation, bool flipped, float offsetx , float offsety )
 	{
 		ContraptionDatasetUnit contraptionDatasetUnit = new ContraptionDatasetUnit
 		{
@@ -68,7 +68,7 @@ public class ContraptionDataset
 		};
 		m_contraptionDataSet.Add(contraptionDatasetUnit);
 	}
-	public void AddPart(int x, int y, int partType, int customPartIndex, int rotation, bool flipped, out ContraptionDatasetUnit unit, float offsetx = 0f, float offsety = 0f)
+	public void AddPart(int x, int y, int partType, int customPartIndex, int rotation, bool flipped, out ContraptionDatasetUnit unit, float offsetx, float offsety)
 	{
 		ContraptionDatasetUnit contraptionDatasetUnit = new ContraptionDatasetUnit
 		{

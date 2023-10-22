@@ -437,7 +437,7 @@ public abstract class GameMode
 			}
 			foreach (BasePart part in ContraptionProto.Parts)
 			{
-				ContraptionProto.DataSet.AddPart(part.m_coordX, part.m_coordY, (int)part.m_partType, part.customPartIndex, part.m_gridRotation, part.m_flipped);
+				ContraptionProto.DataSet.AddPart(part.m_coordX, part.m_coordY, (int)part.m_partType, part.customPartIndex, part.m_gridRotation, part.m_flipped,part.offsetX,part.offsetY);
 			}
 			ContraptionProto.SaveContraption(GetCurrentContraptionName());
 			levelManager.ConstructionUI.ClearContraption();

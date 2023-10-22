@@ -836,7 +836,7 @@ public class Contraption : WPFMonoBehaviour
 		{
 			int coordX = part2.m_coordX;
 			int coordY = part2.m_coordY;
-			DataSet.AddPart(coordX, coordY, (int)part2.m_partType, part2.customPartIndex, part2.m_gridRotation, part2.m_flipped);//Load Parts
+			DataSet.AddPart(coordX, coordY, (int)part2.m_partType, part2.customPartIndex, part2.m_gridRotation, part2.m_flipped, part2.offsetX, part2.offsetY);//Load Parts
 			part2.contraption = this;
 			part2.EnsureRigidbody();
 			//-----------------------SECOND LOOP-----------------------
@@ -1823,7 +1823,7 @@ public class Contraption : WPFMonoBehaviour
 			part.m_coordX = x;
 			part.m_coordY = y;
 			float num = (0f - (float)(x + 2 * y)) / 100000f;
-			part.transform.localPosition = new Vector3(x, y, -0.1f + part.m_ZOffset + num);
+			part.transform.localPosition = new Vector3(x, y, -0.1f + part.m_ZOffset + num) + new Vector3(part.offsetX,part.offsetY);
 		}
 		if (part == null || part.m_enclosedInto == null)
 		{

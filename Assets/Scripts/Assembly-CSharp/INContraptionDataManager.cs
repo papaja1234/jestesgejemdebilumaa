@@ -29,7 +29,7 @@ public class INContraptionDataManager
 			public float offsetX;
 			
 			public float offsetY;
-			public Unit(int type, int index, int x, int y, int rotation, int flipped, float offsetx = 0f, float offsety = 0f)
+			public Unit(int type, int index, int x, int y, int rotation, int flipped, float offsetx, float offsety)
 			{
 				Type = type;
 				Index = index;
@@ -75,8 +75,9 @@ public class INContraptionDataManager
 					contraptionDatasetUnit.x,
 					contraptionDatasetUnit.y,
 					contraptionDatasetUnit.rot,
-					System.Convert.ToInt32(contraptionDatasetUnit.flipped)
-					
+					System.Convert.ToInt32(contraptionDatasetUnit.flipped),
+					contraptionDatasetUnit.offsetX,
+					contraptionDatasetUnit.offsetY
 					);
 			}
 			return contraptionData;
@@ -89,7 +90,7 @@ public class INContraptionDataManager
 			for (int i = 0; i < array.Length; i++)
 			{
 				Unit unit = array[i];
-				contraptionDataset.AddPart(unit.X, unit.Y, (int)((SortedPartType)unit.Type).ToPartType(), unit.Index, (BasePart.GridRotation)unit.Rotation, System.Convert.ToBoolean(unit.Flipped));//IMPORTANT PART
+				contraptionDataset.AddPart(unit.X, unit.Y, (int)((SortedPartType)unit.Type).ToPartType(), unit.Index, (BasePart.GridRotation)unit.Rotation, System.Convert.ToBoolean(unit.Flipped), unit.offsetX, unit.offsetY);//IMPORTANT PART
 			}
 			return contraptionDataset;
 		}
@@ -298,12 +299,25 @@ public class INContraptionDataManager
 		for (int i = 0; i < num; i++)
 		{
 			string[] args = lines[i].Split(new char[2] { ',', '\t' }, StringSplitOptions.RemoveEmptyEntries);
-			if (args.Length is not 6 and 8 )
+			if (args.Length != 6 && args.Length! != 8)
 			{
 				return false;
 			}
 			ContraptionData.Unit unit = default(ContraptionData.Unit);
-			if (int.TryParse(args[0], out unit.Type) && int.TryParse(args[1], out unit.Index) && int.TryParse(args[2], out unit.X) && int.TryParse(args[3], out unit.Y) && int.TryParse(args[4], out unit.Rotation) && int.TryParse(args[5], out unit.Flipped))
+			if (int.TryParse(args[0],
+				    out unit.Type) &&
+			    int.TryParse(args[1],
+				    out unit.Index) &&
+			    int.TryParse(args[2],
+				    out unit.X) &&
+			    int.TryParse(args[3],
+				    out unit.Y) &&
+			    int.TryParse(args[4],
+				    out unit.Rotation) &&
+			    int.TryParse(args[5],
+				    out unit.Flipped) &&
+			    float.TryParse(args[6],NumberStyles.Float, CultureInfo.InvariantCulture, out unit.offsetX) &&
+			    float.TryParse(args[7],NumberStyles.Float, CultureInfo.InvariantCulture, out unit.offsetY))
 			{
 				contraptionData.items[i] = unit;
 				continue;

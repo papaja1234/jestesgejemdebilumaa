@@ -84,7 +84,9 @@ public class RECommandInterface : MonoBehaviour
                 new RECommandArgDef("type", "Integer", "part type of new part"),
                 new RECommandArgDef("custom index", "Integer", "skin value of new part"),
                 new RECommandArgDef("grid rotation", "Integer[..7]", "grid rotation value of new part"),
-                new RECommandArgDef("is it flipped", "Boolean as Integer", "determine if new part is flipped")
+                new RECommandArgDef("is it flipped", "Boolean as Integer", "determine if new part is flipped"),
+                new RECommandArgDef("offset x", "Float", "x Offset of new part"),
+                new RECommandArgDef("offset y", "Float", "y Offset of new part"),
             },
             (args) =>
             {
@@ -124,12 +126,10 @@ public class RECommandInterface : MonoBehaviour
                               or LevelManager.GameState.PausedWhileBuilding
                               or LevelManager.GameState.PreviewWhileBuilding)
                     {
-                        float x = args.GetFloat(0);
-                        float y = args.GetFloat(1);
-                        int gridX = (int)math.floor(x);
-                        int gridY = (int)math.floor(y);
-                        float offsetX = x - math.floor(x);
-                        float offsetY = y - math.floor(y);
+                        int x = args.GetInt(0);
+                        int y = args.GetInt(1);
+                        float offsetX = args.HasValue(6) ? args.GetFloat(6) : 0f;
+                        float offsetY = args.HasValue(7) ? args.GetFloat(7) : 0f;
                         int intPartType = args.GetInt(2);
                         int customPartIndex = args.GetInt(3);
                         int rotation = args.GetInt(4);
@@ -137,8 +137,8 @@ public class RECommandInterface : MonoBehaviour
                         BasePart.PartType partType = ((SortedPartType)intPartType).ToPartType();
                         Contraption.Instance.DataSet.AddPart
                         (
-                            gridX,
-                            gridY,
+                            x,
+                            y,
                             intPartType,
                             customPartIndex,
                             rotation, isFlipped, 
@@ -261,7 +261,7 @@ public class RECommandInterface : MonoBehaviour
                             unit.x = x;
                             unit.y = y;
                             Contraption.Instance.DataSet.AddPart(x, y, x2, y2,
-                                intPartType, isFlipped, out ContraptionDataset.ContraptionDatasetUnit _);
+                                intPartType, isFlipped, out ContraptionDataset.ContraptionDatasetUnit _,0,0);
                             BasePart customPart = WPFMonoBehaviour.gameData.GetCustomPart(partType,unit.customPartIndex);
                             if (customPart != null)
                             {

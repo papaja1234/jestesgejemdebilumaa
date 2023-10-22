@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Entities.UniversalDelegates;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class RailGun : BasePart
@@ -70,8 +71,25 @@ public class RailGun : BasePart
 		Shoot();
 	}
 
+	public float GetVesselElectricity()
+	{
+		float temp = 0f;
+		List<BasePart> baseParts = contraption.GetConnectedParts(this);
+		foreach (BasePart basePart in baseParts)
+		{
+			if (basePart is Engine)
+			{
+				Engine engine = basePart as Engine;
+				temp += engine.m_enginePower;
+			}
+		}
+
+		return temp;
+	}
+
 	protected void Shoot()
 	{
+		float e = GetVesselElectricity();
 		EnsureRigidbody();
 		float rapidCooldownTime = 0.0f;
 		rapidCooldownTime = m_rapidCooldownTime;
@@ -80,16 +98,16 @@ public class RailGun : BasePart
 			m_shootTime = Time.time;
 			Singleton<AudioManager>.Instance.SpawnOneShotEffect(WPFMonoBehaviour.gameData.commonAudioCollection.alienLaserFire, base.transform);
 			currentProjectile = UnityEngine.Object.Instantiate(m_projectilePrefab).GetComponent<RailGunProjectile>();
-			//m_particleEffect.Play();
+			Physics.IgnoreCollision(GetComponent<Collider>(),currentProjectile.GetComponent<Collider>());
 			currentProjectile.transform.parent = base.transform;
-			currentProjectile.transform.localPosition = Vector3.forward * 0.1f;
+			currentProjectile.transform.localPosition = base.transform.right*2;
 			currentProjectile.transform.rotation = base.transform.rotation;
-			currentProjectile.m_Acceleration = base.transform.right*2;
+			currentProjectile.m_Acceleration = base.transform.right + base.transform.right * (math.pow(e,0.6f));
 			currentProjectile.m_AccelerationMod = base.transform.right * 0.01f;
 			Vector3 right = base.transform.right;
 			currentProjectile.transform.position = base.rigidbody.position + right;
-			currentProjectile.GetComponent<Rigidbody>().position = base.rigidbody.position + right;
-			currentProjectile.GetComponent<Rigidbody>().velocity = base.rigidbody.velocity + base.rigidbody.velocity.normalized*2f;
+			currentProjectile.ElectricityMultiplier = e;
+			//currentProjectile.GetComponent<Rigidbody>().velocity = base.rigidbody.velocity + right * (2f * math.pow( e + math.E, 2/3f));
 			this.m_enabled = false;
 		}
 	}

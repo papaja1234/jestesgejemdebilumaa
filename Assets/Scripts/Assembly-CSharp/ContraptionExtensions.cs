@@ -17,7 +17,7 @@ public static class ContraptionExtensions
 		ContraptionDataset contraptionDataset = new ContraptionDataset();
 		foreach (BasePart part in contraption.Parts)
 		{
-			contraptionDataset.AddPart(part.m_coordX, part.m_coordY, (int)part.m_partType, part.customPartIndex, part.m_gridRotation, part.m_flipped);
+			contraptionDataset.AddPart(part.m_coordX, part.m_coordY, (int)part.m_partType, part.customPartIndex, part.m_gridRotation, part.m_flipped, part.offsetX,part.offsetY);
 		}
 		WPFPrefs.SaveContraptionDataset(currentContraptionName, contraptionDataset);
 	}

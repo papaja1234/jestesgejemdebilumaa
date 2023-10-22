@@ -45,6 +45,11 @@ public class RECommandArgs
         return value;
     }
 
+    public bool HasValue(int at)
+    {
+        return this.args.Length - 1 >= at;
+    }
+
     public float GetFloat(int at)
     {
         if (!Single.TryParse(args[at], out float value))

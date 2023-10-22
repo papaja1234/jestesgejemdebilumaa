@@ -10,6 +10,7 @@ using UnityEngine.Jobs;
 
 public class RailGunProjectile : MonoBehaviour
 {
+    public float ElectricityMultiplier = 1f;
     private GameObject Point;
     public Vector3 m_Acceleration;
     public Vector3 m_AccelerationMod;
@@ -17,11 +18,15 @@ public class RailGunProjectile : MonoBehaviour
     public double RadiusFactor;
     public double ExplodeRadius;
     private bool flag = false;
-
+    private TrailRenderer trailRenderer;
+    private TrailRenderer childTrail;
+    
     private void Start()
     {
+        ExplodeRadius = RadiusFactor * 0.6f * math.pow(ElectricityMultiplier*0.5f, 0.2f);
         Point = base.transform.Find("Point").gameObject;
-        
+        this.trailRenderer = GetComponent<TrailRenderer>();
+        this.childTrail = this.Point.GetComponent<TrailRenderer>();
     }
 
     // Update is called once per frame
@@ -50,17 +55,33 @@ public class RailGunProjectile : MonoBehaviour
                 if (!e) continue;
                 Vector3 dir = base.transform.position - e.transform.position;
                 Vector3 a = (math.log(math.abs(dir) + new float3(0.0185f, 0.0185f, 0.0185f)));//WOW Ln A VECTOR IS SO COOL
-                e.AddForce(dir.normalized * (a.magnitude * 17.68f), ForceMode.Impulse);
+                e.AddForce(dir.normalized * (a.magnitude * math.log(this.ElectricityMultiplier+math.E)), ForceMode.Impulse);
                 BasePart d = e.GetComponent<BasePart>();
                 if (!d) continue;
                 d.Hurt(a.magnitude*(float)math.sqrt(FrequencyFactor*2.718281828));
             }
 
-            FrequencyFactor = 0;
-            RadiusFactor = 0;
+            transform.localScale *= (float)this.ExplodeRadius;
+            this.GetComponent<Collider>().enabled = false;
+            Effect();
             //GetComponent<Rigidbody>().velocity = Vector3.zero;
-            Destroy(gameObject);
+            Invoke(nameof(Destruction),0.1f);
         }
+    }
+
+    public void Effect()
+    {
+        this.childTrail.enabled = false;
+        this.trailRenderer.time = 0.4f;
+        this.trailRenderer.widthMultiplier = (float)this.RadiusFactor;
+        transform.localScale = new Vector3((float)this.RadiusFactor, (float)this.RadiusFactor, 1);
+    }
+
+    public void Destruction()
+    {
+        RadiusFactor = 0d;
+        FrequencyFactor = 0d;
+        Destroy(gameObject);
     }
 
     private void CircleMove()

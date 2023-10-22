@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 23720211558535167}
   - component: {fileID: 33894412711176476}
   - component: {fileID: 114032985854992638}
-  - component: {fileID: 4795500937488807907}
   - component: {fileID: -7500017871886830504}
+  - component: {fileID: 3155368021108828279}
   m_Layer: 9
   m_Name: Part_RailGun_01_SET
   m_TagString: Untagged
@@ -57,7 +57,7 @@ MonoBehaviour:
   m_mass: 1
   m_interactiveRadius: 0.5
   m_breakVelocity: 0
-  m_powerConsumption: 0
+  m_powerConsumption: 0.0271828
   m_enginePower: 0
   m_ZOffset: 0
   customPartIndex: 14
@@ -75,6 +75,8 @@ MonoBehaviour:
   m_gridXmax: 0
   m_gridYmin: 0
   m_gridYmax: 0
+  offsetX: 0
+  offsetY: 0
   m_static: 0
   m_jointConnectionStrength: 2
   m_jointConnectionType: 2
@@ -82,7 +84,7 @@ MonoBehaviour:
   m_customJointConnectionDirection: 7
   m_enclosedPart: {fileID: 0}
   m_enclosedInto: {fileID: 0}
-  m_constructionIconSprite: {fileID: 114129909036198488, guid: 05055156d6294be4a8a58b454a09343d, type: 3}
+  m_constructionIconSprite: {fileID: 2122343127336603223, guid: 05055156d6294be4a8a58b454a09343d, type: 3}
   lateSpeed: {x: 0, y: 0, z: 0}
   m_hp: 800
   m_maxHp: 800
@@ -153,19 +155,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_name: RailGun_Sprite
---- !u!135 &4795500937488807907
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1119343771257975}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &-7500017871886830504
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -178,6 +167,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ac9e180769c4e749aa9d96d2f996aee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!65 &3155368021108828279
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1119343771257975}
+  m_Material: {fileID: 13400000, guid: 6a4d7c799faeb124ca08e702b11f8f4f, type: 2}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.28, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &167370742711155072
 GameObject:
   m_ObjectHideFlags: 0

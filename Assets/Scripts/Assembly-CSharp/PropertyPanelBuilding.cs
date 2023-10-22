@@ -34,8 +34,21 @@ public class PropertyPanelBuilding : PropertyPanel
 		Contraption instance = Contraption.Instance;
 		BasePart basePart = FindTargetPart();
 		string text2 = ((basePart != null) ? basePart.transform.position.Vector2ToString(m_format) : text);
-		string text3 = ((basePart != null) ? new Vector2Int(basePart.m_coordX, basePart.m_coordY).ToString() : text);
-		string text4 = ((INUnity.Language != SystemLanguage.Chinese) ? (m_versionText + "\n" + PropertyPanel.FormatHeading2("Camera Target Properties") + "\n" + m_prefix + "Position " + text2 + "\n" + m_prefix + "Building Position " + text3 + "\n\n" + PropertyPanel.FormatHeading2("Camera Properties") + "\n" + m_prefix + "Size " + m_camera.orthographicSize.ToString(m_format) + "\n" + m_prefix + "Position " + m_camera.transform.position.Vector2ToString(m_format) + "\n\n" + PropertyPanel.FormatHeading2("Contraption Properties") + "\n" + m_prefix + "Part Count " + instance.Parts.Count + "\n") : (m_versionText + "\n" + PropertyPanel.FormatHeading2("目标部件属性") + "\n" + m_prefix + "位置\u3000 " + text2 + "\n" + m_prefix + "建造位置 " + text3 + "\n\n" + PropertyPanel.FormatHeading2("视野属性") + "\n" + m_prefix + "大小\u3000 " + m_camera.orthographicSize.ToString(m_format) + "\n" + m_prefix + "位置\u3000 " + m_camera.transform.position.Vector2ToString(m_format) + "\n\n" + PropertyPanel.FormatHeading2("载具属性") + "\n" + m_prefix + "部件数 " + instance.Parts.Count + "\n"));
+		string text3 = ((basePart != null) ? new Vector2(basePart.m_coordX+basePart.offsetX, basePart.m_coordY+basePart.offsetY).ToString() : text);
+		string text4 = INUnity.Language != SystemLanguage.Chinese
+			? this.m_versionText + "\n" + FormatHeading2("Camera Target Properties") + "\n" + this.m_prefix +
+			  "Position " +
+			  text2 + "\n" + this.m_prefix + "Building Position " + text3 + "\n\n" +
+			  FormatHeading2("Camera Properties") +
+			  "\n" + this.m_prefix + "Size " + this.m_camera.orthographicSize.ToString(this.m_format) + "\n" +
+			  this.m_prefix + "Position " + this.m_camera.transform.position.Vector2ToString(this.m_format) + "\n\n" +
+			  FormatHeading2("Contraption Properties") + "\n" + this.m_prefix + "Part Count " + instance.Parts.Count +
+			  "\n"
+			: this.m_versionText + "\n" + FormatHeading2("目标部件属性") + "\n" + this.m_prefix + "位置\u3000 " + text2 + "\n" +
+			  this.m_prefix + "建造位置 " + text3 + "\n\n" + FormatHeading2("视野属性") + "\n" + this.m_prefix + "大小\u3000 " +
+			  this.m_camera.orthographicSize.ToString(this.m_format) + "\n" + this.m_prefix + "位置\u3000 " +
+			  this.m_camera.transform.position.Vector2ToString(this.m_format) + "\n\n" + FormatHeading2("载具属性") + "\n" +
+			  this.m_prefix + "部件数 " + instance.Parts.Count + "\n";
 		m_text = text4;
 	}
 
