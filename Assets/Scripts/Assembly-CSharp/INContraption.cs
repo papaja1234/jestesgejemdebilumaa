@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using Unity.Jobs;
 using UnityEngine;
 
 public class INContraption : MonoBehaviour
@@ -67,18 +69,16 @@ public class INContraption : MonoBehaviour
 		m_behaviours.Add(behaviour);
 	}
 
-	public IEnumerable<INBehaviour> GetBehaviours()
+	private IEnumerable<INBehaviour> GetBehaviours()
 	{
 		if (m_behaviours == null)
 		{
 			yield break;
 		}
-		foreach (INBehaviour behaviour in m_behaviours)
+
+		foreach (INBehaviour behaviour in m_behaviours.Where(behaviour => (behaviour.Status & m_status) != 0))
 		{
-			if ((behaviour.Status & m_status) != 0)
-			{
-				yield return behaviour;
-			}
+			yield return behaviour;
 		}
 	}
 
@@ -282,7 +282,7 @@ public class INContraption : MonoBehaviour
 		}
 	}
 
-	private void FixedUpdate()
+	private void FixedUpdate()//most expensive stuff
 	{
 		if (!m_enabled)
 		{
@@ -303,36 +303,32 @@ public class INContraption : MonoBehaviour
 		}
 		if (INSettings.GetBool(INFeature.NoDrag))
 		{
-			if (m_rigidbodyDragTable == null)
-			{
-				m_rigidbodyDragTable = new Dictionary<Rigidbody, (float, float)>();
-			}
+			m_rigidbodyDragTable ??= new Dictionary<Rigidbody, (float, float)>();
 			Rigidbody[] components = GetComponents<Rigidbody>();
-			foreach (Rigidbody rigidbody in components)
+			foreach (Rigidbody key in components)
 			{
-				m_rigidbodyDragTable.TryAdd(rigidbody, (rigidbody.drag, rigidbody.angularDrag));
-				rigidbody.drag = 0f;
-				rigidbody.angularDrag = 0f;
+				m_rigidbodyDragTable.TryAdd(key, (key.drag, key.angularDrag));
+				key.drag = 0f;
+				key.angularDrag = 0f;
+				//set everything to 0 drag
 			}
 		}
 		else
 		{
-			if (m_rigidbodyDragTable == null || m_rigidbodyDragTable.Count <= 0)
+			if (m_rigidbodyDragTable is not { Count: > 0 })
 			{
 				return;
 			}
-			foreach (KeyValuePair<Rigidbody, (float, float)> item in m_rigidbodyDragTable)
+			foreach ((Rigidbody key, (float, float) value) in m_rigidbodyDragTable)
 			{
-				Rigidbody key = item.Key;
-				if (key != null)
-				{
-					key.drag = item.Value.Item1;
-					key.angularDrag = item.Value.Item2;
-				}
+				if (key == null) continue;
+				key.drag = value.Item1;
+				key.angularDrag = value.Item2;
 			}
 			m_rigidbodyDragTable.Clear();
 		}
 	}
+
 
 	private void Update()
 	{

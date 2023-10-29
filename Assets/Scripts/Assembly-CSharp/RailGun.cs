@@ -16,22 +16,7 @@ public class RailGun : BasePart
 	private ParticleSystem m_particleEffect;
 
 	private bool m_enabled;
-
-	private GameObject m_leftAttachment;
-
-	private GameObject m_rightAttachment;
-
-	private GameObject m_topAttachment;
-
-	private GameObject m_bottomAttachment;
-
-	private GameObject m_bottomLeftAttachment;
-
-	private GameObject m_bottomRightAttachment;
-
-	private GameObject m_topLeftAttachment;
-
-	private GameObject m_topRightAttachment;
+	
 
 	private float m_shootTime;
 	
@@ -74,6 +59,7 @@ public class RailGun : BasePart
 	public float GetVesselElectricity()
 	{
 		float temp = 0f;
+		int count = 1;
 		List<BasePart> baseParts = contraption.GetConnectedParts(this);
 		foreach (BasePart basePart in baseParts)
 		{
@@ -81,10 +67,12 @@ public class RailGun : BasePart
 			{
 				Engine engine = basePart as Engine;
 				temp += engine.m_enginePower;
+			}else if (basePart is RailGun)
+			{
+				count++;
 			}
 		}
-
-		return temp;
+		return temp/count;
 	}
 
 	protected void Shoot()

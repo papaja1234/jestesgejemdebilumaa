@@ -28,19 +28,17 @@ public class Frame : BasePart
 
 	public override void Initialize()
 	{
-		if ((bool)m_enclosedPart && !(m_enclosedPart is Rope) && !(m_enclosedPart is HingePlate))
-		{
-			FixedJoint fixedJoint = m_enclosedPart.gameObject.AddComponent<FixedJoint>();
-			fixedJoint.connectedBody = base.rigidbody;
-			float breakForce = base.contraption.GetJointConnectionStrength(GetJointConnectionStrength()) + base.contraption.GetJointConnectionStrength(m_enclosedPart.GetJointConnectionStrength());
-			fixedJoint.breakForce = breakForce;
-			fixedJoint.enablePreprocessing = false;
-			base.contraption.AddJointToMap(this, m_enclosedPart, fixedJoint);
-			IgnoreCollisionRecursive(base.collider, m_enclosedPart.gameObject);
-		}
+		if (!(bool)m_enclosedPart || m_enclosedPart is Rope or HingePlate) return;
+		FixedJoint fixedJoint = m_enclosedPart.gameObject.AddComponent<FixedJoint>();
+		fixedJoint.connectedBody = base.rigidbody;
+		float breakForce = base.contraption.GetJointConnectionStrength(GetJointConnectionStrength()) + base.contraption.GetJointConnectionStrength(m_enclosedPart.GetJointConnectionStrength());
+		fixedJoint.breakForce = breakForce;
+		fixedJoint.enablePreprocessing = false;
+		base.contraption.AddJointToMap(this, m_enclosedPart, fixedJoint);
+		IgnoreCollisionRecursive(base.collider, m_enclosedPart.gameObject);
 	}
 
-	private void IgnoreCollisionRecursive(Collider collider, GameObject part)
+	private static void IgnoreCollisionRecursive(Collider collider, GameObject part)
 	{
 		if (part.activeInHierarchy && (bool)part.GetComponent<Collider>())
 		{
@@ -104,8 +102,9 @@ public class Frame : BasePart
 			MeshRenderer[] renderers = m_renderers;
 			foreach (MeshRenderer obj in renderers)
 			{
-				obj.material.shader = INUnity.CustomTransparentShader;
-				obj.material.color = Color.white;
+				Material material = obj.material;
+				material.shader = INUnity.CustomTransparentShader;
+				material.color = Color.white;
 			}
 			m_colored = false;
 		}

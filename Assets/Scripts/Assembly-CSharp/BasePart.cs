@@ -338,20 +338,22 @@ public class BasePart : WPFMonoBehaviour
 				Destroy(gameObject);
 				return;
 		}
-
+		//if (Math.Abs(m_minDamage +2f) < 0.001f)return;
 		//Destroy(gameObject);
-		m_minDamage = -1f;
+		m_minDamage = -2f;
 		Joint[] joints = this.gameObject.GetComponents<Joint>();
 		foreach (Joint V in joints)
 		{
 			if(V)Destroy(V);
 		}
-		Collider[] colliders = Physics.OverlapSphere(transform.position, passDamage * 0.04f + 0.5f);
+		
+		Collider[] colliders = new Collider[4];
+		Physics.OverlapSphereNonAlloc(transform.position, 0.5f ,colliders);
 		foreach (Collider _collider in colliders)
 		{
 
-			BasePart basePart = _collider.GetComponent<BasePart>();
-			if (basePart)
+			BasePart? basePart = _collider.GetComponent<BasePart?>();
+			if (basePart != null)
 			{
 				Physics.IgnoreCollision(_collider, collider);
 				//this thing makes stackoverflow --> basePart.Hurt(passDamage/(4f+64f*Vector3.SqrMagnitude(_collider.transform.position-transform.position)));//hidden recursion, use big denominator to avoid stackoverflow

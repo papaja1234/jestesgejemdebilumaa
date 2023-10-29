@@ -1,5 +1,8 @@
+using System;
+
 public class INBehaviour
 {
+	[Flags]
 	public enum StatusCode
 	{
 		None = 0,

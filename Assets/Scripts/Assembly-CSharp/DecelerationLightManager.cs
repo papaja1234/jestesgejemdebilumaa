@@ -1,8 +1,15 @@
 using System.Collections.Generic;
+using Unity.Burst;
+using Unity.Collections;
+using Unity.Jobs;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class DecelerationLightManager : PartManager
 {
+	private static NativeArray<Vector2> nativeVector2s = new NativeArray<Vector2>(4,Allocator.Persistent);
+	private static ComputeJob computeJob = new ComputeJob(){vector2s = nativeVector2s};
+	public static JobHandle jobHandle;
 	private static float s_force;
 
 	private static float s_maxForce;
@@ -110,10 +117,32 @@ public class DecelerationLightManager : PartManager
 
 	private static Vector2 ComputeForce(Vector2 v1, Vector2 v2, float c)
 	{
-		float num = v2.x - v1.x;
-		float num2 = v2.y - v1.y;
-		float num3 = c * Mathf.Sqrt(num * num + num2 * num2);
-		c *= ((num3 > s_maxForce) ? (s_maxForce / num3) : 1f);
-		return new Vector2(c * num, c * num2);
+		computeJob.c = c;
+		computeJob.v1 = v1;
+		computeJob.v2 = v2;
+		computeJob.s_maxForce = s_maxForce;
+		jobHandle = computeJob.Schedule(4, 4);
+		jobHandle.Complete();
+		return nativeVector2s[0];
 	}
+	
+	[BurstCompile]
+	private struct ComputeJob : IJobParallelFor
+	{
+		[ReadOnly] public Vector2 v1;
+		[ReadOnly] public Vector2 v2;
+		[ReadOnly] public float c;
+		[ReadOnly] public float s_maxForce;
+
+		[WriteOnly] public NativeArray<Vector2> vector2s;
+		public void Execute(int index)
+		{
+			float num = v2.x - v1.x;
+			float num2 = v2.y - v1.y;
+			float num3 = c * math.sqrt(num * num + num2 * num2);
+			c *= ((num3 > s_maxForce) ? (s_maxForce / num3) : 1f);
+			vector2s[0] = new Vector2(c * num, c * num2);
+		}
+	}
+	
 }

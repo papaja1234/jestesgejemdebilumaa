@@ -300,7 +300,19 @@ public class RECommandInterface : MonoBehaviour
         }
 
         Application.logMessageReceived += DebugLogReader;
-        ReCommandHandler.RunCommand(m_commandInput.text);
+        try
+        {
+            ReCommandHandler.RunCommand(m_commandInput.text);
+        }
+        catch (RECommandException e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        catch (Exception e)
+        {
+            // ignored
+        }
+
         if (!GameRules.ShowCommandLog) return;
         Application.logMessageReceived -= DebugLogReader;
         m_commandOutput.text += m_logBuilder.ToString();
