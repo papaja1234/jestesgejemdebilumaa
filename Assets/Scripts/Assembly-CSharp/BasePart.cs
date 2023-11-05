@@ -347,13 +347,12 @@ public class BasePart : WPFMonoBehaviour
 			if(V)Destroy(V);
 		}
 		
-		Collider[] colliders = new Collider[4];
-		Physics.OverlapSphereNonAlloc(transform.position, 0.5f ,colliders);
+		Collider[] colliders = Physics.OverlapSphere(transform.position, 0.5f);
 		foreach (Collider _collider in colliders)
 		{
 
-			BasePart? basePart = _collider.GetComponent<BasePart?>();
-			if (basePart != null)
+			BasePart basePart = _collider.GetComponent<BasePart>();
+			if (basePart)
 			{
 				Physics.IgnoreCollision(_collider, collider);
 				//this thing makes stackoverflow --> basePart.Hurt(passDamage/(4f+64f*Vector3.SqrMagnitude(_collider.transform.position-transform.position)));//hidden recursion, use big denominator to avoid stackoverflow

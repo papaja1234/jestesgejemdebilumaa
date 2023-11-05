@@ -7,7 +7,7 @@ using UnityEngine;
 /// <summary>
 /// Handles commands.
 /// </summary>
-public class RECommandHandler
+public class RECommandHandler : MonoBehaviour
 {
     private Dictionary<string, RECommand>
         commands = new Dictionary<string, RECommand>(); //command name (lowercase!) -> command class
@@ -85,29 +85,79 @@ public class RECommandHandler
     public void HandleMultiLineCommand(string text)
     {
         text = text.Normalize().ToLower().Replace("#multiline", "").Trim();
-        string[] mlCommands = text.Split('\n', StringSplitOptions.RemoveEmptyEntries);
-        int line = 1;
-        foreach (string c in mlCommands)
-        {
-            string[]
-                textParts = c.TrimStart('/')
-                    .Split(new[] { ' ' },
-                        StringSplitOptions
-                            .RemoveEmptyEntries); //Dart: maybe use "　" (U+3000) instead of " " for chinese? //Goggs: i guess i'll just use string.Normalize(). also we don't use U+3000
-            if (!commands.TryGetValue(textParts[0].ToLower().Trim(),
-                    out RECommand command)) //we lower & trim since we ignore case (and trailing spaces etc)
-            {
-                Console.WriteLine($"Line {line} : Command {textParts[0]} not found!");
-                throw new RECommandException($"Line {line} : Command {textParts[0]} not found!");
-            }
+        multiCommands = text.Split('\n', StringSplitOptions.RemoveEmptyEntries);
+        executionIndex = 0;
+        isExecuting = true;
+        canExecuteNext = true;
+        waitUntil = 0;
+    }
 
-            if (command.Name == "delay")
-            {
-                float.TryParse(textParts[1], out float f);
-                
-            }
-            command.Execute(new RECommandArgs(textParts.Skip(1).ToArray()));
-            line++;
+    public string[] multiCommands;
+    public int executionIndex;
+    public bool canExecuteNext;
+    private bool isExecuting = false;
+    private float waitUntil;
+    public void ExecuteNext()
+    {
+        string c = multiCommands[executionIndex];
+        string[]
+            textParts = c.TrimStart('/')
+                .Split(new[] { ' ' },
+                    StringSplitOptions
+                        .RemoveEmptyEntries); //Dart: maybe use "　" (U+3000) instead of " " for chinese? //Goggs: i guess i'll just use string.Normalize(). also we don't use U+3000
+        if (!commands.TryGetValue(textParts[0].ToLower().Trim(),
+                out RECommand command)) //we lower & trim since we ignore case (and trailing spaces etc)
+        {
+            Console.WriteLine($"Line {executionIndex+1} : Command {textParts[0]} not found!");
+            throw new RECommandException($"Line {executionIndex+1} : Command {textParts[0]} not found!");
         }
+
+        if (command.Name == "delay")
+        {
+            float.TryParse(textParts[1], out float f);
+            canExecuteNext = false;
+            waitUntil = Time.realtimeSinceStartup + f;
+        }
+        command.Execute(new RECommandArgs(textParts.Skip(1).ToArray()));
+        executionIndex++;
+    }
+
+    public void Update()
+    {
+        if (!isExecuting)return;
+        switch (canExecuteNext)
+        {
+            case true:
+            {
+                ExecuteNext();
+                if (executionIndex == multiCommands.Length)
+                {
+                    isExecuting = false;
+                }
+
+                break;
+            }
+            case false:
+            {
+                if (Time.realtimeSinceStartup >= waitUntil)
+                {
+                    canExecuteNext = true;
+                }
+
+                return;
+            }
+        }
+    }
+
+    private IEnumerator WaitingCoroutine(float s) 
+    {
+        yield return StartCoroutine(CoroutineToWait(s));  
+    
+        //CoroutineToWait has finished
+    } 
+
+    private static IEnumerator CoroutineToWait(float s) 
+    {
+        yield return new WaitForSeconds(s);
     }
 }

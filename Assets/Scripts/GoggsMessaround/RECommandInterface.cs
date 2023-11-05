@@ -18,8 +18,11 @@ public class RECommandInterface : MonoBehaviour
     [SerializeField] private UnityEngine.UI.Button m_executeButton;
 
     [FormerlySerializedAs("m_runButton")] [SerializeField] private UnityEngine.UI.Button m_helpButton;
+    
+    [SerializeField] public RECommandHandler ReCommandHandler;
+    
+    [SerializeField] public GameObject ExecutorDummy;
 
-    public RECommandHandler ReCommandHandler;
     public bool IsChanged { get; private set; }
     public static RECommandInterface Instance { get; private set; }
 
@@ -31,10 +34,11 @@ public class RECommandInterface : MonoBehaviour
     {
         Instance = this;
         DontDestroyOnLoad(this);
+        ExecutorDummy = INAppInterface.Instance.ExecutorDummy;
         m_executeButton.onClick.AddListener(Execute);
         m_helpButton.onClick.AddListener(Help);
         m_logBuilder = new StringBuilder();
-        ReCommandHandler = new RECommandHandler();
+        ReCommandHandler = ExecutorDummy.GetComponent<RECommandHandler>();
         ReCommandHandler.RegisterCommand("gamerule", "Gets or Sets a gamerule", new []
             {
                 new RECommandArgDef("Mode", "String", "Select mode (Get or Set)"),

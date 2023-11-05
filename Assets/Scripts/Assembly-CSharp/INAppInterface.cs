@@ -33,6 +33,9 @@ public class INAppInterface : MonoBehaviour
 	private UnityEngine.UI.Button m_hidePropertyPanelButton;
 
 	[SerializeField]
+	public GameObject ExecutorDummy;
+	
+	[SerializeField]
 	private List<GameObject> m_elements;
 
 	private bool m_enabled;

@@ -897,6 +897,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 224098398694325372}
+  - {fileID: 9145123459649625282}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: -0, z: -0}
@@ -921,6 +922,7 @@ MonoBehaviour:
   m_backButton: {fileID: 114744831051767041}
   m_menuButton: {fileID: 114382288913895497}
   m_hidePropertyPanelButton: {fileID: 7967761862656106578}
+  ExecutorDummy: {fileID: 800862675758157590}
   m_elements:
   - {fileID: 1569305748891797, guid: 7f31e7dcf1a82ad4aba70878df38a023, type: 3}
   - {fileID: 1206246748191444, guid: 5d44bbb12325ed04ab34a2c4dd17b95d, type: 3}
@@ -1587,6 +1589,53 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0063431562e4077bab081f25c8b94825, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &800862675758157590
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9145123459649625282}
+  - component: {fileID: 404466015535451048}
+  m_Layer: 0
+  m_Name: ExecuterDummy
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9145123459649625282
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 800862675758157590}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4788073609271827}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &404466015535451048
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 800862675758157590}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdae7a7f23c76574f9f937d06c087f26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  multiCommands: []
+  executionIndex: 0
+  canExecuteNext: 0
 --- !u!1 &3243778555491277072
 GameObject:
   m_ObjectHideFlags: 0
