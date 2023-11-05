@@ -346,3 +346,92 @@ public class RECommandInterface : MonoBehaviour
         m_logBuilder.AppendLine(logMessage);
     }
 }
+
+/*
+#multiline
+/delay 3
+/setpart 0 0 6 0 0 0 0 0 
+/delay 0.01
+/setpart 0 1 6 0 0 0 0 0 
+/delay 0.01
+/setpart 0 2 6 0 0 0 0 0 
+/delay 0.01
+/setpart 0 3 6 0 0 0 0 0 
+/delay 0.01
+/setpart 0 4 6 0 0 0 0 0 
+/delay 0.01
+/setpart 0 5 6 0 0 0 0 0 
+/delay 0.01
+/setpart 1 0 6 0 0 0 0 0 
+/delay 0.01
+/setpart 1 1 6 0 0 0 0 0 
+/delay 0.01
+/setpart 1 2 6 0 0 0 0 0 
+/delay 0.01
+/setpart 1 3 6 0 0 0 0 0 
+/delay 0.01
+/setpart 1 4 6 0 0 0 0 0 
+/delay 0.01
+/setpart 1 5 6 0 0 0 0 0 
+/delay 0.01
+/setpart 2 0 6 0 0 0 0 0 
+/delay 0.01
+/setpart 2 1 6 0 0 0 0 0 
+/delay 0.01
+/setpart 2 2 6 0 0 0 0 0 
+/delay 0.01
+/setpart 2 3 6 0 0 0 0 0 
+/delay 0.01
+/setpart 2 4 6 0 0 0 0 0 
+/delay 0.01
+/setpart 2 5 6 0 0 0 0 0 
+/delay 0.01
+/setpart 3 0 6 0 0 0 0 0 
+/delay 0.01
+/setpart 3 1 6 0 0 0 0 0 
+/delay 0.01
+/setpart 3 2 6 0 0 0 0 0 
+/delay 0.01
+/setpart 3 3 6 0 0 0 0 0 
+/delay 0.01
+/setpart 3 4 6 0 0 0 0 0 
+/delay 0.01
+/setpart 3 5 6 0 0 0 0 0 
+/delay 0.01
+/setpart 4 0 6 0 0 0 0 0 
+/delay 0.01
+/setpart 4 1 6 0 0 0 0 0 
+/delay 0.01
+/setpart 4 2 6 0 0 0 0 0 
+/delay 0.01
+/setpart 4 3 6 0 0 0 0 0 
+/delay 0.01
+/setpart 4 4 6 0 0 0 0 0 
+/delay 0.01
+/setpart 4 5 6 0 0 0 0 0 
+/delay 0.01
+/setpart 5 0 6 0 0 0 0 0 
+/delay 0.01
+/setpart 5 1 6 0 0 0 0 0 
+/delay 0.01
+/setpart 5 2 6 0 0 0 0 0 
+/delay 0.01
+/setpart 5 3 6 0 0 0 0 0 
+/delay 0.01
+/setpart 5 4 6 0 0 0 0 0 
+/delay 0.01
+/setpart 5 5 6 0 0 0 0 0 
+/delay 0.01
+/setpart 6 0 6 0 0 0 0 0 
+/delay 0.01
+/setpart 6 1 6 0 0 0 0 0 
+/delay 0.01
+/setpart 6 2 6 0 0 0 0 0 
+/delay 0.01
+/setpart 6 3 6 0 0 0 0 0 
+/delay 0.01
+/setpart 6 4 6 0 0 0 0 0 
+/delay 0.01
+/setpart 6 5 6 0 0 0 0 0 
+/delay 0.01
+*/
