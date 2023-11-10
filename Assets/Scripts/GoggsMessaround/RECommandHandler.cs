@@ -12,6 +12,34 @@ public class RECommandHandler : MonoBehaviour
     private Dictionary<string, RECommand>
         commands = new Dictionary<string, RECommand>(); //command name (lowercase!) -> command class
 
+    private Dictionary<string, BasePart>
+        BasePartPool = new Dictionary<string, BasePart>();
+
+    public void AddPartDefinition(string varName, string literal)
+    {
+        PartDefinition partDefinition = new PartDefinition(literal);
+        BasePartPool.Add(varName,partDefinition.GetBasePart());
+    }
+
+    public bool TryAddPartDefinition(string varName, string literal)
+    {
+        try
+        {
+            PartDefinition partDefinition = new PartDefinition(literal);
+            BasePartPool.Add(varName,partDefinition.GetBasePart());
+            return true;
+        }
+        catch (Exception e)
+        {
+            return false;
+        }
+    }
+
+    public BasePart GetPartDefinition(string varName)
+    {
+        return BasePartPool[varName];
+    }
+
     public RECommandHandler()
     {
         //we register our help command here since it's special-ish
@@ -84,7 +112,10 @@ public class RECommandHandler : MonoBehaviour
 
     public void HandleMultiLineCommand(string text)
     {
-        text = text.Normalize().ToLower().Replace("#multiline", "").Trim();
+        text = text.Normalize().ToLower().Replace("#multiline", "").Replace("\r","").Trim();
+        isAutoAnimated = text.Contains("#animate");
+        text = text.Replace("#animate", "");
+        autoAnimateTime = isAutoAnimated ? 0.01 : 0;
         multiCommands = text.Split('\n', StringSplitOptions.RemoveEmptyEntries);
         executionIndex = 0;
         isExecuting = true;
@@ -97,6 +128,8 @@ public class RECommandHandler : MonoBehaviour
     public bool canExecuteNext;
     private bool isExecuting = false;
     private float waitUntil;
+    public bool isAutoAnimated;
+    public double autoAnimateTime;
     public void ExecuteNext()
     {
         string c = multiCommands[executionIndex];
@@ -112,12 +145,23 @@ public class RECommandHandler : MonoBehaviour
             throw new RECommandException($"Line {executionIndex+1} : Command {textParts[0]} not found!");
         }
 
-        if (command.Name == "delay")
+        switch (command.Name)
         {
-            float.TryParse(textParts[1], out float f);
-            canExecuteNext = false;
-            waitUntil = Time.realtimeSinceStartup + f;
+            case "delay":
+            {
+                float.TryParse(textParts[1], out float f);
+                canExecuteNext = false;
+                waitUntil = Time.realtimeSinceStartup + f;
+                break;
+            }
+            case "frameinterval":
+            {
+                float.TryParse(textParts[1], out float f);
+                autoAnimateTime = f;
+                break;
+            }
         }
+
         command.Execute(new RECommandArgs(textParts.Skip(1).ToArray()));
         executionIndex++;
     }
@@ -134,7 +178,12 @@ public class RECommandHandler : MonoBehaviour
                 {
                     isExecuting = false;
                 }
-
+                //----------------------------------------//
+                if (isAutoAnimated)
+                {
+                    canExecuteNext = false;
+                    waitUntil = Time.realtimeSinceStartup +(float)autoAnimateTime;
+                }
                 break;
             }
             case false:
@@ -143,21 +192,8 @@ public class RECommandHandler : MonoBehaviour
                 {
                     canExecuteNext = true;
                 }
-
                 return;
             }
         }
-    }
-
-    private IEnumerator WaitingCoroutine(float s) 
-    {
-        yield return StartCoroutine(CoroutineToWait(s));  
-    
-        //CoroutineToWait has finished
-    } 
-
-    private static IEnumerator CoroutineToWait(float s) 
-    {
-        yield return new WaitForSeconds(s);
     }
 }

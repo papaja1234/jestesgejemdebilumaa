@@ -46,7 +46,7 @@ public class PartDefinition
     }
     private class LambdaChecker<T> : Checker<T>
     {
-        protected bool Equals(LambdaChecker<T> other)
+        private bool Equals(LambdaChecker<T> other)
         {
             return base.Equals(other) && Equals(truthMachine, other.truthMachine);
         }
@@ -55,8 +55,7 @@ public class PartDefinition
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != this.GetType()) return false;
-            return Equals((LambdaChecker<T>)obj);
+            return obj.GetType() == this.GetType() && Equals((LambdaChecker<T>)obj);
         }
 
         public readonly Func<T, bool> truthMachine;
@@ -105,6 +104,13 @@ public class PartDefinition
      * <x|partx|xcoord|x|part_x|x_coord> <=|=>|is|equal|equals|==|===|>>|<<|等于> <value>\n
      * <y|party|ycoord|y|part_y|y_coord> <=|=>|is|equal|equals|==|===|>>|<<|等于> <value>
      */
+    public PartDefinition(string literal)
+    {
+        InitializeData(literal);
+    }
+    public PartDefinition()
+    {
+    }
     public string rawData
     {
         get => datas;
@@ -209,7 +215,7 @@ public class PartDefinition
         }
     }
 
-    private BasePart GetBasePart()
+    public BasePart GetBasePart()
     {
         float x = 0f, y = 0f;
         int color = 0;
@@ -242,9 +248,24 @@ public class PartDefinition
         }
         BasePart customPart = WPFMonoBehaviour.gameData.GetCustomPart(partType, color);
         float realX = math.floor(x);
-        float offsetX = x - realX - 0.5f;
+        float offsetX = x - realX;
         float realY = math.floor(y);
-        float offsetY = y - realY - 0.5f;
+        float offsetY = y - realY;
+        customPart.m_coordX = (int)realX;
+        customPart.m_coordY = (int)realY;
+        customPart.offsetX = offsetX;
+        customPart.offsetY = offsetY;
+        customPart.m_flipped = flip;
+        customPart.m_gridRotation = (BasePart.GridRotation)rotation;
+        return customPart;
+    }
+    public BasePart GetBasePart(float x = 0f,float y = 0f,int color = 0,BasePart.PartType partType = BasePart.PartType.Unknown,bool flip = false,int rotation = 0)
+    {
+        BasePart customPart = WPFMonoBehaviour.gameData.GetCustomPart(partType, color);
+        float realX = math.floor(x);
+        float offsetX = x - realX;
+        float realY = math.floor(y);
+        float offsetY = y - realY;
         customPart.m_coordX = (int)realX;
         customPart.m_coordY = (int)realY;
         customPart.offsetX = offsetX;

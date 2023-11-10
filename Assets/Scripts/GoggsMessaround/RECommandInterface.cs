@@ -83,14 +83,12 @@ public class RECommandInterface : MonoBehaviour
         );
         ReCommandHandler.RegisterCommand("setpart", "sets a new part at certain location", new []
             {
-                new RECommandArgDef("x", "Integer", "x Coordinate of new part"),
-                new RECommandArgDef("y", "Integer", "y Coordinate of new part"),
+                new RECommandArgDef("x", "Float", "x Coordinate of new part"),
+                new RECommandArgDef("y", "Float", "y Coordinate of new part"),
                 new RECommandArgDef("type", "Integer", "part type of new part"),
                 new RECommandArgDef("custom index", "Integer", "skin value of new part"),
                 new RECommandArgDef("grid rotation", "Integer[..7]", "grid rotation value of new part"),
                 new RECommandArgDef("is it flipped", "Boolean as Integer", "determine if new part is flipped"),
-                new RECommandArgDef("offset x", "Float", "x Offset of new part"),
-                new RECommandArgDef("offset y", "Float", "y Offset of new part"),
             },
             (args) =>
             {
@@ -130,10 +128,12 @@ public class RECommandInterface : MonoBehaviour
                               or LevelManager.GameState.PausedWhileBuilding
                               or LevelManager.GameState.PreviewWhileBuilding)
                     {
-                        int x = args.GetInt(0);
-                        int y = args.GetInt(1);
-                        float offsetX = args.HasValue(6) ? args.GetFloat(6) : 0f;
-                        float offsetY = args.HasValue(7) ? args.GetFloat(7) : 0f;
+                        float rx = args.GetFloat(0);
+                        float ry = args.GetFloat(1);
+                        int x = (int)math.floor(rx);
+                        int y = (int)math.floor(ry);
+                        float offsetX = rx - x;
+                        float offsetY = ry - y;
                         int intPartType = args.GetInt(2);
                         int customPartIndex = args.GetInt(3);
                         int rotation = args.GetInt(4);
@@ -170,9 +170,8 @@ public class RECommandInterface : MonoBehaviour
                         if (customPart != null)
                         {
                             WPFMonoBehaviour.levelManager.BuildPart(unit, customPart);
-                            partDesc.useCount++;
                         }
-
+                        partDesc.useCount++;
                         Console.WriteLine(INLocalization.Instance.GetText("CommandInterface_SetPart"), x,
                             y, intPartType, customPartIndex, rotation, isFlipped);
                     }
@@ -201,6 +200,15 @@ public class RECommandInterface : MonoBehaviour
                 
             }
         );
+        ReCommandHandler.RegisterCommand("frameinterval", "delay for a Time Span for next frame, only used with #multiline and #animate", new []
+            {
+                new RECommandArgDef("delay amount", "Float", "How long to delay in seconds")
+            },
+            (args) =>
+            {
+                
+            }
+        );
         ReCommandHandler.RegisterCommand("fill", "fills an rectangular area with a new part", new []
             {
                 new RECommandArgDef("x1", "Integer", "x Coordinate of rectangle vertex1"),
@@ -216,8 +224,7 @@ public class RECommandInterface : MonoBehaviour
             {
                 if (Contraption.Instance && WPFMonoBehaviour.levelManager && WPFMonoBehaviour.levelManager.ConstructionUI)
                 {
-                    int x, y;
-                    ConstructionUI.PartDesc partDesc;
+                    int y;
 
                     if (!(WPFMonoBehaviour.levelManager.gameState is LevelManager.GameState.Building
                             or LevelManager.GameState.PausedWhileBuilding
@@ -235,9 +242,8 @@ public class RECommandInterface : MonoBehaviour
                     int rotation = args.GetInt(6);
                     bool isFlipped = args.GetBool(7);
                     BasePart.PartType partType = ((SortedPartType)intPartType).ToPartType();
-                    partDesc =
-                        WPFMonoBehaviour.levelManager.ConstructionUI.FindPartDesc(((SortedPartType)intPartType)
-                            .ToPartType());
+                    ConstructionUI.PartDesc partDesc = WPFMonoBehaviour.levelManager.ConstructionUI.FindPartDesc(((SortedPartType)intPartType)
+                        .ToPartType());
                     partDesc.useCount +=         (
                                           Math.Max(x1, x2) 
                                                  -
@@ -258,7 +264,7 @@ public class RECommandInterface : MonoBehaviour
                         rot = rotation,
                         flipped = isFlipped
                     };
-                    for (x = Math.Min(x1,x2); x <= Math.Max(x1,x2); x++)
+                    for (int x = Math.Min(x1,x2); x <= Math.Max(x1,x2); x++)
                     {
                         for (y = Math.Min(y1,y2); y <= Math.Max(y1,y2); y++)
                         {
@@ -270,11 +276,6 @@ public class RECommandInterface : MonoBehaviour
                             if (customPart != null)
                             {
                                 WPFMonoBehaviour.levelManager.BuildPart(unit, customPart);
-                            }
-
-                            if (WPFMonoBehaviour.levelManager.gameState == LevelManager.GameState.Running)
-                            {
-                                customPart.EnsureRigidbody();
                             }
                         }
                     }
@@ -290,6 +291,38 @@ public class RECommandInterface : MonoBehaviour
         ReCommandHandler.RegisterCommand("clear", "Clears command display",
             Array.Empty<RECommandArgDef>(),
             (args) => {Clear();}
+        );
+        ReCommandHandler.RegisterCommand("storage", "Storage a Part in memory", 
+            new RECommandArgDef[]
+            {
+                new RECommandArgDef("multiline part definition/多行部件定义", "Part Definition", "Part describer"),
+                new RECommandArgDef("___OR USE OLDER PART DEFINITION BELOW___", "Alternative Argument Set", "Do not use both"),
+                new RECommandArgDef("x", "Float", "x Coordinate of new part"),
+                new RECommandArgDef("y", "Float", "y Coordinate of new part"),
+                new RECommandArgDef("type", "Integer", "part type of new part"),
+                new RECommandArgDef("custom index", "Integer", "skin value of new part"),
+                new RECommandArgDef("grid rotation", "Integer[..7]", "grid rotation value of new part"),
+                new RECommandArgDef("is it flipped", "Boolean as Integer", "determine if new part is flipped")
+            },
+            (args) =>
+            {
+                string varName = args.GetString(0);
+                string data = args.GetRawString().Substring(varName.Length);
+                PartDefinition partDefinition = new PartDefinition();
+                bool success = ReCommandHandler.TryAddPartDefinition(varName, data);
+                if (!success)
+                {
+                    float rx = args.GetFloat(0);
+                    float ry = args.GetFloat(1);
+                    int intPartType = args.GetInt(2);
+                    int customPartIndex = args.GetInt(3);
+                    int rotation = args.GetInt(4);
+                    bool isFlipped = args.GetBool(5);
+                    BasePart.PartType partType = ((SortedPartType)intPartType).ToPartType();
+                    BasePart basePart =
+                        partDefinition.GetBasePart(rx, ry, customPartIndex, partType, isFlipped, rotation);
+                }
+            }
         );
     }
     
@@ -349,89 +382,49 @@ public class RECommandInterface : MonoBehaviour
 
 /*
 #multiline
+#animate
+/frameinterval 0.001
 /delay 3
-/setpart 0 0 6 0 0 0 0 0 
-/delay 0.01
-/setpart 0 1 6 0 0 0 0 0 
-/delay 0.01
-/setpart 0 2 6 0 0 0 0 0 
-/delay 0.01
-/setpart 0 3 6 0 0 0 0 0 
-/delay 0.01
-/setpart 0 4 6 0 0 0 0 0 
-/delay 0.01
-/setpart 0 5 6 0 0 0 0 0 
-/delay 0.01
-/setpart 1 0 6 0 0 0 0 0 
-/delay 0.01
-/setpart 1 1 6 0 0 0 0 0 
-/delay 0.01
-/setpart 1 2 6 0 0 0 0 0 
-/delay 0.01
-/setpart 1 3 6 0 0 0 0 0 
-/delay 0.01
-/setpart 1 4 6 0 0 0 0 0 
-/delay 0.01
-/setpart 1 5 6 0 0 0 0 0 
-/delay 0.01
-/setpart 2 0 6 0 0 0 0 0 
-/delay 0.01
-/setpart 2 1 6 0 0 0 0 0 
-/delay 0.01
-/setpart 2 2 6 0 0 0 0 0 
-/delay 0.01
-/setpart 2 3 6 0 0 0 0 0 
-/delay 0.01
-/setpart 2 4 6 0 0 0 0 0 
-/delay 0.01
-/setpart 2 5 6 0 0 0 0 0 
-/delay 0.01
-/setpart 3 0 6 0 0 0 0 0 
-/delay 0.01
-/setpart 3 1 6 0 0 0 0 0 
-/delay 0.01
-/setpart 3 2 6 0 0 0 0 0 
-/delay 0.01
-/setpart 3 3 6 0 0 0 0 0 
-/delay 0.01
-/setpart 3 4 6 0 0 0 0 0 
-/delay 0.01
-/setpart 3 5 6 0 0 0 0 0 
-/delay 0.01
-/setpart 4 0 6 0 0 0 0 0 
-/delay 0.01
-/setpart 4 1 6 0 0 0 0 0 
-/delay 0.01
-/setpart 4 2 6 0 0 0 0 0 
-/delay 0.01
-/setpart 4 3 6 0 0 0 0 0 
-/delay 0.01
-/setpart 4 4 6 0 0 0 0 0 
-/delay 0.01
-/setpart 4 5 6 0 0 0 0 0 
-/delay 0.01
-/setpart 5 0 6 0 0 0 0 0 
-/delay 0.01
-/setpart 5 1 6 0 0 0 0 0 
-/delay 0.01
-/setpart 5 2 6 0 0 0 0 0 
-/delay 0.01
-/setpart 5 3 6 0 0 0 0 0 
-/delay 0.01
-/setpart 5 4 6 0 0 0 0 0 
-/delay 0.01
-/setpart 5 5 6 0 0 0 0 0 
-/delay 0.01
-/setpart 6 0 6 0 0 0 0 0 
-/delay 0.01
-/setpart 6 1 6 0 0 0 0 0 
-/delay 0.01
-/setpart 6 2 6 0 0 0 0 0 
-/delay 0.01
-/setpart 6 3 6 0 0 0 0 0 
-/delay 0.01
-/setpart 6 4 6 0 0 0 0 0 
-/delay 0.01
-/setpart 6 5 6 0 0 0 0 0 
-/delay 0.01
+/setpart 0 0 6 42 0 0
+/setpart 0 1 6 42 0 0
+/setpart 0 2 6 42 0 0
+/setpart 0 3 6 42 0 0
+/setpart 0 4 6 42 0 0
+/setpart 0 5 6 42 0 0
+/setpart 1 0 6 42 0 0
+/setpart 1 1 6 42 0 0
+/setpart 1 2 6 42 0 0
+/setpart 1 3 6 42 0 0
+/setpart 1 4 6 42 0 0
+/setpart 1 5 6 42 0 0
+/setpart 2 0 6 42 0 0
+/setpart 2 1 6 42 0 0
+/setpart 2 2 6 42 0 0
+/setpart 2 3 6 42 0 0
+/setpart 2 4 6 42 0 0
+/setpart 2 5 6 42 0 0
+/setpart 3 0 6 42 0 0
+/setpart 3 1 6 42 0 0
+/setpart 3 2 6 42 0 0
+/setpart 3 3 6 42 0 0
+/setpart 3 4 6 42 0 0
+/setpart 3 5 6 42 0 0
+/setpart 4 0 6 42 0 0
+/setpart 4 1 6 42 0 0
+/setpart 4 2 6 42 0 0
+/setpart 4 3 6 42 0 0
+/setpart 4 4 6 42 0 0
+/setpart 4 5 6 42 0 0
+/setpart 5 0 6 42 0 0
+/setpart 5 1 6 42 0 0
+/setpart 5 2 6 42 0 0
+/setpart 5 3 6 42 0 0
+/setpart 5 4 6 42 0 0
+/setpart 5 5 6 42 0 0
+/setpart 6 0 6 42 0 0
+/setpart 6 1 6 42 0 0
+/setpart 6 2 6 42 0 0
+/setpart 6 3 6 42 0 0
+/setpart 6 4 6 42 0 0
+/setpart 6 5 6 42 0 0
 */
