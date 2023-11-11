@@ -381,7 +381,7 @@ public class EntityLight : MonoBehaviour
 				Vector2s = deltaVectors,
 				numbers = physicFloats
 			};
-			JobHandle jobHandle = pillarCollision.Schedule(4,4);
+			JobHandle jobHandle = pillarCollision.Schedule(8,128);
 			jobHandle.Complete();
 			data.Position0 = data.Position0 * (1f - timeOfImpact) + data.Position1 * timeOfImpact;
 			data.Position1 += deltaVectors[0];
@@ -488,7 +488,7 @@ public class EntityLight : MonoBehaviour
 				physicFloats = physicFloats,
 				deltaVectors = deltaVectors
 			};
-			JobHandle jobHandle = shieldAndBoxCollision.Schedule(4, 4);
+			JobHandle jobHandle = shieldAndBoxCollision.Schedule(8, 128);
 			jobHandle.Complete();
 			data.Position0 = data.Position0 * (1f - timeOfImpact) + data.Position1 * timeOfImpact + deltaVectors[0];
 			data.Position1 += deltaVectors[1];

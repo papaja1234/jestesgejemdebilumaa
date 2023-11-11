@@ -758,6 +758,7 @@ public class BasePart : WPFMonoBehaviour
 		}
 	}
 
+	[BurstCompile]
 	public static Direction Rotate(Direction direction, GridRotation rotation)
 	{
 		return (Direction)(((int)direction + (int)rotation) % 4);

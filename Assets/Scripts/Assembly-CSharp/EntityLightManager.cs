@@ -343,7 +343,7 @@ public class EntityLightManager : PartManager
 	private bool BroadPhaseDetect(EntityLight light, ref CCDData data)
 	{
 		EntityLight.LightData data2 = light.Data;
-		BroadPhaseDetectJob broadPhaseDetectJob = new BroadPhaseDetectJob()
+		BroadPhaseDetectJob broadPhaseDetectJob = new BroadPhaseDetectJob
 		{
 			type = light.Type,
 			dataPosition0x = data.Position0.x,
@@ -488,8 +488,8 @@ public class EntityLightManager : PartManager
 		}
 		bounds.GetLocalContactPoint(resultX3, resultY3, out var pointX, out var pointY);
 		Vector2 contactPoint = new Vector2(pointX, pointY);
-		Vector2 contactNormal = new Vector2((float)(-num5) * y2, (float)num5 * x2);
-		Vector2 relativeVelocity = new Vector2((float)num5 * (resultX2 - resultX), (float)num5 * (resultY2 - resultY));
+		Vector2 contactNormal = new Vector2(-num5 * y2, num5 * x2);
+		Vector2 relativeVelocity = new Vector2(num5 * (resultX2 - resultX), num5 * (resultY2 - resultY));
 		result = new TOIResult(num8, 1, contactPoint, contactNormal, contactSeparation, relativeVelocity);
 		return true;
 	}
@@ -539,14 +539,14 @@ public class EntityLightManager : PartManager
 			int num12 = ((num6 > 0f) ? 1 : (-1));
 			if (num7 > num11)
 			{
-				float num13 = (float)num12 * ((float)Math.Sqrt(num9 - num11 * num11) + bounds.B);
+				float num13 = num12 * ((float)Math.Sqrt(num9 - num11 * num11) + bounds.B);
 				resultCount = 2;
 				result2 = (0f - num13 - num2) / num6;
 				result3 = (num13 - num2) / num6;
 			}
 			if (num8 > num11)
 			{
-				float num14 = (float)num12 * ((float)Math.Sqrt(num10 - num11 * num11) + bounds.B);
+				float num14 = num12 * ((float)Math.Sqrt(num10 - num11 * num11) + bounds.B);
 				resultCount2 = 2;
 				result4 = (0f - num14 - num2) / num6;
 				result5 = (num14 - num2) / num6;
@@ -558,14 +558,14 @@ public class EntityLightManager : PartManager
 			int num16 = ((num5 > 0f) ? 1 : (-1));
 			if (num7 > num15)
 			{
-				float num17 = (float)num16 * ((float)Math.Sqrt(num9 - num15 * num15) + bounds.A);
+				float num17 = num16 * ((float)Math.Sqrt(num9 - num15 * num15) + bounds.A);
 				resultCount = 2;
 				result2 = (0f - num17 - num) / num5;
 				result3 = (num17 - num) / num5;
 			}
 			if (num8 > num15)
 			{
-				float num18 = (float)num16 * ((float)Math.Sqrt(num10 - num15 * num15) + bounds.A);
+				float num18 = num16 * ((float)Math.Sqrt(num10 - num15 * num15) + bounds.A);
 				resultCount2 = 2;
 				result4 = (0f - num18 - num) / num5;
 				result5 = (num18 - num) / num5;
@@ -596,10 +596,10 @@ public class EntityLightManager : PartManager
 				float num23 = num22;
 				int num24 = ((num5 > 0f) ? num19 : (-num19));
 				int num25 = ((num6 > 0f) ? num20 : (-num20));
-				float num26 = (float)num24 * num5;
-				float num27 = (float)num24 * num - bounds.A;
-				float num28 = (float)num25 * num6;
-				float num29 = (float)num25 * num2 - bounds.B;
+				float num26 = num24 * num5;
+				float num27 = num24 * num - bounds.A;
+				float num28 = num25 * num6;
+				float num29 = num25 * num2 - bounds.B;
 				if (num24 != 0 && num25 != 0)
 				{
 					QuadraticFunction quadraticFunction = new QuadraticFunction(num26 * num26 + num28 * num28, 2f * (num26 * num27 + num28 * num29), num27 * num27 + num29 * num29);
@@ -685,25 +685,25 @@ public class EntityLightManager : PartManager
 				}
 				if (num40 != 0 && num41 != 0)
 				{
-					vector4 = new Vector2((float)num40 * bounds.A, (float)num41 * bounds.B);
+					vector4 = new Vector2(num40 * bounds.A, num41 * bounds.B);
 					vector5 = vector4 - vector3;
 					num39 = Vector.Length(vector5);
 					vector5 /= num39;
 				}
 				else if (num40 == 0 && num41 != 0)
 				{
-					vector4 = new Vector2(num37, (float)num41 * bounds.B);
+					vector4 = new Vector2(num37, num41 * bounds.B);
 					vector5 = new Vector2(0f, -num41);
 					num39 = Math.Abs(num38) - bounds.B;
 				}
 				else if (num40 != 0 && num41 == 0)
 				{
-					vector4 = new Vector2((float)num40 * bounds.A, num38);
+					vector4 = new Vector2(num40 * bounds.A, num38);
 					vector5 = new Vector2(-num40, 0f);
 					num39 = Math.Abs(num37) - bounds.A;
 				}
 			}
-			result = new TOIResult(num36, 1, vector4, vector5, num39 - num7, default(Vector2));
+			result = new TOIResult(num36, 1, vector4, vector5, num39 - num7);
 			return true;
 		}
 		return false;
@@ -935,7 +935,7 @@ public class EntityLightManager : PartManager
 	private static void LineAndCircleIntersection(float pX, float pY, float dX, float dY, float cX, float cY, float r,
 		out int resultCount, out float result1, out float result2)
 	{
-		LineAndCircleIntersectionJob lineAndCircleIntersectionJob = new LineAndCircleIntersectionJob()
+		LineAndCircleIntersectionJob lineAndCircleIntersectionJob = new LineAndCircleIntersectionJob
 		{
 			pX = pX,
 			pY = pY,
@@ -988,7 +988,7 @@ public class EntityLightManager : PartManager
 			}
 			else
 			{
-				float num8 = (float)math.sqrt(num6);
+				float num8 = math.sqrt(num6);
 				nativeInts[0] = 2;
 				nativeFloats[0] = (0f - num3 - num8) / num5;
 				nativeFloats[1] = (0f - num3 + num8) / num5;
@@ -1066,7 +1066,7 @@ public class EntityLightManager : PartManager
 			if (num5 == 0) continue;
 			for (int m = 0; m < num2; m++)
 			{
-				m_capacities[k * num2 + m] += array2[k] * (float)m_lightCounts[k * num2 + m] / (float)num5;
+				m_capacities[k * num2 + m] += array2[k] * m_lightCounts[k * num2 + m] / num5;
 			}
 		}
 		for (int n = 0; n < num * num2; n++)
@@ -1075,7 +1075,7 @@ public class EntityLightManager : PartManager
 			float num7 = m_electricities[n] + num6;
 			float num8 = Math.Min(num7 + Mathf.Sqrt(num6) * @float, num6);
 			m_electricities[n] = num8;
-			array3[n] = (num8 - num7) / (float)m_lightCounts[n];
+			array3[n] = (num8 - num7) / m_lightCounts[n];
 		}
 		for (int num9 = 0; num9 < num; num9++)
 		{
@@ -1102,12 +1102,12 @@ public class EntityLightManager : PartManager
 					}
 				}
 				num10 |= 1 << num14;
-				float num18 = ((num15 < num11 / (float)num13) ? num15 : (num11 / (float)num13));
+				float num18 = ((num15 < num11 / num13) ? num15 : (num11 / num13));
 				num11 -= num18;
 				int num19 = m_lightCounts[num9 * num2 + num14];
 				if (num19 != 0)
 				{
-					array4[num9 * num2 + num14] = (num18 - num15) / (float)num19;
+					array4[num9 * num2 + num14] = (num18 - num15) / num19;
 				}
 			}
 		}
@@ -1245,8 +1245,8 @@ public class EntityLightManager : PartManager
 					prePosition = new Vector2(prePosition.x + position2.x - velocity.x * fixedDeltaTime, prePosition.y + position2.y - velocity.y * fixedDeltaTime);
 				}
 			}
-			position /= (float)num4;
-			prePosition /= (float)num4;
+			position /= num4;
+			prePosition /= num4;
 			foreach (BasePart item3 in list)
 			{
 				if (!item3.HasMultipleRigidbodies())
