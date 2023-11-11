@@ -134,6 +134,26 @@ public class RECommandInterface : MonoBehaviour
                         int y = (int)math.floor(ry);
                         float offsetX = rx - x;
                         float offsetY = ry - y;
+                        if (offsetX>0.5f)
+                        {
+                            offsetX -= 1;
+                            x++;
+                        }
+                        if (offsetX<-0.5f)
+                        {
+                            offsetX = 1 - offsetX;
+                            x--;
+                        }
+                        if (offsetY>0.5f)
+                        {
+                            offsetY -=1;
+                            y++;
+                        }
+                        if (offsetY<-0.5f)
+                        {
+                            offsetY = 1 - offsetY;
+                            y--;
+                        }
                         int intPartType = args.GetInt(2);
                         int customPartIndex = args.GetInt(3);
                         int rotation = args.GetInt(4);
