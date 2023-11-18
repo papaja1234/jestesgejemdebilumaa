@@ -160,7 +160,6 @@ MonoBehaviour:
   - {fileID: 1270757001993425, guid: a5d4f36f10501fe4589cf8fec3469600, type: 3}
   - {fileID: 1096738951977490, guid: aac092a45c345dd478b432edf2e9e89b, type: 3}
   - {fileID: 1930032585199545, guid: a74ee491bca739347acef9821ef24b64, type: 3}
-  - {fileID: 1781075272015711, guid: 6e1d1d806aac5ee4eb252534cb659980, type: 3}
   m_customParts:
   - partType: 7
     customParts:
@@ -519,8 +518,6 @@ MonoBehaviour:
     - {fileID: 445477866284809951, guid: f8799e6024677744792415e09ed02282, type: 3}
     - {fileID: 114849973470915591, guid: 5e251fc33f6f63042ac69f2d52d2d426, type: 3}
     - {fileID: 1791194212841919917, guid: 1391e9bde125d044587da8af6c42da0d, type: 3}
-  - partType: 50
-    customParts: []
   m_episodeLevels:
   - {fileID: 114863267608396748, guid: 7c1239181347ac14785f11970b12409a, type: 3}
   - {fileID: 114778965027394414, guid: a66b4b06f8572fc40b3d79a02517362e, type: 3}

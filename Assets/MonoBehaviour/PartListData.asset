@@ -70,7 +70,6 @@ MonoBehaviour:
   - {fileID: 1260145950847552, guid: 503264338ce0fdf49884a24cfbe5a814, type: 3}
   - {fileID: 1056058711696539, guid: 63f873a484d06b2499f19f0130404a33, type: 3}
   - {fileID: 1286369299885130, guid: 2efe1f2392a0fde46aa83d96f41cf8a8, type: 3}
-  - {fileID: 1781075272015711, guid: 6e1d1d806aac5ee4eb252534cb659980, type: 3}
   PartIcons:
   - Part: {fileID: 1780987275874567, guid: a4e12d208b234a44aaab3e8410333301, type: 3}
     MaterialName: IngameAtlas4
@@ -168,9 +167,6 @@ MonoBehaviour:
   - Part: {fileID: 1494904642099499, guid: c4e4bce215a95254caf01709261d2ff7, type: 3}
     MaterialName: IngameAtlas4
     SpriteName: DigitalDisplay_IconSprite
-  - Part: {fileID: 1781075272015711, guid: 6e1d1d806aac5ee4eb252534cb659980, type: 3}
-    MaterialName: IngameAtlas4
-    SpriteName: NeuralNetwork_Sprite
   PartRanges:
   - Part: {fileID: 1269385843468890, guid: 7657a2b714b3f6b47a0d6a085075dfa4, type: 3}
     Count: 16
