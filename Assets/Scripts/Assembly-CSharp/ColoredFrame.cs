@@ -106,7 +106,7 @@ public class ColoredFrame : Frame
 				}
 				else
 				{
-					//INUnity.LoadShader("PreAlpha_Unlit_ColorTransparent_Geometry");
+					INUnity.LoadShader("PreAlpha_Unlit_ColorTransparent_Geometry");
 					m_coloredPartMaterials = null;
 				}
 				m_coloredPart = basePart;

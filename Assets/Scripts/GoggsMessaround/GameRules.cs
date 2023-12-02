@@ -8,6 +8,7 @@ using UnityEngine;
 
 public static class GameRules
 {
+    public static bool ChanneledRadio { get; private set; } = true;
     public static int PartHPStatus { get; private set; } = 2;
     public static bool ShowPropertyPanel { get; set; } = false;
     public static float TerrainScale { get; set; } = 1f;
@@ -50,6 +51,9 @@ public static class GameRules
             case "playsound":
                 PlaySound = Boolean.Parse(value);
                 break;
+            case "channeledradio":
+                ChanneledRadio = bool.Parse(value);
+                break;
             default:
                 Console.WriteLine(INLocalization.Instance.GetText("Gamerule_NotFound"));
                 break;
@@ -65,7 +69,18 @@ public static class GameRules
             "playername" => PlayerName,
             "showcommandlog" => ShowCommandLog.ToString(),
             "playsound" => PlaySound.ToString(),
+            "channeledradio" => ChanneledRadio.ToString(),
             _ => INLocalization.Instance.GetText("Gamerule_NotFound")
         };
     }
 }
+/*
+parthpmode                                             
+showpropertypanel                                      
+terrainscale                                           
+playername                                             
+showcommandlog                                         
+playsound                                              
+
+
+ */
