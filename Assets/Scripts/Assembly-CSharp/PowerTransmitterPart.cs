@@ -54,7 +54,7 @@ public class PowerTransmitterPart : ElectricalPart
 			{
 				CircuitFactory.Disconnect(m_element, m_connectedPart.m_element);
 			}
-			if (other != null && IsOnSameChannel(other))
+			if (other != null)
 			{
 				CircuitFactory.Connect(m_element, other.m_element);
 			}
@@ -68,20 +68,5 @@ public class PowerTransmitterPart : ElectricalPart
 		}
 		distance = Math.Max(distance - 1f, 0f);
 		resistor.Resistance = 0.2f * distance * distance + 0.1f;
-	}
-
-	private bool IsOnSameChannel(PowerTransmitterPart other)
-	{
-		if (!GameRules.ChanneledRadio)return true;
-		return this.enclosedInto switch
-		{
-			null when other.enclosedInto is null => true,
-			not null when other.enclosedInto is null => false,
-			null when other.enclosedInto is not null => false,
-			not null when this.enclosedInto.m_partType is PartType.WoodenFrame || other.enclosedInto.m_partType is PartType.WoodenFrame => true,
-			ColoredFrame coloredFrame when other.enclosedInto is ColoredFrame otherEnclosedInto => coloredFrame
-				.customPartIndex == otherEnclosedInto.customPartIndex,
-			_ => false
-		};
 	}
 }

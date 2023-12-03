@@ -160,38 +160,73 @@ public class ElectricalSystem : PartManager
 
 	private void UpdatePowerTransmitters()
 	{
-		List<PowerTransmitterPart> list = new List<PowerTransmitterPart>();
-		List<PowerTransmitterPart> list2 = new List<PowerTransmitterPart>();
+		List<PowerTransmitterPart> senders = new List<PowerTransmitterPart>();
+		List<PowerTransmitterPart> receivers = new List<PowerTransmitterPart>();
 		foreach (ElectricalPart electricalPart in m_electricalParts)
 		{
 			if (electricalPart is PowerTransmitterPart powerTransmitterPart)
 			{
 				if (powerTransmitterPart.IsSender)
 				{
-					list.Add(powerTransmitterPart);
+					senders.Add(powerTransmitterPart);
 				}
 				else
 				{
-					list2.Add(powerTransmitterPart);
+					receivers.Add(powerTransmitterPart);
 				}
 			}
 		}
-		foreach (PowerTransmitterPart item in list2)
+
+		if (!GameRules.ChanneledRadio)
 		{
-			Vector3 position = item.transform.position;
-			float num = 256f;
-			PowerTransmitterPart other = null;
-			foreach (PowerTransmitterPart item2 in list)
+			foreach (PowerTransmitterPart receiver in receivers)
 			{
-				Vector3 position2 = item2.transform.position;
-				float num2 = Vector.DistanceSquared(position, position2);
-				if (num2 < num)
+				Vector3 position = receiver.transform.position;
+				float num = 256f;
+				PowerTransmitterPart other = null;
+				foreach (PowerTransmitterPart sender in senders)
 				{
+					Vector3 position2 = sender.transform.position;
+					float num2 = Vector.DistanceSquared(position, position2);
+					if (!(num2 < num)) continue;
 					num = num2;
-					other = item2;
+					other = sender;
+				}
+				receiver.Connect(other, Mathf.Sqrt(num));
+			}
+		}
+		else
+		{
+			foreach (PowerTransmitterPart receiver in receivers)
+			{
+				Vector3 position = receiver.transform.position;
+				float num = 256f;
+				foreach (PowerTransmitterPart sender in senders)
+				{
+					Vector3 position2 = sender.transform.position;
+					float num2 = Vector.DistanceSquared(position, position2);
+					if (!(num2 < num)) continue;
+					num = num2;
+					if (IsOnSameChannel(receiver,sender)) receiver.Connect(sender, Mathf.Sqrt(num));
 				}
 			}
-			item.Connect(other, Mathf.Sqrt(num));
+		}
+
+		return;
+
+		static bool IsOnSameChannel(PowerTransmitterPart t, PowerTransmitterPart other)
+		{
+			if (!GameRules.ChanneledRadio)return true;
+			return t.enclosedInto switch
+			{
+				null when other.enclosedInto is null => true,
+				not null when other.enclosedInto is null => false,
+				null when other.enclosedInto is not null => false,
+				not null when t.enclosedInto.m_partType is BasePart.PartType.WoodenFrame || other.enclosedInto.m_partType is BasePart.PartType.WoodenFrame => true,
+				ColoredFrame coloredFrame when other.enclosedInto is ColoredFrame otherEnclosedInto => coloredFrame
+					.customPartIndex == otherEnclosedInto.customPartIndex,
+				_ => false
+			};
 		}
 	}
 
