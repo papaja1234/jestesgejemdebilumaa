@@ -75,7 +75,7 @@ MonoBehaviour:
   craftable: 1
   lootCrateReward: 1
   tags: []
-  audioMaterial: 0
+  audioMaterial: 1
   m_jointType: 0
   m_partTier: 4
   m_partType: 5
@@ -86,6 +86,8 @@ MonoBehaviour:
   m_gridXmax: 0
   m_gridYmin: 0
   m_gridYmax: 0
+  offsetX: 0
+  offsetY: 0
   m_static: 0
   m_jointConnectionStrength: 4
   m_jointConnectionType: 1
