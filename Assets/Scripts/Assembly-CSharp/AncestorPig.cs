@@ -296,6 +296,10 @@ public class AncestorPig : WPFMonoBehaviour
 
 	public void CheckForAncestorPigAchievement()
 	{
+		if (GameRules.PerformanceMode)
+		{
+			return;
+		}
 		if (Singleton<SocialGameManager>.IsInstantiated() && Singleton<GameManager>.Instance.IsInGame())
 		{
 			int revealedAncestorPigs = GameProgress.GetInt("Revealed_Ancestor_Pigs") + 1;

@@ -14,7 +14,7 @@ public static class GameRules
     public static float TerrainScale { get; set; } = 1f;
     public static bool PlaySound { get; set; } = false;
     public static string PlayerName { get; set; } = "Player";
-
+    public static bool PerformanceMode { get; set; } = false;
     public static bool ShowCommandLog { get; set; } = true;
 
     private static string SetPartHPMode(int mode)
@@ -54,6 +54,9 @@ public static class GameRules
             case "channeledradio":
                 ChanneledRadio = bool.Parse(value);
                 break;
+            case "performancemode":
+                PerformanceMode = bool.Parse(value);
+                break;
             default:
                 Console.WriteLine(INLocalization.Instance.GetText("Gamerule_NotFound"));
                 break;
@@ -70,6 +73,7 @@ public static class GameRules
             "showcommandlog" => ShowCommandLog.ToString(),
             "playsound" => PlaySound.ToString(),
             "channeledradio" => ChanneledRadio.ToString(),
+            "performancemode" => PerformanceMode.ToString(),
             _ => INLocalization.Instance.GetText("Gamerule_NotFound")
         };
     }

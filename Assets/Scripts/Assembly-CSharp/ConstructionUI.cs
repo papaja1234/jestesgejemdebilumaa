@@ -14,7 +14,7 @@ public class ConstructionUI : WPFMonoBehaviour
 		public int coordX;
 
 		public int coordY;
-
+		
 		public int useCount;
 
 		public int maxCount;
@@ -38,6 +38,10 @@ public class ConstructionUI : WPFMonoBehaviour
 		}
 	}
 
+	public int oldMouseX;
+		
+	public int oldMouseY;
+	
 	public Action OnPartsUnlocked;
 
 	public List<Transform> m_purchasableParts = new List<Transform>();
@@ -1037,7 +1041,18 @@ public class ConstructionUI : WPFMonoBehaviour
 		{
 			return;
 		}
+
 		GuiManager.Pointer pointer = GuiManager.GetPointer();
+
+		//initialize mouse pos if it's still at default (-1)
+		if (oldMouseX == -1 || oldMouseY == -1)
+		{
+			Vector3 mousePos = WPFMonoBehaviour.ScreenToZ0(pointer.position) - base.transform.position;
+			oldMouseX = Mathf.RoundToInt(mousePos.x); //dart note: using FloorToInt instead of RoundToInt??
+			oldMouseY = Mathf.RoundToInt(mousePos.y);
+			//Debug.Log("1t set");
+		}
+
 		if (DeviceInfo.UsesTouchInput)
 		{
 			if (Input.touchCount != 0)
@@ -1049,40 +1064,48 @@ public class ConstructionUI : WPFMonoBehaviour
 					{
 						m_pointerTime.x += Time.deltaTime;
 					}
+
 					if (phase == TouchPhase.Ended)
 					{
 						m_pointerTime.x = 0f;
 					}
+
 					if (m_pointerTime.x >= 0.4f || m_dragStarted)
 					{
 						m_pointerTime.y = 0f;
 					}
 				}
+
 				if (INSettings.GetBool(INFeature.PartDeletionOperation))
 				{
 					if (phase == TouchPhase.Stationary)
 					{
 						m_pointerTime.y += Time.deltaTime;
 					}
+
 					if (phase == TouchPhase.Ended)
 					{
 						m_pointerTime.y = 0f;
 					}
+
 					if (m_pointerTime.y >= 0.4f)
 					{
 						m_pointerTime.x = 0f;
 					}
 				}
+
 				if (INSettings.GetBool(INFeature.PartDeselectionOperation))
 				{
 					if (phase == TouchPhase.Stationary && pointer.onWidget)
 					{
 						m_pointerTime.z += Time.deltaTime;
 					}
+
 					if (phase == TouchPhase.Ended)
 					{
 						m_pointerTime.z = 0f;
 					}
+
 					if (m_pointerTime.z >= 0.4f)
 					{
 						partSelector.ResetSelection();
@@ -1104,12 +1127,14 @@ public class ConstructionUI : WPFMonoBehaviour
 					m_pointerTime.x = 0f;
 				}
 			}
+
 			if (INSettings.GetBool(INFeature.PartDeselectionOperation) && pointer.secondaryDown && pointer.onWidget)
 			{
 				partSelector.ResetSelection();
 				m_selectedElement = -1;
 			}
 		}
+
 		int constructionUiRows = m_partDescs.Count / m_itemsPerRow + ((m_partDescs.Count % m_itemsPerRow != 0) ? 1 : 0);
 		WPFMonoBehaviour.levelManager.m_constructionUiRows = constructionUiRows;
 		if (pointer.down && !pointer.onWidget && m_draggedElement == -1 && !m_dragStarted)
@@ -1125,6 +1150,7 @@ public class ConstructionUI : WPFMonoBehaviour
 				{
 					basePart = basePart.enclosedPart;
 				}
+
 				if (!basePart.m_static)
 				{
 					m_dragStartPosition = pointer.position;
@@ -1132,6 +1158,7 @@ public class ConstructionUI : WPFMonoBehaviour
 				}
 			}
 		}
+
 		if (pointer.up)
 		{
 			if (m_dragStarted && m_draggedElement == -1)
@@ -1146,31 +1173,38 @@ public class ConstructionUI : WPFMonoBehaviour
 					{
 						basePart2 = basePart2.enclosedPart;
 					}
+
 					if (m_contraption.Flip(basePart2))
 					{
 						AddMove();
 						RotationCount++;
-						Singleton<AudioManager>.Instance.Play2dEffect(WPFMonoBehaviour.gameData.commonAudioCollection.rotatePart);
+						Singleton<AudioManager>.Instance.Play2dEffect(WPFMonoBehaviour.gameData.commonAudioCollection
+							.rotatePart);
 					}
 				}
 			}
+
 			m_dragStarted = false;
 		}
+
 		float num = 1f;
 		if (DeviceInfo.UsesTouchInput)
 		{
 			num = ((!m_useDragOffset) ? 10f : 20f);
 		}
+
 		if (m_dragStarted && m_draggedElement == -1 && Vector3.Distance(pointer.position, m_dragStartPosition) >= num)
 		{
 			Vector3 vector3 = WPFMonoBehaviour.ScreenToZ0(m_dragStartPosition) - base.transform.position;
 			int coordX2 = Mathf.RoundToInt(vector3.x);
 			int coordY2 = Mathf.RoundToInt(vector3.y);
 			BasePart basePart3 = m_contraption.FindPartAt(coordX2, coordY2);
-			if (!basePart3 || (basePart3.m_partType != BasePart.PartType.Rope && basePart3.m_partType != BasePart.PartType.Spring))
+			if (!basePart3 || (basePart3.m_partType != BasePart.PartType.Rope &&
+			                   basePart3.m_partType != BasePart.PartType.Spring))
 			{
 				ChangeCoordinatesToSelectBigPart(ref coordX2, ref coordY2);
 			}
+
 			BasePart basePart4 = m_contraption.RemovePartAt(coordX2, coordY2);
 			if ((bool)basePart4)
 			{
@@ -1189,11 +1223,14 @@ public class ConstructionUI : WPFMonoBehaviour
 						break;
 					}
 				}
+
 				if (INSettings.GetBool(INFeature.AutoSetPartBuildingIndex))
 				{
 					CustomizationManager.SetLastUsedPartIndex(basePart4.m_partType, basePart4.customPartIndex);
-					EventManager.Send(new CustomizePartUI.PartCustomizationEvent(basePart4.m_partType, basePart4.customPartIndex));
+					EventManager.Send(
+						new CustomizePartUI.PartCustomizationEvent(basePart4.m_partType, basePart4.customPartIndex));
 				}
+
 				if (INSettings.GetBool(INFeature.AutoSetPartBuildingRotation))
 				{
 					ContraptionExtensionData extensionData = INContraption.Instance.ExtensionData;
@@ -1203,15 +1240,18 @@ public class ConstructionUI : WPFMonoBehaviour
 						extensionData.PartRotations[key] = ((int)basePart4.m_gridRotation, basePart4.m_flipped);
 					}
 				}
+
 				UnityEngine.Object.Destroy(basePart4.gameObject);
 				ContraptionPartChanged(coordX2, coordY2);
 				PlayDragSound();
 			}
 		}
+
 		if (m_draggedElement != -1)
 		{
 			PartDesc partDesc = m_partDescs[m_draggedElement];
-			Vector3 position = WPFMonoBehaviour.hudCamera.GetComponent<Camera>().ScreenToWorldPoint(pointer.position) + m_dragOffset;
+			Vector3 position = WPFMonoBehaviour.hudCamera.GetComponent<Camera>().ScreenToWorldPoint(pointer.position) +
+			                   m_dragOffset;
 			Vector3 position2 = WPFMonoBehaviour.hudCamera.GetComponent<Camera>().WorldToScreenPoint(position);
 			Vector3 vector4 = Camera.main.ScreenToWorldPoint(position2);
 			EventManager.Send(new DraggingPartEvent(partDesc.part.m_partType, vector4));
@@ -1227,6 +1267,7 @@ public class ConstructionUI : WPFMonoBehaviour
 					{
 						m_mouseOverCell.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
 					}
+
 					m_mouseOverCell = value;
 					value.transform.localScale = new Vector3(0.33f, 0.33f, 0.33f);
 				}
@@ -1235,56 +1276,64 @@ public class ConstructionUI : WPFMonoBehaviour
 					m_mouseOverCell.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
 				}
 			}
+
 			if (pointer.up)
 			{
 				partDesc.customPartIndex = m_draggedElementCustomizationIndex;
 				AddMove();
-				if (WPFMonoBehaviour.levelManager.CanPlacePartAtGridCell(num2, num3) && m_contraption.CanPlaceSpecificPartAt(num2, num3, partDesc.part) && !pointer.onWidget)
+				if (WPFMonoBehaviour.levelManager.CanPlacePartAtGridCell(num2, num3) &&
+				    m_contraption.CanPlaceSpecificPartAt(num2, num3, partDesc.part) && !pointer.onWidget)
 				{
 					partDesc.useCount++;
 					EventManager.Send(new PartCountChanged(partDesc.part.m_partType, partDesc.CurrentCount));
 					BasePart basePart5 = partDesc.part;
 					if (m_draggingFromContraption)
 					{
-						basePart5 = WPFMonoBehaviour.gameData.GetCustomPart(basePart5.m_partType, m_draggedElementCustomizationIndex);
+						basePart5 = WPFMonoBehaviour.gameData.GetCustomPart(basePart5.m_partType,
+							m_draggedElementCustomizationIndex);
 					}
+
 					BasePart basePart6 = SetPartAt(num2, num3, basePart5);
 					ContraptionPartChanged(num2, num3);
 					PlayPartPlacedSound();
 					basePart6.OnPartPlaced();
-					EventManager.Send(new PartPlacedEvent(partDesc.part.m_partType, partDesc.part.m_partTier, basePart6.transform.position));
+					EventManager.Send(new PartPlacedEvent(partDesc.part.m_partType, partDesc.part.m_partTier,
+						basePart6.transform.position));
 				}
 				else
 				{
 					PlayRemoveSound();
 				}
+
 				SetDraggedElement(-1);
 			}
 		}
 		else if (m_selectedElement != -1 && m_draggedElement == -1 && !pointer.onWidget)
 		{
-			PartDesc partDesc2 = m_partDescs[m_selectedElement];
-			Vector3 vector6 = WPFMonoBehaviour.ScreenToZ0(pointer.position) - base.transform.position;
-			int num4 = Mathf.RoundToInt(vector6.x);
-			int num5 = Mathf.RoundToInt(vector6.y);
-			BasePart basePart7 = m_contraption.FindPartAt(num4, num5);
-			if (!basePart7 && (m_pointerTime.x >= 0.4f || pointer.down || (m_allowDragPlacement && pointer.dragging)) && partDesc2.useCount < partDesc2.maxCount)
-			{
-				if (TryPlacePartAtGridCell(num4, num5, partDesc2))
-				{
-					AddMove();
-				}
-			}
-			else if ((bool)basePart7 && basePart7.CanEncloseParts() && partDesc2.part.CanBeEnclosed() && (m_pointerTime.x >= 0.4f || pointer.up) && (!basePart7.enclosedPart || partDesc2.part.m_partType != basePart7.enclosedPart.m_partType) && partDesc2.useCount < partDesc2.maxCount && TryPlacePartAtGridCell(num4, num5, partDesc2))
-			{
-				AddMove();
-			}
+			PartDesc selectedPart = m_partDescs[m_selectedElement];
+			Vector3 mousePos = WPFMonoBehaviour.ScreenToZ0(pointer.position) - base.transform.position;
+			int newMouseX = Mathf.RoundToInt(mousePos.x);
+			int newMouseY = Mathf.RoundToInt(mousePos.y);
+
+			//bresenham's line algorithm
+			//https://www.cs.helsinki.fi/group/goa/mallinnus/lines/bresenh.html
+			if (newMouseX != oldMouseX || newMouseY != oldMouseY)
+				PlotLine(oldMouseX, oldMouseY, newMouseX, newMouseY, selectedPart, pointer);
+			else
+				PlotPart(newMouseX, newMouseY, selectedPart, pointer);
+
+			//and update old mouse pos
+			oldMouseX = newMouseX;
+			oldMouseY = newMouseY;
 		}
+
 		if (pointer.secondaryDown)
 		{
 			m_rightDragStartPosition = pointer.position;
 		}
-		if (m_draggedElement == -1 && (m_pointerTime.y >= 0.4f || pointer.secondaryDown || (pointer.secondaryDragging && pointer.position != m_rightDragStartPosition && !pointer.dragging)))
+
+		if (m_draggedElement == -1 && (m_pointerTime.y >= 0.4f || pointer.secondaryDown || (pointer.secondaryDragging &&
+			    pointer.position != m_rightDragStartPosition && !pointer.dragging)))
 		{
 			Vector3 vector7 = WPFMonoBehaviour.ScreenToZ0(pointer.position) - base.transform.position;
 			int x2 = Mathf.RoundToInt(vector7.x);
@@ -1294,6 +1343,7 @@ public class ConstructionUI : WPFMonoBehaviour
 			{
 				basePart8 = basePart8.enclosedPart;
 			}
+
 			if ((bool)basePart8 && !basePart8.m_static)
 			{
 				BasePart basePart9 = m_contraption.RemovePartAt(x2, y2);
@@ -1311,17 +1361,119 @@ public class ConstructionUI : WPFMonoBehaviour
 							break;
 						}
 					}
+
 					UnityEngine.Object.Destroy(basePart9.gameObject);
 					ContraptionPartChanged(x2, y2);
 				}
 			}
 		}
+
 		if (m_draggedElement == -1 && (bool)m_mouseOverCell)
 		{
 			m_mouseOverCell.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
 			m_mouseOverCell = null;
 		}
 	}
+
+	private void PlotLine(int x0, int y0, int x1, int y1, PartDesc selectedPart, GuiManager.Pointer pointer)
+	{
+		if (Math.Abs(y1 - y0) < Math.Abs(x1 - x0))
+		{
+			if (x0 > x1)
+				PlotLineLow(x1, y1, x0, y0, selectedPart, pointer);
+			else
+				PlotLineLow(x0, y0, x1, y1, selectedPart, pointer);
+		} else
+		{
+			if (y0 > y1)
+				PlotLineHigh(x1, y1, x0, y0, selectedPart, pointer);
+			else
+				PlotLineHigh(x0, y0, x1, y1, selectedPart, pointer);
+		}
+	}
+
+	private void PlotLineLow(int x0, int y0, int x1, int y1, PartDesc selectedPart, GuiManager.Pointer pointer)
+	{
+		int dx = x1 - x0;
+		int dy = y1 - y0;
+		int yi = 1;
+		if (dy < 0)
+		{
+			yi = -1;
+			dy = -dy;
+		}
+		int d = (2 * dy) - dx;
+		int y = y0;
+		for (int x = x0; x < x1; x++)
+		{
+			//plot
+			PlotPart(x, y, selectedPart, pointer);
+
+			if (d > 0)
+			{
+				y += yi;
+				d += 2 * (dy - dx);
+			} else
+			{
+				d += 2 * dy;
+			}
+        }
+    }
+
+	private void PlotLineHigh(int x0, int y0, int x1, int y1, PartDesc selectedPart, GuiManager.Pointer pointer)
+	{
+        int dx = x1 - x0;
+        int dy = y1 - y0;
+		int xi = 1;
+		if (dx < 0)
+		{
+			xi = -1;
+			dx = -dx;
+		}
+		int d = (2 * dx) - dy;
+		int x = x0;
+
+		for (int y = y0; y < y1; y++)
+		{
+			//plot part at that pos
+			PlotPart(x, y, selectedPart, pointer);
+
+			if (d > 0)
+			{
+				x += xi;
+				d += 2 * (dx - dy);
+			} else
+			{
+				d += 2 * dx;
+			}
+		}
+    }
+
+    private void PlotPart(int x, int y, PartDesc selectedPart, GuiManager.Pointer pointer)
+	{
+		//if we can't plot return
+		if (!(m_pointerTime.x >= 0.4f || pointer.down || (m_allowDragPlacement && pointer.dragging)))
+			return;
+
+        BasePart part = m_contraption.FindPartAt(x, y);
+        bool canEnclosePlot = part && (m_pointerTime.x >= 0.4f || pointer.up) && (!part.enclosedPart || selectedPart.part.m_partType != part.enclosedPart.m_partType);
+
+        if (!part && selectedPart.useCount < selectedPart.maxCount)
+        {
+            //ran on dragging mouse around with selected part action
+            if (TryPlacePartAtGridCell(x, y, selectedPart))
+            {
+                //reading this code is a nightmare, lol -dart
+                //Debug.Log("PLACE ABSYUGDSAUYFTVUYDF");
+                AddMove();
+            }
+        }
+        else if (part && part.CanEncloseParts() && selectedPart.part.CanBeEnclosed() && canEnclosePlot && selectedPart.useCount < selectedPart.maxCount && TryPlacePartAtGridCell(x, y, selectedPart))
+        {
+            AddMove();
+        }
+    }
+
 
 	private void ChangeCoordinatesToSelectBigPart(ref int coordX, ref int coordY)
 	{

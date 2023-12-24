@@ -233,8 +233,13 @@ public class TNT : BasePart
 		component.AddForce(num * vector.normalized, ForceMode.Impulse);
 	}
 
+
 	public void CheckForTNTAchievement()
 	{
+		if (GameRules.PerformanceMode)
+		{
+			return;
+		}
 		if (!Singleton<SocialGameManager>.IsInstantiated() || !Singleton<GameManager>.Instance.IsInGame())
 		{
 			return;

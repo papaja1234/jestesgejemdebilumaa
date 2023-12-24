@@ -694,6 +694,10 @@ public sealed class LevelManager : WPFMonoBehaviour
 
 	public void CheckForLevelStartAchievements()
 	{
+		if (GameRules.PerformanceMode)
+		{
+			return;
+		}
 		if (!Singleton<SocialGameManager>.IsInstantiated())
 		{
 			return;

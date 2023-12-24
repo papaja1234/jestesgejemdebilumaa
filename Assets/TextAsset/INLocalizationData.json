@@ -493,8 +493,8 @@
 		{
 			"id": "CommandInterface_InputPlaceHolder",
 			"text": {
-				"en-US": "/help gamerule",
-				"zh-Hans": "/help gamerule"
+				"en-US": "Input your commands here, e.g. /help",
+				"zh-Hans": "在这里输入命令, 例如 /help"
 			}
 		},
 		{

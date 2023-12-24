@@ -99,6 +99,10 @@ public class DynamicTNTBox : WPFMonoBehaviour
 
 	public void CheckForTNTAchievement()
 	{
+		if (GameRules.PerformanceMode)
+		{
+			return;
+		}
 		if (!Singleton<SocialGameManager>.IsInstantiated())
 		{
 			return;

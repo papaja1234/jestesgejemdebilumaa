@@ -684,6 +684,10 @@ public class Rocket : BasePropulsion
 
 	public void CheckForTNTAchievement()
 	{
+		if (GameRules.PerformanceMode)
+		{
+			return;
+		}
 		if (!Singleton<SocialGameManager>.IsInstantiated())
 		{
 			return;

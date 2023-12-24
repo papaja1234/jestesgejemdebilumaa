@@ -85,7 +85,7 @@ public class RECommandInterface : MonoBehaviour
             {
                 new RECommandArgDef("x", "Float", "x Coordinate of new part"),
                 new RECommandArgDef("y", "Float", "y Coordinate of new part"),
-                new RECommandArgDef("type", "Integer", "part type of new part"),
+                new RECommandArgDef("type", "Integer", "part type of new part (-1 for removal)"),
                 new RECommandArgDef("custom index", "Integer", "skin value of new part"),
                 new RECommandArgDef("grid rotation", "Integer[..7]", "grid rotation value of new part"),
                 new RECommandArgDef("is it flipped", "Boolean as Integer", "determine if new part is flipped"),
@@ -128,6 +128,7 @@ public class RECommandInterface : MonoBehaviour
                               or LevelManager.GameState.PausedWhileBuilding
                               or LevelManager.GameState.PreviewWhileBuilding)
                     {
+                        
                         float rx = args.GetFloat(0);
                         float ry = args.GetFloat(1);
                         int x = (int)math.floor(rx);
@@ -153,6 +154,11 @@ public class RECommandInterface : MonoBehaviour
                         {
                             offsetY = 1 - offsetY;
                             y--;
+                        }
+                        if (args.GetInt(2) <= -1)
+                        {
+                            Contraption.Instance.RemovePartAt(x, y);
+                            return;
                         }
                         int intPartType = args.GetInt(2);
                         int customPartIndex = args.GetInt(3);
@@ -214,6 +220,24 @@ public class RECommandInterface : MonoBehaviour
         ReCommandHandler.RegisterCommand("delay", "delay for a Time Span (seconds), only used with #multiline", new []
             {
                 new RECommandArgDef("delay amount", "Float", "How long to delay in seconds")
+            },
+            (args) =>
+            {
+                
+            }
+        );
+        ReCommandHandler.RegisterCommand("executefile", "execute a command from a file, not multi thread", new []
+            {
+                new RECommandArgDef("path", "String", "The absolute path of the file")
+            },
+            (args) =>
+            {
+                
+            }
+        );
+        ReCommandHandler.RegisterCommand("stop", "stop all executions", new RECommandArgDef[]
+            {
+                
             },
             (args) =>
             {

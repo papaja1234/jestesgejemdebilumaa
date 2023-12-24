@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using UnityEngine;
 
@@ -94,7 +95,7 @@ public class RECommandHandler : MonoBehaviour
                 Console.Write($"<{GameRules.GetGameRuleString("playername")}>: {text}\n");
                 return;
         }
-
+        
         string[]
             textParts = text.Normalize().TrimStart('/')
                 .Split(new[] { ' ' },
@@ -106,8 +107,35 @@ public class RECommandHandler : MonoBehaviour
             Console.WriteLine($"Command {textParts[0]} not found!");
             throw new RECommandException($"Command {textParts[0]} not found!");
         }
-
+        switch (command.Name)
+        {
+            case "executefile":
+            {
+                HandleFile(textParts[1]);
+                return;
+            }
+            case "stop":
+            {
+                StopAllCoroutines();
+                break;
+            }
+        }
         command.Execute(new RECommandArgs(textParts.Skip(1).ToArray())); //skip first part since that's the command name
+    }
+
+    public void HandleFile(string path)
+    {
+        string src = File.ReadAllText(path);
+        src = src.Normalize().ToLower().Replace("#multiline", "").Replace("\r","").Trim();
+        bool isAutoAnimated = src.Contains("#animate");
+        double autoAnimateTime = isAutoAnimated ? 0.01 : 0;
+        string[] multiCommands = src.Split('\n', StringSplitOptions.RemoveEmptyEntries);
+        int executionIndex = 0;
+        bool isExecuting = true;
+        bool canExecuteNext = true;
+        int waitUntil = 0;
+        src = src.Replace("#animate", "");
+        StartCoroutine(HandleFile(multiCommands, isAutoAnimated, autoAnimateTime));
     }
 
     public void HandleMultiLineCommand(string text)
@@ -160,10 +188,107 @@ public class RECommandHandler : MonoBehaviour
                 autoAnimateTime = f;
                 break;
             }
+            case "executefile":
+            {
+                HandleFile(textParts[1]);
+                break;
+            }
+            case "stop":
+            {
+                StopAllCoroutines();
+                break;
+            }
         }
 
         command.Execute(new RECommandArgs(textParts.Skip(1).ToArray()));
         executionIndex++;
+    }
+
+    private IEnumerator HandleFile(string[] multiCommands, bool isAutoAnimated = false,double autoAnimateTime = 0.01,/*just don't touch these two->>*/bool canExecuteNext = true, bool isExecuting = true)
+    {
+        int executionIndex = 0;
+        float waitUntil = 0;
+        for (;;)
+        {
+            if (!isExecuting) break;
+            switch (canExecuteNext)
+            {
+                case true:
+                {
+                    InternalExecuteNext();
+                    if (executionIndex == multiCommands.Length)
+                    {
+                        isExecuting = false;
+                        continue;
+                    }
+
+                    //----------------------------------------//
+                    if (isAutoAnimated)
+                    {
+                        canExecuteNext = false;
+                        waitUntil = Time.realtimeSinceStartup + (float)autoAnimateTime;
+                    }
+
+                    break;
+                }
+                case false:
+                {
+                    if (Time.realtimeSinceStartup >= waitUntil)
+                    {
+                        canExecuteNext = true;
+                    }
+
+                    yield return new WaitForRealSeconds((float)autoAnimateTime);
+                    break;
+                }
+            }
+        }
+
+        yield return null;
+        void InternalExecuteNext()
+        {
+            string c = multiCommands[executionIndex];
+            string[]
+                textParts = c.TrimStart('/')
+                    .Split(new[] { ' ' },
+                        StringSplitOptions
+                            .RemoveEmptyEntries); //Dart: maybe use "　" (U+3000) instead of " " for chinese? //Goggs: i guess i'll just use string.Normalize(). also we don't use U+3000
+            if (!commands.TryGetValue(textParts[0].ToLower().Trim(),
+                    out RECommand command)) //we lower & trim since we ignore case (and trailing spaces etc)
+            {
+                Console.WriteLine($"Line {executionIndex+1} : Command {textParts[0]} not found!");
+                throw new RECommandException($"Line {executionIndex+1} : Command {textParts[0]} not found!");
+            }
+
+            switch (command.Name)
+            {
+                case "delay":
+                {
+                    float.TryParse(textParts[1], out float f);
+                    canExecuteNext = false;
+                    waitUntil = Time.realtimeSinceStartup + f;
+                    break;
+                }
+                case "frameinterval":
+                {
+                    float.TryParse(textParts[1], out float f);
+                    autoAnimateTime = f;
+                    break;
+                }
+                case "executefile":
+                {
+                    HandleFile(textParts[1]);
+                    break;
+                }
+                case "stop":
+                {
+                    StopAllCoroutines();
+                    break;
+                }
+            }
+            command.Execute(new RECommandArgs(textParts.Skip(1).ToArray()));
+            executionIndex++;
+        }
     }
 
     public void Update()

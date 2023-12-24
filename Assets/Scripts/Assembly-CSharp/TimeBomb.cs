@@ -99,15 +99,18 @@ public class TimeBomb : BasePart
 			}
 		}
 		Singleton<AudioManager>.Instance.SpawnOneShotEffect(WPFMonoBehaviour.gameData.commonAudioCollection.tntExplosion, base.transform.position);
-		WPFMonoBehaviour.effectManager.CreateParticles(smokeCloudPrefab, base.transform.position - Vector3.forward * 12f, force: true);
-		CheckForAchievements();
+		if (!GameRules.PerformanceMode)
+		{
+			WPFMonoBehaviour.effectManager.CreateParticles(smokeCloudPrefab, base.transform.position - Vector3.forward * 12f, force: true);
+			CheckForAchievements();
+		}
 		base.contraption.RemovePart(this);
 		List<Joint> list = base.contraption.FindPartJointsFast(this);
 		if (list.Count > 0)
 		{
 			for (int j = 0; j < list.Count; j++)
 			{
-				bool flag = list[j].gameObject == this || list[j].connectedBody == this;
+				bool flag = list[j].gameObject == this || list[j].connectedBody == this;//don't touch this
 				if (!float.IsInfinity(list[j].breakForce) || flag)
 				{
 					UnityEngine.Object.Destroy(list[j]);
@@ -175,6 +178,10 @@ public class TimeBomb : BasePart
 
 	public void CheckForAchievements()
 	{
+		if (GameRules.PerformanceMode)
+		{
+			return;
+		}
 		if (Singleton<SocialGameManager>.IsInstantiated())
 		{
 			Singleton<GameManager>.Instance.IsInGame();

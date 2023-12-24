@@ -37,12 +37,15 @@ public class AlienTNT : TNT
 			}
 		}
 		Singleton<AudioManager>.Instance.SpawnOneShotEffect(WPFMonoBehaviour.gameData.commonAudioCollection.tntExplosion, base.transform.position);
-		WPFMonoBehaviour.effectManager.CreateParticles(smokeCloud, base.transform.position - Vector3.forward * 5f, force: true);
-		if ((bool)extraEffect)
+		if (!GameRules.PerformanceMode)
 		{
-			WPFMonoBehaviour.effectManager.CreateParticles(extraEffect, base.transform.position - Vector3.forward * 4f, force: true);
+			WPFMonoBehaviour.effectManager.CreateParticles(smokeCloud, base.transform.position - Vector3.forward * 5f, force: true);
+			if ((bool)extraEffect)
+			{
+				WPFMonoBehaviour.effectManager.CreateParticles(extraEffect, base.transform.position - Vector3.forward * 4f, force: true);
+			}
+			CheckForTNTAchievement();
 		}
-		CheckForTNTAchievement();
 		StartCoroutine(ShineLight());
 	}
 

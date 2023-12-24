@@ -5,7 +5,7 @@ using Unity.Jobs;
 using Unity.Burst;
 using Unity.Collections;
 
-[BurstCompile(CompileSynchronously = true)]
+
 public class BasePart : WPFMonoBehaviour
 {
 	public enum JointType
@@ -1067,6 +1067,8 @@ public class BasePart : WPFMonoBehaviour
 		AddShineEffect();
 	}
 
+	
+	[Obsolete("Obsolete")]
 	public virtual void PrePlaced()
 	{
 		if (!INSettings.GetBool(INFeature.DisableAlienPartParticles))
@@ -1092,6 +1094,10 @@ public class BasePart : WPFMonoBehaviour
 
 	private void AddShineEffect()
 	{
+		if (GameRules.PerformanceMode)
+		{
+			return;
+		}
 		if (WPFMonoBehaviour.levelManager != null && HasTag("Gold"))
 		{
 			SpriteShineEffect.AddOneTimeShine(base.gameObject);
@@ -1297,6 +1303,10 @@ public class BasePart : WPFMonoBehaviour
 
 	public void CheckForBrokenPartsAchievement()
 	{
+		if (GameRules.PerformanceMode)
+		{
+			return;
+		}
 		if (!Singleton<SocialGameManager>.IsInstantiated() || !Singleton<GameManager>.Instance.IsInGame())
 		{
 			return;

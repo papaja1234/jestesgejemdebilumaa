@@ -105,6 +105,10 @@ public class TNTBox : Goal
 
 	public void CheckForTNTAchievement()
 	{
+		if (GameRules.PerformanceMode)
+		{
+			return;
+		}
 		if (!Singleton<SocialGameManager>.IsInstantiated())
 		{
 			return;
