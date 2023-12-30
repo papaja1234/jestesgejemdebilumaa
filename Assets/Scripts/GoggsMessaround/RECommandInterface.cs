@@ -22,6 +22,10 @@ public class RECommandInterface : MonoBehaviour
     [SerializeField] public RECommandHandler ReCommandHandler;
     
     [SerializeField] public GameObject ExecutorDummy;
+    
+    [SerializeField] public UnityEngine.UI.Button OpenExtraMenu;
+    
+    [SerializeField] public UnityEngine.UI.Button CloseExtraMenu;
 
     public bool IsChanged { get; private set; }
     public static RECommandInterface Instance { get; private set; }
