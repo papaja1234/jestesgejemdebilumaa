@@ -1348,7 +1348,6 @@ GameObject:
   - component: {fileID: 3562048425765953543}
   - component: {fileID: 4608043400799201632}
   - component: {fileID: 4040134743063276281}
-  - component: {fileID: 4497366755391919594}
   m_Layer: 5
   m_Name: OpenButton
   m_TagString: Untagged
@@ -1459,27 +1458,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!95 &4497366755391919594
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7584301778336129006}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: fd9ee749e7396fa4e9983265ffd559a9, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &7669477547049083061
 GameObject:
   m_ObjectHideFlags: 0
