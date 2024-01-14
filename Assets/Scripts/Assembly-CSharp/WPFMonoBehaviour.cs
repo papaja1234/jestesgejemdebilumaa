@@ -379,10 +379,10 @@ public class WPFMonoBehaviour : MonoBehaviour
 
 	public static void ExportAllPartData(List<BasePart> parts)
 	{
-		StreamWriter streamWriter = new StreamWriter(@"C:\Users\Me\Documents\Parts.txt");
+		StreamWriter streamWriter = new StreamWriter(Path.Combine(Application.persistentDataPath, "Parts.txt"));
 		foreach (BasePart part in parts)
 		{
-			streamWriter.Write(GetPartStringData(part));
+			streamWriter.WriteLine(GetPartStringData(part));
 		}
 		streamWriter.Close();
 	}
@@ -391,9 +391,34 @@ public class WPFMonoBehaviour : MonoBehaviour
 	{
 		public static void ExportPartPrefabs(List<BasePart> parts)
 		{
+			static void CleanDirectory(string directoryPath)
+			{
+				if (Directory.Exists(directoryPath))
+				{
+					foreach (string filePath in Directory.GetFiles(directoryPath))
+					{
+						File.Delete(filePath);
+					}
+
+					foreach (string subdirectoryPath in Directory.GetDirectories(directoryPath))
+					{
+						CleanDirectory(subdirectoryPath);
+					}
+
+					Directory.Delete(directoryPath);
+				}
+			}
+
+			string partsFolder = Path.Combine(Application.persistentDataPath, "Parts");
+			if (Directory.Exists(partsFolder))
+			{
+				CleanDirectory(partsFolder);
+			}
+			Directory.CreateDirectory(partsFolder);
+
 			foreach (BasePart part in parts)
 			{
-				StreamWriter streamWriter = new StreamWriter(@"C:\Users\Me\Documents\Parts\" + part.ToString() + ".txt");
+				StreamWriter streamWriter = new StreamWriter(Path.Combine(partsFolder, part.ToString() + ".txt"));
 				int nestingLevel = 1;
 				GetResource(part.gameObject, streamWriter, 0);
 				CollectResources(part.gameObject.transform, streamWriter, nestingLevel);
@@ -415,6 +440,11 @@ public class WPFMonoBehaviour : MonoBehaviour
 			return "transform " + transform.position.x + " " + transform.position.y + " " + transform.position.z + " " + transform.rotation.eulerAngles.x + " " + transform.rotation.eulerAngles.y + " " + transform.rotation.eulerAngles.z + " " + transform.localScale.x + " " + transform.localScale.y + " " + transform.localScale.z;
 		}
 
+		public static string GetLocalTransformString(Transform transform)
+		{
+			return "localTransform " + transform.position.x + " " + transform.position.y + " " + transform.position.z + " " + transform.rotation.eulerAngles.x + " " + transform.rotation.eulerAngles.y + " " + transform.rotation.eulerAngles.z + " " + transform.localScale.x + " " + transform.localScale.y + " " + transform.localScale.z;
+		}
+
 		public static string GetSphereColliderString(SphereCollider sphereCollider)
 		{
 			return "sphereCollider " + sphereCollider.isTrigger + " " + sphereCollider.material.ToString() + " " + sphereCollider.center.x + " " + sphereCollider.center.y + " " + sphereCollider.center.z + " " + sphereCollider.radius;
@@ -427,7 +457,7 @@ public class WPFMonoBehaviour : MonoBehaviour
 
 		public static string GetBoxColliderString(BoxCollider boxCollider)
 		{
-			return "boxCollider " + boxCollider.isTrigger + " " + boxCollider.center.x + " " + boxCollider.center.y + " " + boxCollider.center.z + " " + boxCollider.size.x + " " + boxCollider.size.y + " " + boxCollider.size.z;
+			return "boxCollider " + boxCollider.isTrigger + " " + boxCollider.material.ToString() + " " + boxCollider.center.x + " " + boxCollider.center.y + " " + boxCollider.center.z + " " + boxCollider.size.x + " " + boxCollider.size.y + " " + boxCollider.size.z;
 		}
 
 		public static string GetSpriteString(Sprite sprite)
@@ -438,6 +468,11 @@ public class WPFMonoBehaviour : MonoBehaviour
 		public static string GetINSerializedSpriteString(INSerializedSprite serializedSprite)
 		{
 			return "serializedSprite " + serializedSprite.SpriteName;
+		}
+
+		public static string GetMaterial(PhysicMaterial material)
+		{
+			return "material " + material.bounciness + " " + material.dynamicFriction + " " + material.staticFriction + " " + material.frictionCombine + " " + material.bounceCombine;
 		}
 
 		public static void GetResource(GameObject gameObject, StreamWriter streamWriter, int nestingLevel)
@@ -452,6 +487,8 @@ public class WPFMonoBehaviour : MonoBehaviour
 			{
 				for (int i = 0; i < nestingLevel + 1; i++) streamWriter.Write("	");
 				streamWriter.WriteLine(GetSphereColliderString(sphereCollider));
+				for (int i = 0; i < nestingLevel + 1; i++) streamWriter.Write("	");
+				streamWriter.WriteLine(GetMaterial(sphereCollider.material));
 			}
 
 			CapsuleCollider capsuleCollider = gameObject.GetComponent<CapsuleCollider>();
@@ -459,6 +496,8 @@ public class WPFMonoBehaviour : MonoBehaviour
 			{
 				for (int i = 0; i < nestingLevel + 1; i++) streamWriter.Write("	");
 				streamWriter.WriteLine(GetCapsuleColliderString(capsuleCollider));
+				for (int i = 0; i < nestingLevel + 1; i++) streamWriter.Write("	");
+				streamWriter.WriteLine(GetMaterial(capsuleCollider.material));
 			}
 
 			BoxCollider boxCollider = gameObject.GetComponent<BoxCollider>();
@@ -466,6 +505,8 @@ public class WPFMonoBehaviour : MonoBehaviour
 			{
 				for (int i = 0; i < nestingLevel + 1; i++) streamWriter.Write("	");
 				streamWriter.WriteLine(GetBoxColliderString(boxCollider));
+				for (int i = 0; i < nestingLevel + 1; i++) streamWriter.Write("	");
+				streamWriter.WriteLine(GetMaterial(boxCollider.material));
 			}
 
 			Sprite sprite = gameObject.GetComponent<Sprite>();
