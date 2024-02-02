@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class BasePart : WPFMonoBehaviour
@@ -456,14 +457,14 @@ public class BasePart : WPFMonoBehaviour
 	{
 		switch (type)
 		{
-		case PartType.Balloons2:
-		case PartType.Balloons3:
-			return PartType.Balloon;
-		case PartType.Sandbag2:
-		case PartType.Sandbag3:
-			return PartType.Sandbag;
-		default:
-			return type;
+			case PartType.Balloons2:
+			case PartType.Balloons3:
+				return PartType.Balloon;
+			case PartType.Sandbag2:
+			case PartType.Sandbag3:
+				return PartType.Sandbag;
+			default:
+				return type;
 		}
 	}
 
@@ -594,34 +595,34 @@ public class BasePart : WPFMonoBehaviour
 		JointConnectionDirection jointConnectionDirection = localDirection;
 		switch (localDirection)
 		{
-		case JointConnectionDirection.LeftAndRight:
-			if (m_gridRotation == GridRotation.Deg_90 || m_gridRotation == GridRotation.Deg_270)
-			{
-				jointConnectionDirection = JointConnectionDirection.UpAndDown;
-			}
-			break;
-		case JointConnectionDirection.UpAndDown:
-			if (m_gridRotation == GridRotation.Deg_90 || m_gridRotation == GridRotation.Deg_270)
-			{
-				jointConnectionDirection = JointConnectionDirection.LeftAndRight;
-			}
-			break;
-		default:
-			jointConnectionDirection = (JointConnectionDirection)(((int)(localDirection - 1) + (int)m_gridRotation) % 4 + 1);
-			break;
+			case JointConnectionDirection.LeftAndRight:
+				if (m_gridRotation == GridRotation.Deg_90 || m_gridRotation == GridRotation.Deg_270)
+				{
+					jointConnectionDirection = JointConnectionDirection.UpAndDown;
+				}
+				break;
+			case JointConnectionDirection.UpAndDown:
+				if (m_gridRotation == GridRotation.Deg_90 || m_gridRotation == GridRotation.Deg_270)
+				{
+					jointConnectionDirection = JointConnectionDirection.LeftAndRight;
+				}
+				break;
+			default:
+				jointConnectionDirection = (JointConnectionDirection)(((int)(localDirection - 1) + (int)m_gridRotation) % 4 + 1);
+				break;
 		}
 		if (m_flipped)
 		{
 			switch (jointConnectionDirection)
 			{
-			case JointConnectionDirection.Left:
-				return JointConnectionDirection.Right;
-			case JointConnectionDirection.Right:
-				return JointConnectionDirection.Left;
-			case JointConnectionDirection.Up:
-				return JointConnectionDirection.Down;
-			case JointConnectionDirection.Down:
-				return JointConnectionDirection.Up;
+				case JointConnectionDirection.Left:
+					return JointConnectionDirection.Right;
+				case JointConnectionDirection.Right:
+					return JointConnectionDirection.Left;
+				case JointConnectionDirection.Up:
+					return JointConnectionDirection.Down;
+				case JointConnectionDirection.Down:
+					return JointConnectionDirection.Up;
 			}
 		}
 		return jointConnectionDirection;
@@ -631,11 +632,11 @@ public class BasePart : WPFMonoBehaviour
 	{
 		return direction switch
 		{
-			Direction.Right => Direction.Left, 
-			Direction.Up => Direction.Down, 
-			Direction.Left => Direction.Right, 
-			Direction.Down => Direction.Up, 
-			_ => Direction.Right, 
+			Direction.Right => Direction.Left,
+			Direction.Up => Direction.Down,
+			Direction.Left => Direction.Right,
+			Direction.Down => Direction.Up,
+			_ => Direction.Right,
 		};
 	}
 
@@ -643,32 +644,32 @@ public class BasePart : WPFMonoBehaviour
 	{
 		switch (GetJointConnectionDirection())
 		{
-		case JointConnectionDirection.Any:
-			return true;
-		case JointConnectionDirection.Right:
-			return direction == Direction.Right;
-		case JointConnectionDirection.Up:
-			return direction == Direction.Up;
-		case JointConnectionDirection.Left:
-			return direction == Direction.Left;
-		case JointConnectionDirection.Down:
-			return direction == Direction.Down;
-		case JointConnectionDirection.LeftAndRight:
-			if (direction != Direction.Left)
-			{
+			case JointConnectionDirection.Any:
+				return true;
+			case JointConnectionDirection.Right:
 				return direction == Direction.Right;
-			}
-			return true;
-		case JointConnectionDirection.UpAndDown:
-			if (direction != Direction.Up)
-			{
+			case JointConnectionDirection.Up:
+				return direction == Direction.Up;
+			case JointConnectionDirection.Left:
+				return direction == Direction.Left;
+			case JointConnectionDirection.Down:
 				return direction == Direction.Down;
-			}
-			return true;
-		case JointConnectionDirection.None:
-			return false;
-		default:
-			return false;
+			case JointConnectionDirection.LeftAndRight:
+				if (direction != Direction.Left)
+				{
+					return direction == Direction.Right;
+				}
+				return true;
+			case JointConnectionDirection.UpAndDown:
+				if (direction != Direction.Up)
+				{
+					return direction == Direction.Down;
+				}
+				return true;
+			case JointConnectionDirection.None:
+				return false;
+			default:
+				return false;
 		}
 	}
 
@@ -676,32 +677,32 @@ public class BasePart : WPFMonoBehaviour
 	{
 		switch (GetCustomJointConnectionDirection())
 		{
-		case JointConnectionDirection.Any:
-			return true;
-		case JointConnectionDirection.Right:
-			return direction == Direction.Right;
-		case JointConnectionDirection.Up:
-			return direction == Direction.Up;
-		case JointConnectionDirection.Left:
-			return direction == Direction.Left;
-		case JointConnectionDirection.Down:
-			return direction == Direction.Down;
-		case JointConnectionDirection.LeftAndRight:
-			if (direction != Direction.Left)
-			{
+			case JointConnectionDirection.Any:
+				return true;
+			case JointConnectionDirection.Right:
 				return direction == Direction.Right;
-			}
-			return true;
-		case JointConnectionDirection.UpAndDown:
-			if (direction != Direction.Up)
-			{
+			case JointConnectionDirection.Up:
+				return direction == Direction.Up;
+			case JointConnectionDirection.Left:
+				return direction == Direction.Left;
+			case JointConnectionDirection.Down:
 				return direction == Direction.Down;
-			}
-			return true;
-		case JointConnectionDirection.None:
-			return false;
-		default:
-			return false;
+			case JointConnectionDirection.LeftAndRight:
+				if (direction != Direction.Left)
+				{
+					return direction == Direction.Right;
+				}
+				return true;
+			case JointConnectionDirection.UpAndDown:
+				if (direction != Direction.Up)
+				{
+					return direction == Direction.Down;
+				}
+				return true;
+			case JointConnectionDirection.None:
+				return false;
+			default:
+				return false;
 		}
 	}
 
@@ -723,20 +724,20 @@ public class BasePart : WPFMonoBehaviour
 		}
 		switch (source)
 		{
-		case JointConnectionDirection.LeftAndRight:
-			if (target == JointConnectionDirection.UpAndDown || target == JointConnectionDirection.Up || target == JointConnectionDirection.Down)
-			{
-				return GridRotation.Deg_90;
-			}
-			return GridRotation.Deg_0;
-		default:
-			return (GridRotation)((target - source + 4) % 4);
-		case JointConnectionDirection.UpAndDown:
-			if (target == JointConnectionDirection.LeftAndRight || target == JointConnectionDirection.Left || target == JointConnectionDirection.Right)
-			{
-				return GridRotation.Deg_90;
-			}
-			return GridRotation.Deg_0;
+			case JointConnectionDirection.LeftAndRight:
+				if (target == JointConnectionDirection.UpAndDown || target == JointConnectionDirection.Up || target == JointConnectionDirection.Down)
+				{
+					return GridRotation.Deg_90;
+				}
+				return GridRotation.Deg_0;
+			default:
+				return (GridRotation)((target - source + 4) % 4);
+			case JointConnectionDirection.UpAndDown:
+				if (target == JointConnectionDirection.LeftAndRight || target == JointConnectionDirection.Left || target == JointConnectionDirection.Right)
+				{
+					return GridRotation.Deg_90;
+				}
+				return GridRotation.Deg_0;
 		}
 	}
 
@@ -744,15 +745,15 @@ public class BasePart : WPFMonoBehaviour
 	{
 		return rotation switch
 		{
-			GridRotation.Deg_0 => 0f, 
-			GridRotation.Deg_90 => 90f, 
-			GridRotation.Deg_180 => 180f, 
-			GridRotation.Deg_270 => 270f, 
-			GridRotation.Deg_45 => 45f, 
-			GridRotation.Deg_135 => 135f, 
-			GridRotation.Deg_225 => 225f, 
-			GridRotation.Deg_315 => 315f, 
-			_ => 0f, 
+			GridRotation.Deg_0 => 0f,
+			GridRotation.Deg_90 => 90f,
+			GridRotation.Deg_180 => 180f,
+			GridRotation.Deg_270 => 270f,
+			GridRotation.Deg_45 => 45f,
+			GridRotation.Deg_135 => 135f,
+			GridRotation.Deg_225 => 225f,
+			GridRotation.Deg_315 => 315f,
+			_ => 0f,
 		};
 	}
 
@@ -766,58 +767,58 @@ public class BasePart : WPFMonoBehaviour
 	{
 		switch (m_gridRotation)
 		{
-		case GridRotation.Deg_0:
-			if (!m_eightWay)
-			{
-				SetRotation(GridRotation.Deg_270);
-			}
-			else
-			{
-				SetRotation(GridRotation.Deg_315);
-			}
-			break;
-		case GridRotation.Deg_90:
-			if (!m_eightWay)
-			{
+			case GridRotation.Deg_0:
+				if (!m_eightWay)
+				{
+					SetRotation(GridRotation.Deg_270);
+				}
+				else
+				{
+					SetRotation(GridRotation.Deg_315);
+				}
+				break;
+			case GridRotation.Deg_90:
+				if (!m_eightWay)
+				{
+					SetRotation(GridRotation.Deg_0);
+				}
+				else
+				{
+					SetRotation(GridRotation.Deg_45);
+				}
+				break;
+			case GridRotation.Deg_180:
+				if (!m_eightWay)
+				{
+					SetRotation(GridRotation.Deg_90);
+				}
+				else
+				{
+					SetRotation(GridRotation.Deg_135);
+				}
+				break;
+			case GridRotation.Deg_270:
+				if (!m_eightWay)
+				{
+					SetRotation(GridRotation.Deg_180);
+				}
+				else
+				{
+					SetRotation(GridRotation.Deg_225);
+				}
+				break;
+			case GridRotation.Deg_45:
 				SetRotation(GridRotation.Deg_0);
-			}
-			else
-			{
-				SetRotation(GridRotation.Deg_45);
-			}
-			break;
-		case GridRotation.Deg_180:
-			if (!m_eightWay)
-			{
+				break;
+			case GridRotation.Deg_135:
 				SetRotation(GridRotation.Deg_90);
-			}
-			else
-			{
-				SetRotation(GridRotation.Deg_135);
-			}
-			break;
-		case GridRotation.Deg_270:
-			if (!m_eightWay)
-			{
+				break;
+			case GridRotation.Deg_225:
 				SetRotation(GridRotation.Deg_180);
-			}
-			else
-			{
-				SetRotation(GridRotation.Deg_225);
-			}
-			break;
-		case GridRotation.Deg_45:
-			SetRotation(GridRotation.Deg_0);
-			break;
-		case GridRotation.Deg_135:
-			SetRotation(GridRotation.Deg_90);
-			break;
-		case GridRotation.Deg_225:
-			SetRotation(GridRotation.Deg_180);
-			break;
-		case GridRotation.Deg_315:
-			SetRotation(GridRotation.Deg_270);
-			break;
+				break;
+			case GridRotation.Deg_315:
+				SetRotation(GridRotation.Deg_270);
+				break;
 		}
 	}
 
@@ -937,18 +938,18 @@ public class BasePart : WPFMonoBehaviour
 		AudioSource[] array2 = null;
 		switch (collisionPart.AudioMaterial)
 		{
-		default:
-			array = null;
-			array2 = null;
-			break;
-		case AudioManager.AudioMaterial.Wood:
-			array = WPFMonoBehaviour.gameData.commonAudioCollection.collisionWoodHit;
-			array2 = WPFMonoBehaviour.gameData.commonAudioCollection.collisionWoodDamage;
-			break;
-		case AudioManager.AudioMaterial.Metal:
-			array = WPFMonoBehaviour.gameData.commonAudioCollection.collisionMetalHit;
-			array2 = WPFMonoBehaviour.gameData.commonAudioCollection.collisionMetalDamage;
-			break;
+			default:
+				array = null;
+				array2 = null;
+				break;
+			case AudioManager.AudioMaterial.Wood:
+				array = WPFMonoBehaviour.gameData.commonAudioCollection.collisionWoodHit;
+				array2 = WPFMonoBehaviour.gameData.commonAudioCollection.collisionWoodDamage;
+				break;
+			case AudioManager.AudioMaterial.Metal:
+				array = WPFMonoBehaviour.gameData.commonAudioCollection.collisionMetalHit;
+				array2 = WPFMonoBehaviour.gameData.commonAudioCollection.collisionMetalDamage;
+				break;
 		}
 		float num = 1f;
 		if (this is GoldenPig)
@@ -990,9 +991,9 @@ public class BasePart : WPFMonoBehaviour
 	{
 		AudioSource[] array = breakingPart.AudioMaterial switch
 		{
-			AudioManager.AudioMaterial.Wood => WPFMonoBehaviour.gameData.commonAudioCollection.collisionWoodDestroy, 
-			AudioManager.AudioMaterial.Metal => WPFMonoBehaviour.gameData.commonAudioCollection.collisionMetalBreak, 
-			_ => null, 
+			AudioManager.AudioMaterial.Wood => WPFMonoBehaviour.gameData.commonAudioCollection.collisionWoodDestroy,
+			AudioManager.AudioMaterial.Metal => WPFMonoBehaviour.gameData.commonAudioCollection.collisionMetalBreak,
+			_ => null,
 		};
 		if (array != null)
 		{
@@ -1042,11 +1043,11 @@ public class BasePart : WPFMonoBehaviour
 	{
 		return direction switch
 		{
-			Direction.Right => Vector3.right, 
-			Direction.Up => Vector3.up, 
-			Direction.Left => -Vector3.right, 
-			Direction.Down => -Vector3.up, 
-			_ => Vector3.up, 
+			Direction.Right => Vector3.right,
+			Direction.Up => Vector3.up,
+			Direction.Left => -Vector3.right,
+			Direction.Down => -Vector3.up,
+			_ => Vector3.up,
 		};
 	}
 
@@ -1229,7 +1230,7 @@ public class BasePart : WPFMonoBehaviour
 		}
 		int brokenParts = GameProgress.GetInt("Broken_Parts") + 1;
 		GameProgress.SetInt("Broken_Parts", brokenParts);
-		((Action<List<string>>)delegate(List<string> achievements)
+		((Action<List<string>>)delegate (List<string> achievements)
 		{
 			foreach (string achievement in achievements)
 			{
@@ -1332,16 +1333,16 @@ public class BasePart : WPFMonoBehaviour
 	{
 		return rotation switch
 		{
-			GridRotation.Deg_0 => 0, 
-			GridRotation.Deg_45 => 45, 
-			GridRotation.Deg_90 => 90, 
-			GridRotation.Deg_135 => 135, 
-			GridRotation.Deg_180 => 180, 
-			GridRotation.Deg_225 => 225, 
-			GridRotation.Deg_270 => 270, 
-			GridRotation.Deg_315 => 315, 
-			GridRotation.Deg_Max => 360, 
-			_ => throw new ArgumentException("rotation"), 
+			GridRotation.Deg_0 => 0,
+			GridRotation.Deg_45 => 45,
+			GridRotation.Deg_90 => 90,
+			GridRotation.Deg_135 => 135,
+			GridRotation.Deg_180 => 180,
+			GridRotation.Deg_225 => 225,
+			GridRotation.Deg_270 => 270,
+			GridRotation.Deg_315 => 315,
+			GridRotation.Deg_Max => 360,
+			_ => throw new ArgumentException("rotation"),
 		};
 	}
 
@@ -1349,16 +1350,16 @@ public class BasePart : WPFMonoBehaviour
 	{
 		return rotation switch
 		{
-			GridRotation.Deg_0 => (1, 0), 
-			GridRotation.Deg_45 => (1, 1), 
-			GridRotation.Deg_90 => (0, 1), 
-			GridRotation.Deg_135 => (-1, 1), 
-			GridRotation.Deg_180 => (-1, 0), 
-			GridRotation.Deg_225 => (-1, -1), 
-			GridRotation.Deg_270 => (0, -1), 
-			GridRotation.Deg_315 => (1, -1), 
-			GridRotation.Deg_Max => (1, 0), 
-			_ => throw new ArgumentException("rotation"), 
+			GridRotation.Deg_0 => (1, 0),
+			GridRotation.Deg_45 => (1, 1),
+			GridRotation.Deg_90 => (0, 1),
+			GridRotation.Deg_135 => (-1, 1),
+			GridRotation.Deg_180 => (-1, 0),
+			GridRotation.Deg_225 => (-1, -1),
+			GridRotation.Deg_270 => (0, -1),
+			GridRotation.Deg_315 => (1, -1),
+			GridRotation.Deg_Max => (1, 0),
+			_ => throw new ArgumentException("rotation"),
 		};
 	}
 

@@ -1,6 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
+using System.Linq;
+using System.Text;
 using UnityEngine;
 
 public class Contraption : WPFMonoBehaviour
@@ -694,11 +697,11 @@ public class Contraption : WPFMonoBehaviour
 			}
 		}
 		goto IL_00d0;
-		IL_00d0:
+	IL_00d0:
 		return false;
-		IL_00c4:
+	IL_00c4:
 		return true;
-		IL_00c2:
+	IL_00c2:
 		if (num)
 		{
 			goto IL_00c4;
@@ -714,22 +717,22 @@ public class Contraption : WPFMonoBehaviour
 		}
 		switch (direction)
 		{
-		case BasePart.JointConnectionDirection.Any:
-			return true;
-		case BasePart.JointConnectionDirection.LeftAndRight:
-			if (!CanConnectTo(part, BasePart.Direction.Left))
-			{
-				return CanConnectTo(part, BasePart.Direction.Right);
-			}
-			return true;
-		case BasePart.JointConnectionDirection.UpAndDown:
-			if (!CanConnectTo(part, BasePart.Direction.Up))
-			{
-				return CanConnectTo(part, BasePart.Direction.Down);
-			}
-			return true;
-		default:
-			return CanConnectTo(part, BasePart.ConvertDirection(direction));
+			case BasePart.JointConnectionDirection.Any:
+				return true;
+			case BasePart.JointConnectionDirection.LeftAndRight:
+				if (!CanConnectTo(part, BasePart.Direction.Left))
+				{
+					return CanConnectTo(part, BasePart.Direction.Right);
+				}
+				return true;
+			case BasePart.JointConnectionDirection.UpAndDown:
+				if (!CanConnectTo(part, BasePart.Direction.Up))
+				{
+					return CanConnectTo(part, BasePart.Direction.Down);
+				}
+				return true;
+			default:
+				return CanConnectTo(part, BasePart.ConvertDirection(direction));
 		}
 	}
 
@@ -739,28 +742,28 @@ public class Contraption : WPFMonoBehaviour
 		int coordY = part.m_coordY;
 		switch (direction)
 		{
-		case BasePart.Direction.Right:
-		{
-			BasePart part5 = FindPartAt(coordX + 1, coordY, part);
-			return CanConnectTo(part, part5, direction);
-		}
-		case BasePart.Direction.Up:
-		{
-			BasePart part4 = FindPartAt(coordX, coordY + 1, part);
-			return CanConnectTo(part, part4, direction);
-		}
-		case BasePart.Direction.Left:
-		{
-			BasePart part3 = FindPartAt(coordX - 1, coordY, part);
-			return CanConnectTo(part, part3, direction);
-		}
-		case BasePart.Direction.Down:
-		{
-			BasePart part2 = FindPartAt(coordX, coordY - 1, part);
-			return CanConnectTo(part, part2, direction);
-		}
-		default:
-			return false;
+			case BasePart.Direction.Right:
+				{
+					BasePart part5 = FindPartAt(coordX + 1, coordY, part);
+					return CanConnectTo(part, part5, direction);
+				}
+			case BasePart.Direction.Up:
+				{
+					BasePart part4 = FindPartAt(coordX, coordY + 1, part);
+					return CanConnectTo(part, part4, direction);
+				}
+			case BasePart.Direction.Left:
+				{
+					BasePart part3 = FindPartAt(coordX - 1, coordY, part);
+					return CanConnectTo(part, part3, direction);
+				}
+			case BasePart.Direction.Down:
+				{
+					BasePart part2 = FindPartAt(coordX, coordY - 1, part);
+					return CanConnectTo(part, part2, direction);
+				}
+			default:
+				return false;
 		}
 	}
 
@@ -770,11 +773,11 @@ public class Contraption : WPFMonoBehaviour
 		int coordY = part.m_coordY;
 		return direction switch
 		{
-			BasePart.Direction.Right => FindPartAt(coordX + 1, coordY, part), 
-			BasePart.Direction.Up => FindPartAt(coordX, coordY + 1, part), 
-			BasePart.Direction.Left => FindPartAt(coordX - 1, coordY, part), 
-			BasePart.Direction.Down => FindPartAt(coordX, coordY - 1, part), 
-			_ => null, 
+			BasePart.Direction.Right => FindPartAt(coordX + 1, coordY, part),
+			BasePart.Direction.Up => FindPartAt(coordX, coordY + 1, part),
+			BasePart.Direction.Left => FindPartAt(coordX - 1, coordY, part),
+			BasePart.Direction.Down => FindPartAt(coordX, coordY - 1, part),
+			_ => null,
 		};
 	}
 
@@ -783,11 +786,26 @@ public class Contraption : WPFMonoBehaviour
 		m_broken = false;
 		m_stopTimer = 0f;
 		m_parts = new List<BasePart>(GetComponentsInChildren<BasePart>());
-
-		// List all parts:
-		WPFMonoBehaviour.ExportAllPartData(m_parts);
-		WPFMonoBehaviour.PrefabExtractor.ExportPartPrefabs(m_parts);
-
+		string header = "";
+		string footer = "";
+		FileStream file = new FileStream(Path.Combine(Application.persistentDataPath, "parts.cpp"), FileMode.Create, FileAccess.Write);
+		file.Write(Encoding.UTF8.GetBytes(header));
+		foreach (BasePart part in m_parts)
+		{
+			GameObject gameObject;
+			Transform transform;
+			SphereCollider sphereCollider;
+			CapsuleCollider capsuleCollider;
+			BoxCollider boxCollider;
+			PhysicMaterial physicMaterial;
+			Rigidbody rigidbody;
+			Sprite sprite;
+			INSerializedSprite iNSerializedSprite;
+            string partString = $"{(part.m_eightWay ? "true" : "false")}, {part.m_coordX}, {part.m_coordY}, {part.m_mass}f, {part.m_interactiveRadius}f, {part.m_breakVelocity}f, {part.m_powerConsumption}f, {part.m_enginePower}f, {part.m_ZOffset}f, {part.customPartIndex}, {(part.craftable ? "true" : "false")}, {(part.lootCrateReward ? "true" : "false")}, {(int)part.m_jointType}, {(int)part.m_partTier}, {(int)part.m_partType}, {(int)part.m_autoAlign}, {(part.m_flipped ? "true" : "false")}, {(int)part.m_gridRotation}, {part.m_gridXmin}, {part.m_gridXmax}, {part.m_gridYmin}, {part.m_gridYmax}, {(part.m_static ? "true" : "false")}, {(int)part.m_jointConnectionStrength}, {(int)part.m_jointConnectionType}, {(int)part.m_jointConnectionDirection}, {(int)part.m_customJointConnectionDirection}, {{\"{part.m_constructionIconSprite.m_id}\", {part.m_constructionIconSprite.m_scaleX}, {part.m_constructionIconSprite.m_scaleY}, {part.m_constructionIconSprite.m_pivotX}, {part.m_constructionIconSprite.m_pivotY}, {(part.m_constructionIconSprite.m_updateCollider ? "true" : "false")}}}, {(part.VisibleOnPartListBeforeUnlocking ? "true" : "false")}, {(part.JointPreprocessing ? "true" : "false")}, {part.ConnectedComponent}, {{{part.WindVelocity.x}f, {part.WindVelocity.y}f, {part.WindVelocity.z}f}}, {(part.valid ? "true" : "false")}, {part.StrictConnectedComponent}, {part.GeneralConnectedComponent}, {part.GeneratorRefCount}, {part.GenerationLevel}, {part.GenerationIndex}, {part.Temperature}f";
+			file.Write(Encoding.UTF8.GetBytes("{" + partString));
+			file.Write(Encoding.UTF8.GetBytes("}"));
+		}
+		file.Write(Encoding.UTF8.GetBytes(footer));
 		m_ropes.Clear();
 		m_powerConsumption = 0f;
 		m_enginesAmount = 0;
@@ -1714,12 +1732,12 @@ public class Contraption : WPFMonoBehaviour
 	{
 		return strength switch
 		{
-			BasePart.JointConnectionStrength.Weak => WPFMonoBehaviour.gameData.m_jointConnectionStrengthWeak, 
-			BasePart.JointConnectionStrength.Normal => WPFMonoBehaviour.gameData.m_jointConnectionStrengthNormal * ((INSettings.GetFloat(INFeature.ConnectionStrength) > 1f) ? 2f : 1f), 
-			BasePart.JointConnectionStrength.High => WPFMonoBehaviour.gameData.m_jointConnectionStrengthHigh, 
-			BasePart.JointConnectionStrength.Extreme => WPFMonoBehaviour.gameData.m_jointConnectionStrengthExtreme, 
-			BasePart.JointConnectionStrength.HighlyExtreme => WPFMonoBehaviour.gameData.m_jointConnectionStrengthHighlyExtreme, 
-			_ => 0f, 
+			BasePart.JointConnectionStrength.Weak => WPFMonoBehaviour.gameData.m_jointConnectionStrengthWeak,
+			BasePart.JointConnectionStrength.Normal => WPFMonoBehaviour.gameData.m_jointConnectionStrengthNormal * ((INSettings.GetFloat(INFeature.ConnectionStrength) > 1f) ? 2f : 1f),
+			BasePart.JointConnectionStrength.High => WPFMonoBehaviour.gameData.m_jointConnectionStrengthHigh,
+			BasePart.JointConnectionStrength.Extreme => WPFMonoBehaviour.gameData.m_jointConnectionStrengthExtreme,
+			BasePart.JointConnectionStrength.HighlyExtreme => WPFMonoBehaviour.gameData.m_jointConnectionStrengthHighlyExtreme,
+			_ => 0f,
 		};
 	}
 
