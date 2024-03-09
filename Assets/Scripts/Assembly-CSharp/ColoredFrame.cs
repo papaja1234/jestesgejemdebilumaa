@@ -26,7 +26,7 @@ public class ColoredFrame : Frame
 	private MeshRenderer m_backgroundRenderer;
 
 	private (MeshRenderer, Material)[] m_coloredPartMaterials;
-
+	private static readonly int Blend = Shader.PropertyToID("_Blend");
 	public Color Color
 	{
 		get
@@ -94,7 +94,7 @@ public class ColoredFrame : Frame
 				{
 					MeshRenderer[] componentsInChildren = basePart.GetComponentsInChildren<MeshRenderer>(includeInactive: true);
 					m_coloredPartMaterials = new(MeshRenderer, Material)[componentsInChildren.Length];
-					INUnity.LoadShader("Unlit_ColorTransparent_GrayOverlay");
+					//INUnity.LoadShader("Unlit_Color");
 					for (int i = 0; i < componentsInChildren.Length; i++)
 					{
 						MeshRenderer meshRenderer = componentsInChildren[i];
@@ -102,14 +102,16 @@ public class ColoredFrame : Frame
 						{
 							m_coloredPartMaterials[i] = (meshRenderer, meshRenderer.sharedMaterial);
 							float num2 = ((m_color.a > 0.5f) ? m_color.a : 0.5f);
-							meshRenderer.material.shader = INUnity.LoadShader("Unlit_ColorTransparent_GrayOverlay");
-							meshRenderer.material.color = new Color(m_color.r, m_color.g, m_color.b, num2 * meshRenderer.material.color.a);
-							meshRenderer.material.SetFloat("_Blend", @float);
+							Material material;
+							(material = meshRenderer.material).shader = INUnity.CustomTransparentShader;//fixed weird color frame
+							material.color = new Color(m_color.r, m_color.g, m_color.b, num2 * material.color.a);
+							meshRenderer.material.SetFloat(Blend, @float);
 						}
 					}
 				}
 				else
 				{
+					INUnity.LoadShader("PreAlpha_Unlit_ColorTransparent_Geometry");
 					m_coloredPartMaterials = null;
 				}
 				m_coloredPart = basePart;

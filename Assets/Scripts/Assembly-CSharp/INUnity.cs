@@ -38,12 +38,13 @@ public static class INUnity
 
 	static INUnity()
 	{
-		Version = Version.Parse(Application.version);
+		//Bug below!
+		//Version = Version.Parse(Application.version);
 		VersionText = Application.version;
 		DataPath = Application.persistentDataPath;
 		SettingsPath = Application.persistentDataPath + "/Settings";
 		SystemLanguage systemLanguage = Application.systemLanguage;
-		if (systemLanguage == SystemLanguage.Chinese || systemLanguage == SystemLanguage.ChineseSimplified || systemLanguage == SystemLanguage.ChineseTraditional)
+		if (systemLanguage is SystemLanguage.Chinese or SystemLanguage.ChineseSimplified or SystemLanguage.ChineseTraditional)
 		{
 			Language = SystemLanguage.Chinese;
 		}
@@ -66,7 +67,7 @@ public static class INUnity
 		InitializeResources("TextAsset", data.TextAssets);
 		InitializeResources("ScriptableObject", data.ScriptableObjects);
 		ColorShader = LoadShader("Unlit_Color");
-		ColorTransparentShader = LoadShader("Unlit_ColorTransparent");
+		ColorTransparentShader = LoadShader("PreAlpha_Unlit_ColorTransparent_Geometry");
 		CustomTransparentShader = LoadShader("PreAlpha_Unlit_ColorTransparent_Geometry");
 	}
 

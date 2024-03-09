@@ -1,4 +1,4 @@
-Shader "_Custom/Unlit_ColorTransparent_Geometry" {
+Shader "_Custom/PreAlpha_Unlit_ColorTransparent_Geometry" {
 	Properties {
 		_MainTex ("Base (RGB) Trans (A)", 2D) = "white" {}
 		_Color ("Main Color", Vector) = (1,1,1,1)
@@ -9,7 +9,7 @@ Shader "_Custom/Unlit_ColorTransparent_Geometry" {
 		Pass {
 			LOD 100
 			Tags { "IGNOREPROJECTOR" = "true" "QUEUE" = "Transparent" "RenderType" = "Transparent" }
-			Blend SrcAlpha OneMinusSrcAlpha, SrcAlpha OneMinusSrcAlpha
+			Blend SrcAlpha OneMinusSrcAlpha
 			ZWrite Off
 			Cull Off
 			Fog {

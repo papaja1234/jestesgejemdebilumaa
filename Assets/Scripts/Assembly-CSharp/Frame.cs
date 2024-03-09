@@ -93,7 +93,7 @@ public class Frame : BasePart
 			{
 				if (!m_colored)
 				{
-					meshRenderer.material.shader = INUnity.LoadShader("Unlit_ColorTransparent_GrayOverlay");
+					meshRenderer.material.shader = INUnity.LoadShader("PreAlpha_Unlit_ColorTransparent_Geometry");
 				}
 				meshRenderer.material.color = clear;
 			}
@@ -104,7 +104,7 @@ public class Frame : BasePart
 			MeshRenderer[] renderers = m_renderers;
 			foreach (MeshRenderer obj in renderers)
 			{
-				obj.material.shader = INUnity.CustomTransparentShader;
+				obj.material.shader =/* INUnity.CustomTransparentShader*/INUnity.LoadShader("PreAlpha_Unlit_ColorTransparent_Geometry");
 				obj.material.color = Color.white;
 			}
 			m_colored = false;
