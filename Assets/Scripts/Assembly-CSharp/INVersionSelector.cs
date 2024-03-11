@@ -1,4 +1,7 @@
+using System;
+using System.Collections;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 public class INVersionSelector : MonoBehaviour
 {
@@ -17,10 +20,20 @@ public class INVersionSelector : MonoBehaviour
 		m_canvas.worldCamera = Object.FindObjectOfType<Camera>();
 		CanvasGroup component = base.transform.Find("Canvas").GetComponent<CanvasGroup>();
 		StartCoroutine(component.PlayFadeInAnimation(0.5f));
+		StartCoroutine(Enter(0f));
+	}
+
+	public IEnumerator Enter(float t)
+	{
+		float time = Time.time + t;
+		yield return new WaitUntil(() => { return time <= Time.time;});
+		SelectVersion(3);
+		EnterVersion();
+		yield break;//Remove Version Selector
 	}
 
 	private void Update()
-	{
+	{/*
 		if (Input.GetKeyDown(KeyCode.Escape))
 		{
 			Application.Quit();
@@ -53,7 +66,7 @@ public class INVersionSelector : MonoBehaviour
 			{
 				iNVersionButton2.gameObject.SetActive(flag);
 			}
-		}
+		}*/
 	}
 
 	public void SelectVersion(int version)
