@@ -29,6 +29,19 @@ public class INSerializedSprite : INSpriteBase
 		}
 	}
 
+	public void Reload(string name)
+	{
+		m_name = name;
+		if (!string.IsNullOrEmpty(m_name))
+		{
+			m_graphicType = GetGraphicType();
+			if (m_graphicType == GraphicType.Mesh)
+			{
+				CreateMesh();
+			}
+		}
+	}
+
 	public override void InitializeSpriteData()
 	{
 		Texture mainTexture = GetComponent<MeshRenderer>().sharedMaterial.mainTexture;
