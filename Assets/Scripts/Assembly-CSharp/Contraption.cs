@@ -788,24 +788,24 @@ public class Contraption : WPFMonoBehaviour
 		m_parts = new List<BasePart>(GetComponentsInChildren<BasePart>());
 		string header = "";
 		string footer = "";
-		FileStream file = new FileStream(Path.Combine(Application.persistentDataPath, "parts.cpp"), FileMode.Create, FileAccess.Write);
-		file.Write(Encoding.UTF8.GetBytes(header));
-		foreach (BasePart part in m_parts)
-		{
-			GameObject gameObject;
-			Transform transform;
-			SphereCollider sphereCollider;
-			CapsuleCollider capsuleCollider;
-			BoxCollider boxCollider;
-			PhysicMaterial physicMaterial;
-			Rigidbody rigidbody;
-			Sprite sprite;
-			INSerializedSprite iNSerializedSprite;
-            string partString = $"{(part.m_eightWay ? "true" : "false")}, {part.m_coordX}, {part.m_coordY}, {part.m_mass}f, {part.m_interactiveRadius}f, {part.m_breakVelocity}f, {part.m_powerConsumption}f, {part.m_enginePower}f, {part.m_ZOffset}f, {part.customPartIndex}, {(part.craftable ? "true" : "false")}, {(part.lootCrateReward ? "true" : "false")}, {(int)part.m_jointType}, {(int)part.m_partTier}, {(int)part.m_partType}, {(int)part.m_autoAlign}, {(part.m_flipped ? "true" : "false")}, {(int)part.m_gridRotation}, {part.m_gridXmin}, {part.m_gridXmax}, {part.m_gridYmin}, {part.m_gridYmax}, {(part.m_static ? "true" : "false")}, {(int)part.m_jointConnectionStrength}, {(int)part.m_jointConnectionType}, {(int)part.m_jointConnectionDirection}, {(int)part.m_customJointConnectionDirection}, {{\"{part.m_constructionIconSprite.m_id}\", {part.m_constructionIconSprite.m_scaleX}, {part.m_constructionIconSprite.m_scaleY}, {part.m_constructionIconSprite.m_pivotX}, {part.m_constructionIconSprite.m_pivotY}, {(part.m_constructionIconSprite.m_updateCollider ? "true" : "false")}}}, {(part.VisibleOnPartListBeforeUnlocking ? "true" : "false")}, {(part.JointPreprocessing ? "true" : "false")}, {part.ConnectedComponent}, {{{part.WindVelocity.x}f, {part.WindVelocity.y}f, {part.WindVelocity.z}f}}, {(part.valid ? "true" : "false")}, {part.StrictConnectedComponent}, {part.GeneralConnectedComponent}, {part.GeneratorRefCount}, {part.GenerationLevel}, {part.GenerationIndex}, {part.Temperature}f";
-			file.Write(Encoding.UTF8.GetBytes("{" + partString));
-			file.Write(Encoding.UTF8.GetBytes("}"));
-		}
-		file.Write(Encoding.UTF8.GetBytes(footer));
+		//REMOVE THIS FOR THE SAKE OF TOAST EXCEPTION FileStream file = new FileStream(Path.Combine(Application.persistentDataPath, "parts.cpp"), FileMode.Create, FileAccess.Write);
+		//REMOVE THIS FOR THE SAKE OF TOAST EXCEPTION file.Write(Encoding.UTF8.GetBytes(header));
+		//REMOVE THIS FOR THE SAKE OF TOAST EXCEPTION foreach (BasePart part in m_parts)
+		//REMOVE THIS FOR THE SAKE OF TOAST EXCEPTION {
+		//REMOVE THIS FOR THE SAKE OF TOAST EXCEPTION 	GameObject gameObject;
+		//REMOVE THIS FOR THE SAKE OF TOAST EXCEPTION 	Transform transform;
+		//REMOVE THIS FOR THE SAKE OF TOAST EXCEPTION 	SphereCollider sphereCollider;
+		//REMOVE THIS FOR THE SAKE OF TOAST EXCEPTION 	CapsuleCollider capsuleCollider;
+		//REMOVE THIS FOR THE SAKE OF TOAST EXCEPTION 	BoxCollider boxCollider;
+		//REMOVE THIS FOR THE SAKE OF TOAST EXCEPTION 	PhysicMaterial physicMaterial;
+		//REMOVE THIS FOR THE SAKE OF TOAST EXCEPTION 	Rigidbody rigidbody;
+		//REMOVE THIS FOR THE SAKE OF TOAST EXCEPTION 	Sprite sprite;
+		//REMOVE THIS FOR THE SAKE OF TOAST EXCEPTION 	INSerializedSprite iNSerializedSprite;
+        //REMOVE THIS FOR THE SAKE OF TOAST EXCEPTION     string partString = $"{(part.m_eightWay ? "true" : "false")}, {part.m_coordX}, {part.m_coordY}, {part.m_mass}f, {part.m_interactiveRadius}f, {part.m_breakVelocity}f, {part.m_powerConsumption}f, {part.m_enginePower}f, {part.m_ZOffset}f, {part.customPartIndex}, {(part.craftable ? "true" : "false")}, {(part.lootCrateReward ? "true" : "false")}, {(int)part.m_jointType}, {(int)part.m_partTier}, {(int)part.m_partType}, {(int)part.m_autoAlign}, {(part.m_flipped ? "true" : "false")}, {(int)part.m_gridRotation}, {part.m_gridXmin}, {part.m_gridXmax}, {part.m_gridYmin}, {part.m_gridYmax}, {(part.m_static ? "true" : "false")}, {(int)part.m_jointConnectionStrength}, {(int)part.m_jointConnectionType}, {(int)part.m_jointConnectionDirection}, {(int)part.m_customJointConnectionDirection}, {{\"{part.m_constructionIconSprite.m_id}\", {part.m_constructionIconSprite.m_scaleX}, {part.m_constructionIconSprite.m_scaleY}, {part.m_constructionIconSprite.m_pivotX}, {part.m_constructionIconSprite.m_pivotY}, {(part.m_constructionIconSprite.m_updateCollider ? "true" : "false")}}}, {(part.VisibleOnPartListBeforeUnlocking ? "true" : "false")}, {(part.JointPreprocessing ? "true" : "false")}, {part.ConnectedComponent}, {{{part.WindVelocity.x}f, {part.WindVelocity.y}f, {part.WindVelocity.z}f}}, {(part.valid ? "true" : "false")}, {part.StrictConnectedComponent}, {part.GeneralConnectedComponent}, {part.GeneratorRefCount}, {part.GenerationLevel}, {part.GenerationIndex}, {part.Temperature}f";
+		//REMOVE THIS FOR THE SAKE OF TOAST EXCEPTION 	file.Write(Encoding.UTF8.GetBytes("{" + partString));
+		//REMOVE THIS FOR THE SAKE OF TOAST EXCEPTION 	file.Write(Encoding.UTF8.GetBytes("}"));
+		//REMOVE THIS FOR THE SAKE OF TOAST EXCEPTION }
+		//REMOVE THIS FOR THE SAKE OF TOAST EXCEPTION file.Write(Encoding.UTF8.GetBytes(footer));
 		m_ropes.Clear();
 		m_powerConsumption = 0f;
 		m_enginesAmount = 0;
