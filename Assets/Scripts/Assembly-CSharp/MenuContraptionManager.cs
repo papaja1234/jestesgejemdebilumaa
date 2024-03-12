@@ -220,9 +220,7 @@ public class MenuContraptionManager : MonoBehaviour
 		for (int i = 0; i < m_contraptionAssets.Count - 1; i++)
 		{
 			int index = Random.Range(i, m_contraptionAssets.Count);
-			TextAsset value = m_contraptionAssets[i];
-			m_contraptionAssets[i] = m_contraptionAssets[index];
-			m_contraptionAssets[index] = value;
+			(m_contraptionAssets[i], m_contraptionAssets[index]) = (m_contraptionAssets[index], m_contraptionAssets[i]);
 		}
 	}
 }

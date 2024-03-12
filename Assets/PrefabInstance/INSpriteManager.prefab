@@ -2,11 +2,11 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!1 &1687931121149359
 GameObject:
-  serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
   m_Component:
   - component: {fileID: 4096480944604209}
   - component: {fileID: 114178099915111443}
@@ -42,9 +42,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4dfd774acc57025c44818a83cb8f96c1, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   m_textAssets:
   - {fileID: 4900000, guid: fc2be1f1fc17f774595be5d812bc2547, type: 3}
   - {fileID: 4900000, guid: 3a7abc79b864b184f94954e7cc5c79eb, type: 3}
   - {fileID: 4900000, guid: 56a082ff80cb650498b7e6629b225557, type: 3}
+  - {fileID: 4900000, guid: 95f4fc20ed029974dac88e15551855ec, type: 3}
