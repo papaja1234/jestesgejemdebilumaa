@@ -7,7 +7,7 @@ public class ClickInteraction : BasePart
 {
     [SerializeField] public string SpriteName;
     // Start is called before the first frame update
-    void Start()
+    protected virtual void Start()
     {
         INSerializedSprite inSerializedSprite = gameObject.GetComponent<INSerializedSprite>();
         inSerializedSprite.Reload(SpriteName);
