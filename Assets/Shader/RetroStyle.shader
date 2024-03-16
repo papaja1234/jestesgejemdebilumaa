@@ -44,7 +44,7 @@ Shader "Custom/RetroStyle"
             // Yeah hard coded stuff...
             #define CURVATURE 0.2
             #define BLUR 0.021
-            #define CA_AMT 1.01 // Chromatic Abberation
+            #define CA_AMT 1.0075 // Chromatic Abberation
             #define PS_X 4 // Pixel Spacing
             #define PS_Y 4
             #define PT_X 0.5 // Pixel Thickness
