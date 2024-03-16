@@ -17,7 +17,7 @@ public class MineSweeperElement : ClickInteraction
     public int MatY;
     private INSerializedSprite DisplayContent;
 
-    public MinesweeperManager parent;
+    public MineSweeperManager parent;
 
     public enum MineSweeperBlockType
     {
@@ -62,11 +62,11 @@ public class MineSweeperElement : ClickInteraction
         //check for input type
         if (pointerInfo.doubleClick || pointerInfo.secondaryDown)
         {
-            parent.Sweep(MatX, MatY, MinesweeperManager.SweepType.DoubleClick);
+            parent.Sweep(MatX, MatY, MineSweeperManager.SweepType.DoubleClick);
             return;
         }
 
-        parent.Sweep(MatX, MatY, MinesweeperManager.SweepType.LeftClick);
+        parent.Sweep(MatX, MatY, MineSweeperManager.SweepType.LeftClick);
     }
 
     //set then invoke, or invoke to set?
