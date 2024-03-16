@@ -16,12 +16,16 @@ public class MinesweeperManager : Singleton<MinesweeperManager>
 
     public enum SweepType
     {
-        LeftClick,
-        RightClick,
-        MiddleClick
+        LeftClick = 0,
+        ScreenTap = 0,
+        RightClick = 1,
+        DoubleClick = 1,
+        ScreenPress = 1,
+        MiddleClick = 2,
     }
 
-    // Reference implementtions from KMines https://invent.kde.org/games/kmines/-/blob/master/src/minefielditem.cpp
+    // Reference implementations from KMines https://invent.kde.org/games/kmines/-/blob/master/src/minefielditem.cpp
+    //fix typo
     public void InitializeGame(int squareWidth, int squareHeight, int squareBirdCount, int x, int y)
     {
         Elements = new MineSweeperElement[squareWidth, squareHeight];
@@ -36,11 +40,22 @@ public class MinesweeperManager : Singleton<MinesweeperManager>
             {
                 Elements[i, j].CoordX = i + x;
                 Elements[i, j].CoordY = j + y;
+                Elements[i, j].MatX = i;
+                Elements[i, j].MatY = j;
+                Elements[i, j].parent = this;
                 Elements[i, j].blockType = MineSweeperElement.MineSweeperBlockType.Empty;
             }
         }
     }
 
+    /// <summary>
+    /// Basically when clicking on an element, call this
+    /// Return true if bomber
+    /// </summary>
+    /// <param name="x">Matrix X coord</param>
+    /// <param name="y">Matrix Y coord</param>
+    /// <param name="sweepType"></param>
+    /// <returns></returns>
     // Basically when clicking on an element, call this
     // Return true if bomber
     public bool Sweep(int x, int y, SweepType sweepType)
@@ -114,7 +129,7 @@ public class MinesweeperManager : Singleton<MinesweeperManager>
                 if (x != width - 1) elementIndices.Add(new int[2] { x + 1, y });
                 if (x != width - 1 && y != height - 1) elementIndices.Add(new int[2] { x + 1, y + 1 });
 
-                // Recursiveness
+                // Recursive-ness
                 foreach (var elementIndex in elementIndices)
                 {
                     ref MineSweeperElement element = ref Elements[elementIndex[0], elementIndex[1]];
@@ -127,6 +142,8 @@ public class MinesweeperManager : Singleton<MinesweeperManager>
 
                     // One thing that doesn't work is setting the element to be opened when the gird size is 1x1
                     element.isOpened = true;
+                    // Gotta update the state of display -- Goggs
+                    element.UpdateDisplay();
                     if (element.digit == 0)
                     {
                         RevealElements(elementIndex[0], elementIndex[1]);
