@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MinesweeperManager : Singleton<MinesweeperManager>
+public class MineSweeperManager : Singleton<MineSweeperManager>
 {
     public MineSweeperElement[,] Elements;
 
@@ -38,12 +38,14 @@ public class MinesweeperManager : Singleton<MinesweeperManager>
         {
             for (int j = 0; j < squareHeight; j++)
             {
+                //Create playable objects
+                Elements[i, j] = Object.Instantiate(GameData.MinesweeperElementPrefab).GetComponent<MineSweeperElement>();
                 Elements[i, j].CoordX = i + x;
                 Elements[i, j].CoordY = j + y;
                 Elements[i, j].MatX = i;
                 Elements[i, j].MatY = j;
                 Elements[i, j].parent = this;
-                Elements[i, j].blockType = MineSweeperElement.MineSweeperBlockType.Empty;
+                Elements[i, j].blockType = MineSweeperElement.MineSweeperBlockType.Empty; 
             }
         }
     }
@@ -120,6 +122,7 @@ public class MinesweeperManager : Singleton<MinesweeperManager>
                 List<int[]> elementIndices = new List<int[]>();
 
                 // Yeah... v2
+                // this is hell -- Goggs
                 if (x != 0 && y != 0) elementIndices.Add(new int[2] { x - 1, y - 1 });
                 if (x != 0) elementIndices.Add(new int[2] { x - 1, y });
                 if (x != 0 && y != height - 1) elementIndices.Add(new int[2] { x - 1, y + 1 });
