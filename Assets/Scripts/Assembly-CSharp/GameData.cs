@@ -209,6 +209,10 @@ public class GameData : ScriptableObject
 
 	public GameObject m_kingsFavoriteDialog;
 
+	[SerializeField]
+	//Not working, consider creating a new file called UnlistedParts to reference unlisted prefabs
+	public static GameObject MinesweeperElementPrefab;
+
 	private bool initialized;
 
 	private Dictionary<BasePart.PartType, PartReaction> m_partReactions;
