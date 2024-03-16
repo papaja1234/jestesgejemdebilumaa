@@ -29,11 +29,12 @@ public class INVersionSelector : MonoBehaviour
 		yield return new WaitUntil(() => { return time <= Time.time;});
 		SelectVersion(3);
 		EnterVersion();
-		yield break;//Remove Version Selector
+		yield break; // Remove Version Selector
 	}
 
 	private void Update()
-	{/*
+	{
+		/*
 		if (Input.GetKeyDown(KeyCode.Escape))
 		{
 			Application.Quit();
@@ -66,7 +67,8 @@ public class INVersionSelector : MonoBehaviour
 			{
 				iNVersionButton2.gameObject.SetActive(flag);
 			}
-		}*/
+		}
+		*/
 	}
 
 	public void SelectVersion(int version)

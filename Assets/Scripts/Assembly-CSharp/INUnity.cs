@@ -38,7 +38,7 @@ public static class INUnity
 
 	static INUnity()
 	{
-		//Bug below!
+		// Bug below!
 		//Version = Version.Parse(Application.version);
 		VersionText = Application.version;
 		DataPath = Application.persistentDataPath;
