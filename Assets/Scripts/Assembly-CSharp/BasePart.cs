@@ -838,12 +838,12 @@ public class BasePart : WPFMonoBehaviour
 		}
 	}
 
-	public void ProcessTouch(Vector3 touchPosition)
+	public void ProcessTouch(Vector3 touchPosition, GuiManager.Pointer pointerInfo)
 	{
 		if (!WPFMonoBehaviour.levelManager || WPFMonoBehaviour.levelManager.gameState == LevelManager.GameState.Running)
 		{
 			OnTouch();
-			OnTouch(hasPosition: true, touchPosition);
+			OnTouch(hasPosition: true, touchPosition, pointerInfo);
 		}
 	}
 
@@ -851,7 +851,7 @@ public class BasePart : WPFMonoBehaviour
 	{
 	}
 
-	protected virtual void OnTouch(bool hasPosition, Vector3 touchPosition)
+	protected virtual void OnTouch(bool hasPosition, Vector3 touchPosition, GuiManager.Pointer pointerInfo = default)
 	{
 	}
 

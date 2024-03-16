@@ -2273,7 +2273,8 @@ public class Contraption : WPFMonoBehaviour
 			{
 				if ((bool)part && part.IsInInteractiveRadius(vector) && !part.enclosedPart && part.gameObject.layer != m_droppedSandbagLayer)
 				{
-					part.ProcessTouch(vector);
+					part.ProcessTouch(vector, pointer.Clone());
+					//pointer.down must be true.
 					EventManager.Send(default(UserInputEvent));
 					break;
 				}

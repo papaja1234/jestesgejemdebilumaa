@@ -1,9 +1,14 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using Object = UnityEngine.Object;
 
 public class GuiManager : Singleton<GuiManager>
 {
+	/// <summary>
+	/// Provides touch+mouse information
+	/// </summary>
 	public class Pointer
 	{
 		public bool touching;
@@ -31,6 +36,30 @@ public class GuiManager : Singleton<GuiManager>
 		public Widget widget;
 
 		public Vector3 position;
+		/// <summary>
+		/// Clone the pointer for data providing
+		/// </summary>
+		/// <returns>A new instance of Pointer with widget=null</returns>
+		public Pointer Clone()
+		{
+			Pointer newOne = new Pointer
+			{
+				touching = touching,
+				down = down,
+				up = up,
+				dragging = dragging,
+				secondaryDown = secondaryDown,
+				secondaryUp = secondaryUp,
+				secondaryDragging = secondaryDragging,
+				doubleClick = doubleClick,
+				onWidget = onWidget,
+				touchUsed = touchUsed,
+				fingerId = fingerId,
+				widget = null,
+				position = position,
+			};
+			return newOne;
+		}
 	}
 
 	private class FocusData
