@@ -166,7 +166,8 @@ public class Rope : BasePart
 		return FindInteractiveSegment(position) != -1;
 	}
 
-	protected override void OnTouch(bool hasPosition, Vector3 touchPosition)
+	//Changed to fit new feature
+	protected override void OnTouch(bool hasPosition, Vector3 touchPosition, GuiManager.Pointer pointerInfo = default)
 	{
 		if (!m_ropeCut)
 		{
