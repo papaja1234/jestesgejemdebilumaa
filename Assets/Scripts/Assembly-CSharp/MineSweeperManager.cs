@@ -6,28 +6,167 @@ public class MinesweeperManager : Singleton<MinesweeperManager>
 {
     public MineSweeperElement[,] Elements;
 
-    public void InitializeGame(int squareWidth, int birdCount, int x, int y)
+    private int width;
+
+    private int height;
+
+    private int birdCount;
+
+    bool firstOpen = false;
+
+    public enum SweepType
     {
-        Elements = new MineSweeperElement[squareWidth, squareWidth];
-        int index = 0;
-        foreach (var mineSweeperElement in Elements)
+        LeftClick,
+        RightClick,
+        MiddleClick
+    }
+
+    // Reference implementtions from KMines https://invent.kde.org/games/kmines/-/blob/master/src/minefielditem.cpp
+    public void InitializeGame(int squareWidth, int squareHeight, int squareBirdCount, int x, int y)
+    {
+        Elements = new MineSweeperElement[squareWidth, squareHeight];
+        width = squareWidth;
+        height = squareHeight;
+        birdCount = squareBirdCount;
+
+        // Make all empty and correctly placed
+        for (int i = 0; i < squareWidth; i++)
         {
-            mineSweeperElement.ForeGroundType = index % 2;
-            mineSweeperElement.CoordX = x + (index % squareWidth);
-            mineSweeperElement.CoordY = y + (index % squareWidth);
-            
-            index++;
+            for (int j = 0; j < squareHeight; j++)
+            {
+                Elements[i, j].CoordX = i + x;
+                Elements[i, j].CoordY = j + y;
+                Elements[i, j].blockType = MineSweeperElement.MineSweeperBlockType.Empty;
+            }
+        }
+    }
+
+    // Basically when clicking on an element, call this
+    // Return true if bomber
+    public bool Sweep(int x, int y, SweepType sweepType)
+    {
+        // Add birds only after the player reveals an element
+        if (firstOpen)
+        {
+            // Add bomber birds
+            for (int i = 0; i < birdCount; i++)
+            {
+                int randomX = Random.Range(0, width);
+                int randomY = Random.Range(0, height);
+                if (randomX != x && randomY != y)
+                {
+                    Elements[randomX, randomY].blockType = MineSweeperElement.MineSweeperBlockType.Bomb;
+                }
+                else i--;
+            }
+
+            // Calculate digits
+            for (int i = 0; i < width; i++)
+            {
+                for (int j = 0; j < height; j++)
+                {
+                    int digit = 0;
+
+                    // It's me alright? who nests functions like this...
+                    bool BombAt(int x, int y)
+                    {
+                        if (x < 0 || x >= width || y < 0 || y >= height)
+                        {
+                            return false;
+                        }
+                        return Elements[x, y].blockType == MineSweeperElement.MineSweeperBlockType.Bomb;
+                    }
+
+                    // Yeah...
+                    digit += BombAt(i + 1, j + 1) ? 1 : 0;
+                    digit += BombAt(i + 1, j + 0) ? 1 : 0;
+                    digit += BombAt(i + 1, j - 1) ? 1 : 0;
+                    digit += BombAt(i + 0, j + 1) ? 1 : 0;
+                    digit += BombAt(i + 0, j - 1) ? 1 : 0;
+                    digit += BombAt(i - 1, j + 1) ? 1 : 0;
+                    digit += BombAt(i - 1, j + 0) ? 1 : 0;
+                    digit += BombAt(i - 1, j - 1) ? 1 : 0;
+
+                    Elements[i, j].digit = digit;
+                }
+            }
+        }
+        else if (sweepType == SweepType.LeftClick)
+        {
+            // Check if the element is a bomber bird
+            if (Elements[x, y].blockType == MineSweeperElement.MineSweeperBlockType.Bomb)
+            {
+                return true;
+            }
+
+            // Recursively reveal adjacent elements
+            void RevealElements(int x, int y)
+            {
+                List<int[]> elementIndices = new List<int[]>();
+
+                // Yeah... v2
+                if (x != 0 && y != 0) elementIndices.Add(new int[2] { x - 1, y - 1 });
+                if (x != 0) elementIndices.Add(new int[2] { x - 1, y });
+                if (x != 0 && y != height - 1) elementIndices.Add(new int[2] { x - 1, y + 1 });
+                if (y != 0) elementIndices.Add(new int[2] { x, y - 1 });
+                if (y != height - 1) elementIndices.Add(new int[2] { x, y + 1 });
+                if (x != width - 1 && y != 0) elementIndices.Add(new int[2] { x + 1, y - 1 });
+                if (x != width - 1) elementIndices.Add(new int[2] { x + 1, y });
+                if (x != width - 1 && y != height - 1) elementIndices.Add(new int[2] { x + 1, y + 1 });
+
+                // Recursiveness
+                foreach (var elementIndex in elementIndices)
+                {
+                    ref MineSweeperElement element = ref Elements[elementIndex[0], elementIndex[1]];
+
+                    // Prevent infinite recursion
+                    if (element.isOpened || element.isFlagged || element.isQuestioned)
+                    {
+                        continue;
+                    }
+
+                    // One thing that doesn't work is setting the element to be opened when the gird size is 1x1
+                    element.isOpened = true;
+                    if (element.digit == 0)
+                    {
+                        RevealElements(elementIndex[0], elementIndex[1]);
+                    }
+                }
+            }
         }
 
+        // First flag, then remove flag and question your life decisions about reading this source code, then remove questioned feelings
+        else if (sweepType == SweepType.RightClick)
+        {
+            if (Elements[x, y].isFlagged)
+            {
+                Elements[x, y].isFlagged = false;
+                Elements[x, y].isQuestioned = true;
+            }
+            else if (Elements[x, y].isQuestioned)
+            {
+                Elements[x, y].isQuestioned = false;
+            }
+            else
+            {
+                Elements[x, y].isFlagged = true;
+            }
+        }
+
+        else if (sweepType == SweepType.MiddleClick)
+        {
+            // ... Nothing, maybe easter egg in here?
+        }
+        return false;
     }
 
     void Start()
     {
-        
+
     }
 
     void Update()
     {
-        
+
     }
 }
