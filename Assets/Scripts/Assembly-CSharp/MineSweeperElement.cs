@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class MineSweeperElement : ClickInteraction
 {
@@ -62,11 +64,11 @@ public class MineSweeperElement : ClickInteraction
         //check for input type
         if (pointerInfo.doubleClick || pointerInfo.secondaryDown)
         {
-            parent.Sweep(MatX, MatY, MineSweeperManager.SweepType.DoubleClick);
+            parent.UpdateStatus(MatX, MatY, MineSweeperManager.SweepType.DoubleClick);
             return;
         }
 
-        parent.Sweep(MatX, MatY, MineSweeperManager.SweepType.LeftClick);
+        parent.UpdateStatus(MatX, MatY, MineSweeperManager.SweepType.LeftClick);
     }
 
     //set then invoke, or invoke to set?
@@ -76,17 +78,22 @@ public class MineSweeperElement : ClickInteraction
     {
         if (isOpened)
         {
-            if (blockType == MineSweeperBlockType.Bomb)
+            switch (blockType)
             {
-                DisplayContent.Reload(birds[Random.Range(0, 2)]);
-            }
-            else if (blockType == MineSweeperBlockType.Empty)
-            {
-                GetComponent<INSerializedSprite>().Reload("MS_DefaultBackground");
-                if (digit != 0)
+                case MineSweeperBlockType.Bomb:
+                    DisplayContent.Reload(birds[Random.Range(0, 2)]);
+                    break;
+                case MineSweeperBlockType.Empty:
                 {
-                    DisplayContent.Reload(digits[digit]);
+                    GetComponent<INSerializedSprite>().Reload("MS_DefaultBackground");
+                    if (digit != 0)
+                    {
+                        DisplayContent.Reload(digits[digit]);
+                    }
+                    break;
                 }
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
         }
         else if (isFlagged)

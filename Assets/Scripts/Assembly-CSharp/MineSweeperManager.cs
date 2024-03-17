@@ -14,6 +14,7 @@ public class MineSweeperManager : Singleton<MineSweeperManager>
 
     bool firstOpen = false;
 
+    private Vector3 Position;
     public enum SweepType
     {
         LeftClick = 0,
@@ -32,14 +33,14 @@ public class MineSweeperManager : Singleton<MineSweeperManager>
         width = squareWidth;
         height = squareHeight;
         birdCount = squareBirdCount;
-
+        Position = new Vector3(x, y);
         // Make all empty and correctly placed
         for (int i = 0; i < squareWidth; i++)
         {
             for (int j = 0; j < squareHeight; j++)
             {
                 //Create playable objects
-                Elements[i, j] = Object.Instantiate(GameData.MinesweeperElementPrefab).GetComponent<MineSweeperElement>();
+                Elements[i, j] = Object.Instantiate(Singleton<INRuntimeGameData>.Instance.UnlistedPart.Parts[0]).GetComponent<MineSweeperElement>();
                 Elements[i, j].CoordX = i + x;
                 Elements[i, j].CoordY = j + y;
                 Elements[i, j].MatX = i;
@@ -50,9 +51,24 @@ public class MineSweeperManager : Singleton<MineSweeperManager>
         }
     }
 
+    public void UpdateStatus(int x, int y, SweepType sweepType)
+    {
+        bool Bombed = Sweep(x, y, sweepType);
+        if (Bombed)
+        {
+            Singleton<EffectManager>.Instance.CreateParticles(Singleton<INRuntimeGameData>.Instance.GameData.m_ballonParticles, Position, true);
+            foreach (MineSweeperElement mineSweeperElement in Elements)
+            {
+                Destroy(mineSweeperElement);
+            }
+        }
+    }
+
     /// <summary>
     /// Basically when clicking on an element, call this
     /// Return true if bomber
+    ///
+    /// -- Set to private -- Goggs
     /// </summary>
     /// <param name="x">Matrix X coord</param>
     /// <param name="y">Matrix Y coord</param>
@@ -60,7 +76,7 @@ public class MineSweeperManager : Singleton<MineSweeperManager>
     /// <returns></returns>
     // Basically when clicking on an element, call this
     // Return true if bomber
-    public bool Sweep(int x, int y, SweepType sweepType)
+    private bool Sweep(int x, int y, SweepType sweepType)
     {
         // Add birds only after the player reveals an element
         if (firstOpen)
