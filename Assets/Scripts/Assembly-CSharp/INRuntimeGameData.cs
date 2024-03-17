@@ -10,6 +10,8 @@ public class INRuntimeGameData : Singleton<INRuntimeGameData>
 	[SerializeField]
 	private GameObject m_partIconContainer;
 
+	private UnlistedPart m_unlistedPart;
+	
 	private GameData m_gameData;
 
 	private PartListData m_partListData;
@@ -30,6 +32,7 @@ public class INRuntimeGameData : Singleton<INRuntimeGameData>
 
 	public GameData GameData => m_gameData;
 
+	public UnlistedPart UnlistedPart => m_unlistedPart;
 	public GameObject PartContainer => m_partContainer;
 
 	public GameObject PartIconContainer => m_partIconContainer;
@@ -38,6 +41,7 @@ public class INRuntimeGameData : Singleton<INRuntimeGameData>
 	{
 		SetAsPersistant();
 		m_partListData = INUnity.LoadScriptableObject<PartListData>("PartListData");
+		m_unlistedPart = INUnity.LoadScriptableObject<UnlistedPart>("UnlistedPart");
 		m_partListBuilder = new PartListBuilder(m_partListData);
 		m_gameData = CreateGameData();
 		InitializeSettings();

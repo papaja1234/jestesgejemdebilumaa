@@ -10,6 +10,9 @@ public class INInitializer : MonoBehaviour
 	[SerializeField]
 	private List<GameObject> m_prefabs;
 
+	/// <summary>
+	/// Stores all runtime resources
+	/// </summary>
 	[SerializeField]
 	private ResourceData m_resourceData;
 
