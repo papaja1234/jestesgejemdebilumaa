@@ -209,9 +209,9 @@ public class GameData : ScriptableObject
 
 	public GameObject m_kingsFavoriteDialog;
 
-	[SerializeField]
+	//[SerializeField]
 	//Not working, consider creating a new file called UnlistedParts to reference unlisted prefabs
-	public static GameObject MinesweeperElementPrefab;
+	//public static GameObject MinesweeperElementPrefab;
 
 	private bool initialized;
 
