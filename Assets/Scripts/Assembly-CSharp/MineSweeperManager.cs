@@ -40,7 +40,7 @@ public class MineSweeperManager : Singleton<MineSweeperManager>
             for (int j = 0; j < squareHeight; j++)
             {
                 //Create playable objects
-                Elements[i, j] = Object.Instantiate(Singleton<INRuntimeGameData>.Instance.UnlistedPart.Parts[0]).GetComponent<MineSweeperElement>();
+                Elements[i, j] = Object.Instantiate(Singleton<INRuntimeGameData>.Instance.UnlistedPart.Parts[1]).GetComponent<MineSweeperElement>();
                 Elements[i, j].CoordX = i + x;
                 Elements[i, j].CoordY = j + y;
                 Elements[i, j].MatX = i;
