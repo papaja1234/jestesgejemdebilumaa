@@ -4,14 +4,17 @@ using UnityEngine;
 
 public class SnakeElement : ClickInteraction
 {
-    public enum SnakeElementType
+    public enum SnakeBlockType
     {
         Empty,
         SnakeBody,
         SnakeHead,
         SnakeTail,
+        SnakeSoul, // Snake head and tail are same
         Egg
     }
+
+    public SnakeBlockType blockType;
 
     protected override void Start()
     {

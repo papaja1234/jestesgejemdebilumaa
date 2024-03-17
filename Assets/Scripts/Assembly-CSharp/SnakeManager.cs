@@ -65,6 +65,40 @@ public class SnakeManager : Singleton<SnakeManager>
         return Snake.Count;
     }
 
+    // Call this to update element display
+    public void UpdateElements()
+    {
+        for (int i = 0; i < width; i++)
+        {
+            for (int j = 0; j < height; j++)
+            {
+                Elements[i, j].blockType = SnakeElement.SnakeBlockType.Empty;
+            }
+        }
+        foreach (var snake in Snake)
+        {
+            Elements[snake.x, snake.y].blockType = SnakeElement.SnakeBlockType.SnakeBody;
+        }
+        if (Snake[0] != Snake[Snake.Count - 1])
+        {
+            Elements[Snake[0].x, Snake[0].y].blockType = SnakeElement.SnakeBlockType.SnakeTail;
+            Elements[Snake[Snake.Count - 1].x, Snake[Snake.Count - 1].y].blockType = SnakeElement.SnakeBlockType.SnakeHead;
+        }
+        else
+        {
+            Elements[Snake[0].x, Snake[0].y].blockType = SnakeElement.SnakeBlockType.SnakeSoul;
+        }
+        Elements[EggPosition.x, EggPosition.y].blockType = SnakeElement.SnakeBlockType.Egg;
+
+        for (int i = 0; i < width; i++)
+        {
+            for (int j = 0; j < height; j++)
+            {
+                Elements[i, j].UpdateDisplay();
+            }
+        }
+    }
+
     public void UpdateStatus(TurnType turnType)
     {
         // Dear Goggs... ^-^
