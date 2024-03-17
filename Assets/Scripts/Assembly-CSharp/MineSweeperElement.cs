@@ -25,6 +25,9 @@ public class MineSweeperElement : ClickInteraction
     {
         Empty = 1,
         Bomb = 2,
+        Chuck = 3,
+        Red = 4,
+        Max = 3
     }
 
     public MineSweeperBlockType blockType;

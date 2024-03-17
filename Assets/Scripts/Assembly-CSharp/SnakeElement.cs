@@ -2,17 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SnakeElement : MonoBehaviour
+public class SnakeElement : ClickInteraction
 {
-    // Start is called before the first frame update
-    void Start()
+    public enum SnakeElementType
     {
-        
+        Empty,
+        SnakeBody,
+        SnakeHead,
+        SnakeTail,
+        Egg
     }
 
-    // Update is called once per frame
-    void Update()
+    protected override void Start()
     {
-        
+        // Dear Goggs, dew it. -- Anstro Pleuton
+    }
+
+    public void UpdateDisplay()
+    {
+        // Dear Goggs, you know the drill. -- Anstro Pleuton
     }
 }

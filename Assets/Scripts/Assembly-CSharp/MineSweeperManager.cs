@@ -12,9 +12,10 @@ public class MineSweeperManager : Singleton<MineSweeperManager>
 
     private int birdCount;
 
-    bool firstOpen = false;
+    private bool firstOpen = false;
 
     private Vector3 Position;
+
     public enum SweepType
     {
         LeftClick = 0,
@@ -49,6 +50,40 @@ public class MineSweeperManager : Singleton<MineSweeperManager>
                 Elements[i, j].blockType = MineSweeperElement.MineSweeperBlockType.Empty; 
             }
         }
+    }
+
+    // Call it before update status I guess?
+    public bool CheckWon()
+    {
+        bool unopenedElements = false;
+        for (int i = 0; i < width; i++)
+        {
+            for (int j = 0; j < height; j++)
+            {
+                if (!Elements[i, j].isOpened && Elements[i, j].blockType == MineSweeperElement.MineSweeperBlockType.Empty)
+                {
+                    unopenedElements = true;
+                    break;
+                }
+            }
+        }
+        return !unopenedElements;
+    }
+
+    public int FlaggedElements()
+    {
+        int count = 0;
+        for (int i = 0; i < width; i++)
+        {
+            for (int j = 0; j < height; j++)
+            {
+                if (Elements[i, j].isFlagged)
+                {
+                    count++;
+                }
+            }
+        }
+        return count;
     }
 
     public void UpdateStatus(int x, int y, SweepType sweepType)
@@ -88,7 +123,7 @@ public class MineSweeperManager : Singleton<MineSweeperManager>
                 int randomY = Random.Range(0, height);
                 if (randomX != x && randomY != y)
                 {
-                    Elements[randomX, randomY].blockType = MineSweeperElement.MineSweeperBlockType.Bomb;
+                    Elements[randomX, randomY].blockType = (MineSweeperElement.MineSweeperBlockType)(Random.Range(0, (int)MineSweeperElement.MineSweeperBlockType.Max) + 2);
                 }
                 else i--;
             }
@@ -107,7 +142,7 @@ public class MineSweeperManager : Singleton<MineSweeperManager>
                         {
                             return false;
                         }
-                        return Elements[x, y].blockType == MineSweeperElement.MineSweeperBlockType.Bomb;
+                        return Elements[x, y].blockType != MineSweeperElement.MineSweeperBlockType.Empty;
                     }
 
                     // Yeah...
@@ -127,7 +162,7 @@ public class MineSweeperManager : Singleton<MineSweeperManager>
         else if (sweepType == SweepType.LeftClick)
         {
             // Check if the element is a bomber bird
-            if (Elements[x, y].blockType == MineSweeperElement.MineSweeperBlockType.Bomb)
+            if (Elements[x, y].blockType != MineSweeperElement.MineSweeperBlockType.Empty)
             {
                 return true;
             }
@@ -196,15 +231,5 @@ public class MineSweeperManager : Singleton<MineSweeperManager>
             // ... Nothing, maybe easter egg in here?
         }
         return false;
-    }
-
-    void Start()
-    {
-
-    }
-
-    void Update()
-    {
-
     }
 }
