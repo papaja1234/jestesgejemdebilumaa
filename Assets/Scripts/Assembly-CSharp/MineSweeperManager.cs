@@ -139,6 +139,7 @@ public class MineSweeperManager : Singleton<MineSweeperManager>
 
                 // Yeah... v2
                 // this is hell -- Goggs
+                // I know right? -- Anstro Pleuton
                 if (x != 0 && y != 0) elementIndices.Add(new int[2] { x - 1, y - 1 });
                 if (x != 0) elementIndices.Add(new int[2] { x - 1, y });
                 if (x != 0 && y != height - 1) elementIndices.Add(new int[2] { x - 1, y + 1 });
@@ -187,6 +188,7 @@ public class MineSweeperManager : Singleton<MineSweeperManager>
             {
                 Elements[x, y].isFlagged = true;
             }
+            Elements[x, y].UpdateDisplay();
         }
 
         else if (sweepType == SweepType.MiddleClick)
