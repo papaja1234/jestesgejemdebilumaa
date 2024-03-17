@@ -58,8 +58,12 @@ public class MineSweeperElement : ClickInteraction
 
     protected override void Start()
     {
-        GetComponent<INSerializedSprite>().Reload(ForeGroundType == 0 ? "MS_Default" : "MS_DefaultVariation");
         DisplayContent = transform.Find("Display").gameObject.GetComponent<INSerializedSprite>();
+    }
+
+    public void Reload()
+    {
+        gameObject.GetComponent<INSerializedSprite>().Reload(ForeGroundType == 0 ? "MS_Default" : "MS_DefaultVariation");
     }
 
     protected override void OnTouch(bool hasPosition, Vector3 touchPosition, GuiManager.Pointer pointerInfo)

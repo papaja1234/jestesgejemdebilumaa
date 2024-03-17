@@ -1,6 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Object = UnityEngine.Object;
+using Random = UnityEngine.Random;
 
 public class MineSweeperManager : Singleton<MineSweeperManager>
 {
@@ -15,6 +18,11 @@ public class MineSweeperManager : Singleton<MineSweeperManager>
     private bool firstOpen = false;
 
     private Vector3 Position;
+
+    public void Awake()
+    {
+        SetAsPersistant();
+    }
 
     public enum SweepType
     {
@@ -41,13 +49,17 @@ public class MineSweeperManager : Singleton<MineSweeperManager>
             for (int j = 0; j < squareHeight; j++)
             {
                 //Create playable objects
-                Elements[i, j] = Object.Instantiate(Singleton<INRuntimeGameData>.Instance.UnlistedPart.Parts[1]).GetComponent<MineSweeperElement>();
+                GameObject element = Instantiate(Singleton<INRuntimeGameData>.Instance.UnlistedPart.Parts[1]);
+                Elements[i, j] = element.GetComponent<MineSweeperElement>();//fix me
                 Elements[i, j].CoordX = i + x;
                 Elements[i, j].CoordY = j + y;
                 Elements[i, j].MatX = i;
                 Elements[i, j].MatY = j;
                 Elements[i, j].parent = this;
-                Elements[i, j].blockType = MineSweeperElement.MineSweeperBlockType.Empty; 
+                Elements[i, j].blockType = MineSweeperElement.MineSweeperBlockType.Empty;
+                Elements[i, j].ForeGroundType = (i + j) % 2;
+                Elements[i, j].Reload();
+                element.transform.position = Position + new Vector3(i, j);
             }
         }
     }
@@ -224,8 +236,15 @@ public class MineSweeperManager : Singleton<MineSweeperManager>
                 Elements[x, y].isFlagged = true;
             }
             Elements[x, y].UpdateDisplay();
+            if (CheckWon())
+            {
+                Singleton<EffectManager>.Instance.CreateParticles(Singleton<INRuntimeGameData>.Instance.GameData.m_ballonParticles, Position, true);
+                foreach (MineSweeperElement mineSweeperElement in Elements)
+                {
+                    Destroy(mineSweeperElement);
+                }
+            }
         }
-
         else if (sweepType == SweepType.MiddleClick)
         {
             // ... Nothing, maybe easter egg in here?

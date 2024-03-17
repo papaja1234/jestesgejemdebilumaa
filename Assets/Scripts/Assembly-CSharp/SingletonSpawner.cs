@@ -43,7 +43,7 @@ public class SingletonSpawner : MonoBehaviour
 		{
 			return;
 		}
-		Application.targetFrameRate = 60;
+		Application.targetFrameRate = Screen.resolutions[0].refreshRate;
 		foreach (GameObject commonSingleton in m_commonSingletons)
 		{
 			if (!GameObject.Find(commonSingleton.name))

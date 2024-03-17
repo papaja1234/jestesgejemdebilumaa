@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 33364357485009894}
   - component: {fileID: 23953573009520003}
   - component: {fileID: 4446338040735181192}
+  - component: {fileID: 2946718105629602694}
   m_Layer: 9
   m_Name: Part_MineSweeperBlock_01_SET
   m_TagString: Untagged
@@ -146,11 +147,27 @@ MonoBehaviour:
   m_constructionIconSprite: {fileID: 114072690382698575, guid: 8cc63e9c2c5ffad41b69ff7ac2960b37, type: 3}
   SpriteName: 
   ForeGroundType: 0
+  MatX: 0
+  MatY: 0
+  parent: {fileID: 0}
   blockType: 0
   isOpened: 0
   isFlagged: 0
   isQuestioned: 0
   digit: 0
+--- !u!114 &2946718105629602694
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1803258236287564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e17d54ebdf3b8977649d5e41205b8918, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_name: 
 --- !u!1 &7137071430466114419
 GameObject:
   m_ObjectHideFlags: 0
