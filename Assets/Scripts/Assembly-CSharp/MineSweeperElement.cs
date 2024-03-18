@@ -19,9 +19,7 @@ public class MineSweeperElement : ClickInteraction
     public int MatX;
     public int MatY;
     private INSerializedSprite DisplayContent;
-
-    public MineSweeperManager parent;
-
+    
     public enum MineSweeperBlockType
     {
         Empty = 1,
@@ -69,19 +67,29 @@ public class MineSweeperElement : ClickInteraction
 
     protected override void OnTouch()
     {
-        Debug.Log("Touché! But Not resp");
+        //ignored
     }
 
     protected override void OnTouch(bool hasPosition, Vector3 touchPosition, GuiManager.Pointer pointerInfo)
     {
+        Debug.Log("Touché!");
         //check for input type
-        if (pointerInfo.doubleClick || pointerInfo.secondaryDown)
+        if (pointerInfo.doubleClick)
         {
-            parent.UpdateStatus(MatX, MatY, MineSweeperManager.SweepType.DoubleClick);
+            Singleton<MineSweeperManager>.Instance.UpdateStatus(MatX, MatY, MineSweeperManager.SweepType.DoubleClick);
             return;
         }
-        Debug.Log("Touché!");
-        parent.UpdateStatus(MatX, MatY, MineSweeperManager.SweepType.LeftClick);
+        if (pointerInfo.down)
+        {
+            Singleton<MineSweeperManager>.Instance.UpdateStatus(MatX, MatY, MineSweeperManager.SweepType.LeftClick);
+        }
+
+        if (pointerInfo.secondaryDown && isOpened == false)
+        {
+            this.isFlagged = true;
+            UpdateDisplay();
+        }
+        
     }
 /*
     public override void OnPointerDown(PointerEventData eventData)
@@ -104,6 +112,7 @@ public class MineSweeperElement : ClickInteraction
     //i prefer the former.
     public void UpdateDisplay()
     {
+        Debug.Log("Updating display of:" + ToString());
         if (isOpened)
         {
             GetComponent<INSerializedSprite>().Reload("MS_DefaultBackground");
