@@ -37,7 +37,9 @@ public class INSerializedSprite : INSpriteBase
 			m_graphicType = GetGraphicType();
 			if (m_graphicType == GraphicType.Mesh)
 			{
+				ClearMesh();
 				CreateMesh();
+				UpdateMesh();
 			}
 		}
 	}

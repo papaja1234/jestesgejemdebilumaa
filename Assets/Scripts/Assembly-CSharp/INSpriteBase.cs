@@ -63,6 +63,16 @@ public class INSpriteBase : MonoBehaviour
 		}
 	}
 
+	public void ClearMesh()
+	{
+		MeshRenderer component = GetComponent<MeshRenderer>();
+		MeshFilter component2 = GetComponent<MeshFilter>();
+		if (component != null && component2 != null)
+		{
+			component2.mesh.Clear();
+		}
+	}
+
 	private Mesh CreateMeshInternal(INSpriteData spriteData)
 	{
 		Mesh mesh = new Mesh();

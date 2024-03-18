@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class SnakeManager : Singleton<SnakeManager>
 {
@@ -11,6 +13,11 @@ public class SnakeManager : Singleton<SnakeManager>
     private int height;
 
     private Vector2Int EggPosition;
+
+    public void Awake()
+    {
+        SetAsPersistant();
+    }
 
     // Tail -> First element
     // Body -> Middle all elements

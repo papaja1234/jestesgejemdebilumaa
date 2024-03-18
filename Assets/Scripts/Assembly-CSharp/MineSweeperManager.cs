@@ -1,6 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Object = UnityEngine.Object;
+using Random = UnityEngine.Random;
 
 public class MineSweeperManager : Singleton<MineSweeperManager>
 {
@@ -12,9 +15,14 @@ public class MineSweeperManager : Singleton<MineSweeperManager>
 
     private int birdCount;
 
-    private bool firstOpen = false;
+    private bool firstOpen = true;
 
     public Vector3 Position;
+
+    public void Awake()
+    {
+        SetAsPersistant();
+    }
 
     public enum SweepType
     {
@@ -41,13 +49,18 @@ public class MineSweeperManager : Singleton<MineSweeperManager>
             for (int j = 0; j < squareHeight; j++)
             {
                 //Create playable objects
-                Elements[i, j] = Object.Instantiate(Singleton<INRuntimeGameData>.Instance.UnlistedPart.Parts[1]).GetComponent<MineSweeperElement>();
+                GameObject element = Instantiate(Singleton<INRuntimeGameData>.Instance.UnlistedPart.Parts[1]);
+                Elements[i, j] = element.GetComponent<MineSweeperElement>();//fix me
                 Elements[i, j].CoordX = i + x;
                 Elements[i, j].CoordY = j + y;
                 Elements[i, j].MatX = i;
                 Elements[i, j].MatY = j;
-                Elements[i, j].parent = this;
-                Elements[i, j].blockType = MineSweeperElement.MineSweeperBlockType.Empty; 
+                Elements[i, j].blockType = MineSweeperElement.MineSweeperBlockType.Empty;
+                Elements[i, j].ForeGroundType = (i + j) % 2;
+                Elements[i, j].Reload();
+                element.transform.position = Position + new Vector3(i, j);
+                Contraption.Instance.Parts.Add(Elements[i, j]);
+                    
             }
         }
     }
@@ -113,9 +126,11 @@ public class MineSweeperManager : Singleton<MineSweeperManager>
     // Return true if bomber
     private bool Sweep(int x, int y, SweepType sweepType)
     {
+        Debug.Log("Sweeping");
         // Add birds only after the player reveals an element
         if (firstOpen)
         {
+            firstOpen = false;
             // Add bomber birds
             for (int i = 0; i < birdCount; i++)
             {
@@ -158,53 +173,21 @@ public class MineSweeperManager : Singleton<MineSweeperManager>
                     Elements[i, j].digit = digit;
                 }
             }
+            RevealElements(x,y);
+            
         }
         else if (sweepType == SweepType.LeftClick)
         {
             // Check if the element is a bomber bird
             if (Elements[x, y].blockType != MineSweeperElement.MineSweeperBlockType.Empty)
             {
+                RevealElements(x,y,true);
                 return true;
             }
-
+            RevealElements(x,y);
             // Recursively reveal adjacent elements
-            void RevealElements(int x, int y)
-            {
-                List<int[]> elementIndices = new List<int[]>();
-
-                // Yeah... v2
-                // this is hell -- Goggs
-                // I know right? -- Anstro Pleuton
-                if (x != 0 && y != 0) elementIndices.Add(new int[2] { x - 1, y - 1 });
-                if (x != 0) elementIndices.Add(new int[2] { x - 1, y });
-                if (x != 0 && y != height - 1) elementIndices.Add(new int[2] { x - 1, y + 1 });
-                if (y != 0) elementIndices.Add(new int[2] { x, y - 1 });
-                if (y != height - 1) elementIndices.Add(new int[2] { x, y + 1 });
-                if (x != width - 1 && y != 0) elementIndices.Add(new int[2] { x + 1, y - 1 });
-                if (x != width - 1) elementIndices.Add(new int[2] { x + 1, y });
-                if (x != width - 1 && y != height - 1) elementIndices.Add(new int[2] { x + 1, y + 1 });
-
-                // Recursive-ness
-                foreach (var elementIndex in elementIndices)
-                {
-                    ref MineSweeperElement element = ref Elements[elementIndex[0], elementIndex[1]];
-
-                    // Prevent infinite recursion
-                    if (element.isOpened || element.isFlagged || element.isQuestioned)
-                    {
-                        continue;
-                    }
-
-                    // One thing that doesn't work is setting the element to be opened when the gird size is 1x1
-                    element.isOpened = true;
-                    // Gotta update the state of display -- Goggs
-                    element.UpdateDisplay();
-                    if (element.digit == 0)
-                    {
-                        RevealElements(elementIndex[0], elementIndex[1]);
-                    }
-                }
-            }
+           
+            
         }
 
         // First flag, then remove flag and question your life decisions about reading this source code, then remove questioned feelings
@@ -224,12 +207,67 @@ public class MineSweeperManager : Singleton<MineSweeperManager>
                 Elements[x, y].isFlagged = true;
             }
             Elements[x, y].UpdateDisplay();
+            if (CheckWon())
+            {
+                Singleton<EffectManager>.Instance.CreateParticles(Singleton<INRuntimeGameData>.Instance.GameData.m_ballonParticles, Position, true);
+                foreach (MineSweeperElement mineSweeperElement in Elements)
+                {
+                    Destroy(mineSweeperElement);
+                }
+            }
         }
-
         else if (sweepType == SweepType.MiddleClick)
         {
             // ... Nothing, maybe easter egg in here?
         }
         return false;
+        void RevealElements(int x, int y, bool isBomb = false)
+        {
+            if (isBomb)
+            {
+                Elements[x, y].isOpened = true;
+                Elements[x, y].UpdateDisplay();
+            }
+
+            List<int[]> elementIndices = new List<int[]>();
+
+            // Yeah... v2
+            // this is hell -- Goggs
+            // I know right? -- Anstro Pleuton
+            if (x != 0 && y != 0) elementIndices.Add(new int[2] { x - 1, y - 1 });
+            if (x != 0) elementIndices.Add(new int[2] { x - 1, y });
+            if (x != 0 && y != height - 1) elementIndices.Add(new int[2] { x - 1, y + 1 });
+            if (y != 0) elementIndices.Add(new int[2] { x, y - 1 });
+            if (y != height - 1) elementIndices.Add(new int[2] { x, y + 1 });
+            if (x != width - 1 && y != 0) elementIndices.Add(new int[2] { x + 1, y - 1 });
+            if (x != width - 1) elementIndices.Add(new int[2] { x + 1, y });
+            if (x != width - 1 && y != height - 1) elementIndices.Add(new int[2] { x + 1, y + 1 });
+
+            // Recursive-ness
+            foreach (var elementIndex in elementIndices)
+            {
+                ref MineSweeperElement element = ref Elements[elementIndex[0], elementIndex[1]];
+
+                // Prevent infinite recursion
+                if (element.isOpened || element.isFlagged || element.isQuestioned)
+                {
+                    continue;
+                }
+
+                // One thing that doesn't work is setting the element to be opened when the gird size is 1x1
+                if (element.blockType != MineSweeperElement.MineSweeperBlockType.Bomb && element.blockType != MineSweeperElement.MineSweeperBlockType.Chuck&& element.blockType!= MineSweeperElement.MineSweeperBlockType.Red)
+                {
+                    element.isOpened = true;
+                }
+
+                
+                // Gotta update the state of display -- Goggs
+                element.UpdateDisplay();
+                if (element.digit == 0)
+                {
+                    RevealElements(elementIndex[0], elementIndex[1]);
+                }
+            }
+        }
     }
 }
