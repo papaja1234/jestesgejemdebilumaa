@@ -14,7 +14,7 @@ public class MineSweeperManager : Singleton<MineSweeperManager>
 
     private bool firstOpen = false;
 
-    private Vector3 Position;
+    public Vector3 Position;
 
     public enum SweepType
     {

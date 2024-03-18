@@ -27,7 +27,7 @@ public class SnakeManager : Singleton<SnakeManager>
 
     private Direction direction;
 
-    private Vector2 Position;
+    public Vector2 Position;
 
     public enum TurnType
     {

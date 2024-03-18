@@ -4,4 +4,27 @@ using UnityEngine;
 
 public class TetrisElement : ClickInteraction
 {
+    public enum TetrisBlockType
+    {
+        Empty,
+        Shape1, // T (0 deg)
+        Shape2, // S (flat)
+        Shape3, // Z (flat)
+        Shape4, // J (-90 deg)
+        Shape5, // L (90 deg)
+        Shape6, // I (90 deg)
+        Shape7  // O (fill)
+    }
+
+    public TetrisBlockType blockType;
+
+    protected override void Start()
+    {
+        // Dear Goggs, dew it. -- Anstro Pleuton
+    }
+
+    public void UpdateDisplay()
+    {
+        // Dear Goggs, you know the drill. -- Anstro Pleuton
+    }
 }
