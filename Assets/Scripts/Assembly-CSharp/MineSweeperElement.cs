@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using Random = UnityEngine.Random;
 
 public class MineSweeperElement : ClickInteraction
@@ -66,6 +67,11 @@ public class MineSweeperElement : ClickInteraction
         gameObject.GetComponent<INSerializedSprite>().Reload(ForeGroundType == 0 ? "MS_Default" : "MS_DefaultVariation");
     }
 
+    protected override void OnTouch()
+    {
+        Debug.Log("Touché! But Not resp");
+    }
+
     protected override void OnTouch(bool hasPosition, Vector3 touchPosition, GuiManager.Pointer pointerInfo)
     {
         //check for input type
@@ -74,9 +80,24 @@ public class MineSweeperElement : ClickInteraction
             parent.UpdateStatus(MatX, MatY, MineSweeperManager.SweepType.DoubleClick);
             return;
         }
-
+        Debug.Log("Touché!");
         parent.UpdateStatus(MatX, MatY, MineSweeperManager.SweepType.LeftClick);
     }
+/*
+    public override void OnPointerDown(PointerEventData eventData)
+    {
+        Debug.Log("Touché!");
+        //check for input type
+        if  ( eventData.button == PointerEventData.InputButton.Right )
+        {
+            parent.UpdateStatus(MatX, MatY, MineSweeperManager.SweepType.DoubleClick);
+            return;
+        }else if (eventData.button == PointerEventData.InputButton.Left)
+        {
+            parent.UpdateStatus(MatX, MatY, MineSweeperManager.SweepType.LeftClick);
+        }
+        
+    }*/
 
     //set then invoke, or invoke to set?
     /*bool Opened, bool Flagged, bool Questioned, int Digit*/
@@ -85,6 +106,7 @@ public class MineSweeperElement : ClickInteraction
     {
         if (isOpened)
         {
+            GetComponent<INSerializedSprite>().Reload("MS_DefaultBackground");
             switch (blockType)
             {
                 case MineSweeperBlockType.Bomb:

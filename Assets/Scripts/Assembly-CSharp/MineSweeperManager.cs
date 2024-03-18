@@ -60,6 +60,8 @@ public class MineSweeperManager : Singleton<MineSweeperManager>
                 Elements[i, j].ForeGroundType = (i + j) % 2;
                 Elements[i, j].Reload();
                 element.transform.position = Position + new Vector3(i, j);
+                Contraption.Instance.Parts.Add(Elements[i, j]);
+                    
             }
         }
     }
