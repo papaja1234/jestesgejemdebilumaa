@@ -41,7 +41,7 @@ public class MineSweeperManager : Singleton<MineSweeperManager>
         Elements = new MineSweeperElement[squareWidth, squareHeight];
         width = squareWidth;
         height = squareHeight;
-        birdCount = squareBirdCount;
+        birdCount = squareWidth*squareHeight/7;
         Position = new Vector3(x, y);
         // Make all empty and correctly placed
         for (int i = 0; i < squareWidth; i++)
@@ -104,10 +104,17 @@ public class MineSweeperManager : Singleton<MineSweeperManager>
         bool Bombed = Sweep(x, y, sweepType);
         if (Bombed)
         {
-            Singleton<EffectManager>.Instance.CreateParticles(Singleton<INRuntimeGameData>.Instance.GameData.m_ballonParticles, Position, true);
             foreach (MineSweeperElement mineSweeperElement in Elements)
             {
-                Destroy(mineSweeperElement);
+                mineSweeperElement.rigidbody.isKinematic = false;
+                mineSweeperElement.rigidbody.useGravity = true;
+                mineSweeperElement.rigidbody.velocity = Random.insideUnitCircle * Random.Range(9, 1000);
+                mineSweeperElement.rigidbody.AddForce(Random.insideUnitCircle * Random.Range(9, 1000));
+                mineSweeperElement.rigidbody.mass = 1;
+                mineSweeperElement.rigidbody.drag = 0;
+                mineSweeperElement.rigidbody.angularDrag = 0;
+                mineSweeperElement.rigidbody.angularVelocity = Random.insideUnitCircle * Random.Range(1, 7);
+                Singleton<EffectManager>.Instance.CreateParticles(Singleton<INRuntimeGameData>.Instance.GameData.m_ballonParticles, mineSweeperElement.transform.position, true);
             }
         }
     }
@@ -126,7 +133,7 @@ public class MineSweeperManager : Singleton<MineSweeperManager>
     // Return true if bomber
     private bool Sweep(int x, int y, SweepType sweepType)
     {
-        Debug.Log("Sweeping");
+        //Debug.Log("Sweeping");
         // Add birds only after the player reveals an element
         if (firstOpen)
         {
@@ -184,10 +191,8 @@ public class MineSweeperManager : Singleton<MineSweeperManager>
                 RevealElements(x,y,true);
                 return true;
             }
-            RevealElements(x,y);
+            RevealElements(x,y, force:true);
             // Recursively reveal adjacent elements
-           
-            
         }
 
         // First flag, then remove flag and question your life decisions about reading this source code, then remove questioned feelings
@@ -209,10 +214,9 @@ public class MineSweeperManager : Singleton<MineSweeperManager>
             Elements[x, y].UpdateDisplay();
             if (CheckWon())
             {
-                Singleton<EffectManager>.Instance.CreateParticles(Singleton<INRuntimeGameData>.Instance.GameData.m_ballonParticles, Position, true);
                 foreach (MineSweeperElement mineSweeperElement in Elements)
                 {
-                    Destroy(mineSweeperElement);
+                    Singleton<EffectManager>.Instance.CreateParticles(Singleton<INRuntimeGameData>.Instance.GameData.m_ballonParticles, Position, true);
                 }
             }
         }
@@ -221,13 +225,14 @@ public class MineSweeperManager : Singleton<MineSweeperManager>
             // ... Nothing, maybe easter egg in here?
         }
         return false;
-        void RevealElements(int x, int y, bool isBomb = false)
+        void RevealElements(int x, int y, bool isBomb = false, bool force = false)
         {
-            if (isBomb)
+            if (isBomb || force)
             {
                 Elements[x, y].isOpened = true;
                 Elements[x, y].UpdateDisplay();
             }
+            
 
             List<int[]> elementIndices = new List<int[]>();
 
