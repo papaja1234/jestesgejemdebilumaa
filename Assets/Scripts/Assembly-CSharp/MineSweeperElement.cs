@@ -72,7 +72,7 @@ public class MineSweeperElement : ClickInteraction
 
     protected override void OnTouch(bool hasPosition, Vector3 touchPosition, GuiManager.Pointer pointerInfo)
     {
-        Debug.Log("Touché!");
+        //Debug.Log("Touché!");
         //check for input type
         if (pointerInfo.doubleClick)
         {
@@ -91,34 +91,19 @@ public class MineSweeperElement : ClickInteraction
         }
         
     }
-/*
-    public override void OnPointerDown(PointerEventData eventData)
-    {
-        Debug.Log("Touché!");
-        //check for input type
-        if  ( eventData.button == PointerEventData.InputButton.Right )
-        {
-            parent.UpdateStatus(MatX, MatY, MineSweeperManager.SweepType.DoubleClick);
-            return;
-        }else if (eventData.button == PointerEventData.InputButton.Left)
-        {
-            parent.UpdateStatus(MatX, MatY, MineSweeperManager.SweepType.LeftClick);
-        }
-        
-    }*/
-
+    
     //set then invoke, or invoke to set?
     /*bool Opened, bool Flagged, bool Questioned, int Digit*/
     //i prefer the former.
     public void UpdateDisplay()
     {
-        Debug.Log("Updating display of:" + ToString());
+        
         if (isOpened)
         {
             GetComponent<INSerializedSprite>().Reload("MS_DefaultBackground");
             switch (blockType)
             {
-                case MineSweeperBlockType.Bomb:
+                case MineSweeperBlockType.Bomb or MineSweeperBlockType.Chuck or MineSweeperBlockType.Red:
                     DisplayContent.Reload(birds[Random.Range(0, 2)]);
                     break;
                 case MineSweeperBlockType.Empty:
@@ -131,6 +116,7 @@ public class MineSweeperElement : ClickInteraction
                     break;
                 }
                 default:
+                    Debug.Log(blockType);
                     throw new ArgumentOutOfRangeException();
             }
         }

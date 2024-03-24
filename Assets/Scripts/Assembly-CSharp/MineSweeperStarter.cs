@@ -23,7 +23,7 @@ public class MineSweeperStarter : MonoBehaviour
                 {
                     GetComponent<BasePart>().gameObject.AddComponent<MineSweeperManager>();
                 }
-                Singleton<MineSweeperManager>.Instance.InitializeGame(10,10,20,(int)transform.position.x,(int)transform.position.y);
+                Singleton<MineSweeperManager>.Instance.InitializeGame(Random.Range(9,30),Random.Range(9,30),0,(int)transform.position.x,(int)transform.position.y);
             }
         }
     }
