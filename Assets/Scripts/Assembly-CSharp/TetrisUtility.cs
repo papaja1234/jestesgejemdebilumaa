@@ -35,13 +35,16 @@ public struct TetrisBlock
     }
 }
 
-class TetrisFallingTetromino
+/// <summary>
+/// Tetris all-shaped brick unit
+/// </summary>
+public class TetrisFallingTetromino
 {
- 
-
     // The array being 2D is redundant...
     public TetrisBlock[,] tetromino;
 
+    public bool isFrozen = false;
+    
     public int width;
 
     public int height;
@@ -50,24 +53,26 @@ class TetrisFallingTetromino
 
     public Vector2Int position;
 
-    TetrisFallingTetromino(TetrisGrid grid, TetrisBlock.TetrisBlockType blockType)
+    public TetrisFallingTetromino(TetrisGrid grid, TetrisBlock.TetrisBlockType blockType)
     {
         parentGrid = grid;
 
         switch (blockType)
         {
             case TetrisBlock.TetrisBlockType.Empty: // 0
-                tetromino = new TetrisBlock[,] {};
+                tetromino = new TetrisBlock[,] { };
                 break;
-            case TetrisBlock.TetrisBlockType.I: // 
-                tetromino = new TetrisBlock[,] {
+            case TetrisBlock.TetrisBlockType.I: // 1
+                tetromino = new TetrisBlock[,]
+                {
                     { new TetrisBlock(1), new TetrisBlock(1), new TetrisBlock(1), new TetrisBlock(1) }
                 };
                 width = 4;
                 height = 1;
                 break;
             case TetrisBlock.TetrisBlockType.J: // 2
-                tetromino = new TetrisBlock[,] {
+                tetromino = new TetrisBlock[,]
+                {
                     { new TetrisBlock(2), new TetrisBlock(0), new TetrisBlock(0) },
                     { new TetrisBlock(2), new TetrisBlock(2), new TetrisBlock(2) }
                 };
@@ -75,7 +80,8 @@ class TetrisFallingTetromino
                 height = 2;
                 break;
             case TetrisBlock.TetrisBlockType.L: // 3
-                tetromino = new TetrisBlock[,] {
+                tetromino = new TetrisBlock[,]
+                {
                     { new TetrisBlock(0), new TetrisBlock(0), new TetrisBlock(3) },
                     { new TetrisBlock(3), new TetrisBlock(3), new TetrisBlock(3) }
                 };
@@ -83,7 +89,8 @@ class TetrisFallingTetromino
                 height = 2;
                 break;
             case TetrisBlock.TetrisBlockType.O: // 4
-                tetromino = new TetrisBlock[,] {
+                tetromino = new TetrisBlock[,]
+                {
                     { new TetrisBlock(4), new TetrisBlock(4) },
                     { new TetrisBlock(4), new TetrisBlock(4) }
                 };
@@ -91,7 +98,8 @@ class TetrisFallingTetromino
                 height = 2;
                 break;
             case TetrisBlock.TetrisBlockType.S: // 5
-                tetromino = new TetrisBlock[,] {
+                tetromino = new TetrisBlock[,]
+                {
                     { new TetrisBlock(0), new TetrisBlock(5), new TetrisBlock(5) },
                     { new TetrisBlock(5), new TetrisBlock(5), new TetrisBlock(0) }
                 };
@@ -99,7 +107,8 @@ class TetrisFallingTetromino
                 height = 2;
                 break;
             case TetrisBlock.TetrisBlockType.T: // 6
-                tetromino = new TetrisBlock[,] {
+                tetromino = new TetrisBlock[,]
+                {
                     { new TetrisBlock(0), new TetrisBlock(6), new TetrisBlock(0) },
                     { new TetrisBlock(6), new TetrisBlock(6), new TetrisBlock(6) }
                 };
@@ -107,6 +116,74 @@ class TetrisFallingTetromino
                 height = 2;
                 break;
             case TetrisBlock.TetrisBlockType.Z: // 7
+                tetromino = new TetrisBlock[,]
+                {
+                    { new TetrisBlock(7), new TetrisBlock(7), new TetrisBlock(0) },
+                    { new TetrisBlock(0), new TetrisBlock(7), new TetrisBlock(7) }
+                };
+                width = 3;
+                height = 2;
+                break;
+        }
+    }
+
+    public TetrisFallingTetromino(TetrisGrid grid, int blockType)
+    {
+        parentGrid = grid;
+
+        switch (blockType)
+        {
+            case 0: // 0
+                tetromino = new TetrisBlock[,] {};
+                break;
+            case 1: // 1
+                tetromino = new TetrisBlock[,] {
+                    { new TetrisBlock(1), new TetrisBlock(1), new TetrisBlock(1), new TetrisBlock(1) }
+                };
+                width = 4;
+                height = 1;
+                break;
+            case 2: // 2
+                tetromino = new TetrisBlock[,] {
+                    { new TetrisBlock(2), new TetrisBlock(0), new TetrisBlock(0) },
+                    { new TetrisBlock(2), new TetrisBlock(2), new TetrisBlock(2) }
+                };
+                width = 3;
+                height = 2;
+                break;
+            case 3: // 3
+                tetromino = new TetrisBlock[,] {
+                    { new TetrisBlock(0), new TetrisBlock(0), new TetrisBlock(3) },
+                    { new TetrisBlock(3), new TetrisBlock(3), new TetrisBlock(3) }
+                };
+                width = 3;
+                height = 2;
+                break;
+            case 4: // 4
+                tetromino = new TetrisBlock[,] {
+                    { new TetrisBlock(4), new TetrisBlock(4) },
+                    { new TetrisBlock(4), new TetrisBlock(4) }
+                };
+                width = 2;
+                height = 2;
+                break;
+            case 5: // 5
+                tetromino = new TetrisBlock[,] {
+                    { new TetrisBlock(0), new TetrisBlock(5), new TetrisBlock(5) },
+                    { new TetrisBlock(5), new TetrisBlock(5), new TetrisBlock(0) }
+                };
+                width = 3;
+                height = 2;
+                break;
+            case 6: // 6
+                tetromino = new TetrisBlock[,] {
+                    { new TetrisBlock(0), new TetrisBlock(6), new TetrisBlock(0) },
+                    { new TetrisBlock(6), new TetrisBlock(6), new TetrisBlock(6) }
+                };
+                width = 3;
+                height = 2;
+                break;
+            case 7: // 7
                 tetromino = new TetrisBlock[,] {
                     { new TetrisBlock(7), new TetrisBlock(7), new TetrisBlock(0) },
                     { new TetrisBlock(0), new TetrisBlock(7), new TetrisBlock(7) }
@@ -126,7 +203,7 @@ class TetrisFallingTetromino
                 tetromino[i, j].offset = new Vector2Int(i, j);
             }
         }
-    }
+    }// fold it
 
     private Vector2Int RotatePoint(Vector2Int point, Vector2Int center, bool rightwords)
     {
@@ -149,7 +226,9 @@ class TetrisFallingTetromino
         Vector2Int roughCenter = new Vector2Int(width / 2, height / 2);
 
         TetrisBlock[,] newTetromino = new TetrisBlock[width, height];
-
+        //use jagged array for efficiency?
+        //like TetrisBlock[][]
+        
         for (int i = 0; i < width; i++)
         {
             for (int j = 0; j < height; j++)
@@ -193,6 +272,7 @@ class TetrisFallingTetromino
     // Check collision of the next move before moving and permanently placing the tetromino
     public bool CheckCollision()
     {
+        //Don't forget to assign it's return value to isFrozen
         for (int i = 0; i < width; i++)
         {
             for (int j = 0; j < height; j++)
@@ -212,9 +292,17 @@ class TetrisFallingTetromino
         return false;
     }
 
+    /// <summary>
+    /// Tick-update function
+    /// </summary>
     public void MoveDown()
     {
-        // Yeap
+        
+        if (isFrozen)
+        {
+            return;
+        }
+        //YEET
         position.y++;
     }
 }
@@ -222,7 +310,7 @@ class TetrisFallingTetromino
 public class TetrisGrid
 {
     
-    // You might need to flip the y axis when rednering
+    // You might need to flip the y axis when rendering // fix typo
     public TetrisBlock[,] blocks;
 
     public int width;

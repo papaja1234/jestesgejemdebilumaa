@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class TetrisElement : ClickInteraction
 {
+    /*
+     //discarded
     public enum ETetrisBlockType
     {
         Empty,
@@ -14,9 +16,19 @@ public class TetrisElement : ClickInteraction
         Shape5, // L (90 deg)
         Shape6, // I (90 deg)
         Shape7  // O (fill)
-    }
+    }*/
 
-    public ETetrisBlockType blockType;
+    public TetrisBlock.TetrisBlockType blockType;
+    public TetrisFallingTetromino parentTetromino;
+
+    protected override void OnTouch(bool hasPosition, Vector3 touchPosition, GuiManager.Pointer pointerInfo = default)
+    {
+        if (parentTetromino.isFrozen)
+        {
+            return;
+        }
+        parentTetromino.Rotate(pointerInfo.secondaryDown);
+    }
 
     protected override void Start()
     {
@@ -26,5 +38,6 @@ public class TetrisElement : ClickInteraction
     public void UpdateDisplay()
     {
         // Dear Goggs, you know the drill. -- Anstro Pleuton
+        //Waiting for assets
     }
 }
