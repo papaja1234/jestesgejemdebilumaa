@@ -5,24 +5,22 @@ using UnityEngine;
 public class TetrisManager : Singleton<TetrisManager>
 {
     public TetrisElement[,] Elements;
-
+    public TetrisGrid grid;
     private int width;
 
     private int height;
 
-    private List<List<Vector2Int>> shapes = new List<List<Vector2Int>> {
-        new List<Vector2Int> { new Vector2Int(1, 2) }
-    };
+    
 
     public Vector2 Position;
 
-    public enum ChangeType
+    public enum MoveType
     {
-        Left,
-        Right,
-        Rotate,
-        FastDownward
-    }
+        Nothing,
+        FastDown,
+        RotateRight,
+        RotateLeft
+    };
 
     public void InitializeGame(int squareWidth, int squareHeight, int x, int y)
     {
@@ -35,13 +33,18 @@ public class TetrisManager : Singleton<TetrisManager>
         {
             for (int j = 0; j < squareHeight; j++)
             {
-                Elements[i, j].blockType = TetrisElement.TetrisBlockType.Empty;
+                Elements[i, j].blockType = TetrisElement.ETetrisBlockType.Empty;
             }
         }
     }
-
-    private void Change(ChangeType changeType)
+    public void InitializeGrid (int squareWidth, int squareHeight)
     {
+        grid = new TetrisGrid(squareWidth, squareHeight) { };
+        width = squareWidth;
+        height = squareHeight;
+    }
 
+    private void Move(MoveType moveType)
+    {
     }
 }

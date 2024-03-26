@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 public class SnakeManager : Singleton<SnakeManager>
@@ -11,11 +12,75 @@ public class SnakeManager : Singleton<SnakeManager>
     private int width;
 
     private int height;
-
+    //public KeyListener keyListener;
+    //not using this since it's a singleton<keyListener>
+    public KeyCode lastInput;
     private Vector2Int EggPosition;
 
-    public void Awake()
+    private int frameCount = 0;
+    private const int moveInterval = 2;
+
+    public void Update()
     {
+        GetInput();//set lastInput
+        frameCount++;
+        if (frameCount % moveInterval == 0) 
+        {
+            UpdateStatus(ToTurnType(lastInput));
+        }
+    }
+
+    public void GetInput()
+    {
+        /*
+            KeyCode.W,
+            KeyCode.A,
+            KeyCode.S,
+            KeyCode.D,
+            KeyCode.LeftArrow,
+            KeyCode.UpArrow,
+            KeyCode.DownArrow,
+            KeyCode.RightArrow*/
+        if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            lastInput = KeyCode.UpArrow;   //only use arrow keys for conditions
+            return;
+        }
+        if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            lastInput = KeyCode.LeftArrow; //only use arrow keys for conditions
+            return;
+        }
+        if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            lastInput = KeyCode.DownArrow; //only use arrow keys for conditions
+            return;
+        }
+        if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            lastInput = KeyCode.RightArrow;//only use arrow keys for conditions
+            return;
+        }
+
+        lastInput = KeyCode.None;
+    }
+
+    public void Awake()
+    {/*
+        keyListener = Instance.gameObject.AddComponent<KeyListener>();
+        keyListener.m_hotkeys = new List<KeyCode>()
+        {
+            KeyCode.W,
+            KeyCode.A,
+            KeyCode.S,
+            KeyCode.D,
+            KeyCode.LeftArrow,
+            KeyCode.UpArrow,
+            KeyCode.DownArrow,
+            KeyCode.RightArrow
+        };
+        //not using this class since it's a singleton
+        keyListener.enabled = true;*/
         SetAsPersistant();
     }
 
@@ -35,6 +100,18 @@ public class SnakeManager : Singleton<SnakeManager>
     private Direction direction;
 
     public Vector2 Position;
+
+    public TurnType ToTurnType(KeyCode input)
+    {
+        return input switch
+        {
+            KeyCode.LeftArrow => TurnType.Left,
+            KeyCode.RightArrow => TurnType.Right,
+            KeyCode.UpArrow => TurnType.Up,
+            KeyCode.DownArrow => TurnType.Down,
+            _ => TurnType.None
+        };
+    }
 
     public enum TurnType
     {
@@ -64,7 +141,7 @@ public class SnakeManager : Singleton<SnakeManager>
     public bool CheckWon()
     {
         // More than or equal to, idk why
-        return Snake.Count >= width * height;
+        return Snake.Count >= (width-1) * (height-1) && Snake.Count > 3;
     }
 
     public int SnakeLength()
@@ -109,6 +186,15 @@ public class SnakeManager : Singleton<SnakeManager>
     public void UpdateStatus(TurnType turnType)
     {
         // Dear Goggs... ^-^
+        if (CheckWon())
+        {
+            //Play Win-Animation
+        }
+        else
+        {
+            Move(turnType);
+            UpdateElements();
+        }
     }
 
     private void NewEggPosition()

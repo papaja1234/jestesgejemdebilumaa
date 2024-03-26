@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TetrisElement : ClickInteraction
 {
-    public enum TetrisBlockType
+    public enum ETetrisBlockType
     {
         Empty,
         Shape1, // T (0 deg)
@@ -16,7 +16,7 @@ public class TetrisElement : ClickInteraction
         Shape7  // O (fill)
     }
 
-    public TetrisBlockType blockType;
+    public ETetrisBlockType blockType;
 
     protected override void Start()
     {

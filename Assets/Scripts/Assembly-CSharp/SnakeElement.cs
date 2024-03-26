@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SnakeElement : ClickInteraction
+public class SnakeElement : ClickInteraction/*Click() should be unused */
 {
     public enum SnakeBlockType
     {
@@ -24,5 +24,6 @@ public class SnakeElement : ClickInteraction
     public void UpdateDisplay()
     {
         // Dear Goggs, you know the drill. -- Anstro Pleuton
+        //Waiting for assets
     }
 }
