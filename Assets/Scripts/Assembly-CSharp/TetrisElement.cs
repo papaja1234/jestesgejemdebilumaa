@@ -38,6 +38,7 @@ public class TetrisElement : ClickInteraction
     public void UpdateDisplay()
     {
         // Dear Goggs, you know the drill. -- Anstro Pleuton
-        //Waiting for assets
+        // Waiting for assets...done
+        // Waiting for asset installation
     }
 }
