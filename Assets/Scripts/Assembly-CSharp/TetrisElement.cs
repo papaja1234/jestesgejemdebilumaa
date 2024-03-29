@@ -40,5 +40,6 @@ public class TetrisElement : ClickInteraction
         // Dear Goggs, you know the drill. -- Anstro Pleuton
         // Waiting for assets...done
         // Waiting for asset installation
+        GetComponent<INSerializedSprite>().Reload($"T_{blockType.ToString()}");
     }
 }

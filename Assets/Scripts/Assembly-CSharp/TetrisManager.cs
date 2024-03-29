@@ -12,7 +12,7 @@ public class TetrisManager : Singleton<TetrisManager>
         {
             for (int col = 0; col < matrix.GetLength(1); col++)
             {
-                if (matrix[row, col].Equals(target))
+                if (ReferenceEquals(target,matrix[row,col]))
                 {
                     return (row, col);
                 }
@@ -42,8 +42,9 @@ public class TetrisManager : Singleton<TetrisManager>
             }
             else if (!hasFallingBlock)
             {
-                currentFallingTetromino = new TetrisFallingTetromino(grid, (TetrisBlock.TetrisBlockType)Random.Range(1,7));
+                currentFallingTetromino = new TetrisFallingTetromino(grid, Random.Range(1,7));
                 hasFallingBlock = true;
+                
             }
             //render part
             foreach (TetrisElement tetrisElement in FrameElements)
@@ -70,20 +71,21 @@ public class TetrisManager : Singleton<TetrisManager>
     public void InitializeGame(int squareWidth, int squareHeight, int x, int y)
     {
         InitializeGrid(squareWidth, squareHeight);
-        Elements = new TetrisElement[squareHeight, squareWidth];
+       // Elements = new TetrisElement[squareHeight, squareWidth];
         width = squareWidth;
         height = squareHeight;
         Position = new Vector2(x, y);
-
+/*
         for (int i =  0; i < squareWidth;  i++)
         {
             for (int j = 0; j < squareHeight; j++)
             {
+                Elements[i,j] = 
                 Elements[i, j].blockType = TetrisBlock.TetrisBlockType.Empty;
                 
             }
         }
-
+*/
         for (int i = -squareWidth/2; i <= squareWidth/2; i++)
         {
             GameObject border = Instantiate(INRuntimeGameData.Instance.GameData.m_parts.Find(o => o.GetComponent<Pig>() != null ));
@@ -94,18 +96,19 @@ public class TetrisManager : Singleton<TetrisManager>
 
         //initialize frame element
         FrameElements = new TetrisElement[squareWidth, squareHeight];
-        int index = 0;
-        foreach (TetrisElement te in FrameElements)
+        for (int i =  0; i < squareWidth;  i++)
         {
-            GameObject gameObject = Instantiate(Singleton<INRuntimeGameData>.Instance.UnlistedPart.Parts[3]);
-            TetrisElement tetrisElement = gameObject.GetComponent<TetrisElement>();
-            tetrisElement.blockType = TetrisBlock.TetrisBlockType.Empty;
-            int row = (int)Math.Floor(index / (double)squareWidth);
-            int colomn = index % 7;
-            tetrisElement.transform.position =
-                new Vector3(transform.position.x + 1 + row, transform.position.y + 1 + colomn);
-            FrameElements.SetValue(tetrisElement, row, colomn);
-            index++;
+            for (int j = 0; j < squareHeight; j++)
+            {
+                
+                GameObject gameObject = Instantiate(Singleton<INRuntimeGameData>.Instance.UnlistedPart.Parts[3]);
+                TetrisElement tetrisElement = gameObject.GetComponent<TetrisElement>();
+                tetrisElement.blockType = TetrisBlock.TetrisBlockType.Empty;
+                tetrisElement.transform.position =
+                    new Vector3(transform.position.x + 1 + i, transform.position.y + 1 + j);
+                FrameElements[i, j] = tetrisElement;
+                
+            }
         }
         initalized = true;
     }

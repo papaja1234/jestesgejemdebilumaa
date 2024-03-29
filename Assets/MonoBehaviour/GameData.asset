@@ -203,6 +203,7 @@ MonoBehaviour:
     - {fileID: 114208638687592437, guid: fab6d6e6cef9b45409b7fecc6df379e1, type: 3}
     - {fileID: 114905883212505359, guid: 200dabf1830ab65418fc2e54746d61c3, type: 3}
     - {fileID: 114454882869604994, guid: 48371b4fb79d4294eb77fbe3ea2eafae, type: 3}
+    - {fileID: 114454882869604994, guid: ac24a50d12af801428b5700be402909d, type: 3}
   - partType: 4
     customParts:
     - {fileID: 114381493430809683, guid: da8a1a68f4698a64f86407a9e8beda84, type: 3}
