@@ -78,7 +78,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2503bb0dae5b07b4e95bf7e474607bd4, type: 2}
+  - {fileID: 2100000, guid: 92613d13bd465444da62f958b532c87c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -159,7 +159,9 @@ MonoBehaviour:
   m_enclosedInto: {fileID: 0}
   m_constructionIconSprite: {fileID: 0}
   SpriteName: 
+  BGtype: 0
   blockType: 0
+  display: {fileID: 0}
 --- !u!1 &7137071430466114419
 GameObject:
   m_ObjectHideFlags: 0
