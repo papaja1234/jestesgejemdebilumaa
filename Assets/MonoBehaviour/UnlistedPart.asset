@@ -18,6 +18,7 @@ MonoBehaviour:
   - {fileID: 1803258236287564, guid: b87a0dbc4ce2fec40a16c008a9215794, type: 3}
   - {fileID: 1803258236287564, guid: a3e4c46abf825b843993c3f7ab1150d6, type: 3}
   - {fileID: 1803258236287564, guid: a3e4c46abf825b843993c3f7ab1150d6, type: 3}
+  - {fileID: 1803258236287564, guid: 989f69940057fa14ab02cb664a053cb9, type: 3}
   PartIcons: []
   PartRanges: []
   PartIconRanges: []

@@ -27,6 +27,7 @@ public class SnakeManager : Singleton<SnakeManager>
         if (frameCount % moveInterval == 0) 
         {
             UpdateStatus(ToTurnType(lastInput));
+            
         }
     }
 
@@ -133,7 +134,17 @@ public class SnakeManager : Singleton<SnakeManager>
 
         // Be sure to have at least one element
         Snake = new List<Vector2Int>(1);
-
+        int ind = 0;
+        for (int i = 0; i < squareWidth; i++)
+        {
+            for (int j = 0; j < squareHeight; j++)
+            {
+                GameObject o = Instantiate(Singleton<INRuntimeGameData>.Instance.UnlistedPart.Parts[4]);
+                Elements[i, j] = o.GetComponent<SnakeElement>();
+                Elements[i, j].BGtype = ind % 2; 
+                ind++;
+            }
+        }
         NewEggPosition();
     }
 
