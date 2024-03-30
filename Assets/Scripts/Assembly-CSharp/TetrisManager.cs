@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -33,12 +34,31 @@ public class TetrisManager : Singleton<TetrisManager>
 
     public void Update()
     {
-        //calculation part
+        
         if (frameTicker.WillTick() && initalized)
         {
+            //Pre-initialization
+            grid.blocks = new TetrisBlock[grid.width, grid.height];
+            for (int i =  0; i < width;  i++)
+            {
+                for (int j = 0; j < height; j++)
+                {
+                    grid.blocks[i, j] = new TetrisBlock(0);
+                }
+            }
+            //calculation part
             if (hasFallingBlock)
             {
-                currentFallingTetromino.MoveDown();
+                if (currentFallingTetromino.CheckCollision())
+                {
+                    hasFallingBlock = false;
+                    currentFallingTetromino.isFrozen = true;
+                }
+                else
+                {
+                    currentFallingTetromino.MoveDown();
+                    currentFallingTetromino.UpdateToGrid();
+                }
             }
             else if (!hasFallingBlock)
             {
@@ -50,7 +70,7 @@ public class TetrisManager : Singleton<TetrisManager>
             foreach (TetrisElement tetrisElement in FrameElements)
             {
                 (int, int) tuple = FindElementIndex(FrameElements, tetrisElement);
-                tetrisElement.blockType = grid.blocks[tuple.Item1,tuple.Item2].blockType;
+                tetrisElement.blockType = grid.blocks[tuple.Item2,tuple.Item1].blockType;
                 tetrisElement.UpdateDisplay();
             }
         }
@@ -107,7 +127,7 @@ public class TetrisManager : Singleton<TetrisManager>
                 tetrisElement.transform.position =
                     new Vector3(transform.position.x + 1 + i, transform.position.y + 1 + j);
                 FrameElements[i, j] = tetrisElement;
-                
+                Contraption.Instance.Parts.Add(tetrisElement);
             }
         }
         initalized = true;

@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Material_ColoredFrame
-  m_Shader: {fileID: 4800000, guid: ebf760b637c3635408ef1edd89eacc97, type: 3}
+  m_Shader: {fileID: 4800000, guid: ad42429f56cfd224395f326fbd3d2081, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 4

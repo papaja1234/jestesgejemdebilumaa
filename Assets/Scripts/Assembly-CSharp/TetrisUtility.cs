@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +21,7 @@ public struct TetrisBlock
     public Vector2Int offset;
 
     public TetrisBlockType blockType;
+    
 
     public TetrisBlock(TetrisBlockType blockType)
     {
@@ -196,11 +198,20 @@ public class TetrisFallingTetromino
         // Calculate offsets
         // It's easy only because it is 2D array
         // That might be the only use case of it being 2D array
-        for (int i = 0; i < width; i++)
+        for (int i = 0; i < height; i++)
         {
-            for (int j = 0; j < height; j++)
+            for (int j = 0; j < width; j++)
             {
-                tetromino[i, j].offset = new Vector2Int(i, j);
+                try
+                {
+                    tetromino[i, j].offset = new Vector2Int(i, j);
+                }
+                catch (Exception e)
+                {
+                    Debug.Log(e);
+                    Debug.Log($"Size: {width}, {height}, have: {i}, {j}");
+                }
+                
             }
         }
     }// fold it
@@ -229,9 +240,9 @@ public class TetrisFallingTetromino
         //use jagged array for efficiency?
         //like TetrisBlock[][]
         
-        for (int i = 0; i < width; i++)
+        for (int i = 0; i < height; i++)
         {
-            for (int j = 0; j < height; j++)
+            for (int j = 0; j < width; j++)
             {
                 newTetromino[i, j] = tetromino[i, j];
                 newTetromino[i, j].offset = RotatePoint(tetromino[i, j].offset, roughCenter, rightwords);
@@ -240,9 +251,9 @@ public class TetrisFallingTetromino
 
         // Check collision against walls
         bool collidedWithWalls = false;
-        for (int i = 0; i < width; i++)
+        for (int i = 0; i < height; i++)
         {
-            for (int j = 0; j < height; j++)
+            for (int j = 0; j < width; j++)
             {
                 Vector2Int vec1 = newTetromino[i, j].offset + position;
                 Vector2Int vec2 = new Vector2Int(parentGrid.width, parentGrid.height);
@@ -256,9 +267,9 @@ public class TetrisFallingTetromino
 
         if (!collidedWithWalls)
         {
-            for (int i = 0; i < width; i++)
+            for (int i = 0; i < height; i++)
             {
-                for (int j = 0; j < height; j++)
+                for (int j = 0; j < width; j++)
                 {
                     tetromino[i, j].offset = newTetromino[i, j].offset;
                 }
@@ -271,11 +282,11 @@ public class TetrisFallingTetromino
 
     // Check collision of the next move before moving and permanently placing the tetromino
     public bool CheckCollision()
-    {
+    {/*
         //Don't forget to assign it's return value to isFrozen
-        for (int i = 0; i < width; i++)
+        for (int i = 0; i < height; i++)
         {
-            for (int j = 0; j < height; j++)
+            for (int j = 0; j < width; j++)
             {
                 for (int k = 0; k < parentGrid.width; k++)
                 {
@@ -289,7 +300,38 @@ public class TetrisFallingTetromino
             }
         }
         //add return
-        return false;
+        return false;*/
+        bool collidedWithWalls = false;
+        for (int i = 0; i < height; i++)
+        {
+            for (int j = 0; j < width; j++)
+            {
+                Vector2Int vec1 = tetromino[i, j].offset + position;
+                Vector2Int vec2 = new Vector2Int(parentGrid.width, parentGrid.height);
+                if ( (vec1.x>=vec2.x && vec1.y > vec2.y)   || vec1 is { x: < 0, y: < 0 })
+                {
+                    collidedWithWalls = true;
+                    break;
+                }
+            }
+        }
+
+        return collidedWithWalls;
+    }
+
+    public void UpdateToGrid()
+    {
+        if (isFrozen)
+        {
+            return;
+        }
+        for (int i = 0; i < height; i++)
+        {
+            for (int j = 0; j < width; j++)
+            {
+                parentGrid.blocks[i + position.y, j + position.x] = tetromino[i, j];
+            }
+        }
     }
 
     /// <summary>
