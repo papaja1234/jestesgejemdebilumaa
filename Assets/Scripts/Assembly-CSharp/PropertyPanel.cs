@@ -1,5 +1,12 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using TMPro;
 using UnityEngine;
+using Object = UnityEngine.Object;
+using Random = UnityEngine.Random;
 
 public class PropertyPanel : INBehaviour
 {
@@ -21,6 +28,44 @@ public class PropertyPanel : INBehaviour
 
 	protected Color m_outlineColor;
 
+	public static string RandomString(int length, string allowedChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789\n\t\r")
+	{
+		if (length < 0)
+		{
+			throw new ArgumentOutOfRangeException(nameof(length), "length cannot be less than zero.");
+		}
+			
+		if (string.IsNullOrEmpty(allowedChars))
+		{
+			throw new ArgumentException("allowedChars may not be empty.");
+		}
+		var allowedCharSet = new HashSet<char>(allowedChars).ToArray();
+			
+		if (256 < allowedCharSet.Length)
+		{
+			throw new ArgumentException($"allowedChars may contain no more than 256 characters.");
+		}
+
+		using var rng = RandomNumberGenerator.Create();
+		var result = new StringBuilder();
+		var buf = new byte[128];
+		while (result.Length < length)
+		{
+			rng.GetBytes(buf);
+			var i = 0;
+			while (i < buf.Length && result.Length < length)
+			{
+				var outOfRangeStart = 256 - 256 % allowedCharSet.Length;
+				if (outOfRangeStart > buf[i])
+				{
+					result.Append(allowedCharSet[buf[i] % allowedCharSet.Length]);
+				}
+				i++;
+			}
+		}
+		var result2 = result.ToString();
+		return result2;
+	}
 	protected virtual void Initialize()
 	{
 		INContraption.Instance.AddBehaviour(this);
@@ -30,13 +75,13 @@ public class PropertyPanel : INBehaviour
 			2 => "BPLE Mode-A", 
 			1 => "BPLE Mode-O", 
 			0 => "Original", 
-			_ => "BPLE Mode-B", 
+			_ => "BPLE Mode-"+RandomString(Random.Range(4,15)), 
 		}) : (versionType switch
 		{
 			2 => "新创A", 
 			1 => "新创O", 
 			0 => "原版", 
-			_ => "新创B", 
+			_ => "新创"+RandomString(Random.Range(4,15)), 
 		}));
 		m_prefix = "\u3000";
 		m_versionText = FormatHeading1(text + " " + INUnity.VersionText);
@@ -79,7 +124,7 @@ public class PropertyPanel : INBehaviour
 
 	protected static string FormatHeading1(string text)
 	{
-		return "<b><size=28>" + text + "</size></b>";
+		return $"<b><size={Random.Range(22,30)}>" + text + "</size></b>";
 	}
 
 	protected static string FormatHeading2(string text)

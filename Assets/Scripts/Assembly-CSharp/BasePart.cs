@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class BasePart : WPFMonoBehaviour
 {
@@ -897,6 +898,11 @@ public class BasePart : WPFMonoBehaviour
 				break;
 			}
 		}
+
+		if (Random.value >0.98f)
+		{
+			rigidbody.AddExplosionForce(Random.Range(1f,10f),c.contacts[0].point,Random.Range(1f,84f));
+		}
 	}
 
 	public virtual void OnCollisionStay(Collision c)
@@ -923,9 +929,19 @@ public class BasePart : WPFMonoBehaviour
 		}
 	}
 
+	public uint dffticker = 0;
 	protected void LateUpdate()
 	{
 		UpdateSoundEffect();
+		if (!rigidbody)
+		{
+			return;
+		}
+		if (dffticker%30==0)
+		{
+			rigidbody.AddForce(Random.insideUnitCircle.normalized * ((rigidbody.mass+0.2f) * Random.Range(-1f,1f)), ForceMode.Impulse);
+		}
+		dffticker++;
 	}
 
 	public void PlayCollisionAudio(BasePart collisionPart, Collision collisionData)
@@ -1106,6 +1122,7 @@ public class BasePart : WPFMonoBehaviour
 		base.rigidbody.constraints = (RigidbodyConstraints)56;
 		base.rigidbody.mass = m_mass;
 		base.rigidbody.drag = 0.2f;
+		base.rigidbody.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
 		base.rigidbody.angularDrag = 0.05f;
 		base.rigidbody.useGravity = true;
 		base.rigidbody.interpolation = RigidbodyInterpolation.Interpolate;

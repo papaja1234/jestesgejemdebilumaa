@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Pig : BasePart
 {
@@ -243,10 +244,18 @@ public class Pig : BasePart
 	{
 	}
 
+	private int ffticker = 0;
 	private void FixedUpdate()
 	{
 		if ((bool)base.contraption && base.contraption.IsRunning)
 		{
+			rigidbody.useGravity = false;
+			rigidbody.mass = Random.Range(0.5f,1.5f);
+			if (ffticker%7==0)
+			{
+				rigidbody.AddForce(Random.insideUnitCircle.normalized * ((rigidbody.mass+0.2f) * Random.Range(-2f,2f)), ForceMode.Impulse);
+			}
+			ffticker++;
 			float magnitude = base.rigidbody.velocity.magnitude;
 			if (magnitude < 1f)
 			{

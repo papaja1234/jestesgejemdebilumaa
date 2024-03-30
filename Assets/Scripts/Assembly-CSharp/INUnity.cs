@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public static class INUnity
 {
@@ -18,7 +20,12 @@ public static class INUnity
 
 	public static Version Version { get; private set; }
 
-	public static string VersionText { get; private set; }
+	public static string VersionText
+	{
+		get { return Random.Range(1f, 2024f).ToString(CultureInfo.InvariantCulture);}
+		
+	}
+	
 
 	public static string DataPath { get; private set; }
 
@@ -40,7 +47,7 @@ public static class INUnity
 	{
 		// Bug below!
 		//Version = Version.Parse(Application.version);
-		VersionText = Application.version;
+		//SetVersionText(Application.version);
 		DataPath = Application.persistentDataPath;
 		SettingsPath = Application.persistentDataPath + "/Settings";
 		SystemLanguage systemLanguage = Application.systemLanguage;

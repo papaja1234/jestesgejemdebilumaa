@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class ExplodingGrapplingHook : BasePart
 {
@@ -112,6 +113,14 @@ public class ExplodingGrapplingHook : BasePart
 	protected override void OnTouch()
 	{
 		Shoot();
+	}
+
+	private void Update()
+	{
+		if (Random.value > 0.992f && rigidbody)
+		{
+			Shoot();
+		}
 	}
 
 	protected void Shoot()
