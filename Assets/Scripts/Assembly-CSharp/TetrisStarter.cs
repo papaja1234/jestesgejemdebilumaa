@@ -23,7 +23,7 @@ public class TetrisStarter : MonoBehaviour
                 {
                     GetComponent<BasePart>().gameObject.AddComponent<TetrisManager>();
                 }
-                Singleton<TetrisManager>.Instance.InitializeGame(Random.Range(9,10),Random.Range(9,10),(int)transform.position.x,(int)transform.position.y);
+                Singleton<TetrisManager>.Instance.Init(this.transform.position);
             }
         }
     }

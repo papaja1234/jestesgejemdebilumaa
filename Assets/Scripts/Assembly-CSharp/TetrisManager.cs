@@ -7,7 +7,7 @@ using Random = UnityEngine.Random;
 
 public class TetrisManager : Singleton<TetrisManager>
 {
-    static (int, int) FindElementIndex<T>(T[,] matrix, T target)
+    /*static (int, int) FindElementIndex<T>(T[,] matrix, T target)
     {
         for (int row = 0; row < matrix.GetLength(0); row++)
         {
@@ -34,7 +34,6 @@ public class TetrisManager : Singleton<TetrisManager>
 
     public void Update()
     {
-        
         if (frameTicker.WillTick() && initalized)
         {
             //Pre-initialization
@@ -105,7 +104,7 @@ public class TetrisManager : Singleton<TetrisManager>
                 
             }
         }
-*/
+* /
         for (int i = -squareWidth/2; i <= squareWidth/2; i++)
         {
             GameObject border = Instantiate(INRuntimeGameData.Instance.GameData.m_parts.Find(o => o.GetComponent<Pig>() != null ));
@@ -142,5 +141,121 @@ public class TetrisManager : Singleton<TetrisManager>
 
     private void Move(MoveType moveType)
     {
+    }*/
+    public TetrisBoard Board;
+    private FrameTicker ticker;
+    private Arr2D<TetrisElement> elements;
+
+    private readonly MoveTimer moveLeft = new MoveTimer(KeyCode.LeftArrow);
+    private readonly MoveTimer moveRight = new MoveTimer(KeyCode.RightArrow);
+    private readonly MoveTimer rotate = new MoveTimer(KeyCode.UpArrow);
+
+    private bool initialized;
+
+    private void Awake()
+    {
+        this.Board = new TetrisBoard();
+        this.ticker = new FrameTicker();
+        this.ticker.tickInterval = 30;
+        this.initialized = false;
+    }
+
+    public void Init(Vector3 basePos)
+    {
+        this.initialized = true;
+        
+        //initialize frame element
+        this.elements = new Arr2D<TetrisElement>(this.Board.Data.Width, this.Board.Data.Height, null);
+        //so cursed lol
+        GameObject prefab = Singleton<INRuntimeGameData>.Instance.UnlistedPart.Parts[3];
+
+        for (int y = 0; y < this.elements.Height; y++)
+        {
+            for (int x = 0; x < this.elements.Width; x++)
+            {
+                GameObject obj = Instantiate(prefab);
+                TetrisElement element = obj.GetComponent<TetrisElement>();
+                element.boardPos = new Vector2Int(x, y);
+
+                obj.transform.position += new Vector3(x + 1, y + 1) + basePos;
+                Contraption.Instance.Parts.Add(element);
+
+                this.elements[x, y] = element;
+            }
+        }
+    }
+
+    private void Update()
+    {
+        if (!this.initialized) return;
+
+        bool doRedraw = false;
+        bool cm = this.ticker.frameCounter % 3 == 0;
+        
+        //move
+        this.moveLeft.Tick();
+        this.moveRight.Tick();
+        this.rotate.Tick();
+        
+        if (this.moveLeft.ShouldMove(cm))
+        {
+            this.Board.Falling.Move(Vector2Int.left);
+            doRedraw = true;
+        }
+        if (this.moveRight.ShouldMove(cm))
+        {
+            this.Board.Falling.Move(Vector2Int.right);
+            doRedraw = true;
+        }
+        if (this.rotate.ShouldMove(cm))
+        {
+            this.Board.Falling.Rotate(1);
+            doRedraw = true;
+        }
+        if (Input.GetKey(KeyCode.DownArrow) && cm)
+        {
+            this.Board.Falling.Move(Vector2Int.down);
+            doRedraw = true;
+        }
+
+        if (this.ticker.WillTick())
+        {
+            this.Board.Tick();
+            doRedraw = true;
+        }
+        
+        this.ticker.Count();
+        
+        if (doRedraw) Redraw();
+    }
+
+    private void Redraw()
+    {
+        //copy board to game
+        for (int y = 0; y < this.elements.Height; y++)
+        {
+            for (int x = 0; x < this.elements.Width; x++)
+            {
+                TetrisElement e = this.elements[x, y];
+                e.UpdateDisplay(this.Board.Data[x, y]);
+            }
+        }
+            
+        //copy falling tetromino
+        for (int y = 0; y < this.Board.Falling.CurrentShape.Height; y++)
+        {
+            for (int x = 0; x < this.Board.Falling.CurrentShape.Width; x++)
+            {
+                if (this.Board.Falling.CurrentShape[x, y])
+                {
+                    int globX = x + this.Board.Falling.Position.x;
+                    int globY = y + this.Board.Falling.Position.y;
+                        
+                    if (this.elements.OutOfBounds(globX, globY)) continue;
+
+                    this.elements[globX, globY].UpdateDisplay(this.Board.Falling.Type.Type);
+                }
+            }
+        }
     }
 }

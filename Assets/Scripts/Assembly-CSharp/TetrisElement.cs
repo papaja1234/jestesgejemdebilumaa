@@ -18,28 +18,35 @@ public class TetrisElement : ClickInteraction
         Shape7  // O (fill)
     }*/
 
-    public TetrisBlock.TetrisBlockType blockType;
-    public TetrisFallingTetromino parentTetromino;
+    //public TileType blockType;
+    //public FallingPiece parentTetromino;
+
+    private INSerializedSprite sprite;
+    public Vector2Int boardPos = Vector2Int.zero;
+
+    public override void Awake()
+    {
+        base.Awake();
+        this.sprite = GetComponent<INSerializedSprite>();
+    }
 
     protected override void OnTouch(bool hasPosition, Vector3 touchPosition, GuiManager.Pointer pointerInfo = default)
     {
-        if (parentTetromino.isFrozen)
-        {
-            return;
-        }
-        parentTetromino.Rotate(pointerInfo.secondaryDown);
+        FallingPiece f = TetrisManager.Instance.Board.Falling;
+        //TODO: IMPLEMENT THIS FOR MOBILE MOVEMENT (boardpos to get this element's pos)
     }
 
     protected override void Start()
     {
+        base.Start();
         // Dear Goggs, dew it. -- Anstro Pleuton
     }
 
-    public void UpdateDisplay()
+    public void UpdateDisplay(TileType blockType)
     {
         // Dear Goggs, you know the drill. -- Anstro Pleuton
         // Waiting for assets...done
         // Waiting for asset installation
-        GetComponent<INSerializedSprite>().Reload($"T_{blockType.ToString()}");
+        this.sprite.Reload($"T_{blockType.ToString()}");
     }
 }

@@ -9,10 +9,13 @@ public class ClickInteraction : BasePart/*,IPointerDownHandler/*Goggs: just for 
 {
     [SerializeField] [NotNull] public string SpriteName;
 
-    private Vector3 position;
+    //private Vector3 position;
     protected virtual void Start()
     {
+        //EnsureRigidbody();
         //AddPhysicsRaycaster();
+        //this.position = transform.po
+        rigidbody.isKinematic = true;
         
         INSerializedSprite inSerializedSprite = gameObject.GetComponent<INSerializedSprite>();
         inSerializedSprite.Reload(SpriteName);
@@ -20,7 +23,7 @@ public class ClickInteraction : BasePart/*,IPointerDownHandler/*Goggs: just for 
 
     public void FixedUpdate()
     {
-        rigidbody.velocity = Vector3.zero;
+        //rigidbody.velocity = Vector3.zero;
         //transform.position = position;
     }
 /*
@@ -52,7 +55,7 @@ public class ClickInteraction : BasePart/*,IPointerDownHandler/*Goggs: just for 
     {
         base.Awake();
         EnsureRigidbody();
-        position = transform.position;
+        //position = transform.position;
     }
 
     public override bool IsTriggerable()
@@ -62,6 +65,10 @@ public class ClickInteraction : BasePart/*,IPointerDownHandler/*Goggs: just for 
 
     public override void EnsureRigidbody()
     {
+        //Debug.Log("CREATE RIGIDBODY");
+
+        if (base.rigidbody != null) return;
+        
         base.rigidbody = base.gameObject.AddComponent<Rigidbody>();
         base.rigidbody.constraints = (RigidbodyConstraints)56;
         base.rigidbody.mass = 1;
