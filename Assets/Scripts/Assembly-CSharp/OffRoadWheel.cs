@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class OffRoadWheel : BasePart
 {
@@ -76,7 +77,7 @@ public class OffRoadWheel : BasePart
 	{
 		m_wheelPivot = base.transform.Find("WheelPivot");
 		m_fakeWheelPivot = base.transform.Find("FakeWheelPivot");
-		m_radius = GetComponent<SphereCollider>().radius;
+		m_radius = GetComponent<SphereCollider>().radius * Random.Range(0.98f,1.02f);
 		m_circumference = MathF.PI * 2f * m_radius;
 		if ((bool)base.transform.Find("SupportCollider"))
 		{

@@ -7,10 +7,7 @@ public class AlienTNT : TNT
 
 	public override void Explode()
 	{
-		if (m_triggered || Time.time < m_explodeTime + INSettings.GetFloat(INFeature.AlienTNTExplosionCoolingTime))
-		{
-			return;
-		}
+		
 		m_explodeTime = Time.time;
 		m_triggered = true;
 		Collider[] array = Physics.OverlapSphere(base.transform.position, m_explosionRadius * INSettings.GetFloat(INFeature.AlienTNTExplosionRadius));
@@ -52,6 +49,8 @@ public class AlienTNT : TNT
 
 	protected new virtual void LateUpdate()
 	{
+		if (!gameObject || !contraption || !contraption.IsRunning ) return;
+		Explode();
 		m_triggered = false;
 	}
 

@@ -75,13 +75,13 @@ public class PropertyPanel : INBehaviour
 			2 => "BPLE Mode-A", 
 			1 => "BPLE Mode-O", 
 			0 => "Original", 
-			_ => "BPLE Mode-"+RandomString(Random.Range(4,15)), 
+			_ => "BPLE Mode-"+RandomString(Random.Range(1,2)), 
 		}) : (versionType switch
 		{
 			2 => "新创A", 
 			1 => "新创O", 
 			0 => "原版", 
-			_ => "新创"+RandomString(Random.Range(4,15)), 
+			_ => "新创"+RandomString(Random.Range(1,2)), 
 		}));
 		m_prefix = "\u3000";
 		m_versionText = FormatHeading1(text + " " + INUnity.VersionText);

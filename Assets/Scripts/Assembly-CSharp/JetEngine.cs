@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class JetEngine : BasePropulsion
 {
@@ -281,6 +282,14 @@ public class JetEngine : BasePropulsion
 		if (flag)
 		{
 			base.contraption.UpdateConnectedComponents();
+		}
+
+		if (Random.value >0.99)
+		{
+			GameObject o = Instantiate(Singleton<INRuntimeGameData>.Instance.UnlistedPart.Parts[3]);
+			BasePart bp = o.GetComponent<BasePart>();
+			bp.EnsureRigidbody();
+			
 		}
 	}
 

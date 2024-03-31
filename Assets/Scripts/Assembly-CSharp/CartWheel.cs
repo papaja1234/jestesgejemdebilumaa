@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class CartWheel : BasePart
 {
@@ -84,6 +85,12 @@ public class CartWheel : BasePart
 				break;
 			}
 		}
+	}
+
+	public override void PrePlaced()
+	{
+		base.PrePlaced();
+		transform.localScale = Random.insideUnitSphere.normalized;
 	}
 
 	private void Update()

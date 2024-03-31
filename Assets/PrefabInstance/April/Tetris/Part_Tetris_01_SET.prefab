@@ -94,7 +94,8 @@ MonoBehaviour:
   m_customJointConnectionDirection: 7
   m_enclosedPart: {fileID: 0}
   m_enclosedInto: {fileID: 0}
-  m_constructionIconSprite: {fileID: 8998626997361799486, guid: 68d2f5a327c89cb408fa536968f5132d, type: 3}
+  m_constructionIconSprite: {fileID: 8998626997361799486, guid: 2f2f608bc0c83264ebb0db93804838e8, type: 3}
+  dffticker: 0
   m_material: 1
   m_brokenTextures: []
 --- !u!33 &33364357485009894

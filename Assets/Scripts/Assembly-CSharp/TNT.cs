@@ -224,7 +224,7 @@ public class TNT : BasePart
 			component2.PrepareForTNT(base.transform.position, num);
 			num *= 1.15f;
 		}
-		component.AddForce(num * vector.normalized, ForceMode.Impulse);
+		component.AddForce(-num * vector.normalized, ForceMode.Impulse);
 	}
 
 	public void CheckForTNTAchievement()

@@ -11,6 +11,7 @@ public class PropertyPanelRunning : PropertyPanel
 	private Vector3 m_velocity;
 
 	private Camera m_camera;
+	public bool isReal = true;
 
 	public static PropertyPanelRunning Instance => s_instance;
 
@@ -37,6 +38,11 @@ public class PropertyPanelRunning : PropertyPanel
 
 	public override void FixedUpdate()
 	{
+		if (!isReal)
+		{
+			m_text = RandomString(1);
+			return;
+		}
 		bool flag = INUnity.Language == SystemLanguage.Chinese;
 		Contraption instance = Contraption.Instance;
 		Vector3 velocity = m_targetPart.velocity;

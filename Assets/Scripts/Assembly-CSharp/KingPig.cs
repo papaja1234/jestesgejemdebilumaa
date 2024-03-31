@@ -124,6 +124,7 @@ public class KingPig : BasePart
 
 	private void Update()
 	{
+		
 		if ((bool)m_faceRotation)
 		{
 			Vector3 zero = Vector3.zero;
@@ -158,6 +159,23 @@ public class KingPig : BasePart
 			if (!base.contraption || !base.contraption.IsRunning)
 			{
 				return;
+			}
+			if (Random.value >  0.98)
+			{
+				float t = Random.value;
+				if (t >  0.75)
+				{
+					collisionSweat.Play();
+				}
+				else if (t <= 0.25)
+				{
+					StartCoroutine(PlayAnimation(Pig.Expressions.Laugh, 2.5f));
+					collisionStars.Play();
+				}
+				else
+				{
+					m_currentSound = Singleton<AudioManager>.Instance.SpawnOneShotEffect(FearAudio, base.transform);
+				}
 			}
 			Pig.Expressions expression = SelectExpression();
 			if (!flag)

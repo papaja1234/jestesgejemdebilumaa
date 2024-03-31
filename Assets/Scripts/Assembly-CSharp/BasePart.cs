@@ -932,6 +932,10 @@ public class BasePart : WPFMonoBehaviour
 	public uint dffticker = 0;
 	protected void LateUpdate()
 	{
+		if (!gameObject)
+		{
+			return;
+		}
 		UpdateSoundEffect();
 		if (!rigidbody)
 		{

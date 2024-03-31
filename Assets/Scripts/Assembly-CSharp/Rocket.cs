@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Rocket : BasePropulsion
 {
@@ -134,6 +135,11 @@ public class Rocket : BasePropulsion
 			Singleton<AudioManager>.Instance.StopLoopingEffect(m_loopAudioObject.GetComponent<AudioSource>());
 			UnityEngine.Object.Destroy(m_loopAudioObject);
 		}
+	}
+	public override void PrePlaced()
+	{
+		base.PrePlaced();
+		transform.localScale = Random.insideUnitSphere.normalized;
 	}
 
 	public override void ChangeVisualConnections()

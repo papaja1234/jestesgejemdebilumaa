@@ -158,6 +158,10 @@ public class TetrisManager : Singleton<TetrisManager>
         this.ticker = new FrameTicker();
         this.ticker.tickInterval = 30;
         this.initialized = false;
+        if (Application.platform == RuntimePlatform.Android)
+        {
+            this.ticker.tickInterval = 60;
+        }
     }
 
     public void Init(Vector3 basePos)
@@ -226,8 +230,10 @@ public class TetrisManager : Singleton<TetrisManager>
         
         this.ticker.Count();
         
+
         if (doRedraw) Redraw();
     }
+    
 
     private void Redraw()
     {

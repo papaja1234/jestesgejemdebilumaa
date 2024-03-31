@@ -34,6 +34,14 @@ public class TetrisElement : ClickInteraction
     {
         FallingPiece f = TetrisManager.Instance.Board.Falling;
         //TODO: IMPLEMENT THIS FOR MOBILE MOVEMENT (boardpos to get this element's pos)
+        if (f.Position.y == boardPos.y)
+        {
+            f.Move(f.Position.x >= boardPos.x?Vector2Int.left:Vector2Int.right);
+        }
+        if (f.Position.y > boardPos.y)
+        {
+            f.Move(Vector2Int.down);
+        }
     }
 
     protected override void Start()
