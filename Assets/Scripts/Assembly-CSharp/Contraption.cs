@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using UnityEditor;
 using UnityEngine;
 
 public class Contraption : WPFMonoBehaviour
@@ -779,9 +781,9 @@ public class Contraption : WPFMonoBehaviour
 			BasePart.Direction.Down => FindPartAt(coordX, coordY - 1, part),
 			_ => null,
 		};
-	}
+    }
 
-	public void StartContraption()
+    public void StartContraption()
 	{
 		m_broken = false;
 		m_stopTimer = 0f;
@@ -789,6 +791,7 @@ public class Contraption : WPFMonoBehaviour
 		m_ropes.Clear();
 		m_powerConsumption = 0f;
 		m_enginesAmount = 0;
+
 		if (m_hasTurboCharge)
 		{
 			m_enginePowerFactor = WPFMonoBehaviour.gameData.m_turboChargePowerFactor;
