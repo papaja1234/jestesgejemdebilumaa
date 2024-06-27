@@ -200,6 +200,7 @@ public class DataExtractor : MonoBehaviour
 			string s = Repeat(indentString, level * indentMultiplier);
 			string ss = Repeat(indentString, level * indentMultiplier + 1);
 			string sss = Repeat(indentString, level * indentMultiplier + 2);
+			string ssss = Repeat(indentString, level * indentMultiplier + 3);
 			sw.WriteLine(s + "part (name: " + S(part.name) + "): {");
 			sw.WriteLine(ss + "tag: " + S(part.tag) + ";");
 
@@ -216,6 +217,12 @@ public class DataExtractor : MonoBehaviour
 			sw.WriteLine(sss + "local rotation: " + Q(part.transform.localRotation) + ";");
 			sw.WriteLine(sss + "lossy scale: " + V3(part.transform.lossyScale) + ";");
 			sw.WriteLine(sss + "local scale: " + V3(part.transform.localScale) + ";");
+			sw.WriteLine();
+			sw.WriteLine(sss + "relative transformation calculations: {");
+			sw.WriteLine(ssss + "absolute position: " + V3(part.transform.position - root.transform.position) + ";");
+			sw.WriteLine(ssss + "absolute rotation: " + Q(Quaternion.Inverse(root.transform.rotation) * part.transform.rotation) + ";");
+			sw.WriteLine(ssss + "absolute scale: " + VF3(part.transform.lossyScale.x / root.transform.lossyScale.x, part.transform.lossyScale.y / root.transform.lossyScale.y, part.transform.lossyScale.z / root.transform.lossyScale.z) + ";");
+			sw.WriteLine(sss + "}; # relative transformation calculations");
 			sw.WriteLine(ss + "}; # transform");
 
 			BoxCollider boxCollider = part.GetComponent<BoxCollider>();
@@ -232,6 +239,10 @@ public class DataExtractor : MonoBehaviour
 					sw.WriteLine();
 					WriteMaterialData(sw, boxCollider.sharedMaterial.name, level, 2, boxCollider.sharedMaterial);
 				}
+				sw.WriteLine(sss + "physx geometry calculations: {");
+				sw.WriteLine(ssss + "center from root: " + V3(boxCollider.center + part.transform.position - root.transform.position) + ";");
+				sw.WriteLine(ssss + "half extents: " + V3(boxCollider.size / 2.0f) + ";");
+				sw.WriteLine(sss + "}; # physx geometry calculations");
 				sw.WriteLine(ss + "}; # box collider");
 			}
 
@@ -251,6 +262,11 @@ public class DataExtractor : MonoBehaviour
 					sw.WriteLine();
 					WriteMaterialData(sw, capsuleCollider.sharedMaterial.name, level, 2, capsuleCollider.sharedMaterial);
 				}
+				sw.WriteLine(sss + "physx geometry calculations: {");
+				sw.WriteLine(ssss + "center from root: " + V3(capsuleCollider.center + part.transform.position - root.transform.position) + ";");
+				sw.WriteLine(ssss + "radius: " + F(capsuleCollider.radius) + ";");
+				sw.WriteLine(ssss + "half height: " + F(capsuleCollider.height / 2.0f - capsuleCollider.radius) + ";");
+				sw.WriteLine(sss + "}; # physx geometry calculations");
 				sw.WriteLine(ss + "}; # capsule collider");
 			}
 
@@ -268,6 +284,10 @@ public class DataExtractor : MonoBehaviour
 					sw.WriteLine();
 					WriteMaterialData(sw, sphereCollider.sharedMaterial.name, level, 2, sphereCollider.sharedMaterial);
 				}
+				sw.WriteLine(sss + "physx geometry calculations: {");
+				sw.WriteLine(ssss + "center from root: " + V3(sphereCollider.center + part.transform.position - root.transform.position) + ";");
+				sw.WriteLine(ssss + "radius: " + F(sphereCollider.radius) + ";");
+				sw.WriteLine(sss + "}; # physx geometry calculations");
 				sw.WriteLine(ss + "}; # sphere collider");
 			}
 
@@ -334,6 +354,20 @@ public class DataExtractor : MonoBehaviour
 				sw.WriteLine(sss + "generation index: " + I(basePart.GenerationIndex) + ";");
 				sw.WriteLine(sss + "temperature: " + F(basePart.Temperature) + ";");
 				sw.WriteLine(sss + "has generator reference: " + B(basePart.HasGeneratorRef) + ";");
+				//try { _ = basePart.Position; sw.WriteLine(sss + "[virtual] position: " + V3(basePart.Position) + ";"); } catch (Exception e) { Debug.Log("Exception on getting virtual field Position: " + e.Message); }
+				try { _ = basePart.GetJointConnectionStrength(); sw.WriteLine(sss + "[virtual] joint connection strength: " + basePart.GetJointConnectionStrength().ToString() + " (" + I((int)basePart.GetJointConnectionStrength()) + ");"); } catch (Exception e) { Debug.Log("Exception on getting virtual field GetJointConnectionStrength(): " + e.Message); }
+				//try { _ = basePart.CanBeEnabled(); sw.WriteLine(sss + "[virtual] can be enabled: " + B(basePart.CanBeEnabled()) + ";"); } catch (Exception e) { Debug.Log("Exception on getting virtual field CanBeEnabled(): " + e.Message); }
+				try { _ = basePart.HasOnOffToggle(); sw.WriteLine(sss + "[virtual] has on off toggle: " + B(basePart.HasOnOffToggle()) + ";"); } catch (Exception e) { Debug.Log("Exception on getting virtual field HasOnOffToggle(): " + e.Message); }
+				//try { _ = basePart.IsEnabled(); sw.WriteLine(sss + "[virtual] is enabled: " + B(basePart.IsEnabled()) + ";"); } catch (Exception e) { Debug.Log("Exception on getting virtual field IsEnabled(): " + e.Message); }
+				try { _ = basePart.IsPowered(); sw.WriteLine(sss + "[virtual] is powered: " + B(basePart.IsPowered()) + ";"); } catch (Exception e) { Debug.Log("Exception on getting virtual field IsPowered(): " + e.Message); }
+				//try { _ = basePart.IsIntegralPart(); sw.WriteLine(sss + "[virtual] is integral part: " + B(basePart.IsIntegralPart()) + ";"); } catch (Exception e) { Debug.Log("Exception on getting virtual field IsIntegralPart(): " + e.Message); }
+				try { _ = basePart.CanEncloseParts(); sw.WriteLine(sss + "[virtual] can encluse part: " + B(basePart.CanEncloseParts()) + ";"); } catch (Exception e) { Debug.Log("Exception on getting virtual field CanEncloseParts(): " + e.Message); }
+				try { _ = basePart.CanBeEnclosed(); sw.WriteLine(sss + "[virtual] can be enclosed: " + B(basePart.CanBeEnclosed()) + ";"); } catch (Exception e) { Debug.Log("Exception on getting virtual field CanBeEnclosed(): " + e.Message); }
+				try { _ = basePart.GetJointConnectionType(); sw.WriteLine(sss + "[virtual] joint connection type: " + basePart.GetJointConnectionType().ToString() + " (" + I((int)basePart.GetJointConnectionType()) + ");"); } catch (Exception e) { Debug.Log("Exception on getting virtual field GetJointConnectionType(): " + e.Message); }
+				//try { _ = basePart.ValidatePart(); sw.WriteLine(sss + "[virtual] validate part: " + B(basePart.ValidatePart()) + ";"); } catch (Exception e) { Debug.Log("Exception on getting virtual field ValidatePart(): " + e.Message); }
+				try { _ = basePart.IsCustomRotated(); sw.WriteLine(sss + "[virtual] is custom rotated: " + B(basePart.IsCustomRotated()) + ";"); } catch (Exception e) { Debug.Log("Exception on getting virtual field IsCustomRotated(): " + e.Message); }
+				try { _ = basePart.GetRotation(); sw.WriteLine(sss + "[virtual] rotation: " + I(basePart.GetRotation()) + ";"); } catch (Exception e) { Debug.Log("Exception on getting virtual field GetRotation(): " + e.Message); }
+				try { _ = basePart.IsTriggerable(); sw.WriteLine(sss + "[virtual] is triggerable: " + B(basePart.IsTriggerable()) + ";"); } catch (Exception e) { Debug.Log("Exception on getting virtual field IsTriggerable(): " + e.Message); }
 				sw.WriteLine(ss + "}; # base part");
 			}
 
@@ -541,11 +575,11 @@ public class DataExtractor : MonoBehaviour
 		array[3].y = data.uv.y + num22;
 		Rect dest = new Rect(0f, 0f, mesh.vertices[2].x - mesh.vertices[0].x, mesh.vertices[2].y - mesh.vertices[0].y);
 		Vector2 origin = new Vector2(-mesh.vertices[0].x, mesh.vertices[2].y);
-		data.uv.x *= 2048;
-		data.uv.y *= 2048;
-		data.uv.width *= 2048;
-		data.uv.height *= 2048;
-		data.uv.y = data.height - data.uv.y - data.uv.height;
+		data.uv.x *= 2048f;
+		data.uv.y *= 2048f;
+		data.uv.width *= 2048f;
+		data.uv.height *= 2048f;
+		data.uv.y = 2048f - data.uv.y - data.uv.height;
 
 		sw.WriteLine(ss + "sprite data values (id: " + id + "): {");
 		sw.WriteLine(sss + "id: " + S(data.id) + ";");
@@ -587,11 +621,11 @@ public class DataExtractor : MonoBehaviour
 		//sw.WriteLine(sssss + V2(array[2]) + ";");
 		//sw.WriteLine(sssss + V2(array[3]) + ";");
 		//sw.WriteLine(ssss + "}; # mesh uvs\n");
-		sw.WriteLine(sss + "for you, my dear love: {");
+		sw.WriteLine(sss + "raylib texture calculations: {");
 		sw.WriteLine(ssss + "src rectangle: " + R(data.uv) + ";");
 		sw.WriteLine(ssss + "dest rectangle: " + R(dest) + ";");
 		sw.WriteLine(ssss + "origin: " + V2(origin) + ";");
-		sw.WriteLine(sss + "}; # for you, my dear love");
+		sw.WriteLine(sss + "}; # raylib texture calculations");
 		//sw.WriteLine(sss + "}; # mesh calculations");
 		sw.WriteLine(ss + "}; # sprite data values (id: " + id + ")");
 	}
