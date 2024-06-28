@@ -6,6 +6,8 @@ public class AudioManager : Singleton<AudioManager>
 {
 	public delegate void OnAudioMuted(bool muted);
 
+	public delegate void OnMusicMuted(bool muted);
+
 	public enum AudioMaterial
 	{
 		None = 0,
@@ -132,6 +134,8 @@ public class AudioManager : Singleton<AudioManager>
 
 	private bool audioMuted;
 
+	private bool musicMuted;
+
 	private Dictionary<int, float> previousPlayTimes = new Dictionary<int, float>();
 
 	private List<AudioSource> activeLoopingSounds = new List<AudioSource>();
@@ -158,9 +162,13 @@ public class AudioManager : Singleton<AudioManager>
 
 	public bool AudioMuted => audioMuted;
 
+	public bool MusicMuted => musicMuted;
+
 	public bool Paused => m_paused;
 
 	public static event OnAudioMuted onAudioMuted;
+
+	public static event OnMusicMuted onMusicMuted;
 
 	public List<AudioSource> GetActiveLoopingSounds()
 	{
@@ -402,7 +410,7 @@ public class AudioManager : Singleton<AudioManager>
 	public GameObject SpawnMusic(AudioSource musicPrefab)
 	{
 		GameObject gameObject = Object.Instantiate(musicPrefab.gameObject);
-		gameObject.GetComponent<AudioSource>().mute = audioMuted;
+		gameObject.GetComponent<AudioSource>().mute = musicMuted;
 		Object.DontDestroyOnLoad(gameObject);
 		m_activeMusic.Add(gameObject.GetComponent<AudioSource>());
 		return gameObject;
@@ -515,14 +523,11 @@ public class AudioManager : Singleton<AudioManager>
 	private void LoadAudioParams()
 	{
 		audioMuted = UserSettings.GetBool("AudioMuted");
-		if (audioMuted)
-		{
-			AudioListener.volume = 0f;
-		}
-		else
-		{
-			AudioListener.volume = 1f;
-		}
+	}
+
+	private void LoadMusicParams()
+	{
+		musicMuted = UserSettings.GetBool("MusicMuted");
 	}
 
 	private void SaveAudioParams()
@@ -531,24 +536,32 @@ public class AudioManager : Singleton<AudioManager>
 		UserSettings.Save();
 	}
 
+	private void SaveMusicParams()
+	{
+		UserSettings.SetBool("MusicMuted", musicMuted);
+		UserSettings.Save();
+	}
+
 	public void ToggleMute()
 	{
 		audioMuted = !audioMuted;
-		if (audioMuted)
-		{
-			AudioListener.volume = 0f;
-		}
-		else
-		{
-			AudioListener.volume = 1f;
-		}
 		MuteSounds(activeLoopingSounds, audioMuted);
 		MuteSounds(active3dOneShotSounds, audioMuted);
-		MuteSounds(m_activeMusic, audioMuted);
 		SaveAudioParams();
 		if (AudioManager.onAudioMuted != null)
 		{
 			AudioManager.onAudioMuted(audioMuted);
+		}
+	}
+
+	public void ToggleMusicMute()
+	{
+		musicMuted = !musicMuted;
+		MuteSounds(m_activeMusic, musicMuted);
+		SaveMusicParams();
+		if (AudioManager.onMusicMuted != null)
+		{
+			AudioManager.onMusicMuted(musicMuted);
 		}
 	}
 
