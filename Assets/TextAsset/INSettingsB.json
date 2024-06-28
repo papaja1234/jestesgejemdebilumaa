@@ -58,7 +58,7 @@
 		{
 			"name": "PropertyPanel",
 			"scope": "Global",
-			"value": true
+			"value": false
 		},
 		{
 			"name": "GridSize",
@@ -642,6 +642,11 @@
 		},
 		{
 			"name": "LargeOffRoadWheel",
+			"scope": "Global",
+			"value": true
+		},
+		{
+			"name": "SecondAPBB",
 			"scope": "Global",
 			"value": true
 		}

@@ -201,5 +201,6 @@ public enum INFeature
 	JetEngineFlameLength = 198,
 	JetEngineFlameWidth = 199,
 	ElectricalSystem = 200,
-	LargeOffRoadWheel
+	LargeOffRoadWheel,
+	SecondAPBB
 }

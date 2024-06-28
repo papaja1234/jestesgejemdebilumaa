@@ -58,6 +58,7 @@ public class INRuntimeGameData : Singleton<INRuntimeGameData>
 		InitializePart(INFeature.AutoControlLight, SetAutoControlLight);
 		InitializePart(INFeature.ElectricalSystem, SetElectricalSystem);
 		InitializePart(INFeature.LargeOffRoadWheel, SetLargeOffRoadWheel);
+		InitializePart(INFeature.SecondAPBB, SetSecondAPBB);
 	}
 
 	private void InitializePart(INFeature feature, Action action)
@@ -66,6 +67,15 @@ public class INRuntimeGameData : Singleton<INRuntimeGameData>
 		if (INSettings.GetBool(feature))
 		{
 			action();
+		}
+	}
+
+	private void SetSecondAPBB()
+	{
+		if (INSettings.GetBool(INFeature.SecondAPBB))
+		{
+			BasePart basePart = CreatePartAndSetParent(BasePart.PartType.SpringBoxingGlove, 5);
+			AddCustomPart(basePart);
 		}
 	}
 

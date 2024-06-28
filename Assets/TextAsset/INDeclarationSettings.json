@@ -1018,6 +1018,11 @@
 			"name": "LargeOffRoadWheel",
 			"type": "Boolean",
 			"value": false
+		},
+		{
+			"name": "SecondAPBB",
+			"type": "Boolean",
+			"value": false
 		}
 	]
 }
