@@ -70,6 +70,7 @@ public class OffRoadWheel : BasePart
 		base.Awake();
 		m_lastContactDirection = new List<Vector3>();
 		SetScale(INSettings.GetFloat(INFeature.OffRoadWheelScale));
+		m_radius = GetComponent<SphereCollider>().radius;
 	}
 
 	private void Start()
@@ -99,10 +100,10 @@ public class OffRoadWheel : BasePart
 			}
 			return;
 		}
-		int num = -1;
-		int num2 = 1;
-		int num3 = -1;
-		int num4 = 0;
+		int num = -(int)MathF.Ceiling(m_radius + 0.1f);
+		int num2 = (int)MathF.Ceiling(m_radius + 0.1f);
+		int num3 = -(int)MathF.Ceiling(m_radius + 0.1f);
+		int num4 = (int)MathF.Ceiling(m_radius + 0.1f) - 1;
 		int num5 = num;
 		int num6 = num2;
 		int num7 = num3;
@@ -385,7 +386,7 @@ public class OffRoadWheel : BasePart
 		float num = 0.5f;
 		SphereCollider component = GetComponent<SphereCollider>();
 		component.center = new Vector3(0f, num - (num + 0.5f) * scale, 0f);
-		component.radius = 0.9f * scale;
+		// component.radius = 0.9f * scale;
 		Transform obj = base.transform.Find("WheelPivot");
 		obj.localPosition = new Vector3(0f, num - (num + 0.5f) * scale, 0f);
 		obj.localScale = new Vector3(scale, scale, 1f);

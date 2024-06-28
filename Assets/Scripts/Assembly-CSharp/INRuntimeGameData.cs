@@ -57,6 +57,7 @@ public class INRuntimeGameData : Singleton<INRuntimeGameData>
 		InitializePart(INFeature.DecelerationLight, SetDecelerationLight);
 		InitializePart(INFeature.AutoControlLight, SetAutoControlLight);
 		InitializePart(INFeature.ElectricalSystem, SetElectricalSystem);
+		InitializePart(INFeature.LargeOffRoadWheel, SetLargeOffRoadWheel);
 	}
 
 	private void InitializePart(INFeature feature, Action action)
@@ -65,6 +66,15 @@ public class INRuntimeGameData : Singleton<INRuntimeGameData>
 		if (INSettings.GetBool(feature))
 		{
 			action();
+		}
+	}
+
+	private void SetLargeOffRoadWheel()
+	{
+		if (INSettings.GetBool(INFeature.LargeOffRoadWheel))
+		{
+			BasePart basePart = CreatePartAndSetParent(BasePart.PartType.MotorWheel, 8);
+			AddCustomPart(basePart);
 		}
 	}
 

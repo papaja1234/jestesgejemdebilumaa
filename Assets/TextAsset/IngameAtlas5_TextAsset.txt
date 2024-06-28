@@ -1,0 +1,4 @@
+IngameAtlas5							2048	2048
+
+LargeOffRoadWheel						0		0		253		253		0.4		0.4		768
+LargeOffRoadWheel_IconSprite			0		0		253		253		0.2		0.2		768

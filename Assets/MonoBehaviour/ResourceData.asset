@@ -11,15 +11,15 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1e4486f1282953ec0e6aa4c1db9249b8, type: 3}
   m_Name: ResourceData
-  m_EditorClassIdentifier:
+  m_EditorClassIdentifier: 
   Prefabs:
-  - {fileID: 1717089699120419, guid: 387a528f8d165204ebce89cee1a9cf30, type: 2}
-  - {fileID: 1672916538306362, guid: c0253e90c17acab468ee8b40447a6452, type: 2}
-  - {fileID: 1643649022641238, guid: 41cc4e8b6287290488730023a96b2129, type: 2}
-  - {fileID: 1127103381558523, guid: a2f50148bc9a5c04692d4356d71b9e38, type: 2}
-  - {fileID: 1315609782828769, guid: 60db189b173ddd24382f14b5ccc5731f, type: 2}
-  - {fileID: 1687360304461419, guid: a3933715bd2d7964c9df59ea31c5d2d7, type: 2}
-  - {fileID: 1101184733719142, guid: c436bfbc2bb0c924b97774c48e65d822, type: 2}
+  - {fileID: 1717089699120419, guid: 387a528f8d165204ebce89cee1a9cf30, type: 3}
+  - {fileID: 1672916538306362, guid: c0253e90c17acab468ee8b40447a6452, type: 3}
+  - {fileID: 1643649022641238, guid: 41cc4e8b6287290488730023a96b2129, type: 3}
+  - {fileID: 1127103381558523, guid: a2f50148bc9a5c04692d4356d71b9e38, type: 3}
+  - {fileID: 1315609782828769, guid: 60db189b173ddd24382f14b5ccc5731f, type: 3}
+  - {fileID: 1687360304461419, guid: a3933715bd2d7964c9df59ea31c5d2d7, type: 3}
+  - {fileID: 1101184733719142, guid: c436bfbc2bb0c924b97774c48e65d822, type: 3}
   Fonts:
   - {fileID: 12800000, guid: affb34303fcc8a644b3dc61ebff76e9e, type: 3}
   - {fileID: 12800000, guid: 1f6733fd68f0af0449b588afc7f8205b, type: 3}
@@ -42,6 +42,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: c6dca10bdfc3be34c9de9f1e01eb9755, type: 2}
   - {fileID: 2100000, guid: 33939e25275d32e4ca0da60ce2783d10, type: 2}
   - {fileID: 2100000, guid: 905545ca079b39f4da2701f6a275cd15, type: 2}
+  - {fileID: 2100000, guid: 603a82c9aa4f490c294ea70a7ef4f87f, type: 2}
   TextAssets:
   - {fileID: 4900000, guid: 10b76faa603047b49b915d944dc4db59, type: 3}
   - {fileID: 4900000, guid: 411d5ece9b55e9047b175f9529ab099d, type: 3}

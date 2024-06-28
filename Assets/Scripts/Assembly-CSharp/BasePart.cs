@@ -72,7 +72,7 @@ public class BasePart : WPFMonoBehaviour
 		SpotLight = 47,
 		TimeBomb = 48,
 		ElectricalPart = 49,
-		MAX = 50
+		MAX
 	}
 
 	public enum AutoAlignType

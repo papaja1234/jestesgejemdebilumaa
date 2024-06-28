@@ -639,6 +639,11 @@
 			"name": "ElectricalSystem",
 			"scope": "Global",
 			"value": true
+		},
+		{
+			"name": "LargeOffRoadWheel",
+			"scope": "Global",
+			"value": true
 		}
 	]
 }
