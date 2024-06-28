@@ -7,6 +7,7 @@ using UnityEngine;
 
 public class DataExtractor : MonoBehaviour
 {
+#if UNITY_EDITOR
 	public static string prefabsFolder = "Assets/PrefabInstance";
 
 	public static string filenameExpression = "Part_*.prefab";
@@ -680,4 +681,5 @@ public class DataExtractor : MonoBehaviour
 			}
 		}
 	}
+#endif
 }

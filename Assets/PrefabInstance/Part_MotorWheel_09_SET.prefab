@@ -309,7 +309,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4313308060922078
 Transform:
   m_ObjectHideFlags: 0
@@ -355,7 +355,7 @@ MonoBehaviour:
   tags: []
   audioMaterial: 1
   m_jointType: 1
-  m_partTier: 4
+  m_partTier: 0
   m_partType: 23
   m_autoAlign: 1
   m_flipped: 0
