@@ -431,6 +431,7 @@ public class AudioManager : Singleton<AudioManager>
 		SetAsPersistant();
 		m_combinedLoopValues = m_combinedLoops.Values.GetEnumerator();
 		LoadAudioParams();
+		LoadMusicParams();
 		EventManager.Connect<GameTimePaused>(ReceiveGameTimePaused);
 		EventManager.Connect<LevelLoadedEvent>(OnLevelLoaded);
 	}

@@ -3,8 +3,8 @@ IngameAtlas5							2048	2048
 LargeOffRoadWheel						0		0		253		253		0.4		0.4		768
 LargeOffRoadWheel_IconSprite			0		0		253		253		0.2		0.2		768
 
-SecondAPBB          	           		253		0		40		50		1.0		1.0		768
-SecondAPBB_IconSprite	           		0		0		40		50		1.0		1.0		768
+SecondAPBB          	           		530		0		105		132		1.0		1.0		768
+SecondAPBB_IconSprite	           		0		0		105		132		1.0		1.0		768
 
 MusicOnButton							293		0		121		120		1.0		1.0		768
 MusicOffButton							414		0		121		120		1.0		1.0		768
