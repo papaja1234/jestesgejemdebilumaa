@@ -129,19 +129,9 @@ public class IngameCamera : WPFMonoBehaviour
 		m_camera = GetComponent<Camera>();
 		m_camera.orthographic = true;
 		m_cameraLimits = WPFMonoBehaviour.levelManager.CurrentCameraLimits;
-		m_cameraMaxZoom = Mathf.Min(Mathf.Min(m_cameraLimits.size.x, m_cameraLimits.size.y) / 2f, 20f) * INSettings.GetFloat(INFeature.CameraMaxZoom);
-		m_cameraMinZoom = 7f;
-		if (Singleton<BuildCustomizationLoader>.Instance.IsHDVersion)
-		{
-			if (ScreenPlacement.IsAspectRatioNarrowerThan(3f, 2f))
-			{
-				m_cameraMinZoom = 8.4f;
-			}
-			else
-			{
-				m_cameraMinZoom = 7.7f;
-			}
-		}
+		// m_cameraMaxZoom = Mathf.Min(Mathf.Min(m_cameraLimits.size.x, m_cameraLimits.size.y) / 2f, 20f) * INSettings.GetFloat(INFeature.CameraMaxZoom);
+		m_cameraMaxZoom = 100000000f;
+		m_cameraMinZoom = 5f;
 		m_camera.orthographicSize = m_cameraMinZoom;
 		m_cameraPreview = GetComponent<CameraPreview>();
 		m_snapshotFX = GetComponent<SnapshotEffect>();
