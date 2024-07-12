@@ -108,7 +108,7 @@ GameObject:
   - component: {fileID: 4926913784128638}
   - component: {fileID: 23019430319143498}
   - component: {fileID: 33396734687660275}
-  - component: {fileID: 114743655535544382}
+  - component: {fileID: 3311760024029250293}
   m_Layer: 9
   m_Name: SpringVisualization
   m_TagString: Untagged
@@ -151,7 +151,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: cb6204057ca182549a5edea42e3f6dca, type: 2}
+  - {fileID: 2100000, guid: 603a82c9aa4f490c294ea70a7ef4f87f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -181,7 +181,7 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1553891823481239}
   m_Mesh: {fileID: 0}
---- !u!114 &114743655535544382
+--- !u!114 &3311760024029250293
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -190,15 +190,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1553891823481239}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 04a340c55c247513cbdc1b4d88bbdbae, type: 3}
+  m_Script: {fileID: 11500000, guid: e17d54ebdf3b8977649d5e41205b8918, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_id: 854626cc-c19f-4363-8376-16c85c311ed3
-  m_scaleX: 0.4
-  m_scaleY: 0.6
-  m_pivotX: 0
-  m_pivotY: 16
-  m_updateCollider: 1
+  m_name: SecondAPBB_Spring
 --- !u!1 &1817806753294942
 GameObject:
   m_ObjectHideFlags: 0
@@ -280,7 +275,7 @@ MonoBehaviour:
   m_enclosedPart: {fileID: 0}
   m_enclosedInto: {fileID: 0}
   m_constructionIconSprite: {fileID: 114370038034356874, guid: f57d4c412aed0f13e9127c2da8a00ebc, type: 3}
-  m_BoxingGlovePrefab: {fileID: 1458017101564840, guid: 5f49ad6edecbfb147b9008673aefb535, type: 3}
+  m_BoxingGlovePrefab: {fileID: 1458017101564840, guid: 3119d26662ef2f9feaf4d4b414975cdd, type: 3}
   m_targetDistanceY: 5
   m_targetDeviationX: 0
   m_WindingTime: 1
