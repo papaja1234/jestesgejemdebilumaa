@@ -276,10 +276,10 @@ MonoBehaviour:
   m_enclosedInto: {fileID: 0}
   m_constructionIconSprite: {fileID: 114370038034356874, guid: f57d4c412aed0f13e9127c2da8a00ebc, type: 3}
   m_BoxingGlovePrefab: {fileID: 1458017101564840, guid: 3119d26662ef2f9feaf4d4b414975cdd, type: 3}
-  m_targetDistanceY: 5
+  m_targetDistanceY: 10
   m_targetDeviationX: 0
   m_WindingTime: 1
-  m_ShootTime: 0.4
+  m_ShootTime: 0.2
   m_SpringYDrive: 380
   m_SpringYDriveDamper: 3.5
   m_checkRotation: 0
