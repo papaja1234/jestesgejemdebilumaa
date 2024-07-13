@@ -68,6 +68,7 @@ MonoBehaviour:
   - {fileID: 1867000707314727, guid: 7c5e43ac4bd983da0997ddf31937e9e2, type: 3}
   - {fileID: 1817806753294942, guid: 3bc3738e9cd64e6cab9abd78e21974a3, type: 3}
   - {fileID: 1544964612535747, guid: 7d741fa0a5edafeedbb58b683281e2e2, type: 3}
+  - {fileID: 1286369299885130, guid: 432ff129d64551fbc82aa4415e06889f, type: 3}
   PartIcons:
   - Part: {fileID: 1780987275874567, guid: a4e12d208b234a44aaab3e8410333301, type: 3}
     MaterialName: IngameAtlas4
@@ -174,6 +175,9 @@ MonoBehaviour:
   - Part: {fileID: 1544964612535747, guid: 7d741fa0a5edafeedbb58b683281e2e2, type: 3}
     MaterialName: IngameAtlas5
     SpriteName: LargeExplodingGrapplingHook
+  - Part: {fileID: 1286369299885130, guid: 432ff129d64551fbc82aa4415e06889f, type: 3}
+    MaterialName: IngameAtlas5
+    SpriteName: OffRoadStickyWheek_IconSprite
   PartRanges:
   - Part: {fileID: 1269385843468890, guid: 7657a2b714b3f6b47a0d6a085075dfa4, type: 3}
     Count: 16

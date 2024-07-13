@@ -2827,7 +2827,7 @@ MonoBehaviour:
   m_enclosedPart: {fileID: 0}
   m_enclosedInto: {fileID: 0}
   m_constructionIconSprite: {fileID: 114290017204915766, guid: b08129c5d07acc74b9e600349683e5b2, type: 3}
-  m_projectilePrefab: {fileID: 1155311346533028, guid: 773c4495590b7d940af8cd68b5a9fc02, type: 3}
+  m_projectilePrefab: {fileID: 1155311346533028, guid: 7376973a18b932647ac1d32348642ccf, type: 3}
   m_particleEffect: {fileID: 198749085496206227}
 --- !u!65 &65044161297452722
 BoxCollider:

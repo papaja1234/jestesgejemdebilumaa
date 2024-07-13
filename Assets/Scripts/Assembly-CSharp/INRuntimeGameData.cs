@@ -60,6 +60,7 @@ public class INRuntimeGameData : Singleton<INRuntimeGameData>
 		InitializePart(INFeature.LargeOffRoadWheel, SetLargeOffRoadWheel);
 		InitializePart(INFeature.SecondAPBB, SetSecondAPBB);
 		InitializePart(INFeature.LargeExplodingGrapplingHook, SetLargeExplodingGrapplingHook);
+		InitializePart(INFeature.OffRoadStickyWheel, SetOffRoadStickyWheel);
 	}
 
 	private void InitializePart(INFeature feature, Action action)
@@ -94,6 +95,15 @@ public class INRuntimeGameData : Singleton<INRuntimeGameData>
 		if (INSettings.GetBool(INFeature.LargeOffRoadWheel))
 		{
 			BasePart basePart = CreatePartAndSetParent(BasePart.PartType.MotorWheel, 8);
+			AddCustomPart(basePart);
+		}
+	}
+
+	private void SetOffRoadStickyWheel()
+	{
+		if (INSettings.GetBool(INFeature.OffRoadStickyWheel))
+		{
+			BasePart basePart = CreatePartAndSetParent(BasePart.PartType.StickyWheel, 4);
 			AddCustomPart(basePart);
 		}
 	}

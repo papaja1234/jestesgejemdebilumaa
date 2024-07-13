@@ -654,6 +654,11 @@
 			"name": "LargeExplodingGrapplingHook",
 			"scope": "Global",
 			"value": true
+		},
+		{
+			"name": "OffRoadStickyWheel",
+			"scope": "Global",
+			"value": true
 		}
 	]
 }

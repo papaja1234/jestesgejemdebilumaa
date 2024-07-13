@@ -203,5 +203,6 @@ public enum INFeature
 	ElectricalSystem = 200,
 	LargeOffRoadWheel,
 	SecondAPBB,
-	LargeExplodingGrapplingHook
+	LargeExplodingGrapplingHook,
+	OffRoadStickyWheel
 }

@@ -1028,6 +1028,11 @@
 			"name": "LargeExplodingGrapplingHook",
 			"type": "Boolean",
 			"value": false
+		},
+		{
+			"name": "OffRoadStickyWheel",
+			"type": "Boolean",
+			"value": false
 		}
 	]
 }

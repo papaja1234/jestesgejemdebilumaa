@@ -29,10 +29,16 @@ public class ExplodingGrapplingHookProjectile : WPFMonoBehaviour
 
 	private int m_explosionCount;
 
+	public int m_customExplosionCount;
+
 	private void Start()
 	{
 		m_triggered = false;
 		m_explosionCount = INSettings.GetInt(INFeature.GunProjectileExplosionCount);
+		if (m_customExplosionCount > 0)
+		{
+			m_explosionCount = m_customExplosionCount;
+		}
 		m_renderer = GetComponentInChildren<Renderer>();
 		EventManager.Connect<UIEvent>(OnUIEvent);
 		m_forceDirection = base.transform.parent.TransformDirection(Vector3.right);
