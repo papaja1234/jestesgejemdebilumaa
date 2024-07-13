@@ -1033,6 +1033,11 @@
 			"name": "OffRoadStickyWheel",
 			"type": "Boolean",
 			"value": false
+		},
+		{
+			"name": "MoreAlienEngines",
+			"type": "Boolean",
+			"value": false
 		}
 	]
 }

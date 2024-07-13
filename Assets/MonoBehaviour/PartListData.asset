@@ -69,6 +69,8 @@ MonoBehaviour:
   - {fileID: 1817806753294942, guid: 3bc3738e9cd64e6cab9abd78e21974a3, type: 3}
   - {fileID: 1544964612535747, guid: 7d741fa0a5edafeedbb58b683281e2e2, type: 3}
   - {fileID: 1286369299885130, guid: 432ff129d64551fbc82aa4415e06889f, type: 3}
+  - {fileID: 1260145950847552, guid: 0763534e39a4c4d1dbfd317d1c33eee3, type: 3}
+  - {fileID: 1056058711696539, guid: 036d9240ecc1f10d99a38a7688707f5c, type: 3}
   PartIcons:
   - Part: {fileID: 1780987275874567, guid: a4e12d208b234a44aaab3e8410333301, type: 3}
     MaterialName: IngameAtlas4
@@ -178,6 +180,12 @@ MonoBehaviour:
   - Part: {fileID: 1286369299885130, guid: 432ff129d64551fbc82aa4415e06889f, type: 3}
     MaterialName: IngameAtlas5
     SpriteName: OffRoadStickyWheek_IconSprite
+  - Part: {fileID: 1260145950847552, guid: 0763534e39a4c4d1dbfd317d1c33eee3, type: 3}
+    MaterialName: IngameAtlas5
+    SpriteName: AlienEngine
+  - Part: {fileID: 1056058711696539, guid: 036d9240ecc1f10d99a38a7688707f5c, type: 3}
+    MaterialName: IngameAtlas5
+    SpriteName: AlienEngineBig
   PartRanges:
   - Part: {fileID: 1269385843468890, guid: 7657a2b714b3f6b47a0d6a085075dfa4, type: 3}
     Count: 16

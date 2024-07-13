@@ -17,3 +17,6 @@ LargeExplodingGrapplingHook_Projectile	1090	0		123		34		0.3		0.3		768
 OffRoadStickyWheel_IconSprite			0		258		143		144		0.3		0.3		768
 OffRoadStickyWheel						143		258		143		141		0.5		0.5		768
 OffRoadStickyWheel_Pivot				286		258		66		66		0.5		0.5		768
+
+AlienEngineBig							253		120		115		96		0.4		0.4		768
+AlienEngine								368		120		92		83		0.4		0.4		768

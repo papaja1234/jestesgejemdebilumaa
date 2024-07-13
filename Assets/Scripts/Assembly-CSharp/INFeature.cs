@@ -204,5 +204,6 @@ public enum INFeature
 	LargeOffRoadWheel,
 	SecondAPBB,
 	LargeExplodingGrapplingHook,
-	OffRoadStickyWheel
+	OffRoadStickyWheel,
+	MoreAlienEngines
 }

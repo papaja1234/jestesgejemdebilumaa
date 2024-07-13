@@ -659,6 +659,11 @@
 			"name": "OffRoadStickyWheel",
 			"scope": "Global",
 			"value": true
+		},
+		{
+			"name": "MoreAlienEngines",
+			"scope": "Global",
+			"value": true
 		}
 	]
 }
