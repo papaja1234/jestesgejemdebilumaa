@@ -59,6 +59,7 @@ public class INRuntimeGameData : Singleton<INRuntimeGameData>
 		InitializePart(INFeature.ElectricalSystem, SetElectricalSystem);
 		InitializePart(INFeature.LargeOffRoadWheel, SetLargeOffRoadWheel);
 		InitializePart(INFeature.SecondAPBB, SetSecondAPBB);
+		InitializePart(INFeature.LargeExplodingGrapplingHook, SetLargeExplodingGrapplingHook);
 	}
 
 	private void InitializePart(INFeature feature, Action action)
@@ -75,6 +76,15 @@ public class INRuntimeGameData : Singleton<INRuntimeGameData>
 		if (INSettings.GetBool(INFeature.SecondAPBB))
 		{
 			BasePart basePart = CreatePartAndSetParent(BasePart.PartType.SpringBoxingGlove, 5);
+			AddCustomPart(basePart);
+		}
+	}
+
+	private void SetLargeExplodingGrapplingHook()
+	{
+		if (INSettings.GetBool(INFeature.LargeExplodingGrapplingHook))
+		{
+			BasePart basePart = CreatePartAndSetParent(BasePart.PartType.GrapplingHook, 12);
 			AddCustomPart(basePart);
 		}
 	}

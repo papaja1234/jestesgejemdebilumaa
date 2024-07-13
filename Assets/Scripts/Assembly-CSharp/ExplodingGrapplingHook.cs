@@ -35,6 +35,8 @@ public class ExplodingGrapplingHook : BasePart
 
 	protected float ForcedCoolingTime { get; set; }
 
+	private bool continuousShooting = false;
+
 	public override bool CanBeEnabled()
 	{
 		return true;
@@ -42,7 +44,7 @@ public class ExplodingGrapplingHook : BasePart
 
 	public override bool IsEnabled()
 	{
-		return m_enabled;
+		return m_enabled || continuousShooting;
 	}
 
 	public override Direction EffectDirection()
@@ -70,6 +72,14 @@ public class ExplodingGrapplingHook : BasePart
 		m_topLeftAttachment.SetActive(value: false);
 		m_topRightAttachment.SetActive(value: false);
 		m_eightWay = true;
+	}
+
+	public void FixedUpdate()
+	{
+		if (continuousShooting)
+		{
+			Shoot();
+		}
 	}
 
 	public override void ChangeVisualConnections()
@@ -111,12 +121,20 @@ public class ExplodingGrapplingHook : BasePart
 
 	protected override void OnTouch()
 	{
-		Shoot();
+		if (customPartIndex == 12)
+		{
+			continuousShooting = !continuousShooting;
+		}
+		else
+		{
+			Shoot();
+		}
 	}
 
 	protected void Shoot()
 	{
-		if (!m_enabled && !(Time.time - m_shootTime < INSettings.GetFloat(INFeature.GunProjectileForcedCoolingTime)))
+		float delay = 0.2f * (customPartIndex == 12 ? 1f / 5f : 1f);
+		if (!m_enabled && !(Time.time - m_shootTime < delay))
 		{
 			m_shootTime = Time.time;
 			Singleton<AudioManager>.Instance.SpawnOneShotEffect(WPFMonoBehaviour.gameData.commonAudioCollection.alienLaserFire, base.transform);
@@ -135,11 +153,17 @@ public class ExplodingGrapplingHook : BasePart
 				currentProjectile.collider.material.dynamicFriction = 0f;
 			}
 			currentProjectile.rigidbody.drag = INSettings.GetFloat(INFeature.GunProjectileDrag);
+			m_enabled = false;
 			Physics.IgnoreCollision(currentProjectile.GetComponentInChildren<Collider>(), base.gameObject.GetComponentInChildren<Collider>());
 			currentProjectile.OnExplosion = (Action)Delegate.Combine(currentProjectile.OnExplosion, (Action)delegate
 			{
 				m_enabled = false;
 			});
 		}
+	}
+
+	public override void EnsureRigidbody()
+	{
+		base.EnsureRigidbody();
 	}
 }

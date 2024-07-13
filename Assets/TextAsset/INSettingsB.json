@@ -649,6 +649,11 @@
 			"name": "SecondAPBB",
 			"scope": "Global",
 			"value": true
+		},
+		{
+			"name": "LargeExplodingGrapplingHook",
+			"scope": "Global",
+			"value": true
 		}
 	]
 }

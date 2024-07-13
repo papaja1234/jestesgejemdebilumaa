@@ -1023,6 +1023,11 @@
 			"name": "SecondAPBB",
 			"type": "Boolean",
 			"value": false
+		},
+		{
+			"name": "LargeExplodingGrapplingHook",
+			"type": "Boolean",
+			"value": false
 		}
 	]
 }
