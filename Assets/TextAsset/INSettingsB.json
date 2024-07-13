@@ -669,6 +669,11 @@
 			"name": "GrandTNT",
 			"scope": "Global",
 			"value": true
+		},
+		{
+			"name": "Bread",
+			"scope": "Global",
+			"value": true
 		}
 	]
 }

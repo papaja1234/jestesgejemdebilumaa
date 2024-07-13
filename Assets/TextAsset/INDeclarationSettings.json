@@ -1043,6 +1043,11 @@
 			"name": "GrandTNT",
 			"type": "Boolean",
 			"value": false
+		},
+		{
+			"name": "Bread",
+			"type": "Boolean",
+			"value": false
 		}
 	]
 }

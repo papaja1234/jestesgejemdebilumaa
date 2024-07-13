@@ -206,5 +206,6 @@ public enum INFeature
 	LargeExplodingGrapplingHook,
 	OffRoadStickyWheel,
 	MoreAlienEngines,
-	GrandTNT
+	GrandTNT,
+	Bread
 }
