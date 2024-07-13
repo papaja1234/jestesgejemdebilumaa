@@ -207,5 +207,6 @@ public enum INFeature
 	OffRoadStickyWheel,
 	MoreAlienEngines,
 	GrandTNT,
-	Bread
+	Bread,
+	LargerOffRoadWheel
 }

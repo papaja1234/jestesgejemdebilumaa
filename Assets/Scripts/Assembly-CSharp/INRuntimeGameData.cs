@@ -64,6 +64,7 @@ public class INRuntimeGameData : Singleton<INRuntimeGameData>
 		InitializePart(INFeature.MoreAlienEngines, SetMoreAlienEngines);
 		InitializePart(INFeature.GrandTNT, SetGrandTNT);
 		InitializePart(INFeature.Bread, SetBread);
+		InitializePart(INFeature.LargerOffRoadWheel, SetLargerOffRoadWheel);
 	}
 
 	private void InitializePart(INFeature feature, Action action)
@@ -136,6 +137,15 @@ public class INRuntimeGameData : Singleton<INRuntimeGameData>
 		if (INSettings.GetBool(INFeature.Bread))
 		{
 			BasePart basePart = CreatePartAndSetParent(BasePart.PartType.Egg, 6);
+			AddCustomPart(basePart);
+		}
+	}
+
+	private void SetLargerOffRoadWheel()
+	{
+		if (INSettings.GetBool(INFeature.LargerOffRoadWheel))
+		{
+			BasePart basePart = CreatePartAndSetParent(BasePart.PartType.MotorWheel, 9);
 			AddCustomPart(basePart);
 		}
 	}

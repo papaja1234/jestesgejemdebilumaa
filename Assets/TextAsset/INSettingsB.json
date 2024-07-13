@@ -674,6 +674,11 @@
 			"name": "Bread",
 			"scope": "Global",
 			"value": true
+		},
+		{
+			"name": "LargerOffRoadWheel",
+			"scope": "Global",
+			"value": true
 		}
 	]
 }

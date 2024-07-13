@@ -1048,6 +1048,11 @@
 			"name": "Bread",
 			"type": "Boolean",
 			"value": false
+		},
+		{
+			"name": "LargerOffRoadWheel",
+			"type": "Boolean",
+			"value": false
 		}
 	]
 }

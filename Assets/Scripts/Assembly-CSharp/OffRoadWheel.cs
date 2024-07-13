@@ -69,7 +69,7 @@ public class OffRoadWheel : BasePart
 	{
 		base.Awake();
 		m_lastContactDirection = new List<Vector3>();
-		SetScale(INSettings.GetFloat(INFeature.OffRoadWheelScale));
+		// SetScale(INSettings.GetFloat(INFeature.OffRoadWheelScale));
 		m_radius = GetComponent<SphereCollider>().radius;
 	}
 
@@ -212,7 +212,7 @@ public class OffRoadWheel : BasePart
 		configurableJoint.zMotion = ConfigurableJointMotion.Locked;
 		SoftJointLimitSpring linearLimitSpring = configurableJoint.linearLimitSpring;
 		linearLimitSpring.spring = m_springStiffness;
-		linearLimitSpring.damper = 5f;
+		linearLimitSpring.damper = m_springStiffness / 10f;
 		configurableJoint.linearLimitSpring = linearLimitSpring;
 		SoftJointLimit linearLimit = configurableJoint.linearLimit;
 		linearLimit.limit = 0f;
@@ -335,6 +335,8 @@ public class OffRoadWheel : BasePart
 				}
 			}
 			m_grounded = true;
+			// m_hasContact = false;
+			colliderRigidbody = null;
 		}
 		if (flag)
 		{

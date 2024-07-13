@@ -73,6 +73,7 @@ MonoBehaviour:
   - {fileID: 1056058711696539, guid: 036d9240ecc1f10d99a38a7688707f5c, type: 3}
   - {fileID: 1797414415238928, guid: 16040095a1c4d9478a97ddebbb463578, type: 3}
   - {fileID: 1642037711055099, guid: 73d0004cca338e1c1aadf9de10db5711, type: 3}
+  - {fileID: 1867000707314727, guid: 57fcd8da9d7ca45d4a8e297876c5d1c3, type: 3}
   PartIcons:
   - Part: {fileID: 1780987275874567, guid: a4e12d208b234a44aaab3e8410333301, type: 3}
     MaterialName: IngameAtlas4
@@ -194,6 +195,9 @@ MonoBehaviour:
   - Part: {fileID: 1642037711055099, guid: 73d0004cca338e1c1aadf9de10db5711, type: 3}
     MaterialName: IngameAtlas5
     SpriteName: Bread
+  - Part: {fileID: 1867000707314727, guid: 57fcd8da9d7ca45d4a8e297876c5d1c3, type: 3}
+    MaterialName: IngameAtlas5
+    SpriteName: LargerOffRoadWheel
   PartRanges:
   - Part: {fileID: 1269385843468890, guid: 7657a2b714b3f6b47a0d6a085075dfa4, type: 3}
     Count: 16

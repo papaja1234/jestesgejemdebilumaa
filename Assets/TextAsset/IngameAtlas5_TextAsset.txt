@@ -25,3 +25,6 @@ AlienEngine								368		120		92		83		0.4		0.4		768
 GrandTNT								460		132		105		106		0.4		0.4		768
 
 Bread									565		132		128		122		0.3		0.3		768
+
+LargerOffRoadWheel						0		466		523		523		0.4		0.4		768
+LargerOffRoadWheel_IconSprite			0		466		523		523		0.1		0.1		768
