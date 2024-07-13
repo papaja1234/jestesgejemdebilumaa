@@ -71,6 +71,7 @@ MonoBehaviour:
   - {fileID: 1286369299885130, guid: 432ff129d64551fbc82aa4415e06889f, type: 3}
   - {fileID: 1260145950847552, guid: 0763534e39a4c4d1dbfd317d1c33eee3, type: 3}
   - {fileID: 1056058711696539, guid: 036d9240ecc1f10d99a38a7688707f5c, type: 3}
+  - {fileID: 1797414415238928, guid: 16040095a1c4d9478a97ddebbb463578, type: 3}
   PartIcons:
   - Part: {fileID: 1780987275874567, guid: a4e12d208b234a44aaab3e8410333301, type: 3}
     MaterialName: IngameAtlas4
@@ -186,6 +187,9 @@ MonoBehaviour:
   - Part: {fileID: 1056058711696539, guid: 036d9240ecc1f10d99a38a7688707f5c, type: 3}
     MaterialName: IngameAtlas5
     SpriteName: AlienEngineBig
+  - Part: {fileID: 1797414415238928, guid: 16040095a1c4d9478a97ddebbb463578, type: 3}
+    MaterialName: IngameAtlas5
+    SpriteName: GrandTNT
   PartRanges:
   - Part: {fileID: 1269385843468890, guid: 7657a2b714b3f6b47a0d6a085075dfa4, type: 3}
     Count: 16

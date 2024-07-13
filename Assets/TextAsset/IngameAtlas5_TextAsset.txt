@@ -12,6 +12,7 @@ MusicOnButton							293		0		121		120		1.0		1.0		768
 MusicOffButton							414		0		116		117		1.0		1.0		768
 
 LargeExplodingGrapplingHook				886		0		204		77		0.4		0.4		768
+LargeExplodingGrapplingHook_IconSprite	886		77		204		91		0.3		0.3		768
 LargeExplodingGrapplingHook_Projectile	1090	0		123		34		0.3		0.3		768
 
 OffRoadStickyWheel_IconSprite			0		258		143		144		0.3		0.3		768
@@ -20,3 +21,5 @@ OffRoadStickyWheel_Pivot				286		258		66		66		0.5		0.5		768
 
 AlienEngineBig							253		120		115		96		0.4		0.4		768
 AlienEngine								368		120		92		83		0.4		0.4		768
+
+GrandTNT								460		132		105		106		0.4		0.4		768

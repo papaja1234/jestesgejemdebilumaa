@@ -5,13 +5,25 @@ public class AlienTNT : TNT
 {
 	private float m_explodeTime;
 
-	public override void Explode()
+	public float coolingTime = 0f;
+
+    public override bool CanBeEnabled()
+    {
+        return Time.time >= m_explodeTime;
+    }
+
+    public override bool IsEnabled()
+    {
+        return Time.time < m_explodeTime;
+    }
+
+    public override void Explode()
 	{
 		if (m_triggered || Time.time < m_explodeTime + INSettings.GetFloat(INFeature.AlienTNTExplosionCoolingTime))
 		{
 			return;
 		}
-		m_explodeTime = Time.time;
+		m_explodeTime = Time.time + coolingTime;
 		m_triggered = true;
 		Collider[] array = Physics.OverlapSphere(base.transform.position, m_explosionRadius * INSettings.GetFloat(INFeature.AlienTNTExplosionRadius));
 		foreach (Collider collider in array)

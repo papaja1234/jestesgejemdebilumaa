@@ -664,6 +664,11 @@
 			"name": "MoreAlienEngines",
 			"scope": "Global",
 			"value": true
+		},
+		{
+			"name": "GrandTNT",
+			"scope": "Global",
+			"value": true
 		}
 	]
 }
