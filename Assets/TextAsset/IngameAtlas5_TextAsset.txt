@@ -28,3 +28,5 @@ Bread									565		132		128		122		0.3		0.3		768
 
 LargerOffRoadWheel						0		466		523		523		0.4		0.4		768
 LargerOffRoadWheel_IconSprite			0		466		523		523		0.1		0.1		768
+
+ReverseOffRoadWheelPivot				286		324		66		66		0.4		0.4		768

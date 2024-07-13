@@ -208,5 +208,6 @@ public enum INFeature
 	MoreAlienEngines,
 	GrandTNT,
 	Bread,
-	LargerOffRoadWheel
+	LargerOffRoadWheel,
+	ReverseOffRoadWheel
 }

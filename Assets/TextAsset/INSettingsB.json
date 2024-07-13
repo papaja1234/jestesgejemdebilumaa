@@ -679,6 +679,11 @@
 			"name": "LargerOffRoadWheel",
 			"scope": "Global",
 			"value": true
+		},
+		{
+			"name": "ReverseOffRoadWheel",
+			"scope": "Global",
+			"value": true
 		}
 	]
 }

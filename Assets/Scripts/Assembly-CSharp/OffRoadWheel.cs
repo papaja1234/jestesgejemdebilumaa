@@ -50,6 +50,8 @@ public class OffRoadWheel : BasePart
 
 	public bool HasContact => m_hasContact;
 
+	public bool reversed = false;
+
 	public override bool CanBeEnabled()
 	{
 		return m_maximumSpeed > 0f;
@@ -71,6 +73,7 @@ public class OffRoadWheel : BasePart
 		m_lastContactDirection = new List<Vector3>();
 		// SetScale(INSettings.GetFloat(INFeature.OffRoadWheelScale));
 		m_radius = GetComponent<SphereCollider>().radius;
+		m_circumference = MathF.PI * 2f * m_radius;
 	}
 
 	private void Start()
@@ -100,10 +103,10 @@ public class OffRoadWheel : BasePart
 			}
 			return;
 		}
-		int num = -(int)MathF.Ceiling(m_radius + 0.1f);
-		int num2 = (int)MathF.Ceiling(m_radius + 0.1f);
-		int num3 = -(int)MathF.Ceiling(m_radius + 0.1f);
-		int num4 = (int)MathF.Ceiling(m_radius + 0.1f) - 1;
+		int num = -(int)MathF.Ceiling(m_radius);
+		int num2 = (int)MathF.Ceiling(m_radius);
+		int num3 = -(int)MathF.Ceiling(m_radius);
+		int num4 = (int)MathF.Ceiling(m_radius);
 		int num5 = num;
 		int num6 = num2;
 		int num7 = num3;
@@ -252,7 +255,7 @@ public class OffRoadWheel : BasePart
 			m_spinSpeed = SpeedInDirection(m_lastForceDirection);
 		}
 		float z = base.transform.rotation.eulerAngles.z;
-		m_angle += -360f * m_spinSpeed / m_circumference * Time.deltaTime;
+		m_angle += -360f * m_spinSpeed / m_circumference * Time.deltaTime * (reversed ? -1f : 1f);
 		if ((bool)m_wheelPivot)
 		{
 			m_wheelPivot.transform.localRotation = Quaternion.AngleAxis(0f - z + m_angle, Vector3.forward);
@@ -313,7 +316,7 @@ public class OffRoadWheel : BasePart
 				continue;
 			}
 			flag = false;
-			Vector3 vector = Vector3.Cross(hitInfo.normal, Vector3.forward);
+			Vector3 vector = Vector3.Cross(hitInfo.normal, Vector3.forward) * (reversed ? -1f : 1f);
 			float num = SpeedInDirection(vector);
 			m_lastForceDirection = vector;
 			m_spinSpeed = 0f;
@@ -335,8 +338,6 @@ public class OffRoadWheel : BasePart
 				}
 			}
 			m_grounded = true;
-			// m_hasContact = false;
-			colliderRigidbody = null;
 		}
 		if (flag)
 		{

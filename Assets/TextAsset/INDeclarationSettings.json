@@ -1053,6 +1053,11 @@
 			"name": "LargerOffRoadWheel",
 			"type": "Boolean",
 			"value": false
+		},
+		{
+			"name": "ReverseOffRoadWheel",
+			"type": "Boolean",
+			"value": false
 		}
 	]
 }
