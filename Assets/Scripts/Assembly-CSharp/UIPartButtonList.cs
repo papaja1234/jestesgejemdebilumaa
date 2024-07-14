@@ -497,6 +497,7 @@ public class UIPartButtonList : MonoBehaviour
 				UIPartButtonInfo current2 = item;
 				int componentRank = array[current2.ComponentIndex];
 				current2.ComponentRank = componentRank;
+				current2.maxComponents = connectedComponentCount;
 				if (!m_buttonInfoMap.TryGetValue(current2, out var value))
 				{
 					value = list.Count;
@@ -533,6 +534,7 @@ public class UIPartButtonList : MonoBehaviour
 			foreach (UIPartTriggerButtonInfo item2 in part2.GetTriggerButtonInfo())
 			{
 				UIPartButtonInfo value3 = item2.Value;
+				value3.maxComponents = connectedComponentCount;
 				int componentRank2 = array[value3.ComponentIndex];
 				value3.ComponentRank = componentRank2;
 				int num2 = m_buttonInfoMap[value3];
@@ -555,6 +557,7 @@ public class UIPartButtonList : MonoBehaviour
 			foreach (UIPartSliderButtonInfo item3 in part2.GetSliderButtonInfo())
 			{
 				UIPartButtonInfo value4 = item3.Value;
+				value4.maxComponents = connectedComponentCount;
 				int componentRank3 = array[value4.ComponentIndex];
 				value4.ComponentRank = componentRank3;
 				int num3 = m_buttonInfoMap[value4];
@@ -619,6 +622,7 @@ public class UIPartButtonList : MonoBehaviour
 		}
 		foreach (UIPartButton currentButton in m_currentButtons)
 		{
+			currentButton.setMaxComponents(Math.Min(Settings.MaxSeparationCount, Contraption.Instance.ConnectedComponentCount));
 			currentButton.Initialize();
 		}
 		m_currentButtons.Sort(m_comparer);

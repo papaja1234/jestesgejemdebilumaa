@@ -35,6 +35,11 @@ public class UIPartButton : MonoBehaviour
 
 	public virtual IEnumerable<UIPartButton> SubButtons { get; }
 
+	public void setMaxComponents(int maxComponents)
+	{
+		m_info.maxComponents = maxComponents;
+	}
+
 	protected virtual void Awake()
 	{
 		m_buttonList = UIPartButtonList.Instance;
@@ -66,14 +71,13 @@ public class UIPartButton : MonoBehaviour
 
 	public virtual void Initialize()
 	{
-		float num = (float)m_info.ComponentRank / (float)(UIPartButtonList.Settings.MaxSeparationCount + 1);
-		float num2 = 210f + num * 60f;
-		float num3 = 2f - Math.Abs(num2 - 240f) / 60f;
-		float num4 = 0.8f * (1.5f / num3);
-		m_disabledColor = Color.HSVToRGB(num2 / 360f, num4, 0.6f);
-		m_disabledColor.a = 0.7f;
-		m_enabledColor = Color.HSVToRGB(num2 / 360f, 0.5f * num4, 0.75f);
-		m_enabledColor.a = 0.7f;
+		float num = (float)m_info.ComponentRank / (m_info.maxComponents == 0 ? 1 : m_info.maxComponents);
+		// float num3 = 2f - Math.Abs(num2 - 240f) / 60f;
+		// float num4 = 0.8f * (1.5f / num3);
+		m_disabledColor = Color.HSVToRGB(num, 1f, 0.7f);
+		m_disabledColor.a = 1f;
+		m_enabledColor = Color.HSVToRGB(num, 1f, 1f);
+		m_enabledColor.a = 1f;
 		CalculateAveragePosition();
 	}
 

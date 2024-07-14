@@ -14,6 +14,8 @@ public struct UIPartButtonInfo : IEquatable<UIPartButtonInfo>
 
 	public int ComponentRank;
 
+	public int maxComponents;
+
 	public UIPartButtonInfo(UIPartButtonType buttonType, int buttonIndex, BasePart.PartType partType, int partIndex, int componentIndex)
 		: this(buttonType, buttonIndex, partType, partIndex, componentIndex, -1)
 	{
@@ -27,6 +29,7 @@ public struct UIPartButtonInfo : IEquatable<UIPartButtonInfo>
 		PartIndex = partIndex;
 		ComponentIndex = componentIndex;
 		ComponentRank = componentRank;
+		maxComponents = 0;
 	}
 
 	public bool Equals(UIPartButtonInfo other)
