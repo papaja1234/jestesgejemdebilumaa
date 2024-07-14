@@ -1,7 +1,7 @@
 IngameAtlas5							2048	2048
 
-LargeOffRoadWheel						0		0		253		253		0.4		0.4		768
-LargeOffRoadWheel_IconSprite			0		0		253		253		0.2		0.2		768
+LargeOffRoadWheel						0		466		523		523		0.3		0.3		768
+LargeOffRoadWheel_IconSprite			0		466		523		523		0.1		0.1		768
 
 SecondAPBB								530		0		105		132		0.4		0.4		768
 SecondAPBB_IconSprite					0		0		105		132		0.4		0.4		768
@@ -26,8 +26,8 @@ GrandTNT								460		132		105		106		0.4		0.4		768
 
 Bread									565		132		88		79		0.4		0.4		768
 
-LargerOffRoadWheel						0		466		523		523		0.4		0.4		768
-LargerOffRoadWheel_IconSprite			0		466		523		523		0.1		0.1		768
+LargerOffRoadWheel						0		989		753		752		0.4		0.4		768
+LargerOffRoadWheel_IconSprite			0		989		753		752		0.075	0.075	768
 
 ReverseOffRoadWheelPivot				286		324		66		66		0.4		0.4		768
 
