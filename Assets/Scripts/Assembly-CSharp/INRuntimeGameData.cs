@@ -66,6 +66,7 @@ public class INRuntimeGameData : Singleton<INRuntimeGameData>
 		InitializePart(INFeature.Bread, SetBread);
 		InitializePart(INFeature.LargerOffRoadWheel, SetLargerOffRoadWheel);
 		InitializePart(INFeature.ReverseOffRoadWheel, SetReverseOffRoadWheel);
+		InitializePart(INFeature.AlienWoodenFrame, SetAlienWoodenFrame);
 	}
 
 	private void InitializePart(INFeature feature, Action action)
@@ -156,6 +157,21 @@ public class INRuntimeGameData : Singleton<INRuntimeGameData>
 		if (INSettings.GetBool(INFeature.ReverseOffRoadWheel))
 		{
 			BasePart basePart = CreatePartAndSetParent(BasePart.PartType.MotorWheel, 10);
+			AddCustomPart(basePart);
+		}
+	}
+
+	private void SetAlienWoodenFrame()
+	{
+		if (INSettings.GetBool(INFeature.AlienWoodenFrame))
+		{
+			BasePart basePart = CreatePartAndSetParent(BasePart.PartType.WoodenFrame, 11);
+			AddCustomPart(basePart);
+			basePart = CreatePartAndSetParent(BasePart.PartType.WoodenFrame, 12);
+			AddCustomPart(basePart);
+			basePart = CreatePartAndSetParent(BasePart.PartType.WoodenFrame, 13);
+			AddCustomPart(basePart);
+			basePart = CreatePartAndSetParent(BasePart.PartType.WoodenFrame, 14);
 			AddCustomPart(basePart);
 		}
 	}

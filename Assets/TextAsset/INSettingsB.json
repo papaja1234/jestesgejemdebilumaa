@@ -684,6 +684,11 @@
 			"name": "ReverseOffRoadWheel",
 			"scope": "Global",
 			"value": true
+		},
+		{
+			"name": "AlienWoodenFrame",
+			"scope": "Global",
+			"value": true
 		}
 	]
 }

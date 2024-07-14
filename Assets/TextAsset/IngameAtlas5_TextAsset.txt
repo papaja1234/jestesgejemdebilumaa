@@ -24,9 +24,14 @@ AlienEngine								368		120		92		83		0.4		0.4		768
 
 GrandTNT								460		132		105		106		0.4		0.4		768
 
-Bread									565		132		128		122		0.3		0.3		768
+Bread									565		132		88		79		0.4		0.4		768
 
 LargerOffRoadWheel						0		466		523		523		0.4		0.4		768
 LargerOffRoadWheel_IconSprite			0		466		523		523		0.1		0.1		768
 
 ReverseOffRoadWheelPivot				286		324		66		66		0.4		0.4		768
+
+AlienWoodenFrame1						352		258		105		104		0.4		0.4		768
+AlienWoodenFrame2						457		258		105		104		0.4		0.4		768
+AlienWoodenFrame3						352		362		105		104		0.4		0.4		768
+AlienWoodenFrame4						457		362		105		104		0.4		0.4		768

@@ -209,5 +209,6 @@ public enum INFeature
 	GrandTNT,
 	Bread,
 	LargerOffRoadWheel,
-	ReverseOffRoadWheel
+	ReverseOffRoadWheel,
+	AlienWoodenFrame
 }

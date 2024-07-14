@@ -1058,6 +1058,11 @@
 			"name": "ReverseOffRoadWheel",
 			"type": "Boolean",
 			"value": false
+		},
+		{
+			"name": "AlienWoodenFrame",
+			"type": "Boolean",
+			"value": false
 		}
 	]
 }
