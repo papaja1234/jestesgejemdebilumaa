@@ -365,7 +365,7 @@ MonoBehaviour:
   m_gridYmin: 0
   m_gridYmax: 0
   m_static: 0
-  m_jointConnectionStrength: 4
+  m_jointConnectionStrength: 5
   m_jointConnectionType: 2
   m_jointConnectionDirection: 2
   m_customJointConnectionDirection: 2

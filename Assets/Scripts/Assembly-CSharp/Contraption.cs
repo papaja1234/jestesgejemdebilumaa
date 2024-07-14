@@ -1720,6 +1720,7 @@ public class Contraption : WPFMonoBehaviour
 			BasePart.JointConnectionStrength.High => WPFMonoBehaviour.gameData.m_jointConnectionStrengthHigh,
 			BasePart.JointConnectionStrength.Extreme => WPFMonoBehaviour.gameData.m_jointConnectionStrengthExtreme,
 			BasePart.JointConnectionStrength.HighlyExtreme => WPFMonoBehaviour.gameData.m_jointConnectionStrengthHighlyExtreme,
+			BasePart.JointConnectionStrength.Infinite => float.PositiveInfinity,
 			_ => 0f,
 		};
 	}
@@ -2498,7 +2499,10 @@ public class Contraption : WPFMonoBehaviour
 
 	public void AddJointToMap(BasePart endJointA, BasePart endJointB, Joint joint)
 	{
-		joint.breakForce *= INSettings.GetFloat(INFeature.ConnectionStrength);
+		if (joint.breakForce != float.PositiveInfinity)
+		{
+			joint.breakForce *= INSettings.GetFloat(INFeature.ConnectionStrength);
+		}
 		JointConnection item = default(JointConnection);
 		item.partA = endJointA;
 		item.partB = endJointB;

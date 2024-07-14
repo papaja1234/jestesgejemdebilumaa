@@ -30,6 +30,7 @@ LargerOffRoadWheel						0		989		753		752		0.4		0.4		768
 LargerOffRoadWheel_IconSprite			0		989		753		752		0.075	0.075	768
 
 ReverseOffRoadWheelPivot				286		324		66		66		0.4		0.4		768
+ReverseOffRoadWheel_IconSprite			565		211		126		127		0.4		0.4		768
 
 AlienWoodenFrame1						352		258		105		104		0.4		0.4		768
 AlienWoodenFrame2						457		258		105		104		0.4		0.4		768

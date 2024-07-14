@@ -132,7 +132,8 @@ public class BasePart : WPFMonoBehaviour
 		Normal = 1,
 		High = 2,
 		Extreme = 3,
-		HighlyExtreme = 4
+		HighlyExtreme = 4,
+		Infinite
 	}
 
 	private static float m_lastTimeUsedCollisionParticles;
