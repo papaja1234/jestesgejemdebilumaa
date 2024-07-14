@@ -64,7 +64,7 @@ MonoBehaviour:
   tags:
   - Alien_part
   audioMaterial: 1
-  m_jointType: 0
+  m_jointType: 1
   m_partTier: 4
   m_partType: 5
   m_autoAlign: 1
@@ -95,7 +95,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 0.95, y: 0.95, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &33333774051940575
 MeshFilter:
