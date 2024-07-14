@@ -311,33 +311,38 @@ public class OffRoadWheel : BasePart
 		bool flag = true;
 		foreach (Vector3 item in m_lastContactDirection)
 		{
-			if (!Physics.Raycast(m_wheelPivot.transform.position, item, out var hitInfo, m_radius + 0.1f) || !(hitInfo.collider != m_supportCollider))
+			RaycastHit[] hits = Physics.RaycastAll(m_wheelPivot.transform.position, item, m_radius + 0.1f);
+			foreach (RaycastHit hitInfo in hits)
 			{
-				continue;
-			}
-			flag = false;
-			Vector3 vector = Vector3.Cross(hitInfo.normal, Vector3.forward) * (reversed ? -1f : 1f);
-			float num = SpeedInDirection(vector);
-			m_lastForceDirection = vector;
-			m_spinSpeed = 0f;
-			m_hasContact = true;
-			colliderRigidbody = hitInfo.collider.gameObject.GetComponent<Rigidbody>();
-			if (m_enabled && m_maximumSpeed > 0f && num < m_maximumSpeed && num > 0f - m_maximumSpeed)
-			{
-				float f = 1f - Mathf.Abs(num) / m_maximumSpeed;
-				f = Mathf.Pow(f, 0.5f);
-				float num2 = m_thrust * m_maximumForce * f;
-				base.rigidbody.AddForceAtPosition(num2 * vector, hitInfo.point, ForceMode.Force);
-				if (!colliderRigidbody && hitInfo.collider.transform.parent != null)
+				if (hitInfo.collider == m_supportCollider || (hitInfo.point - m_wheelPivot.transform.position).magnitude < m_radius - 0.1f)
 				{
-					colliderRigidbody = hitInfo.collider.transform.parent.GetComponent<Rigidbody>();
+					continue;
 				}
-				if (colliderRigidbody != null && !colliderRigidbody.isKinematic)
+				flag = false;
+				Vector3 vector = Vector3.Cross(hitInfo.normal, Vector3.forward) * (reversed ? -1f : 1f);
+				float num = SpeedInDirection(vector);
+				m_lastForceDirection = vector;
+				m_spinSpeed = 0f;
+				m_hasContact = true;
+				colliderRigidbody = hitInfo.collider.gameObject.GetComponent<Rigidbody>();
+				if (m_enabled && m_maximumSpeed > 0f && num < m_maximumSpeed && num > 0f - m_maximumSpeed)
 				{
-					colliderRigidbody.AddForceAtPosition((0f - num2) * vector, hitInfo.point, ForceMode.Force);
+					float f = 1f - Mathf.Abs(num) / m_maximumSpeed;
+					f = Mathf.Pow(f, 0.5f);
+					float num2 = m_thrust * m_maximumForce * f;
+					base.rigidbody.AddForceAtPosition(num2 * vector, hitInfo.point, ForceMode.Force);
+					if (!colliderRigidbody && hitInfo.collider.transform.parent != null)
+					{
+						colliderRigidbody = hitInfo.collider.transform.parent.GetComponent<Rigidbody>();
+					}
+					if (colliderRigidbody != null && !colliderRigidbody.isKinematic)
+					{
+						colliderRigidbody.AddForceAtPosition((0f - num2) * vector, hitInfo.point, ForceMode.Force);
+					}
 				}
+				m_grounded = true;
+				break;
 			}
-			m_grounded = true;
 		}
 		if (flag)
 		{

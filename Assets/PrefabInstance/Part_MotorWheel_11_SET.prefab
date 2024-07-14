@@ -355,7 +355,7 @@ MonoBehaviour:
   tags: []
   audioMaterial: 1
   m_jointType: 1
-  m_partTier: 0
+  m_partTier: 4
   m_partType: 23
   m_autoAlign: 1
   m_flipped: 0

@@ -246,10 +246,10 @@ MonoBehaviour:
   m_eightWay: 0
   m_coordX: 0
   m_coordY: 0
-  m_mass: 18
+  m_mass: 4.3
   m_interactiveRadius: 0.5
   m_breakVelocity: 2
-  m_powerConsumption: 300
+  m_powerConsumption: 100
   m_enginePower: 0
   m_ZOffset: 0
   customPartIndex: 9
@@ -258,7 +258,7 @@ MonoBehaviour:
   tags: []
   audioMaterial: 1
   m_jointType: 1
-  m_partTier: 0
+  m_partTier: 2
   m_partType: 23
   m_autoAlign: 1
   m_flipped: 0
@@ -275,7 +275,7 @@ MonoBehaviour:
   m_enclosedPart: {fileID: 0}
   m_enclosedInto: {fileID: 0}
   m_constructionIconSprite: {fileID: 114981272919752839, guid: b047e5be863380e39830bbcbc7d80c93, type: 3}
-  m_force: 282
+  m_force: 65
   m_enabled: 0
   m_maximumSpeed: 0
   m_springStiffness: 50
