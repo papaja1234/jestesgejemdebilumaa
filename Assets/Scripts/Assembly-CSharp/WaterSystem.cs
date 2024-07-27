@@ -14,6 +14,12 @@ public class WaterSystem : INBehaviour
 
 	private static Dictionary<MeshRenderer, (Color, Color)> m_rendererTable;
 
+	private static Vector2 waterTextureSize; // (1550, 1550)
+
+	private static float waterTextureWaterPosition;
+
+	private static float waterTextureScale;
+
 	public static void Create()
 	{
 		new WaterSystem().Initialize();
@@ -33,19 +39,19 @@ public class WaterSystem : INBehaviour
 	{
 		GameObject gameObject = new GameObject("INWater");
 		gameObject.transform.parent = Contraption.Instance.transform;
-		LineRenderer lineRenderer = gameObject.AddComponent<LineRenderer>();
-		Color color = new Color(0.32f, 0.56f, 0.8f, 0.5f);
-		lineRenderer.material = new Material(Shader.Find("GUI/Text Shader"));
-		lineRenderer.material.color = color;
-		lineRenderer.SetWidth(0.5f, 0.5f);
-		lineRenderer.SetColors(color, color);
-		lineRenderer.positionCount = 2;
-		gameObject.AddComponent<MeshFilter>().sharedMesh = INUnity.QuadMesh;
-		Material sharedMaterial = new Material(INUnity.ColorTransparentShader)
+		MeshFilter meshFilter = gameObject.AddComponent<MeshFilter>();
+		MeshRenderer meshRenderer = gameObject.AddComponent<MeshRenderer>();
+		meshFilter.sharedMesh = INUnity.QuadMesh;
+		Material sharedMaterial = INUnity.LoadMaterial("Water");
+		if (sharedMaterial.mainTexture != null)
 		{
-			color = new Color(0.28f, 0.49f, 0.7f, 0.3f)
-		};
-		gameObject.AddComponent<MeshRenderer>().sharedMaterial = sharedMaterial;
+			waterTextureSize = new Vector2(sharedMaterial.mainTexture.width, sharedMaterial.mainTexture.height);
+			waterTextureWaterPosition = 487.25f;
+			waterTextureScale = 50f;
+			sharedMaterial.mainTexture.wrapModeU = TextureWrapMode.Repeat;
+			sharedMaterial.mainTexture.wrapModeV = TextureWrapMode.Clamp;
+		}
+		meshRenderer.sharedMaterial = sharedMaterial;
 		return gameObject;
 	}
 
@@ -528,17 +534,23 @@ public class WaterSystem : INBehaviour
 
 	private void UpdateWaterPosition()
 	{
-		Camera component = WPFMonoBehaviour.ingameCamera.GetComponent<Camera>();
-		Vector3 position = component.transform.position;
-		float num = component.orthographicSize * 1.1f;
+		Camera camera = WPFMonoBehaviour.ingameCamera.GetComponent<Camera>();
+		Vector3 cameraPos = camera.transform.position;
+		float waterOffset = waterTextureWaterPosition / waterTextureScale;
+		float num = camera.orthographicSize * 1.1f;
 		float num2 = num * (float)Screen.width / (float)Screen.height;
-		float height = m_height;
-		m_water.GetComponent<LineRenderer>().SetPosition(0, new Vector3(position.x - num2, height - 0.25f));
-		m_water.GetComponent<LineRenderer>().SetPosition(1, new Vector3(position.x + num2, height - 0.25f));
-		float num3 = position.y - num;
-		float num4 = Math.Clamp(num3, height, position.y + num);
-		m_water.transform.position = new Vector3(position.x, (num3 + num4) * 0.5f);
+		float height = m_height + waterOffset;
+		float num3 = cameraPos.y - num;
+		float num4 = cameraPos.y + num;
+		if (height <= cameraPos.y + num) num4 = Math.Clamp(num3, height, cameraPos.y + num);
+		m_water.transform.position = new Vector3(cameraPos.x, (num3 + num4) * 0.5f);
 		m_water.transform.localScale = new Vector3(num2 * 2f, num4 - num3, 1f);
+		MeshRenderer meshRenderer = m_water.GetComponent<MeshRenderer>();
+		Material material = meshRenderer.sharedMaterial;
+		Vector2 offset = new Vector2(cameraPos.x - camera.orthographicSize * 2f + MathF.Sin(Time.time / 16f) * 32f, cameraPos.y - m_height - num + waterOffset * (1f / 0.4f + 1f)) / waterTextureScale;
+		Vector2 scale = new Vector2(m_water.transform.localScale.x, m_water.transform.localScale.y) / waterTextureScale;
+		material.SetTextureOffset("_MainTex", offset);
+		material.SetTextureScale("_MainTex", scale);
 	}
 
 	private void UpdateRenderers()
