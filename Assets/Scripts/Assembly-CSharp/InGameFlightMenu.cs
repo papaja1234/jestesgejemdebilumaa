@@ -134,6 +134,10 @@ public class InGameFlightMenu : WPFMonoBehaviour
 		{
 			CreateButtonWithSprite(original, BasePart.PartType.JetEngine, BasePart.Direction.Right, material, "JetEngineButton_Sprite");
 		}
+		if (INSettings.GetBool(INFeature.PigCameraButton))
+		{
+			CreateButtonWithSprite(original, BasePart.PartType.Pig, BasePart.Direction.Right, material, "PigCameraButton");
+		}
 	}
 
 	private GadgetButton FindButton(BasePart.PartType partType)

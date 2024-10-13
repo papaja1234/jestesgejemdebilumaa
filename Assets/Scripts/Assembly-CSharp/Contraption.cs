@@ -352,6 +352,17 @@ public class Contraption : WPFMonoBehaviour
 	public void SetCameraTarget(BasePart target)
 	{
 		m_cameraTarget = target;
+		s_ingameCamera.SetCameraTarget(target);
+	}
+
+	public bool IsCameraFreeMode()
+	{
+		return s_ingameCamera.m_freeCameraMode;
+	}
+
+	public void ToggleCameraFreeMode()
+	{
+		s_ingameCamera.ToggleFreeCameraMode();
 	}
 
 	public void SetBroken()
@@ -1286,12 +1297,18 @@ public class Contraption : WPFMonoBehaviour
 			{
 				if (!part2.IsEnabled())
 				{
-					part2.SetEnabled(enabled: true);
+					if (part2.m_partType != BasePart.PartType.Pig)
+					{
+						part2.SetEnabled(enabled: true);
+					}
 				}
 			}
 			else if (part2.IsEnabled())
 			{
-				part2.SetEnabled(enabled: false);
+				if (part2.m_partType != BasePart.PartType.Pig)
+				{
+					part2.SetEnabled(enabled: false);
+				}
 			}
 		}
 	}
@@ -1302,7 +1319,10 @@ public class Contraption : WPFMonoBehaviour
 		{
 			if (!(m_parts[i] == null) && (m_parts[i].IsPowered() || m_parts[i].IsEngine()) && m_parts[i].IsEnabled())
 			{
-				m_parts[i].SetEnabled(enabled: false);
+				if (m_parts[i].m_partType != BasePart.PartType.Pig)
+				{
+					m_parts[i].SetEnabled(enabled: false);
+				}
 			}
 		}
 	}

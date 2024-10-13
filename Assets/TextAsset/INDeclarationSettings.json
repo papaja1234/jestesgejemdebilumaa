@@ -1063,6 +1063,11 @@
 			"name": "AlienWoodenFrame",
 			"type": "Boolean",
 			"value": false
+		},
+		{
+			"name": "PigCameraButton",
+			"type": "Boolean",
+			"value": false
 		}
 	]
 }

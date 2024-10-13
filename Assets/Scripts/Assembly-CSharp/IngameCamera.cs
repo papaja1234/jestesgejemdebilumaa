@@ -48,7 +48,7 @@ public class IngameCamera : WPFMonoBehaviour
 
 	private Vector3 panPosition;
 
-	private bool m_freeCameraMode;
+	public bool m_freeCameraMode;
 
 	private float m_mouseZoomDelta;
 
@@ -590,6 +590,27 @@ public class IngameCamera : WPFMonoBehaviour
 				break;
 			}
 		}
+	}
+
+	public void SetCameraTarget(BasePart target)
+	{
+		WPFMonoBehaviour.levelManager.ContraptionRunning.m_cameraTarget = target;
+		if (target.m_partType == BasePart.PartType.Pig)
+		{
+			WPFMonoBehaviour.levelManager.ContraptionRunning.m_pig = target;
+		}
+		panPosition = currentPos - target.transform.position;
+		m_freeCameraMode = false;
+		panPosition = Vector3.zero;
+	}
+
+	public void ToggleFreeCameraMode()
+	{
+		if (m_freeCameraMode)
+		{
+			panPosition = Vector3.zero;
+		}
+		m_freeCameraMode = !m_freeCameraMode;
 	}
 
 	private void UpdateCameraBuilding(ref Vector3 currentPos, ref float currentFOV)

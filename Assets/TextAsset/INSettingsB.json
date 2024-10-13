@@ -689,6 +689,11 @@
 			"name": "AlienWoodenFrame",
 			"scope": "Global",
 			"value": true
+		},
+		{
+			"name": "PigCameraButton",
+			"scope": "Global",
+			"value": true
 		}
 	]
 }

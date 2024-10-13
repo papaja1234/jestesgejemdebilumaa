@@ -146,6 +146,8 @@ public class Pig : BasePart
 
 	private float m_previousMagnitude;
 
+	private bool m_isEnabled;
+
 	public bool CheckCameraLimits
 	{
 		get
@@ -172,7 +174,48 @@ public class Pig : BasePart
 		return true;
 	}
 
-	public override void OnDetach()
+	public override bool CanBeEnabled()
+	{
+		return true;
+	}
+
+	public override bool HasOnOffToggle()
+	{
+		return true;
+	}
+
+	public override void SetEnabled(bool enabled)
+	{
+		if (!(bool)levelManager || !(bool)levelManager.ContraptionRunning)
+		{
+			return;
+		}
+		m_isEnabled = enabled;
+		if (m_isEnabled)
+		{
+			levelManager.ContraptionRunning.SetCameraTarget(this);
+		}
+		else
+		{
+			levelManager.ContraptionRunning.ToggleCameraFreeMode();
+		}
+	}
+
+	public override bool IsEnabled()
+	{
+		m_isEnabled = false;
+		if (!(bool)levelManager || !(bool)levelManager.ContraptionRunning)
+		{
+			return false;
+		}
+		if (levelManager.ContraptionRunning.IsCameraFreeMode())
+		{
+			return false;
+		}
+		return m_isEnabled = levelManager.ContraptionRunning.m_cameraTarget == this;
+	}
+
+    public override void OnDetach()
 	{
 		base.rigidbody.collisionDetectionMode = CollisionDetectionMode.Continuous;
 		m_detached = true;
@@ -196,12 +239,14 @@ public class Pig : BasePart
 		m_lookAtDraggedPartDistance = UnityEngine.Random.Range(0f, 10f);
 		m_stopTestTimer = 0f;
 		m_replayPulseDone = false;
+		m_enginePower = 0f;
 		m_chorusFilter = GetComponent<AudioChorusFilter>();
 		m_distortionFilter = GetComponent<AudioDistortionFilter>();
 		m_echoFilter = GetComponent<AudioEchoFilter>();
 		m_hpFilter = GetComponent<AudioHighPassFilter>();
 		m_lpFilter = GetComponent<AudioLowPassFilter>();
 		m_reverbFilter = GetComponent<AudioReverbFilter>();
+		m_isEnabled = false;
 	}
 
 	private void OnEnable()
@@ -750,6 +795,7 @@ public class Pig : BasePart
 
 	protected override void OnTouch()
 	{
-		base.contraption.ActivateAllPoweredParts(base.ConnectedComponent);
+		// base.contraption.ActivateAllPoweredParts(base.ConnectedComponent);
+		SetEnabled(!m_isEnabled);
 	}
 }
