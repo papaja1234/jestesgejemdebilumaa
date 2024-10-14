@@ -39,7 +39,9 @@ Shader "_Custom/PreAlpha_Unlit_ColorTransparent_Geometry" {
 			fixed4 _Color;
 			fixed4 frag(v2f i) : SV_Target
 			{
-				return tex2D(_MainTex, i.texcoord) * _Color;
+				fixed4 base = tex2D(_MainTex, i.texcoord);
+				fixed4 tint = _Color;
+				return base * tint;
             }
 			ENDCG
 		}

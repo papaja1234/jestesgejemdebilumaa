@@ -2,8 +2,8 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!55 &1
 PhysicsManager:
-  serializedVersion: 13
   m_ObjectHideFlags: 0
+  serializedVersion: 13
   m_Gravity: {x: 0, y: -9.81, z: 0}
   m_DefaultMaterial: {fileID: 0}
   m_BounceThreshold: 2
@@ -18,39 +18,7 @@ PhysicsManager:
   m_ClothInterCollisionDistance: 0
   m_ClothInterCollisionStiffness: 0
   m_ContactsGeneration: 1
-  m_LayerCollisionMatrix:
-  - 4248042495
-  - 4162976767
-  - 4164025343
-  - 4294967295
-  - 4162976767
-  - 4164943871
-  - 4294967295
-  - 4294967295
-  - 4162976767
-  - 4281891839
-  - 4162846952
-  - 4164025343
-  - 4180696063
-  - 4180700159
-  - 4180802559
-  - 4163979775
-  - 4231121407
-  - 4163109097
-  - 4162978024
-  - 4214227688
-  - 4180277997
-  - 4169138175
-  - 4162846920
-  - 4269801672
-  - 4263015113
-  - 4287103688
-  - 4286644937
-  - 4294967295
-  - 4294967295
-  - 4294967295
-  - 4294967295
-  - 4294967295
+  m_LayerCollisionMatrix: ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
   m_AutoSimulation: 1
   m_AutoSyncTransforms: 1
   m_ReuseCollisionCallbacks: 0

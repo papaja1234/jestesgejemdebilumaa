@@ -211,5 +211,6 @@ public enum INFeature
 	LargerOffRoadWheel,
 	ReverseOffRoadWheel,
 	AlienWoodenFrame,
-	PigCameraButton
+	PigCameraButton,
+	AlienRockets
 }

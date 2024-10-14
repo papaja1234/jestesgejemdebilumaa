@@ -79,6 +79,8 @@ MonoBehaviour:
   - {fileID: 1781075272015711, guid: 274682c2a74c660499aef391e503f4a6, type: 3}
   - {fileID: 1781075272015711, guid: 04b338141995f8437bab68e0d3ea30c2, type: 3}
   - {fileID: 1781075272015711, guid: 98441ab2b9dcb1271ae1691e9a67fca4, type: 3}
+  - {fileID: 1660211880421997, guid: 0bc15afb3340dbec9af68c39f2545bfc, type: 3}
+  - {fileID: 1691751764061739, guid: e3bc0ebd43f446162a8dfac3aa7ddabd, type: 3}
   PartIcons:
   - Part: {fileID: 1780987275874567, guid: a4e12d208b234a44aaab3e8410333301, type: 3}
     MaterialName: IngameAtlas4
@@ -206,6 +208,12 @@ MonoBehaviour:
   - Part: {fileID: 1867000707314727, guid: 0ba057dbe89cb35d1b74f83479ad3878, type: 3}
     MaterialName: IngameAtlas5
     SpriteName: OffRoadWheel
+  - Part: {fileID: 1660211880421997, guid: 0bc15afb3340dbec9af68c39f2545bfc, type: 3}
+    MaterialName: IngameAtlas5
+    SpriteName: AlienRedRocket
+  - Part: {fileID: 1691751764061739, guid: e3bc0ebd43f446162a8dfac3aa7ddabd, type: 3}
+    MaterialName: IngameAtlas5
+    SpriteName: AlienRocket
   PartRanges:
   - Part: {fileID: 1269385843468890, guid: 7657a2b714b3f6b47a0d6a085075dfa4, type: 3}
     Count: 16

@@ -103,7 +103,7 @@ public class ColoredFrame : Frame
 							m_coloredPartMaterials[i] = (meshRenderer, meshRenderer.sharedMaterial);
 							float num2 = ((m_color.a > 0.5f) ? m_color.a : 0.5f);
 							Material material;
-							(material = meshRenderer.material).shader = INUnity.CustomTransparentShader;//fixed weird color frame
+							material = meshRenderer.material;
 							material.color = new Color(m_color.r, m_color.g, m_color.b, num2 * material.color.a);
 							meshRenderer.material.SetFloat(Blend, @float);
 						}
@@ -111,7 +111,7 @@ public class ColoredFrame : Frame
 				}
 				else
 				{
-					INUnity.LoadShader("PreAlpha_Unlit_ColorTransparent_Geometry");
+					// INUnity.LoadShader("PreAlpha_Unlit_ColorTransparent_Geometry");
 					m_coloredPartMaterials = null;
 				}
 				m_coloredPart = basePart;

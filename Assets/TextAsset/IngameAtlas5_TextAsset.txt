@@ -36,3 +36,8 @@ AlienWoodenFrame1						352		258		105		104		0.4		0.4		768
 AlienWoodenFrame2						457		258		105		104		0.4		0.4		768
 AlienWoodenFrame3						352		362		105		104		0.4		0.4		768
 AlienWoodenFrame4						457		362		105		104		0.4		0.4		768
+
+AlienRocket								691		269		92		58		0.4		0.4		768
+AlienRedRocket							691		211		92		58		0.4		0.4		768
+AlienRocket_IconSprite					691		269		92		58		0.4		0.4		768
+AlienRedRocket_IconSprite				691		211		92		58		0.4		0.4		768

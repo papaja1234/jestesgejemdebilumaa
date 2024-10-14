@@ -694,6 +694,11 @@
 			"name": "PigCameraButton",
 			"scope": "Global",
 			"value": true
+		},
+		{
+			"name": "AlienRockets",
+			"scope": "Global",
+			"value": true
 		}
 	]
 }
