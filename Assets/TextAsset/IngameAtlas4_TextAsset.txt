@@ -188,6 +188,7 @@ HealingLight_Off						0		1152	81		101		0.4		0.4		768
 HealingLight_On							100		1152	88		101		0.4		0.4		768
 Oscillator_On							1536	896		100		100		0.4		0.4		768
 Oscillator_Off							1408	896		100		100		0.4		0.4		768
+StructureBlock_Sprite			    	1792	896		100		100		0.4		0.4		768
 TriplePartTrigger_Sprite				1664	896		100		100		0.4		0.4		768
 ForceFieldLight_Off						256		1152	101		102		0.4		0.4		768
 ForceFieldLight_On						368		1152	101		103		0.4		0.4		768
