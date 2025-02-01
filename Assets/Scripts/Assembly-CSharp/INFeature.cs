@@ -202,5 +202,5 @@ public enum INFeature
 	JetEngineFlameWidth = 199,
 	ElectricalSystem = 200,
 	AlienExtras = 201,
-	NeuralPart = 202
+	 
 }

@@ -6,7 +6,7 @@ public static class PartTypeExtensions
 		{
 			SortedPartType.JetEngine => INSettings.GetBool(INFeature.FuelSystem), 
 			SortedPartType.ElectricalPart => INSettings.GetBool(INFeature.ElectricalSystem), 
-			SortedPartType.NeuralPart => INSettings.GetBool(INFeature.NeuralPart), 
+			//SortedPartType.NeuralPart => INSettings.GetBool(INFeature.NeuralPart), 
 			_ => true, 
 		};
 	}

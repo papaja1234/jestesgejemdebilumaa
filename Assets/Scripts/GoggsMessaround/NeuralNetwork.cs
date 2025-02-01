@@ -2,7 +2,7 @@ using System.Collections;
 using static System.Math;
 using System.Collections.Generic;
 using UnityEngine;
-
+/*
 public class NeuralNetwork
 {
     private int inputSize;
@@ -158,3 +158,4 @@ public class NeuralNetwork
         return result;
     }
 }
+*/

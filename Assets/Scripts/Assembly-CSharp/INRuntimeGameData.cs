@@ -58,7 +58,7 @@ public class INRuntimeGameData : Singleton<INRuntimeGameData>
 		InitializePart(INFeature.AutoControlLight, SetAutoControlLight);
 		InitializePart(INFeature.ElectricalSystem, SetElectricalSystem);
 		InitializePart(INFeature.AlienExtras, SetAlienExtras);
-		InitializePart(INFeature.NeuralPart, SetNeuralPart);
+		//InitializePart(INFeature.NeuralPart, SetNeuralPart);
 	}
 
 	private void InitializePart(INFeature feature, Action action)
@@ -368,7 +368,7 @@ public class INRuntimeGameData : Singleton<INRuntimeGameData>
 			RemoveCustomPart(BasePart.PartType.StickyWheel, 4);
 		}*/
 	}
-
+/*
 	private void SetNeuralPart()
 	{
 		if (!INSettings.GetBool(INFeature.NeuralPart))
@@ -403,7 +403,7 @@ public class INRuntimeGameData : Singleton<INRuntimeGameData>
 			}
 		}
 	}
-
+*/
 	private GameData CreateGameData()
 	{
 		GameData gameData = UnityEngine.Object.Instantiate(Singleton<GameManager>.Instance.gameData);

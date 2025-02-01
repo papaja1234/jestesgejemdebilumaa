@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/*
 public class NeuralNetworkManager : PartManager
 {
     private List<NeuralPart> NeuralParts;
@@ -18,3 +18,4 @@ public class NeuralNetworkManager : PartManager
         }
     }
 }
+*/

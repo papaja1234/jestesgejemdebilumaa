@@ -75,8 +75,7 @@ public class BasePart : WPFMonoBehaviour
 		SpotLight = 47,
 		TimeBomb = 48,
 		ElectricalPart = 49,
-		NeuralPart = 50,
-		MAX = 51
+		MAX = 50
 	}
 
 	public float GetMaxHp( BasePart basePart)//this is still WIP
