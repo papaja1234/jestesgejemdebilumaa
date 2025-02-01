@@ -113,7 +113,7 @@ public class Contraption : WPFMonoBehaviour
 			m_data[GetKey(x, y, level)] = part;
 		}
 
-		public bool TryGet(int x, int y, int level, out BasePart part)
+		public bool TryGet(int x, int y, int level, out BasePart part)//
 		{
 			return m_data.TryGetValue(GetKey(x, y, level), out part);
 		}
@@ -2708,6 +2708,8 @@ public class Contraption : WPFMonoBehaviour
 		m_runtimePartMap.TryGet(x, y, level, out BasePart part);
 		return part;
 	}
+
+	public bool TryGet(int x, int y, int level, out BasePart part) => m_runtimePartMap.TryGet(x, y, level, out part);//
 
 	public void SetPartMap(int x, int y, int level, BasePart part)
 	{
