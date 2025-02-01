@@ -87,9 +87,8 @@ public class INContraptionDataManager
 		{
 			ContraptionDataset contraptionDataset = new ContraptionDataset();
 			Unit[] array = items;
-			for (int i = 0; i < array.Length; i++)
+			foreach (Unit unit in array)
 			{
-				Unit unit = array[i];
 				contraptionDataset.AddPart(unit.X, unit.Y, (int)((SortedPartType)unit.Type).ToPartType(), unit.Index, (BasePart.GridRotation)unit.Rotation, System.Convert.ToBoolean(unit.Flipped), unit.offsetX, unit.offsetY);//IMPORTANT PART
 			}
 			return contraptionDataset;
@@ -100,6 +99,8 @@ public class INContraptionDataManager
 
 	public string DataDirectory { get; private set; }
 
+	public string StructureDataDirectory { get; private set; }
+
 	public static INContraptionDataManager Instance { get; private set; }
 
 	public static ContraptionDataSettings Settings => INUserSettings.Instance.ContraptionDataSettings;
@@ -109,6 +110,7 @@ public class INContraptionDataManager
 		INContraptionDataManager iNContraptionDataManager = new INContraptionDataManager();
 		iNContraptionDataManager.Initialize();
 		Instance = iNContraptionDataManager;
+		REStructureManager.Create();//<- just here
 	}
 
 	public static void SetContraptionData()
@@ -134,7 +136,8 @@ public class INContraptionDataManager
 			0 => "", 
 			_ => "B", 
 		};
-		Directory.CreateDirectory(DataDirectory);
+		StructureDataDirectory = DataDirectory + "/structures";
+		Directory.CreateDirectory(DataDirectory); 
 	}
 
 	public ContraptionDataset LoadContraptionData(string levelName)
