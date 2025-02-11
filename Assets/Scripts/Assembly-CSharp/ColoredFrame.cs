@@ -26,7 +26,7 @@ public class ColoredFrame : Frame
 	private MeshRenderer m_backgroundRenderer;
 
 	private (MeshRenderer, Material)[] m_coloredPartMaterials;
-	private static readonly int Blend = Shader.PropertyToID("_Blend");
+	private static readonly int Blend = Shader.PropertyToID("_Blend");//purely simplification, no functional changes
 
 	public Color Color
 	{
@@ -75,46 +75,47 @@ public class ColoredFrame : Frame
 
 	private void FixedUpdate()
 	{
-		bool flag = true;
+		bool b = true;
 		BasePart basePart = m_enclosedPart;
-		float @float = INSettings.GetFloat(INFeature.EnclosedPartColorBlend);
+		float @float = INSettings.GetFloat(INFeature.EnclosedPartColorBlend);//Blend
 		if (basePart != null)
 		{
-			bool num = basePart.IsWoodenBox();
-			bool flag2 = basePart.IsMetalBox();
-			flag = !(num || flag2);
+			bool isWoodenBox = basePart.IsWoodenBox();//rename
+			bool isMetalBox = basePart.IsMetalBox();//rename
+			b = !(isWoodenBox || isMetalBox);
 			if (m_coloredPart == null)
 			{
 				if (INSettings.GetBool(INFeature.CanColorEnclosedPart))
 				{
-					MeshRenderer[] componentsInChildren = basePart.GetComponentsInChildren<MeshRenderer>(includeInactive: true);
-					m_coloredPartMaterials = new(MeshRenderer, Material)[componentsInChildren.Length];
-					INUnity.LoadShader("Unlit_Color");
-					for (int i = 0; i < componentsInChildren.Length; i++)
+					MeshRenderer[] componentsInChildren = basePart.GetComponentsInChildren<MeshRenderer>(includeInactive: true);//Get Mesh renderers
+					m_coloredPartMaterials = new(MeshRenderer, Material)[componentsInChildren.Length];//create access array
+					//INUnity.LoadShader("Unlit_Color"); revert changes
+					var x = INUnity.LoadShader("Unlit_ColorTransparent_GrayOverlay"); //load THE shader, source of chaos, shader decompile issue
+					for (int i = 0; i < componentsInChildren.Length; i++)//iterate through the array
 					{
-						MeshRenderer meshRenderer = componentsInChildren[i];
-						if (meshRenderer.name != "INLight")
+						MeshRenderer meshRenderer = componentsInChildren[i];//get element
+						if (meshRenderer.name != "INLight")//you don't color light components
 						{
-							m_coloredPartMaterials[i] = (meshRenderer, meshRenderer.sharedMaterial);
-							float num2 = ((m_color.a > 0.5f) ? m_color.a : 0.5f);
-							Material material;
-							(material = meshRenderer.material).shader = INUnity.CustomTransparentShader;//fixed weird color frame
-							material.color = new Color(m_color.r, m_color.g, m_color.b, num2 * material.color.a);
+							m_coloredPartMaterials[i] = (meshRenderer, meshRenderer.sharedMaterial);//set material
+							float alpha = ((m_color.a > 0.5f) ? m_color.a : 0.5f);
+							Material material;//not quite a simplification
+							(material = meshRenderer.material).shader = x;//fixed weird color frame, or does it?
+							material.color = new Color(m_color.r, m_color.g, m_color.b, alpha * material.color.a);
 							meshRenderer.material.SetFloat(Blend, @float);
 						}
 					}
 				}
 				else
 				{
-					INUnity.LoadShader("PreAlpha_Unlit_ColorTransparent_Geometry");
+					//unused code
 					m_coloredPartMaterials = null;
 				}
 				m_coloredPart = basePart;
 			}
 		}
-		m_renderer.enabled = flag;
-		m_foregroundRenderer.enabled = flag;
-		m_backgroundRenderer.enabled = flag;
+		m_renderer.enabled = b;
+		m_foregroundRenderer.enabled = b;
+		m_backgroundRenderer.enabled = b;
 	}
 
 	public void UpdateRenderers()
@@ -137,7 +138,7 @@ public class ColoredFrame : Frame
 		{
 			(MeshRenderer, Material) tuple = coloredPartMaterials[i];
 			(Renderer, Material) tuple2 = (tuple.Item1, tuple.Item2);
-			(Renderer renderer, _) = tuple2;
+			(Renderer renderer, _) = tuple2; // simplification
 			if (renderer != null)
 			{
 				float num = ((m_color.a > 0.5f) ? m_color.a : 0.5f);
@@ -153,7 +154,7 @@ public class ColoredFrame : Frame
 			return;
 		}
 		(MeshRenderer, Material)[] coloredPartMaterials = m_coloredPartMaterials;
-		foreach ((MeshRenderer, Material) tuple in coloredPartMaterials)//converted to foreach
+		foreach ((MeshRenderer, Material) tuple in coloredPartMaterials)//simplification converted to foreach
 		{
 			if (tuple.Item1 != null)
 			{
