@@ -566,7 +566,34 @@
 				"en-US": "Bad Piggies :: Rebooted || Command Help Page {0}\n",
 				"zh-Hans": "Bad Piggies :: Rebooted || 指令帮助页面 {0}\n"
 			}
+		},
+		{
+			"id": "AppInterface_Structure",
+			"text": {
+				"en-US": "Structure Manager",
+				"zh-Hans": "结构管理器"
+			}
+		},
+		{
+			"id": "Structure_Unselected",
+			"text": {
+				"en-US": "No structure block is selected, please select one via pressing the button below the structure block.",
+				"zh-Hans": "当前没有结构方块被选中，请通过结构方块下方的按钮选中一个"
+			}
+		},
+		{
+			"id": "Structure_Selected",
+			"text": {
+				"en-US": "Selected structure block {0}:(x={1}, y={2})",
+				"zh-Hans": "已选择结构方块{0}:(x={1}, y={2})"
+			}
+		},
+		{
+			"id": "Structure_Name",
+			"text": {
+				"en-US": "Structure Name",
+				"zh-Hans": "结构名"
+			}
 		}
-		
 	]
 }

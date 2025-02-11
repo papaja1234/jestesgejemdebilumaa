@@ -156,4 +156,10 @@ public class INAppInterface : MonoBehaviour
 			m_paused = false;
 		}
 	}
+
+	public void OpenStructurePage(StructureBlock sb)
+	{
+		SetEnabled(isEnabled: true);
+		ReStructureInterface.Instance.SetSelection(sb);
+	}
 }

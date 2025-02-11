@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
 using Object = UnityEngine.Object;
@@ -7,16 +8,24 @@ using unit = ContraptionDataset.ContraptionDatasetUnit;
 
 public class StructureBlock : BasePart
 {
-    public int L { get; private set; } //Length
-    public int H { get; private set; } //Height--that's how you name like a mathematician!!
+    public int L { get; private set; } = 3; //Length
+    public int H { get; private set; } = 4;//Height--that's how you name like a mathematician!!
     [SerializeField] private LineRenderer lr;
-    [SerializeField] private TextMesh tm;
-    [SerializeField] private Button sb, lb;
-    public string structName;
+    [SerializeField] private TextMeshPro tm;
+    [SerializeField] private Button sb, lb, openMenu;
+    public string structName = "_clipboard";
 
     public override void Awake()
     {
         base.Awake();
+        structName = "_clipboard";
+        SetLineRenderer();
+        SetButtons();
+    }
+ 
+
+    private void SetLineRenderer()
+    {
         if (!lr)
         {
             lr = gameObject.AddComponent<LineRenderer>();
@@ -25,18 +34,36 @@ public class StructureBlock : BasePart
         {
             lr = GetComponent<LineRenderer>();
         }
+
         lr.startColor = Color.white;
         lr.endColor = Color.white;
         lr.useWorldSpace = true;
-        lr.startWidth = 0.1f;
+        lr.startWidth = 0.05f;
         lr.endWidth = lr.startWidth;
-        lr.material = new Material(INUnity.ColorShader);
-        lr.numCapVertices = 8;
-        lr.numCornerVertices = 8;
+        lr.numCapVertices = 0;
+        lr.numCornerVertices = 0;
         lr.loop = true;
         lr.positionCount = 4;
     }
 
+    private void SetButtons()
+    {
+        sb.MethodToCall.SetMethod(this, nameof(SaveStructure));
+        lb.MethodToCall.SetMethod(this,nameof(LoadStructure), structName);
+        openMenu.MethodToCall.SetMethod(this, nameof(OpenMenu));
+    }
+
+    private void SaveStructure()
+    {
+        Debug.Log("Saving structure " + structName);
+        REStructureManager.Instance.SaveStructureBlock(this);
+    }
+
+    private void OpenMenu()
+    {
+        if(INSettings.VersionType == 0) return;
+        INAppInterface.Instance.OpenStructurePage(this);
+    }
     public void SetSize(int length, int height)
     {
         L = length;
@@ -44,8 +71,8 @@ public class StructureBlock : BasePart
     }
 
     
-    public void FixedUpdate()
-    {
+    public void Update()
+    {//
         Vector3 o = new Vector3(0.5f, 0.5f, -0.1f) + transform.position;
         Vector3 l = new Vector3(L, 0, 0);
         Vector3 h = new Vector3(0, H, 0);
@@ -59,6 +86,7 @@ public class StructureBlock : BasePart
     public void LoadStructure(string s)
     {
         structName = s;
+        Debug.Log("Loading structure " + structName);
         bool su = REStructureManager.Instance.TryGet(s, out Structure st);
         if (su)
         {
