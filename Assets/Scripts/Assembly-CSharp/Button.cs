@@ -118,6 +118,7 @@ public class Button : Widget
 
 	protected override void OnActivate()
 	{
+		Debug.Log("Button fired");
 		if (eventToSend.HasEvent())
 		{
 			eventToSend.Send();

@@ -22,6 +22,7 @@ internal class SnapshotEffect : MonoBehaviour
 
 	private void Awake()
 	{
+		if (!snapshotShader) snapshotShader = INUnity.ColorTransparentShader;
 		m_snapshotMaterial = new Material(snapshotShader);
 		m_snapshotMaterial.hideFlags = HideFlags.HideAndDontSave;
 		base.enabled = false;
