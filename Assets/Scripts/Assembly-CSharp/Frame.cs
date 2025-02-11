@@ -66,32 +66,32 @@ public class Frame : BasePart
 		{
 			return;
 		}
-		int num = 1;
-		int num2 = 0;
+		int dx = 1;
+		int dy = 0;
 		Color clear = Color.clear;
-		float num3 = 0f;
+		float alpha = 0f;
 		for (int i = 0; i < 4; i++)
 		{
-			BasePart basePart = base.contraption.FindPartAt(m_coordX + num, m_coordY + num2, this);
-			if (basePart != null && basePart.IsColoredrame())
+			BasePart neighbour = base.contraption.FindPartAt(m_coordX + dx, m_coordY + dy, this);
+			if (neighbour != null && neighbour.IsColoredrame())
 			{
-				ColoredFrame coloredFrame = basePart as ColoredFrame;
+				ColoredFrame coloredFrame = neighbour as ColoredFrame;
 				clear += coloredFrame.Color * coloredFrame.Color.a;
-				num3 += coloredFrame.Color.a;
+				alpha += coloredFrame.Color.a;
 			}
-			int num4 = num;
-			num = -num2;
-			num2 = num4;
+			int temp = dx;
+			dx = -dy;
+			dy = temp;
 		}
-		if (num3 > 0f)
+		if (alpha > 0f)
 		{
-			clear /= num3;
+			clear /= alpha;
 			MeshRenderer[] renderers = m_renderers;
 			foreach (MeshRenderer meshRenderer in renderers)
 			{
 				if (!m_colored)
 				{
-					meshRenderer.material.shader = INUnity.LoadShader("PreAlpha_Unlit_ColorTransparent_Geometry");
+					meshRenderer.material.shader = INUnity.LoadShader("Unlit_ColorTransparent_GrayOverlay");//fix not coloring neighbour frames
 				}
 				meshRenderer.material.color = clear;
 			}
