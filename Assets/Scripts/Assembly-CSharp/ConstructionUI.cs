@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class ConstructionUI : WPFMonoBehaviour
@@ -14,7 +13,7 @@ public class ConstructionUI : WPFMonoBehaviour
 		public int coordX;
 
 		public int coordY;
-		
+
 		public int useCount;
 
 		public int maxCount;
@@ -38,10 +37,6 @@ public class ConstructionUI : WPFMonoBehaviour
 		}
 	}
 
-	public int oldMouseX;
-		
-	public int oldMouseY;
-	
 	public Action OnPartsUnlocked;
 
 	public List<Transform> m_purchasableParts = new List<Transform>();
@@ -122,7 +117,7 @@ public class ConstructionUI : WPFMonoBehaviour
 
 	private GameObject moveDownButton;
 
-	private List<Transform> m_partTransforms = new List<Transform>();
+	private List<Transform> m_parts = new List<Transform>();
 
 	private PartSelector partSelector;
 
@@ -142,6 +137,10 @@ public class ConstructionUI : WPFMonoBehaviour
 
 	private Vector3 m_rightDragStartPosition;
 
+	private int m_moveCounter;
+
+	private int m_rotationCounter;
+
 	private float m_lastMoveTime;
 
 	private bool m_tutorialPulseDone;
@@ -152,35 +151,40 @@ public class ConstructionUI : WPFMonoBehaviour
 
 	private bool m_allowDragPlacement;
 
+	private bool m_disableFunctionality;
+
 	private BasePart.PartType m_currentCustomizablePartType;
 
 	private Vector3 m_pointerTime;
 
 	public List<PartDesc> PartDescriptors => m_partDescs;
 
-	public bool DisableFunctionality { get; set; }
+	public bool DisableFunctionality
+	{
+		get
+		{
+			return m_disableFunctionality;
+		}
+		set
+		{
+			m_disableFunctionality = value;
+		}
+	}
 
 	public List<PartDesc> UnlockedParts => m_unlockedParts;
 
-	public int RotationCount { get; private set; }
+	public int RotationCount => m_rotationCounter;
 
-	public int MoveCount { get; private set; }
+	public int MoveCount => m_moveCounter;
 
 	public int SelectedElement => m_selectedElement;
 
 	public Vector3 PointerTime => m_pointerTime;
 
-	public Vector3 selectionStart;
-	public Vector3 selectionEnd;
-	public List<BasePart> SelectedParts = new List<BasePart>();
-	public bool waitForSetEnd;
-	public bool hasSelection = false;
-	public GameObject selectionFrame;
 	private void AddMove()
 	{
-		
 		m_lastMoveTime = Time.time;
-		MoveCount++;
+		m_moveCounter++;
 	}
 
 	private void OnDestroy()
@@ -276,33 +280,33 @@ public class ConstructionUI : WPFMonoBehaviour
 	{
 		EventManager.Connect<UIEvent>(ReceiveUIEvent);
 		EventManager.Connect<CustomizePartUI.PartCustomizationEvent>(OnPartCustomization);
-		selectionFrame.GetComponent<RectTransform>().localScale = Vector3.zero;
 		int num = 0;
 		int num2 = 0;
-		/*(bool)*/m_useDragOffset = DeviceInfo.UsesTouchInput && !Singleton<BuildCustomizationLoader>.Instance.IsHDVersion;
-		/*(bool)*/m_allowDragPlacement = !DeviceInfo.UsesTouchInput;
+		int num3 = 0;
+		m_useDragOffset = DeviceInfo.UsesTouchInput && !Singleton<BuildCustomizationLoader>.Instance.IsHDVersion;
+		m_allowDragPlacement = !DeviceInfo.UsesTouchInput;
 		foreach (GameObject part in WPFMonoBehaviour.gameData.m_parts)
 		{
-			Transform partTransform = part.transform;
-			m_partTransforms.Add(partTransform);
-			BasePart basePart = part.GetComponent<BasePart>();
-			int num4 = WPFMonoBehaviour.levelManager.GetPartTypeCount(basePart.m_partType);
-			if (INSettings.GetBool(INFeature.PartCounter) && basePart.m_constructionIconSprite != null)
+			Transform transform = part.transform;
+			m_parts.Add(transform);
+			BasePart component = part.GetComponent<BasePart>();
+			int num4 = WPFMonoBehaviour.levelManager.GetPartTypeCount(component.m_partType);
+			if (INSettings.GetBool(INFeature.PartCounter) && component.m_constructionIconSprite != null)
 			{
-				//setting remaining part count to "infinite"
 				num4 = 1061109567;
 			}
-			if (num4 == 0 && !m_purchasableParts.Contains(partTransform))
+			if (num4 == 0 && !m_purchasableParts.Contains(transform))
 			{
 				continue;
 			}
-			Transform obj = UnityEngine.Object.Instantiate(partTransform, base.transform, true);
-			basePart = obj.GetComponent<BasePart>();
-			obj.gameObject.SetActive(value: false);//pre-placed this part
+			Transform obj = UnityEngine.Object.Instantiate(transform);
+			component = obj.GetComponent<BasePart>();
+			obj.gameObject.SetActive(value: false);
+			obj.parent = base.transform;
 			MeshRenderer component2 = obj.GetComponent<MeshRenderer>();
-			if ((bool)basePart.m_constructionIconSprite)
+			if ((bool)component.m_constructionIconSprite)
 			{
-				component2 = basePart.m_constructionIconSprite.GetComponent<MeshRenderer>();
+				component2 = component.m_constructionIconSprite.GetComponent<MeshRenderer>();
 			}
 			if (!component2 || !component2.sharedMaterial)
 			{
@@ -313,41 +317,35 @@ public class ConstructionUI : WPFMonoBehaviour
 			{
 				continue;
 			}
-			PartDesc partDesc = new PartDesc
+			PartDesc partDesc = new PartDesc();
+			partDesc.part = component;
+			partDesc.tex = mainTexture;
+			partDesc.coordX = num;
+			partDesc.coordY = num2;
+			partDesc.useCount = 0;
+			partDesc.maxCount = num4;
+			partDesc.customPartIndex = 0;
+			if (WPFMonoBehaviour.levelManager.m_sandbox && !(WPFMonoBehaviour.levelManager.CurrentGameMode is CakeRaceMode))
 			{
-				part = basePart,
-				tex = mainTexture,
-				coordX = num,
-				coordY = num2,
-				useCount = 0,
-				maxCount = num4,
-				customPartIndex = 0
-			};
-			if (WPFMonoBehaviour.levelManager.m_sandbox && WPFMonoBehaviour.levelManager.CurrentGameMode is not CakeRaceMode)
-			{
-				int unlockedSandboxPartCount = GameProgress.GetUnlockedSandboxPartCount(basePart.m_partType);
+				int unlockedSandboxPartCount = GameProgress.GetUnlockedSandboxPartCount(component.m_partType);
 				if (unlockedSandboxPartCount > 0)
 				{
-					GameProgress.SetUnlockedSandboxPartCount(basePart.m_partType, 0);
-					PartDesc partDesc2 = new PartDesc
-					{
-						part = partDesc.part,
-						maxCount = unlockedSandboxPartCount,
-						customPartIndex = 0
-					};
+					GameProgress.SetUnlockedSandboxPartCount(component.m_partType, 0);
+					PartDesc partDesc2 = new PartDesc();
+					partDesc2.part = partDesc.part;
+					partDesc2.maxCount = unlockedSandboxPartCount;
+					partDesc2.customPartIndex = 0;
 					m_unlockedParts.Add(partDesc2);
 					partDesc.maxCount -= unlockedSandboxPartCount;
 				}
-				unlockedSandboxPartCount = GameProgress.GetUnlockedSandboxPartCount(Singleton<GameManager>.Instance.CurrentSceneName, basePart.m_partType);
+				unlockedSandboxPartCount = GameProgress.GetUnlockedSandboxPartCount(Singleton<GameManager>.Instance.CurrentSceneName, component.m_partType);
 				if (unlockedSandboxPartCount > 0)
 				{
-					GameProgress.SetUnlockedSandboxPartCount(Singleton<GameManager>.Instance.CurrentSceneName, basePart.m_partType, 0);
-					PartDesc partDesc3 = new PartDesc
-					{
-						part = partDesc.part,
-						maxCount = unlockedSandboxPartCount,
-						customPartIndex = 0
-					};
+					GameProgress.SetUnlockedSandboxPartCount(Singleton<GameManager>.Instance.CurrentSceneName, component.m_partType, 0);
+					PartDesc partDesc3 = new PartDesc();
+					partDesc3.part = partDesc.part;
+					partDesc3.maxCount = unlockedSandboxPartCount;
+					partDesc3.customPartIndex = 0;
 					m_unlockedParts.Add(partDesc3);
 					partDesc.maxCount -= unlockedSandboxPartCount;
 				}
@@ -360,68 +358,57 @@ public class ConstructionUI : WPFMonoBehaviour
 				num = 0;
 				num2++;
 			}
+			num3++;
 		}
 		if ((bool)WPFMonoBehaviour.levelManager)
 		{
 			m_contraption = WPFMonoBehaviour.levelManager.ContraptionProto;
 		}
-		if (!m_contraption)//initializes contraption
+		if (!m_contraption)
 		{
-			GameObject contraptionGameObject = new GameObject("Contraption")
-			{
-				transform =
-				{
-					parent = base.transform,
-					localPosition = Vector3.zero
-				}
-			};
-			m_contraption = contraptionGameObject.AddComponent<Contraption>();
+			GameObject obj2 = new GameObject("Contraption");
+			obj2.transform.parent = base.transform;
+			obj2.transform.localPosition = Vector3.zero;
+			m_contraption = obj2.AddComponent<Contraption>();
 		}
 		m_cellPrefab = ((!WPFMonoBehaviour.levelManager.GridCellPrefab) ? m_cellPrefab : WPFMonoBehaviour.levelManager.GridCellPrefab.transform);
 		if ((bool)m_cellPrefab)
 		{
-			//maps all placeable grids
-			GameObject pointer = new GameObject
-			{
-				transform =
-				{
-					parent = base.transform,
-					localPosition = Vector3.zero
-				}
-			};
+			GameObject gameObject = new GameObject();
+			gameObject.transform.parent = base.transform;
+			gameObject.transform.localPosition = Vector3.zero;
 			for (int i = 0; i < WPFMonoBehaviour.levelManager.GridHeight; i++)
 			{
 				for (int j = WPFMonoBehaviour.levelManager.GridXMin; j <= WPFMonoBehaviour.levelManager.GridXMax; j++)
 				{
 					if (WPFMonoBehaviour.levelManager.CanPlacePartAtGridCell(j, i))
 					{
-						Transform transform2 = UnityEngine.Object.Instantiate(m_cellPrefab, pointer.transform, true);
+						Transform transform2 = UnityEngine.Object.Instantiate(m_cellPrefab);
+						transform2.transform.parent = gameObject.transform;
 						transform2.localPosition = new Vector3(j, i, 1f);
 						int key = i * 1000 + j;
 						m_cellMap[key] = transform2;
 					}
 				}
 			}
-			m_grid = pointer.transform;
+			m_grid = gameObject.transform;
 			if (INSettings.GetBool(INFeature.RenderInfiniteGrid))
 			{
-				m_cellMaterial = new Material(m_cellPrefab.GetComponent<MeshRenderer>().sharedMaterial)
-				{
-					color = new Color(1f, 1f, 1f, 0.5f)
-				};
+				m_cellMaterial = new Material(m_cellPrefab.GetComponent<MeshRenderer>().sharedMaterial);
+				m_cellMaterial.color = new Color(1f, 1f, 1f, 0.5f);
 			}
 		}
-		GameObject InGameGUI = GameObject.Find("InGameGUI");//Assigns all gui objects
-		if ((bool)InGameGUI)
+		GameObject gameObject2 = GameObject.Find("InGameGUI");
+		if ((bool)gameObject2)
 		{
-			clearButton = InGameGUI.transform.Find("InGameBuildMenu").Find("ClearButton").gameObject;
-			playButton = InGameGUI.transform.Find("InGameBuildMenu").Find("PlayButton").gameObject;
-			moveButtons = InGameGUI.transform.Find("InGameBuildMenu").Find("MoveButtons").gameObject;
+			clearButton = gameObject2.transform.Find("InGameBuildMenu").Find("ClearButton").gameObject;
+			playButton = gameObject2.transform.Find("InGameBuildMenu").Find("PlayButton").gameObject;
+			moveButtons = gameObject2.transform.Find("InGameBuildMenu").Find("MoveButtons").gameObject;
 			moveLeftButton = moveButtons.transform.Find("MoveLeftButton").gameObject;
 			moveRightButton = moveButtons.transform.Find("MoveRightButton").gameObject;
 			moveUpButton = moveButtons.transform.Find("MoveUpButton").gameObject;
 			moveDownButton = moveButtons.transform.Find("MoveDownButton").gameObject;
-			partSelector = InGameGUI.transform.Find("InGameBuildMenu").Find("PartSelector").GetComponent<PartSelector>();
+			partSelector = gameObject2.transform.Find("InGameBuildMenu").Find("PartSelector").GetComponent<PartSelector>();
 			partSelector.SetParts(m_partDescs);
 		}
 	}
@@ -433,7 +420,7 @@ public class ConstructionUI : WPFMonoBehaviour
 
 	private void Update()
 	{
-		if (DisableFunctionality)
+		if (m_disableFunctionality)
 		{
 			return;
 		}
@@ -442,59 +429,20 @@ public class ConstructionUI : WPFMonoBehaviour
 			m_lastMoveTime = Time.time;
 			if ((bool)m_dragIcon)
 			{
-				Vector3 position = WPFMonoBehaviour.hudCamera.GetComponent<Camera>().ScreenToWorldPoint(GuiManager.GetPointer().position);//probably the right one
+				Vector3 position = WPFMonoBehaviour.hudCamera.GetComponent<Camera>().ScreenToWorldPoint(GuiManager.GetPointer().position);
 				position.z = WPFMonoBehaviour.hudCamera.transform.position.z + 2f;
 				position += m_dragOffset;
 				position += m_dragIconOffset;
 				m_dragIcon.transform.position = position;
 			}
 		}
-
-		if (Input.mousePresent && Input.GetMouseButtonDown(2))
-		{
-			Vector3 mousePos = Input.mousePosition;
-			//mousePos.z = Camera.main.nearClipPlane;
-			hasSelection = false;
-			if(waitForSetEnd)
-			{
-				selectionEnd = WPFMonoBehaviour.hudCamera.GetComponent<Camera>().ScreenToWorldPoint(GuiManager.GetPointer().position);
-				//RectTransform rectTransform = new RectTransform(){position = selectionStart, pivot = Vector2.zero};
-				SelectGridParts();
-			}
-			else
-			{
-				selectionStart = WPFMonoBehaviour.hudCamera.GetComponent<Camera>().ScreenToWorldPoint(GuiManager.GetPointer().position);
-				selectionFrame.GetComponent<RectTransform>().position = mousePos;
-				waitForSetEnd = true;
-			}//STILL WIP
-			//BUG:: ScreenToWorldPoint returns wrong coordinates, right coordinates being the position of part you see in building menu
-		}
-
-		//Debug.Log(Input.touches[0].position);
 		SetButtonPositions();
 		if (Input.touchCount > 1)
 		{
 			CancelDrag();
-			
 		}
 		HandleDragging();
 	}
-
-	private void SelectGridParts()
-	{
-		bool IsInBetween(float left, float right, float variable)
-		{
-			return Mathf.Min(left, right) < variable && variable < Mathf.Max(left, right);
-		}
-
-		//Vector3 diagonal = selectionStart - selectionEnd;
-		//diagonal.x = Mathf.Abs(diagonal.x);
-		//diagonal.y = Mathf.Abs(diagonal.y);
-		SelectedParts = (from transform in m_partInstances where IsInBetween(selectionStart.x,selectionEnd.x,(float)transform.GetComponent<BasePart>().m_coordX) && IsInBetween(selectionStart.y,selectionEnd.y,(float)transform.GetComponent<BasePart>().m_coordY) select transform.GetComponent<BasePart>()) as List<BasePart>;
-		waitForSetEnd = false;
-		hasSelection = true;
-	}
-	
 
 	private void LateUpdate()
 	{
@@ -516,11 +464,11 @@ public class ConstructionUI : WPFMonoBehaviour
 			{
 				for (int k = (int)(vector.y - orthographicSize) - 1; k <= (int)(vector.y + orthographicSize) + 1 && flag2; k++)
 				{
-					Transform getChild;
+					Transform transform;
 					if (i < childCount)
 					{
-						getChild = m_grid.GetChild(i);
-						MeshRenderer component = getChild.GetComponent<MeshRenderer>();
+						transform = m_grid.GetChild(i);
+						MeshRenderer component = transform.GetComponent<MeshRenderer>();
 						if (!component.enabled)
 						{
 							flag = false;
@@ -532,11 +480,12 @@ public class ConstructionUI : WPFMonoBehaviour
 					}
 					else
 					{
-						getChild = UnityEngine.Object.Instantiate(m_cellPrefab, m_grid, true);
-						getChild.GetComponent<MeshRenderer>().material = m_cellMaterial;
+						transform = UnityEngine.Object.Instantiate(m_cellPrefab);
+						transform.GetComponent<MeshRenderer>().material = m_cellMaterial;
+						transform.parent = m_grid;
 					}
 					i++;
-					getChild.localPosition = new Vector3(j, k, 1f);
+					transform.localPosition = new Vector3(j, k, 1f);
 					flag2 = i < childCount + 200;
 				}
 			}
@@ -553,10 +502,6 @@ public class ConstructionUI : WPFMonoBehaviour
 		}
 	}
 
-	
-	/// <summary>
-	/// Update button position
-	/// </summary>
 	private void SetButtonPositions()
 	{
 		if (INSettings.GetBool(INFeature.SetBuildingButtonPosition))
@@ -586,9 +531,9 @@ public class ConstructionUI : WPFMonoBehaviour
 		int num2 = 0;
 		int num3 = 0;
 		int num4 = 0;
-		foreach (Transform part in m_partTransforms)
+		foreach (Transform part in m_parts)
 		{
-			Transform transform = UnityEngine.Object.Instantiate(part, base.transform, true);
+			Transform transform = UnityEngine.Object.Instantiate(part);
 			BasePart component = transform.GetComponent<BasePart>();
 			transform.gameObject.SetActive(value: false);
 			int num5 = WPFMonoBehaviour.levelManager.GetPartTypeCount(component.m_partType);
@@ -601,7 +546,7 @@ public class ConstructionUI : WPFMonoBehaviour
 				UnityEngine.Object.Destroy(transform.gameObject);
 				continue;
 			}
-
+			transform.parent = base.transform;
 			MeshRenderer component2 = transform.GetComponent<MeshRenderer>();
 			if ((bool)transform.GetComponent<BasePart>().m_constructionIconSprite)
 			{
@@ -616,16 +561,14 @@ public class ConstructionUI : WPFMonoBehaviour
 			{
 				continue;
 			}
-			PartDesc partDesc = new PartDesc
-			{
-				part = component,
-				tex = mainTexture,
-				coordX = num,
-				coordY = num2,
-				useCount = WPFMonoBehaviour.levelManager.ContraptionProto.GetPartCount(component.m_partType),
-				maxCount = num5,
-				customPartIndex = 0
-			};
+			PartDesc partDesc = new PartDesc();
+			partDesc.part = component;
+			partDesc.tex = mainTexture;
+			partDesc.coordX = num;
+			partDesc.coordY = num2;
+			partDesc.useCount = WPFMonoBehaviour.levelManager.ContraptionProto.GetPartCount(component.m_partType);
+			partDesc.maxCount = num5;
+			partDesc.customPartIndex = 0;
 			if (WPFMonoBehaviour.levelManager.m_sandbox)
 			{
 				int unlockedSandboxPartCount = GameProgress.GetUnlockedSandboxPartCount(component.m_partType);
@@ -678,8 +621,10 @@ public class ConstructionUI : WPFMonoBehaviour
 			m_partDescs = list2;
 			RefreshButtons();
 		}
-
-		OnPartsUnlocked?.Invoke();
+		if (OnPartsUnlocked != null)
+		{
+			OnPartsUnlocked();
+		}
 	}
 
 	public void RefreshButtons()
@@ -736,7 +681,7 @@ public class ConstructionUI : WPFMonoBehaviour
 	public Vector3 RelativeLevelPositionToHudPosition(Vector3 levelOffset)
 	{
 		Vector3 position = base.transform.position + levelOffset;
-		Vector3 position2 = Camera.main.WorldToScreenPoint(position);/////////////////////////////made a change here, PREVIOUS:: WPFMonoBehaviour.mainCamera
+		Vector3 position2 = Camera.main.WorldToScreenPoint(position);
 		return WPFMonoBehaviour.hudCamera.GetComponent<Camera>().ScreenToWorldPoint(position2);
 	}
 
@@ -842,18 +787,7 @@ public class ConstructionUI : WPFMonoBehaviour
 	private void MoveContraption(int dx, int dy)
 	{
 		AddMove();
-		if (hasSelection)
-		{
-			foreach (BasePart basePart in SelectedParts)
-			{
-				basePart.MoveOnGrid(basePart,dx,dy);
-			}
-		}
-		else
-		{
-			m_contraption.MoveOnGrid(dx, dy);
-		}
-
+		m_contraption.MoveOnGrid(dx, dy);
 		if (dx != 0)
 		{
 			SetMoveButtonState(1, 0);
@@ -1041,18 +975,7 @@ public class ConstructionUI : WPFMonoBehaviour
 		{
 			return;
 		}
-
 		GuiManager.Pointer pointer = GuiManager.GetPointer();
-
-		//initialize mouse pos if it's still at default (-1)
-		if (oldMouseX == -1 || oldMouseY == -1)
-		{
-			Vector3 mousePos = WPFMonoBehaviour.ScreenToZ0(pointer.position) - base.transform.position;
-			oldMouseX = Mathf.RoundToInt(mousePos.x); //dart note: using FloorToInt instead of RoundToInt??
-			oldMouseY = Mathf.RoundToInt(mousePos.y);
-			//Debug.Log("1t set");
-		}
-
 		if (DeviceInfo.UsesTouchInput)
 		{
 			if (Input.touchCount != 0)
@@ -1064,48 +987,40 @@ public class ConstructionUI : WPFMonoBehaviour
 					{
 						m_pointerTime.x += Time.deltaTime;
 					}
-
 					if (phase == TouchPhase.Ended)
 					{
 						m_pointerTime.x = 0f;
 					}
-
 					if (m_pointerTime.x >= 0.4f || m_dragStarted)
 					{
 						m_pointerTime.y = 0f;
 					}
 				}
-
 				if (INSettings.GetBool(INFeature.PartDeletionOperation))
 				{
 					if (phase == TouchPhase.Stationary)
 					{
 						m_pointerTime.y += Time.deltaTime;
 					}
-
 					if (phase == TouchPhase.Ended)
 					{
 						m_pointerTime.y = 0f;
 					}
-
 					if (m_pointerTime.y >= 0.4f)
 					{
 						m_pointerTime.x = 0f;
 					}
 				}
-
 				if (INSettings.GetBool(INFeature.PartDeselectionOperation))
 				{
 					if (phase == TouchPhase.Stationary && pointer.onWidget)
 					{
 						m_pointerTime.z += Time.deltaTime;
 					}
-
 					if (phase == TouchPhase.Ended)
 					{
 						m_pointerTime.z = 0f;
 					}
-
 					if (m_pointerTime.z >= 0.4f)
 					{
 						partSelector.ResetSelection();
@@ -1127,14 +1042,12 @@ public class ConstructionUI : WPFMonoBehaviour
 					m_pointerTime.x = 0f;
 				}
 			}
-
 			if (INSettings.GetBool(INFeature.PartDeselectionOperation) && pointer.secondaryDown && pointer.onWidget)
 			{
 				partSelector.ResetSelection();
 				m_selectedElement = -1;
 			}
 		}
-
 		int constructionUiRows = m_partDescs.Count / m_itemsPerRow + ((m_partDescs.Count % m_itemsPerRow != 0) ? 1 : 0);
 		WPFMonoBehaviour.levelManager.m_constructionUiRows = constructionUiRows;
 		if (pointer.down && !pointer.onWidget && m_draggedElement == -1 && !m_dragStarted)
@@ -1150,7 +1063,6 @@ public class ConstructionUI : WPFMonoBehaviour
 				{
 					basePart = basePart.enclosedPart;
 				}
-
 				if (!basePart.m_static)
 				{
 					m_dragStartPosition = pointer.position;
@@ -1158,7 +1070,6 @@ public class ConstructionUI : WPFMonoBehaviour
 				}
 			}
 		}
-
 		if (pointer.up)
 		{
 			if (m_dragStarted && m_draggedElement == -1)
@@ -1173,38 +1084,31 @@ public class ConstructionUI : WPFMonoBehaviour
 					{
 						basePart2 = basePart2.enclosedPart;
 					}
-
 					if (m_contraption.Flip(basePart2))
 					{
 						AddMove();
-						RotationCount++;
-						Singleton<AudioManager>.Instance.Play2dEffect(WPFMonoBehaviour.gameData.commonAudioCollection
-							.rotatePart);
+						m_rotationCounter++;
+						Singleton<AudioManager>.Instance.Play2dEffect(WPFMonoBehaviour.gameData.commonAudioCollection.rotatePart);
 					}
 				}
 			}
-
 			m_dragStarted = false;
 		}
-
 		float num = 1f;
 		if (DeviceInfo.UsesTouchInput)
 		{
 			num = ((!m_useDragOffset) ? 10f : 20f);
 		}
-
 		if (m_dragStarted && m_draggedElement == -1 && Vector3.Distance(pointer.position, m_dragStartPosition) >= num)
 		{
 			Vector3 vector3 = WPFMonoBehaviour.ScreenToZ0(m_dragStartPosition) - base.transform.position;
 			int coordX2 = Mathf.RoundToInt(vector3.x);
 			int coordY2 = Mathf.RoundToInt(vector3.y);
 			BasePart basePart3 = m_contraption.FindPartAt(coordX2, coordY2);
-			if (!basePart3 || (basePart3.m_partType != BasePart.PartType.Rope &&
-			                   basePart3.m_partType != BasePart.PartType.Spring))
+			if (!basePart3 || (basePart3.m_partType != BasePart.PartType.Rope && basePart3.m_partType != BasePart.PartType.Spring))
 			{
 				ChangeCoordinatesToSelectBigPart(ref coordX2, ref coordY2);
 			}
-
 			BasePart basePart4 = m_contraption.RemovePartAt(coordX2, coordY2);
 			if ((bool)basePart4)
 			{
@@ -1223,14 +1127,11 @@ public class ConstructionUI : WPFMonoBehaviour
 						break;
 					}
 				}
-
 				if (INSettings.GetBool(INFeature.AutoSetPartBuildingIndex))
 				{
 					CustomizationManager.SetLastUsedPartIndex(basePart4.m_partType, basePart4.customPartIndex);
-					EventManager.Send(
-						new CustomizePartUI.PartCustomizationEvent(basePart4.m_partType, basePart4.customPartIndex));
+					EventManager.Send(new CustomizePartUI.PartCustomizationEvent(basePart4.m_partType, basePart4.customPartIndex));
 				}
-
 				if (INSettings.GetBool(INFeature.AutoSetPartBuildingRotation))
 				{
 					ContraptionExtensionData extensionData = INContraption.Instance.ExtensionData;
@@ -1240,18 +1141,15 @@ public class ConstructionUI : WPFMonoBehaviour
 						extensionData.PartRotations[key] = ((int)basePart4.m_gridRotation, basePart4.m_flipped);
 					}
 				}
-
 				UnityEngine.Object.Destroy(basePart4.gameObject);
 				ContraptionPartChanged(coordX2, coordY2);
 				PlayDragSound();
 			}
 		}
-
 		if (m_draggedElement != -1)
 		{
 			PartDesc partDesc = m_partDescs[m_draggedElement];
-			Vector3 position = WPFMonoBehaviour.hudCamera.GetComponent<Camera>().ScreenToWorldPoint(pointer.position) +
-			                   m_dragOffset;
+			Vector3 position = WPFMonoBehaviour.hudCamera.GetComponent<Camera>().ScreenToWorldPoint(pointer.position) + m_dragOffset;
 			Vector3 position2 = WPFMonoBehaviour.hudCamera.GetComponent<Camera>().WorldToScreenPoint(position);
 			Vector3 vector4 = Camera.main.ScreenToWorldPoint(position2);
 			EventManager.Send(new DraggingPartEvent(partDesc.part.m_partType, vector4));
@@ -1261,13 +1159,12 @@ public class ConstructionUI : WPFMonoBehaviour
 			if (m_useDragOffset)
 			{
 				int key2 = num3 * 1000 + num2;
-				if (m_cellMap.TryGetValue(key2, out Transform value))
+				if (m_cellMap.TryGetValue(key2, out var value))
 				{
 					if ((bool)m_mouseOverCell)
 					{
 						m_mouseOverCell.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
 					}
-
 					m_mouseOverCell = value;
 					value.transform.localScale = new Vector3(0.33f, 0.33f, 0.33f);
 				}
@@ -1276,64 +1173,56 @@ public class ConstructionUI : WPFMonoBehaviour
 					m_mouseOverCell.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
 				}
 			}
-
 			if (pointer.up)
 			{
 				partDesc.customPartIndex = m_draggedElementCustomizationIndex;
 				AddMove();
-				if (WPFMonoBehaviour.levelManager.CanPlacePartAtGridCell(num2, num3) &&
-				    m_contraption.CanPlaceSpecificPartAt(num2, num3, partDesc.part) && !pointer.onWidget)
+				if (WPFMonoBehaviour.levelManager.CanPlacePartAtGridCell(num2, num3) && m_contraption.CanPlaceSpecificPartAt(num2, num3, partDesc.part) && !pointer.onWidget)
 				{
 					partDesc.useCount++;
 					EventManager.Send(new PartCountChanged(partDesc.part.m_partType, partDesc.CurrentCount));
 					BasePart basePart5 = partDesc.part;
 					if (m_draggingFromContraption)
 					{
-						basePart5 = WPFMonoBehaviour.gameData.GetCustomPart(basePart5.m_partType,
-							m_draggedElementCustomizationIndex);
+						basePart5 = WPFMonoBehaviour.gameData.GetCustomPart(basePart5.m_partType, m_draggedElementCustomizationIndex);
 					}
-
 					BasePart basePart6 = SetPartAt(num2, num3, basePart5);
 					ContraptionPartChanged(num2, num3);
 					PlayPartPlacedSound();
 					basePart6.OnPartPlaced();
-					EventManager.Send(new PartPlacedEvent(partDesc.part.m_partType, partDesc.part.m_partTier,
-						basePart6.transform.position));
+					EventManager.Send(new PartPlacedEvent(partDesc.part.m_partType, partDesc.part.m_partTier, basePart6.transform.position));
 				}
 				else
 				{
 					PlayRemoveSound();
 				}
-
 				SetDraggedElement(-1);
 			}
 		}
 		else if (m_selectedElement != -1 && m_draggedElement == -1 && !pointer.onWidget)
 		{
-			PartDesc selectedPart = m_partDescs[m_selectedElement];
-			Vector3 mousePos = WPFMonoBehaviour.ScreenToZ0(pointer.position) - base.transform.position;
-			int newMouseX = Mathf.RoundToInt(mousePos.x);
-			int newMouseY = Mathf.RoundToInt(mousePos.y);
-
-			//bresenham's line algorithm
-			//https://www.cs.helsinki.fi/group/goa/mallinnus/lines/bresenh.html
-			if (newMouseX != oldMouseX || newMouseY != oldMouseY)
-				PlotLine(oldMouseX, oldMouseY, newMouseX, newMouseY, selectedPart, pointer);
-			else
-				PlotPart(newMouseX, newMouseY, selectedPart, pointer);
-
-			//and update old mouse pos
-			oldMouseX = newMouseX;
-			oldMouseY = newMouseY;
+			PartDesc partDesc2 = m_partDescs[m_selectedElement];
+			Vector3 vector6 = WPFMonoBehaviour.ScreenToZ0(pointer.position) - base.transform.position;
+			int num4 = Mathf.RoundToInt(vector6.x);
+			int num5 = Mathf.RoundToInt(vector6.y);
+			BasePart basePart7 = m_contraption.FindPartAt(num4, num5);
+			if (!basePart7 && (m_pointerTime.x >= 0.4f || pointer.down || (m_allowDragPlacement && pointer.dragging)) && partDesc2.useCount < partDesc2.maxCount)
+			{
+				if (TryPlacePartAtGridCell(num4, num5, partDesc2))
+				{
+					AddMove();
+				}
+			}
+			else if ((bool)basePart7 && basePart7.CanEncloseParts() && partDesc2.part.CanBeEnclosed() && (m_pointerTime.x >= 0.4f || pointer.up) && (!basePart7.enclosedPart || partDesc2.part.m_partType != basePart7.enclosedPart.m_partType) && partDesc2.useCount < partDesc2.maxCount && TryPlacePartAtGridCell(num4, num5, partDesc2))
+			{
+				AddMove();
+			}
 		}
-
 		if (pointer.secondaryDown)
 		{
 			m_rightDragStartPosition = pointer.position;
 		}
-
-		if (m_draggedElement == -1 && (m_pointerTime.y >= 0.4f || pointer.secondaryDown || (pointer.secondaryDragging &&
-			    pointer.position != m_rightDragStartPosition && !pointer.dragging)))
+		if (m_draggedElement == -1 && (m_pointerTime.y >= 0.4f || pointer.secondaryDown || (pointer.secondaryDragging && pointer.position != m_rightDragStartPosition && !pointer.dragging)))
 		{
 			Vector3 vector7 = WPFMonoBehaviour.ScreenToZ0(pointer.position) - base.transform.position;
 			int x2 = Mathf.RoundToInt(vector7.x);
@@ -1343,7 +1232,6 @@ public class ConstructionUI : WPFMonoBehaviour
 			{
 				basePart8 = basePart8.enclosedPart;
 			}
-
 			if ((bool)basePart8 && !basePart8.m_static)
 			{
 				BasePart basePart9 = m_contraption.RemovePartAt(x2, y2);
@@ -1361,119 +1249,17 @@ public class ConstructionUI : WPFMonoBehaviour
 							break;
 						}
 					}
-
 					UnityEngine.Object.Destroy(basePart9.gameObject);
 					ContraptionPartChanged(x2, y2);
 				}
 			}
 		}
-
 		if (m_draggedElement == -1 && (bool)m_mouseOverCell)
 		{
 			m_mouseOverCell.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
 			m_mouseOverCell = null;
 		}
 	}
-
-	private void PlotLine(int x0, int y0, int x1, int y1, PartDesc selectedPart, GuiManager.Pointer pointer)
-	{
-		if (Math.Abs(y1 - y0) < Math.Abs(x1 - x0))
-		{
-			if (x0 > x1)
-				PlotLineLow(x1, y1, x0, y0, selectedPart, pointer);
-			else
-				PlotLineLow(x0, y0, x1, y1, selectedPart, pointer);
-		} else
-		{
-			if (y0 > y1)
-				PlotLineHigh(x1, y1, x0, y0, selectedPart, pointer);
-			else
-				PlotLineHigh(x0, y0, x1, y1, selectedPart, pointer);
-		}
-	}
-
-	private void PlotLineLow(int x0, int y0, int x1, int y1, PartDesc selectedPart, GuiManager.Pointer pointer)
-	{
-		int dx = x1 - x0;
-		int dy = y1 - y0;
-		int yi = 1;
-		if (dy < 0)
-		{
-			yi = -1;
-			dy = -dy;
-		}
-		int d = (2 * dy) - dx;
-		int y = y0;
-		for (int x = x0; x < x1; x++)
-		{
-			//plot
-			PlotPart(x, y, selectedPart, pointer);
-
-			if (d > 0)
-			{
-				y += yi;
-				d += 2 * (dy - dx);
-			} else
-			{
-				d += 2 * dy;
-			}
-        }
-    }
-
-	private void PlotLineHigh(int x0, int y0, int x1, int y1, PartDesc selectedPart, GuiManager.Pointer pointer)
-	{
-        int dx = x1 - x0;
-        int dy = y1 - y0;
-		int xi = 1;
-		if (dx < 0)
-		{
-			xi = -1;
-			dx = -dx;
-		}
-		int d = (2 * dx) - dy;
-		int x = x0;
-
-		for (int y = y0; y < y1; y++)
-		{
-			//plot part at that pos
-			PlotPart(x, y, selectedPart, pointer);
-
-			if (d > 0)
-			{
-				x += xi;
-				d += 2 * (dx - dy);
-			} else
-			{
-				d += 2 * dx;
-			}
-		}
-    }
-
-    private void PlotPart(int x, int y, PartDesc selectedPart, GuiManager.Pointer pointer)
-	{
-		//if we can't plot return
-		if (!(m_pointerTime.x >= 0.4f || pointer.down || (m_allowDragPlacement && pointer.dragging)))
-			return;
-
-        BasePart part = m_contraption.FindPartAt(x, y);
-        bool canEnclosePlot = part && (m_pointerTime.x >= 0.4f || pointer.up) && (!part.enclosedPart || selectedPart.part.m_partType != part.enclosedPart.m_partType);
-
-        if (!part && selectedPart.useCount < selectedPart.maxCount)
-        {
-            //ran on dragging mouse around with selected part action
-            if (TryPlacePartAtGridCell(x, y, selectedPart))
-            {
-                //reading this code is a nightmare, lol -dart
-                //Debug.Log("PLACE ABSYUGDSAUYFTVUYDF");
-                AddMove();
-            }
-        }
-        else if (part && part.CanEncloseParts() && selectedPart.part.CanBeEnclosed() && canEnclosePlot && selectedPart.useCount < selectedPart.maxCount && TryPlacePartAtGridCell(x, y, selectedPart))
-        {
-            AddMove();
-        }
-    }
-
 
 	private void ChangeCoordinatesToSelectBigPart(ref int coordX, ref int coordY)
 	{
@@ -1568,7 +1354,7 @@ public class ConstructionUI : WPFMonoBehaviour
 				if (part.m_partType == BasePart.PartType.GoldenPig)
 				{
 					BasePart basePart = m_contraption.FindPartAt(coordX + j, coordY + i);
-					if ((bool)basePart && basePart.m_partType is BasePart.PartType.Rope or BasePart.PartType.Spring)
+					if ((bool)basePart && (basePart.m_partType == BasePart.PartType.Rope || basePart.m_partType == BasePart.PartType.Spring))
 					{
 						continue;
 					}
@@ -1591,7 +1377,7 @@ public class ConstructionUI : WPFMonoBehaviour
 					{
 						basePart2 = basePart2.enclosedPart;
 					}
-					if (basePart2.m_partType is BasePart.PartType.KingPig or BasePart.PartType.GoldenPig && ((part.m_partType != BasePart.PartType.Rope && part.m_partType != BasePart.PartType.Spring) || basePart2.m_partType != BasePart.PartType.GoldenPig))
+					if ((basePart2.m_partType == BasePart.PartType.KingPig || basePart2.m_partType == BasePart.PartType.GoldenPig) && ((part.m_partType != BasePart.PartType.Rope && part.m_partType != BasePart.PartType.Spring) || basePart2.m_partType != BasePart.PartType.GoldenPig))
 					{
 						ClearNonChassisPart(coordX + l, coordY + k);
 					}
@@ -1629,7 +1415,7 @@ public class ConstructionUI : WPFMonoBehaviour
 			if (extensionData != null)
 			{
 				(int, int) key = ((int)basePart3.m_partType, basePart3.customPartIndex);
-				if (extensionData.PartRotations != null && extensionData.PartRotations.TryGetValue(key, out (int, bool) value))
+				if (extensionData.PartRotations != null && extensionData.PartRotations.TryGetValue(key, out var value))
 				{
 					if (value.Item2)
 					{
@@ -1641,52 +1427,6 @@ public class ConstructionUI : WPFMonoBehaviour
 				}
 			}
 		}
-		return component;
-	}
-	public BasePart SetPartAt(ContraptionDataset.ContraptionDatasetUnit cdu, BasePart part, bool autoalign = true)
-	{
-		int coordX = cdu.x;
-		int coordY = cdu.y;
-		GameObject obj = UnityEngine.Object.Instantiate(part.gameObject);
-		obj.SetActive(value: true);
-		BasePart component = obj.GetComponent<BasePart>();
-		BasePart basePart = m_contraption.FindPartAt(coordX, coordY);
-		if (component.m_partType == BasePart.PartType.Pig && (bool)basePart && basePart.m_partType == BasePart.PartType.WoodenFrame && Singleton<SocialGameManager>.IsInstantiated())
-		{
-			Singleton<SocialGameManager>.Instance.ReportAchievementProgress("grp.THINK_INSIDE_THE_BOX", 100.0);
-		}
-		ClearCollidingParts(coordX, coordY, component);
-		component.PrePlaced();
-		BasePart basePart2 = m_contraption.SetPartAt(coordX, coordY, component, autoalign);
-		if (autoalign)
-		{
-			m_contraption.AutoAlign(component);
-		}
-		if ((bool)basePart2)
-		{
-			EventManager.Send(new PartRemovedEvent(basePart2.m_partType, basePart2.transform.position));
-			CollectPart(basePart2);
-		}
-		if (INSettings.GetBool(INFeature.AutoSetPartBuildingRotation))
-		{
-			BasePart basePart3 = component;
-			ContraptionExtensionData extensionData = INContraption.Instance.ExtensionData;
-			if (extensionData != null)
-			{
-				(int, int) key = ((int)basePart3.m_partType, basePart3.customPartIndex);
-				if (extensionData.PartRotations != null && extensionData.PartRotations.TryGetValue(key, out (int, bool) value))
-				{
-					if (value.Item2)
-					{
-						basePart3.SetFlipped(value.Item2);
-					}
-					basePart3.SetRotation((BasePart.GridRotation)value.Item1);
-					basePart3.OnChangeConnections();
-					m_contraption.RefreshNeighboursVisual(basePart3.m_coordX, basePart3.m_coordY);
-				}
-			}
-		}
-		obj.transform.position += new Vector3(cdu.offsetX, cdu.offsetY);
 		return component;
 	}
 
@@ -1735,7 +1475,7 @@ public class ConstructionUI : WPFMonoBehaviour
 			EventManager.Send(new PartCountChanged(partDesc.part.m_partType, partDesc.CurrentCount));
 		}
 		SetMoveButtonStates();
-		MoveCount = 0;
+		m_moveCounter = 0;
 	}
 
 	public void ApplySuperGlue(bool apply)

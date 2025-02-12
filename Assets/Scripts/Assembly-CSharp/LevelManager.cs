@@ -1051,7 +1051,7 @@ public sealed class LevelManager : WPFMonoBehaviour
 
 	public BasePart BuildPart(ContraptionDataset.ContraptionDatasetUnit cdu, BasePart partPrefab)
 	{
-		BasePart basePart = WPFMonoBehaviour.levelManager.ConstructionUI.SetPartAt(cdu, partPrefab, autoalign: false);
+		BasePart basePart = WPFMonoBehaviour.levelManager.ConstructionUI.SetPartAt(cdu.x,cdu.y, partPrefab, autoalign: false);
 		if (cdu.flipped)
 		{
 			basePart.SetFlipped(flipped: true);
