@@ -783,6 +783,11 @@ public class Contraption : WPFMonoBehaviour
 		m_broken = false;
 		m_stopTimer = 0f;
 		m_parts = new List<BasePart>(GetComponentsInChildren<BasePart>());
+
+		// List all parts:
+		WPFMonoBehaviour.ExportAllPartData(m_parts);
+		WPFMonoBehaviour.PrefabExtractor.ExportPartPrefabs(m_parts);
+
 		m_ropes.Clear();
 		m_powerConsumption = 0f;
 		m_enginesAmount = 0;
