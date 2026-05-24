@@ -25,5 +25,25 @@ Feel free to fork this repo and come up with your own modification. Let us know 
 
 https://discord.gg/JYrbsXX
 
+## TODOs
+These are left here to kick start development, though I may not do them myself.
+
+- Fix colored frame by reversing BPLE shaders (still not good enough for me)
+- Fix broken physics (track weird changes relating to ECS integration by Goggs)
+- Port Anstro Editions features to BPLE (there are a lot)
+
+Hot features that can be added:
+- Brush tools
+- Selection
+- Move/delete selection
+- Cut/copy/paste
+- Delete confirmation
+- Autosave
+- Import/export
+- Right-click menu for quick skin selection
+- Contraption assets (save a chunk of contraption as placable artifact)
+- Layer system
+- Style redesign of BPLE (to look more like actual bad piggies)
+
 ## Legal Notice
 **This mod is not affiliated with Rovio in any way. Please note that the game Bad Piggies is developed by Rovio. Most of the unmodified source codes and resources belongs to them.**
