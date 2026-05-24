@@ -44,6 +44,7 @@ Hot features that can be added:
 - Contraption assets (save a chunk of contraption as placable artifact)
 - Layer system
 - Style redesign of BPLE (to look more like actual bad piggies)
+- Port BPLE 2022.1.9 features
 
 ## Legal Notice
 **This mod is not affiliated with Rovio in any way. Please note that the game Bad Piggies is developed by Rovio. Most of the unmodified source codes and resources belongs to them.**
