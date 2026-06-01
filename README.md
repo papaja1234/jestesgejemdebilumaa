@@ -2,7 +2,7 @@
 A Community-driven Modification of the game Bad Piggies!
 Thanks to Miuna for all the prior work from the mod called BPLE, we really hope you are doing well and we await your return.
 
-## Bad Piggies :: Rebooted Edition - Season Two branch
+## Bad Piggies :: Rebooted Edition - Anstro Edition
 Anstro Pleuton's experiments branch. Bunch of changes from this branch can be ported over to `delta-epsilon12345` branch.
 **Check out the `delta-epsilon12345` branch for latest BP::RE**.
 
