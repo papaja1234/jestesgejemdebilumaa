@@ -2,8 +2,8 @@
 A Community-driven Modification of the game Bad Piggies!
 Thanks to Miuna for all the prior work from the mod called BPLE, we really hope you are doing well and we await your return.
 
-## Bad Piggies :: Rebooted Edition - Delta Epsilon 3
-This branch of the mod development was run primarily by Goggs. This branch still has plenty of bugs, and most notable and the most annoying ones are the totally broken Physics and half broken colored frames. We need a way to decompile original shaders from BPLE create a perfect replica. Would be tough.
+## Bad Piggies :: Rebooted Edition - Delta Epsilon
+This branch of the mod development was run primarily by Goggs. This branch is the latest BP::RE version. It has some bugs though...
 
 ## Setup
 The unity version to open this project with is [Unity 2021.3.45f2](https://unity.com/releases/editor/whats-new/2021.3.45f2).
@@ -12,7 +12,7 @@ The unity version to open this project with is [Unity 2021.3.45f2](https://unity
 Here are a couple of major branches in the repo.
 
 - **Delta Epsilon** (`delta-epsilon12345`) - Lead primarily by Goggs, this is the primary releases of Bad Piggies :: Rebooted.
-- **Season Two** (`season-two`) - This branch was supposed to be the experimental Bad Piggies Rebooted 2x by me, but abandoned as I could not fix the colored frame.
+- **Season Two** (`season-two`) - This branch was supposed to be the experimental Bad Piggies Rebooted 2x by me, but abandoned as Anstro could not fix the colored frame.
 - **Anstro Editions** (`AnstroEdition`) - Used to be my branch of features and experiments.
 - **OG BPLE** (`OG-BPLE`) - The initial(-ish) source code of BPLE 2022.1 decompiled by Goggs.
 - **Fools Day 2024** (`foolsd-2024`) - 2024 April Fools version.
@@ -25,12 +25,25 @@ Feel free to fork this repo and come up with your own modification. Let us know 
 
 https://discord.gg/JYrbsXX
 
-## TODOs
-These are left here to kick start development, though I may not do them myself.
+## Credits
 
-- Fix colored frame by reversing BPLE shaders (still not good enough for me)
+- [Miuna](https://github.com/miu-na) for all the prior modding effort on Bad Piggies.
+- [Goggs](https://github.com/Goggs77) - BP::RE project leader.
+- [Anstro Pleuton](https://github.com/anstropleuton) - Some BP::RE features.
+- Elderberry Starz - Many BP::RE custom assets.
+- SaltedFish (DStuff) - Many BP::RE custom assets.
+- [Creato](https://www.youtube.com/channel/UCJjkxlcWgDfMtm1WdIZnUBg) - Some BP::RE custom assets.
+- Dartn - Initial decompilation of BPLE as the basis for BP::RE, project coordinator.
+- [Egan](https://www.youtube.com/channel/UC71a3L1Lm-aDq5SK8owkBaA) - April fools custom assets.
+- [snailmaster42](https://www.youtube.com/channel/UCudLJRGcDBTx9WO8NWoZ36A) - Some BP::RE custom assets.
+- [Vas2000](https://www.reddit.com/user/Vas2000) - April fools splash screen, BP::RE custom assets.
+- And counting...
+
+## TODOs
+These are left here to kick start development, though we may not do them ourselves.
+
 - Fix broken physics (track weird changes relating to ECS integration by Goggs)
-- Port Anstro Editions features to BPLE (there are a lot)
+- Port Anstro Editions features to BP::RE (there are a lot)
 
 Hot features that can be added:
 - Brush tools
