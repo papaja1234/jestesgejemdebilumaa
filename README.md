@@ -1,54 +1,44 @@
 # Bad Piggies :: Rebooted Edition
 A Community-driven Modification of the game Bad Piggies!
-Thanks to Miuna for all the prior work from the mod called BPLE, we really hope you had more time to spare for your project.
+Thanks to Miuna for all the prior work from the mod called BPLE, we really hope you are doing well and we await your return.
 
-## Features:
-###### Work in Progress, TONS of features to mention...
+## Bad Piggies :: Rebooted Edition - Master
+This is the master branch of BP::RE.
+**Check out the `delta-epsilon12345` branch for latest BP::RE**.
 
-## Known Issues:
-+ Part will bug when connected to π/3 triangle (most likely physics issue, meshcollider maybe?)
-+ Triangles prevents rotation
-+ Script Engine fails to load assembly on android
-+ Command /fill & /setpart will temporaryily fail grid menu and sometimes disable crafting entirely
-+ /gamerule set terrainscale does not work immediately (&& while it works it potentially removing your contraption?)
-+ Neural Part slot is overflowed with triangles
-##### Possible Improvements
-+ Add AddPart method instead of using new fields in RECommandInterface.cs
-+ Add metadata to savefile, currently // comments are available. and # will be used for meta settings (maybe add a corresponding command to do this)
+## Setup
+The unity version to open this project with is [Unity 2021.3.45f2](https://unity.com/releases/editor/whats-new/2021.3.45f2).
 
-## Changes:
-###### Work in Progress, too, 
-#### Quality Of Life
-+ Mute music button (still weird icon)
-+ Mute starbox sound
-+ Remove (almost) zoom limits
-+ C# Runtime Compilation Engine and it's User Interface
-+ Command System
-+ Job system used with Burst @ entitylight physics
-+ More Types of ExplodingGrapplingHookProjectile, More expandability 
-#### Changes that doesn't effect gameplay
-+ Change version selector background
-+ Change Title Image
-#### Existing part changes
-+ Higher Jet Engine thrust limits (6000)
-+ FULLY COMPLETED Part HP system, with selectable modes (mode 0 is off)
-+ Explosions, Collsions now deals damage to parts
-+ Part is destroyed and removed when hp<0 in mode 1, turned into debris in mode 2
-#### New Parts
-+ Alien Wooden Frame, much flexible with engine power
-+ Alien Santa Spring (3*mass, high connect strength)
-+ Alien Rapid Gun (Rapidly shoot bullets without cooldown with simulated AP, use circuits to spam)
-+ Alien Metal TNT (Much heavier(75kg) and stronger), it also has engine power
-+ Alien Rapid Gun Extended (Alien Gatling Gun), just like Alien Rapid Gun(without auto spam), also new bullets for that(Stackable, Uses Gravity,  Big Mass)
-+ Oscillator (Produces periodic signals when activated)
-+ Healing Light (Heals all parts within 5-meter-radius at a rate of *300*hp/s) (60 before)
-+ Lightning Cannon(comes with lightning bullet)
-+ Force Field Light **-RESURRECTION-** (repels/sucks objects within 5 meters radius with a force inverse proportional to [distance^2+0.2f])
-+ (Still WIP/BUG, prefab named "MovableLight") Machine piston **-RESURRECTION-**, well, Pistons!
-+ Triangle Frames
-+ Metal Slab Frame
-+ Never Gonna Give You up
-+ Never Gonna Let You Down
+## Branches
+Here are a couple of major branches in the repo.
 
-## Legal Notice:
+- **Delta Epsilon** (`delta-epsilon12345`) - Lead primarily by Goggs, this is the primary releases of Bad Piggies :: Rebooted.
+- **Season Two** (`season-two`) - This branch was supposed to be the experimental Bad Piggies Rebooted 2x by me, but abandoned as Anstro could not fix the colored frame.
+- **Anstro Editions** (`AnstroEdition`) - Used to be my branch of features and experiments.
+- **OG BPLE** (`OG-BPLE`) - The initial(-ish) source code of BPLE 2022.1 decompiled by Dartn.
+- **Fools Day 2024** (`foolsd-2024`) - 2024 April Fools version.
+- **Anstro Tweaks** (`AnstroTweaks`) - An older branch of my features and experiments.
+
+## Open Source???
+No. This project is ***NOT*** Open Source. See the legal notice below. We are providing the source code to our mod in the hopes of software preservation, game's longevity and community extension.
+
+Feel free to fork this repo and come up with your own modification. Let us know what you did with it at our discord server!
+
+https://discord.gg/JYrbsXX
+
+## Credits
+
+- [Miuna](https://github.com/miu-na) for all the prior modding effort on Bad Piggies.
+- [Goggs](https://github.com/Goggs77) - BP::RE project leader.
+- [Anstro Pleuton](https://github.com/anstropleuton) - Some BP::RE features.
+- Elderberry Starz - Many BP::RE custom assets.
+- SaltedFish (DStuff) - Many BP::RE custom assets.
+- [Creato](https://www.youtube.com/channel/UCJjkxlcWgDfMtm1WdIZnUBg) - Some BP::RE custom assets.
+- Dartn - Initial decompilation of BPLE as the basis for BP::RE, project coordinator.
+- [Egan](https://www.youtube.com/channel/UC71a3L1Lm-aDq5SK8owkBaA) - April fools custom assets.
+- [snailmaster42](https://www.youtube.com/channel/UCudLJRGcDBTx9WO8NWoZ36A) - Some BP::RE custom assets.
+- [Vas2000](https://www.reddit.com/user/Vas2000) - April fools splash screen, BP::RE custom assets.
+- And counting...
+
+## Legal Notice
 **This mod is not affiliated with Rovio in any way. Please note that the game Bad Piggies is developed by Rovio. Most of the unmodified source codes and resources belongs to them.**
