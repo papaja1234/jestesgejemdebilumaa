@@ -15,7 +15,7 @@ Here are a couple of major branches in the repo.
 - **Delta Epsilon** (`delta-epsilon12345`) - Lead primarily by Goggs, this is the primary releases of Bad Piggies :: Rebooted.
 - **Season Two** (`season-two`) - This branch was supposed to be the experimental Bad Piggies Rebooted 2x by me, but abandoned as Anstro could not fix the colored frame.
 - **Anstro Editions** (`AnstroEdition`) - Used to be my branch of features and experiments.
-- **OG BPLE** (`OG-BPLE`) - The initial(-ish) source code of BPLE 2022.1 decompiled by Goggs.
+- **OG BPLE** (`OG-BPLE`) - The initial(-ish) source code of BPLE 2022.1 decompiled by Dartn.
 - **Fools Day 2024** (`foolsd-2024`) - 2024 April Fools version.
 - **Anstro Tweaks** (`AnstroTweaks`) - An older branch of my features and experiments.
 
